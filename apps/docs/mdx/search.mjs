@@ -44,7 +44,7 @@ function extractSections() {
   };
 }
 
-export default function A(nextConfig = {}) {
+export default (nextConfig = {}) => {
   let cache = new Map();
 
   return Object.assign({}, nextConfig, {
@@ -53,7 +53,7 @@ export default function A(nextConfig = {}) {
         test: __filename,
         use: [
           createLoader(function () {
-            let appDir = path.resolve("./src/app");
+            let appDir = path.resolve("./app");
             this.addContextDependency(appDir);
 
             let files = glob.sync("**/*.mdx", { cwd: appDir });
@@ -132,4 +132,4 @@ export default function A(nextConfig = {}) {
       return config;
     },
   });
-}
+};

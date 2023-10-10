@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { Heading } from "../components/Heading";
-import logoGo from "../images/logos/go.svg";
-import logoNode from "../images/logos/node.svg";
-import logoPhp from "../images/logos/php.svg";
-import logoPython from "../images/logos/python.svg";
-import logoRuby from "../images/logos/ruby.svg";
+import logoGo from "../public/logos/go.svg";
+import logoNode from "../public/logos/node.svg";
+import logoPhp from "../public/logos/php.svg";
+import logoPython from "../public/logos/python.svg";
+import logoRuby from "../public/logos/ruby.svg";
 import Link from "next/link";
 import { HiArrowRight } from "react-icons/hi";
 

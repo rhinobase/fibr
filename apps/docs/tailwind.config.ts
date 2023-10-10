@@ -9,9 +9,9 @@ export default {
   content: [
     join(
       __dirname,
-      "{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,mdx}",
+      "{pages,components,app}/**/*!(*.stories|*.spec).{js,mjs,ts,jsx,tsx,mdx}"
     ),
-    "../../node_modules/@rafty/ui/**/*.{js,cjs}",
+    "node_modules/@rafty/ui/**/*.{js,cjs}",
     ...createGlobPatternsForDependencies(__dirname),
   ],
   theme: {

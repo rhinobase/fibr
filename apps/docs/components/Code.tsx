@@ -19,7 +19,6 @@ import {
 import { create } from "zustand";
 import { Tag } from "../components/Tag";
 import { HiCheck, HiOutlineDocumentDuplicate } from "react-icons/hi";
-import { BsBagFill } from "react-icons/bs";
 
 const languageNames: Record<string, string> = {
   js: "JavaScript",
@@ -130,7 +129,7 @@ function CodePanel({
 
   if (!code) {
     throw new Error(
-      "`CodePanel` requires a `code` prop, or a child with a `code` prop.",
+      "`CodePanel` requires a `code` prop, or a child with a `code` prop."
     );
   }
 
@@ -150,11 +149,9 @@ function CodePanel({
 function CodeGroupHeader({
   title,
   children,
-  selectedIndex,
 }: {
   title: string;
   children: React.ReactNode;
-  selectedIndex: number;
 }) {
   const hasTabs = Children.count(children) > 1;
 
@@ -168,7 +165,7 @@ function CodeGroupHeader({
         <h3
           className={classNames(
             "dark:text my-auto mr-auto text-xs font-semibold text-white",
-            !hasTabs ? "py-3" : "py-0",
+            !hasTabs ? "py-3" : "py-0"
           )}
         >
           {title}
@@ -256,7 +253,7 @@ const usePreferredLanguageStore = create<{
     set((state) => ({
       preferredLanguages: [
         ...state.preferredLanguages.filter(
-          (preferredLanguage) => preferredLanguage !== language,
+          (preferredLanguage) => preferredLanguage !== language
         ),
         language,
       ],
@@ -268,7 +265,7 @@ function useTabGroupProps(availableLanguages: Array<string>) {
     usePreferredLanguageStore();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const activeLanguage = [...availableLanguages].sort(
-    (a, z) => preferredLanguages.indexOf(z) - preferredLanguages.indexOf(a),
+    (a, z) => preferredLanguages.indexOf(z) - preferredLanguages.indexOf(a)
   )[0];
   const languageIndex = availableLanguages.indexOf(activeLanguage);
   const newSelectedIndex = languageIndex === -1 ? selectedIndex : languageIndex;
@@ -284,7 +281,7 @@ function useTabGroupProps(availableLanguages: Array<string>) {
     selectedIndex,
     onChange: (newSelectedIndex: number) => {
       preventLayoutShift(() =>
-        addPreferredLanguage(availableLanguages[newSelectedIndex]),
+        addPreferredLanguage(availableLanguages[newSelectedIndex])
       );
     },
   };
@@ -307,11 +304,7 @@ export function CodeGroup({
 
   const containerClassName =
     "not-prose my-6 overflow-hidden rounded-2xl bg-secondary-900 shadow-md dark:ring-1 dark:ring-white/10";
-  const header = (
-    <CodeGroupHeader title={title} selectedIndex={tabGroupProps.selectedIndex}>
-      {children}
-    </CodeGroupHeader>
-  );
+  const header = <CodeGroupHeader title={title}>{children}</CodeGroupHeader>;
   const panels = <CodeGroupPanels {...props}>{children}</CodeGroupPanels>;
 
   return (
@@ -344,7 +337,7 @@ export function Code({
   if (isGrouped) {
     if (typeof children !== "string") {
       throw new Error(
-        "`Code` children must be a string when nested inside a `CodeGroup`.",
+        "`Code` children must be a string when nested inside a `CodeGroup`."
       );
     }
     return <code {...props} dangerouslySetInnerHTML={{ __html: children }} />;

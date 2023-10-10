@@ -1,8 +1,9 @@
 import { Button } from "@rafty/ui";
+import { ReactElement } from "react";
 
 type ButtonType = {
   name: string;
-  righticon?: any;
+  righticon?: ReactElement;
 };
 
 export default function ButtonClass({ name, righticon }: ButtonType) {
