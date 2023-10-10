@@ -1,0 +1,13 @@
+{
+  "name": "@fiber/core",
+  "version": "0.0.1",
+  "dependencies": {
+    "@swc/helpers": "~0.5.0"
+  },
+  "type": "commonjs",
+  "main": "./src/index.js",
+  "typings": "./src/index.d.ts",
+  "devDependencies": {
+    "react-hook-form": "^7.47.0"
+  }
+}

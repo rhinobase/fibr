@@ -4,67 +4,48 @@
   "sourceRoot": "apps/storybook/src",
   "projectType": "application",
   "targets": {
-    "build": {
-      "executor": "@nx/vite:build",
-      "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "outputPath": "dist/apps/storybook"
-      },
-      "configurations": {
-        "development": {
-          "mode": "development"
-        },
-        "production": {
-          "mode": "production"
-        }
+        "lintFilePatterns": [
+          "apps/storybook/**/*.{ts,tsx,js,jsx}"
+        ]
       }
     },
     "serve": {
-      "executor": "@nx/vite:dev-server",
-      "defaultConfiguration": "development",
+      "executor": "@nx/storybook:storybook",
       "options": {
-        "buildTarget": "storybook:build"
+        "port": 4400,
+        "configDir": "apps/storybook/.storybook"
       },
       "configurations": {
-        "development": {
-          "buildTarget": "storybook:build:development",
-          "hmr": true
-        },
-        "production": {
-          "buildTarget": "storybook:build:production",
-          "hmr": false
+        "ci": {
+          "quiet": true
         }
       }
     },
-    "preview": {
-      "executor": "@nx/vite:preview-server",
-      "defaultConfiguration": "development",
+    "build": {
+      "executor": "@nx/storybook:build",
+      "outputs": [
+        "{options.outputDir}"
+      ],
       "options": {
-        "buildTarget": "storybook:build"
+        "outputDir": "dist/storybook/storybook",
+        "configDir": "apps/storybook/.storybook"
       },
       "configurations": {
-        "development": {
-          "buildTarget": "storybook:build:development"
-        },
-        "production": {
-          "buildTarget": "storybook:build:production"
+        "ci": {
+          "quiet": true
         }
       }
     },
-    "test": {
-      "executor": "@nx/vite:test",
-      "outputs": ["{options.reportsDirectory}"],
+    "test-storybook": {
+      "executor": "nx:run-commands",
       "options": {
-        "passWithNoTests": true,
-        "reportsDirectory": "../../coverage/apps/storybook"
-      }
-    },
-    "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["apps/storybook/**/*.{ts,tsx,js,jsx}"]
+        "command": "test-storybook -c apps/storybook/.storybook --url=http://localhost:4400"
       }
     }
   },

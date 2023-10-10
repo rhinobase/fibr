@@ -14,7 +14,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@fiber/core": ["packages/core/src/index.ts"],
+      "@fiber/react": ["packages/react/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
