@@ -44,7 +44,7 @@ function extractSections() {
   };
 }
 
-export default (nextConfig = {}) => {
+export default function A(nextConfig = {}) {
   let cache = new Map();
 
   return Object.assign({}, nextConfig, {
@@ -132,4 +132,4 @@ export default (nextConfig = {}) => {
       return config;
     },
   });
-};
+}

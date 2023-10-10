@@ -1,17 +1,16 @@
-import { type Config } from "tailwindcss";
-import typographyStyles from "./typography";
-import typographyPlugin from "@tailwindcss/typography";
-import { createGlobPatternsForDependencies } from "@nx/react/tailwind";
-import { join } from "path";
+const { typographyStyles } = require("./typography");
+const { createGlobPatternsForDependencies } = require("@nx/react/tailwind");
+const { join } = require("path");
 
-export default {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
   darkMode: "class",
   content: [
     join(
       __dirname,
-      "{pages,components,app}/**/*!(*.stories|*.spec).{js,mjs,ts,jsx,tsx,mdx}"
+      "{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,mdx}"
     ),
-    "node_modules/@rafty/ui/**/*.{js,cjs}",
+    "../../node_modules/@rafty/ui/**/*.{js,cjs}",
     ...createGlobPatternsForDependencies(__dirname),
   ],
   theme: {
@@ -50,5 +49,5 @@ export default {
       },
     },
   },
-  plugins: [typographyPlugin, require("@rafty/plugin")],
-} satisfies Config;
+  plugins: [require("@tailwindcss/typography"), require("@rafty/plugin")],
+};

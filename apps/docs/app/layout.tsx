@@ -3,7 +3,7 @@ import glob from "fast-glob";
 import { Providers } from "./providers";
 import { Layout } from "../components/Layout";
 
-import "../styles/globals.css";
+import "./globals.css";
 import { type Metadata } from "next";
 import { type Section } from "../components/SectionProvider";
 
