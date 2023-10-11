@@ -3,13 +3,11 @@
   "version": "0.0.1",
   "peerDependencies": {
     "@fiber/core": "*",
-    "@hookform/resolvers": "^3.3.1",
     "@rafty/ui": "*",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-hook-form": "^7.46.2",
     "react-icons": "^4.11.0",
-    "core-js": "^3.32.2",
     "zustand": "^4.4.3"
   }
 }

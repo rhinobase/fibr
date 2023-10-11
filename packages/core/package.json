@@ -6,8 +6,5 @@
   },
   "type": "commonjs",
   "main": "./src/index.js",
-  "typings": "./src/index.d.ts",
-  "devDependencies": {
-    "react-hook-form": "^7.47.0"
-  }
+  "typings": "./src/index.d.ts"
 }

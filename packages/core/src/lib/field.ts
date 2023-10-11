@@ -35,18 +35,4 @@ export class FField implements FFieldType {
   get required() {
     return getValue(this._required);
   }
-
-  toString() {
-    return `FField - ${this.type}`;
-  }
-
-  toJSON() {
-    return JSON.stringify({
-      type: this.type,
-      label: this.label,
-      description: this.description,
-      hidden: this.hidden,
-      readOnly: this.readOnly,
-    });
-  }
 }

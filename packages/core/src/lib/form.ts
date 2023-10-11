@@ -1,18 +1,17 @@
 import { FFieldType, FFormType } from "./types";
-import type { FieldValues, Resolver } from "react-hook-form";
 
-export class FForm<T> implements FFormType<T> {
+export class FForm<T, U> implements FFormType<T, U> {
   fields: Record<keyof T, FFieldType>;
-  validation: Resolver<FieldValues, any>;
+  validation: U;
   default_values?: Partial<T>;
 
-  constructor(config: FFormType<T>) {
+  constructor(config: FFormType<T, U>) {
     this.fields = config.fields;
     this.default_values = config.default_values;
     this.validation = config.validation;
   }
 
-  static create<T>(config: FFormType<T>) {
+  static create<T, U>(config: FFormType<T, U>) {
     return new FForm(config);
   }
 }
