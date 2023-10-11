@@ -1,7 +1,8 @@
 import { FFieldType } from "./field";
+import type { Resolver, FieldValues } from "react-hook-form";
 
-export type FFormType<T, U> = {
+export type FFormType<T> = {
   fields: Record<keyof T, FFieldType>;
-  validation: U;
+  validation: Resolver<FieldValues, any>;
   default_values?: Partial<T>;
 };

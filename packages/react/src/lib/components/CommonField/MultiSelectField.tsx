@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react';
+import { useReducer, useState } from "react";
 import {
   Command,
   CommandEmpty,
@@ -11,13 +11,13 @@ import {
   PopoverTrigger,
   Text,
   classNames,
-} from '@rafty/ui';
-import { HiChevronUpDown, HiXMark } from 'react-icons/hi2';
-import { HiCheck } from 'react-icons/hi';
-import { useFormContext } from 'react-hook-form';
-import { findLabel } from './ComboboxField';
-import { FStringFieldType, FStringListType } from '@fiber/core';
-import { FieldsType } from '../../providers';
+} from "@rafty/ui";
+import { HiChevronUpDown, HiXMark } from "react-icons/hi2";
+import { HiCheck } from "react-icons/hi";
+import { useFormContext } from "react-hook-form";
+import { findLabel } from "./ComboboxField";
+import { FStringFieldType, FStringListType } from "@fiber/core";
+import { FieldsType } from "../../types";
 
 export function MultiSelectField({
   name,
@@ -40,8 +40,8 @@ export function MultiSelectField({
 
       if (index === -1)
         prev.push({
-          label: findLabel(cur, field?.options?.list ?? []) ?? 'No Label',
-          value: field?.type === 'number' ? Number(cur) : cur,
+          label: findLabel(cur, field?.options?.list ?? []) ?? "No Label",
+          value: field?.type === "number" ? Number(cur) : cur,
         });
       else prev.splice(index, 1);
 
@@ -68,9 +68,9 @@ export function MultiSelectField({
           <HiChevronUpDown
             className={classNames(
               isOpen
-                ? 'text-primary-500 dark:text-primary-400'
-                : 'text-secondary-500 dark:text-secondary-400',
-              'shrink-0'
+                ? "text-primary-500 dark:text-primary-400"
+                : "text-secondary-500 dark:text-secondary-400",
+              "shrink-0"
             )}
           />
         }
@@ -101,9 +101,9 @@ export function MultiSelectField({
         )}
         <div
           className={classNames(
-            selected.length > 1 ? 'visible' : 'invisible',
-            'absolute right-8 rounded p-0.5',
-            'dark:focus:ring-secondary-100 dark:focus:ring-offset-secondary-900 text-red-500 hover:bg-red-200/40 focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-1 dark:text-red-300 dark:hover:bg-red-300/10'
+            selected.length > 1 ? "visible" : "invisible",
+            "absolute right-8 rounded p-0.5",
+            "dark:focus:ring-secondary-100 dark:focus:ring-offset-secondary-900 text-red-500 hover:bg-red-200/40 focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-1 dark:text-red-300 dark:hover:bg-red-300/10"
           )}
           onClick={(event) => {
             event.preventDefault();
@@ -149,7 +149,7 @@ function Options({
   const components: JSX.Element[] = [];
 
   items.forEach(({ label, value }, index) => {
-    if (typeof value == 'string' || typeof value == 'number')
+    if (typeof value == "string" || typeof value == "number")
       components.push(
         <CommandItem
           key={index}
@@ -169,5 +169,5 @@ function Options({
       );
   });
 
-  return <>{components}</>;
+  return components;
 }

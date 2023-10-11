@@ -1,8 +1,8 @@
-import { Textarea, classNames } from '@rafty/ui';
-import { useFormContext } from 'react-hook-form';
-import { FTextFieldType } from '@fiber/core';
-import { FieldWrapper } from '../FieldWrapper';
-import { FieldsType } from '../../providers';
+import { Textarea, classNames } from "@rafty/ui";
+import { useFormContext } from "react-hook-form";
+import { FTextFieldType } from "@fiber/core";
+import { FieldWrapper } from "../FieldWrapper";
+import { FieldsType } from "../../types";
 
 export function TextField({ name, field }: FieldsType<FTextFieldType>) {
   const { register } = useFormContext();
@@ -16,7 +16,7 @@ export function TextField({ name, field }: FieldsType<FTextFieldType>) {
       name={name}
       label={field.label}
       description={field.description}
-      className={classNames(field.hidden ? 'hidden' : 'flex')}
+      className={classNames(field.hidden ? "hidden" : "flex")}
     >
       <Textarea
         {...register(name)}

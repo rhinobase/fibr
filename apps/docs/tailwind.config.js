@@ -1,4 +1,5 @@
 const { typographyStyles } = require("./typography");
+const colors = require("tailwindcss/colors");
 const { createGlobPatternsForDependencies } = require("@nx/react/tailwind");
 const { join } = require("path");
 
@@ -32,6 +33,9 @@ module.exports = {
     },
     typography: typographyStyles,
     extend: {
+      colors: {
+        primary: colors.sky,
+      },
       boxShadow: {
         glow: "0 0 4px rgb(0 0 0 / 0.1)",
       },

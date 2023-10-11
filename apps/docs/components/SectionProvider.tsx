@@ -39,7 +39,7 @@ function createSectionStore(sections: Array<Section>) {
       set((state) =>
         state.visibleSections.join() === visibleSections.join()
           ? {}
-          : { visibleSections },
+          : { visibleSections }
       ),
     registerHeading: ({ id, ref, offsetRem }) =>
       set((state) => {
@@ -62,7 +62,7 @@ function createSectionStore(sections: Array<Section>) {
 function useVisibleSections(sectionStore: StoreApi<SectionState>) {
   const setVisibleSections = useStore(
     sectionStore,
-    (s) => s.setVisibleSections,
+    (s) => s.setVisibleSections
   );
   const sections = useStore(sectionStore, (s) => s.sections);
 

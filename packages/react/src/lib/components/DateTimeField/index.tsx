@@ -1,8 +1,8 @@
-import { InputField, classNames } from '@rafty/ui';
-import { FieldWrapper } from '../FieldWrapper';
-import { useFormContext } from 'react-hook-form';
-import { FDateTimeFieldType } from '@fiber/core';
-import { FieldsType } from '../../providers';
+import { InputField, classNames } from "@rafty/ui";
+import { FieldWrapper } from "../FieldWrapper";
+import { useFormContext } from "react-hook-form";
+import { FDateTimeFieldType } from "@fiber/core";
+import { FieldsType } from "../../types";
 
 export function DatetimeField({ name, field }: FieldsType<FDateTimeFieldType>) {
   const { register } = useFormContext();
@@ -14,7 +14,7 @@ export function DatetimeField({ name, field }: FieldsType<FDateTimeFieldType>) {
       name={name}
       label={field.label}
       description={field.description}
-      className={classNames(field.hidden ? 'hidden' : 'flex')}
+      className={classNames(field.hidden ? "hidden" : "flex")}
       required={field.required as boolean | undefined}
     >
       <InputField

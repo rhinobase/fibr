@@ -1,7 +1,7 @@
-import { RadioGroup, RadioGroupItem, Text } from '@rafty/ui';
-import { Controller, useFormContext } from 'react-hook-form';
-import { FStringFieldType, FStringListType } from '@fiber/core';
-import { FieldsType } from '../../providers';
+import { RadioGroup, RadioGroupItem, Text } from "@rafty/ui";
+import { Controller, useFormContext } from "react-hook-form";
+import { FStringFieldType, FStringListType } from "@fiber/core";
+import { FieldsType } from "../../types";
 
 export function RadioField({ name, field }: FieldsType<FStringFieldType>) {
   const { control } = useFormContext();
@@ -28,7 +28,7 @@ function Options({ items }: { items: FStringListType<string>[] }) {
   const components: JSX.Element[] = [];
 
   items.forEach(({ label, value }, index) => {
-    if (typeof value == 'string' || typeof value == 'number')
+    if (typeof value == "string" || typeof value == "number")
       components.push(
         <RadioGroupItem key={index} value={value as string} id={label}>
           {label}

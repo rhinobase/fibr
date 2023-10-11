@@ -1,14 +1,14 @@
-import { FObjectFieldType } from '@fiber/core';
-import { RenderField } from '../../RenderField';
-import { FieldsType } from '../../providers';
+import { FObjectFieldType } from "@fiber/core";
+import { RenderField } from "../../RenderField";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
   classNames,
-} from '@rafty/ui';
-import { FieldWrapper } from '../FieldWrapper';
+} from "@rafty/ui";
+import { FieldWrapper } from "../FieldWrapper";
+import { FieldsType } from "../../types";
 
 export function ObjectField({ name, field }: FieldsType<FObjectFieldType>) {
   // All the groups in the object field
@@ -44,11 +44,11 @@ export function ObjectField({ name, field }: FieldsType<FObjectFieldType>) {
     >
       <div
         className={classNames(
-          field.hidden ? 'hidden' : 'block',
-          field.parent?.type === 'array'
-            ? 'p-3'
-            : 'rounded-md border-2 border-dotted p-5',
-          'h-full space-y-2.5'
+          field.hidden ? "hidden" : "block",
+          field.parent?.type === "array"
+            ? "p-3"
+            : "rounded-md border-2 border-dotted p-5",
+          "h-full space-y-2.5"
         )}
       >
         {Object.entries(groups).map(([value, field_names], index) => (

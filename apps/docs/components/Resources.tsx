@@ -111,7 +111,7 @@ function ResourcePattern({
         />
       </div>
       <motion.div
-        className="dark:group-hover:opacity-15 absolute inset-0 rounded-2xl bg-gradient-to-r from-[#e0edf6] to-[#9bdbff] opacity-0 transition duration-300 group-hover:opacity-50 dark:from-[#3b82f6] dark:to-[#7fb4ff]"
+        className="dark:group-hover:opacity-15 absolute inset-0 rounded-2xl bg-gradient-to-r from-primary-100 to-primary-300 opacity-0 transition duration-300 group-hover:opacity-50 dark:from-primary-500 dark:to-primary-300"
         style={style}
       />
       <motion.div

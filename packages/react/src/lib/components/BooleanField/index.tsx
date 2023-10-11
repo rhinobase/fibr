@@ -1,10 +1,10 @@
-import { FBooleanFieldType } from '@fiber/core';
-import { CheckField } from './CheckField';
-import { SwitchField } from './SwitchField';
-import { FieldsType } from '../../providers';
-import { ErrorMessage, classNames } from '@rafty/ui';
-import { useFormContext } from 'react-hook-form';
-import _ from 'lodash';
+import { FBooleanFieldType } from "@fiber/core";
+import { CheckField } from "./CheckField";
+import { SwitchField } from "./SwitchField";
+import { ErrorMessage, classNames } from "@rafty/ui";
+import { useFormContext } from "react-hook-form";
+import _ from "lodash";
+import { FieldsType } from "../../types";
 
 const LAYOUTS = {
   switch: SwitchField,
@@ -22,7 +22,7 @@ export function BooleanFields({ name, field }: FieldsType<FBooleanFieldType>) {
   if (field.options?.layout) Component = LAYOUTS[field.options.layout];
 
   return (
-    <div className={classNames(field.hidden ? 'hidden' : 'block', 'w-full')}>
+    <div className={classNames(field.hidden ? "hidden" : "block", "w-full")}>
       <Component name={name} field={field} />
       {error && <ErrorMessage>{error.message?.toString()}</ErrorMessage>}
     </div>

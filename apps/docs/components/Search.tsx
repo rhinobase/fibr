@@ -94,7 +94,7 @@ function useAutocomplete({ close }: { close: () => void }) {
           ];
         });
       },
-    }),
+    })
   );
 
   return { autocomplete, autocompleteState };
@@ -168,10 +168,10 @@ function SearchResult({
   const id = useId();
 
   const sectionTitle = navigation.find((section) =>
-    section.links.find((link) => link.href === result.url.split("#")[0]),
+    section.links.find((link) => link.href === result.url.split("#")[0])
   )?.title;
   const hierarchy = [sectionTitle, result.pageTitle].filter(
-    (x): x is string => typeof x === "string",
+    (x): x is string => typeof x === "string"
   );
 
   return (
@@ -179,7 +179,7 @@ function SearchResult({
       className={classNames(
         "aria-selected:bg-secondary-50 dark:aria-selected:bg-secondary-800/50 group block cursor-default px-4 py-3",
         resultIndex > 0 &&
-          "border-secondary-100 dark:border-secondary-800 border-t",
+          "border-secondary-100 dark:border-secondary-800 border-t"
       )}
       aria-labelledby={`${id}-hierarchy ${id}-title`}
       {...autocomplete.getItemProps({
@@ -382,7 +382,7 @@ export function Search() {
 
   useEffect(() => {
     setModifierKey(
-      /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) ? "⌘" : "Ctrl ",
+      /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) ? "⌘" : "Ctrl "
     );
   }, []);
 

@@ -1,14 +1,14 @@
-import { Select, SelectItem } from '@rafty/ui';
-import { useFormContext } from 'react-hook-form';
-import { FStringFieldType, FStringListType } from '@fiber/core';
-import { FieldsType } from '../../providers';
+import { Select, SelectItem } from "@rafty/ui";
+import { useFormContext } from "react-hook-form";
+import { FStringFieldType, FStringListType } from "@fiber/core";
+import { FieldsType } from "../../types";
 
 export function SelectField({ name, field }: FieldsType<FStringFieldType>) {
   const { register } = useFormContext();
 
   return (
     <Select
-      {...register(name, { valueAsNumber: field.type === 'number' })}
+      {...register(name, { valueAsNumber: field.type === "number" })}
       isRequired={field.required as boolean | undefined}
       isReadOnly={field.readOnly as boolean}
     >
@@ -21,7 +21,7 @@ function Options({ items }: { items: FStringListType<string>[] }) {
   const components: JSX.Element[] = [];
 
   items.forEach(({ label, value }, index) => {
-    if (typeof value == 'string' || typeof value == 'number')
+    if (typeof value == "string" || typeof value == "number")
       components.push(
         <SelectItem key={index} value={value as string}>
           {label}
@@ -30,5 +30,5 @@ function Options({ items }: { items: FStringListType<string>[] }) {
     else components.push(<Options key={index} items={value} />);
   });
 
-  return <>{components}</>;
+  return components;
 }

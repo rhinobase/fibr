@@ -1,22 +1,18 @@
-import React, { ReactNode } from "react";
-import { useFormContext } from "react-hook-form";
+import { ReactNode } from "react";
+import { Form as FiberForm } from "@fiber/react";
 
 type Form = {
   children: ReactNode;
 };
 
 export function Form(props: Form) {
-  const { handleSubmit } = useFormContext();
-
   return (
-    <form
-      onSubmit={handleSubmit(
-        (values) => console.log(values),
-        (error) => console.error(error),
-      )}
+    <FiberForm
+      onValid={(values) => console.log(values)}
+      onInvalid={(error) => console.error(error)}
       className="space-y-2"
     >
       {props.children}
-    </form>
+    </FiberForm>
   );
 }

@@ -22,7 +22,7 @@ export function BlueprintProvider<T>({
 }
 
 export function useBlueprint<T>(
-  selector: (state: BlueprintStoreState<any>) => T,
+  selector: (state: BlueprintStoreState<any>) => T
 ): T {
   const store = useContext(BlueprintContext);
   if (!store) throw new Error("Missing BlueprintContext.Provider in the tree");

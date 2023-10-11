@@ -1,5 +1,6 @@
-import { useBlueprint, FieldsType } from "./providers";
+import { useBlueprint } from "./providers";
 import { Kbd } from "@rafty/ui";
+import { FieldsType } from "./types";
 
 export function RenderField(props: FieldsType) {
   const components = useBlueprint((state) => state.components);

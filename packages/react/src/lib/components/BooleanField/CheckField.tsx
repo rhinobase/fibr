@@ -1,8 +1,8 @@
 import { Controller, useFormContext } from "react-hook-form";
 import { Checkbox, Label, Text } from "@rafty/ui";
 import { FBooleanFieldType } from "@fiber/core";
-import { FieldsType } from "../../providers";
 import { ReactNode } from "react";
+import { FieldsType } from "../../types";
 
 export function CheckField({ name, field }: FieldsType<FBooleanFieldType>) {
   const { control } = useFormContext();

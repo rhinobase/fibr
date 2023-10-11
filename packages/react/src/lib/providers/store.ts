@@ -1,10 +1,6 @@
-import { FFieldType, FFormType } from "@fiber/core";
+import { FFormType } from "@fiber/core";
 import { create } from "zustand";
-
-export type FieldsType<T = FFieldType> = {
-  name: string;
-  field: T;
-};
+import { FieldsType } from "../types";
 
 export type BlueprintStoreState<T> = {
   blueprint: FFormType<T>;

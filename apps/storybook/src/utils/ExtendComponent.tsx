@@ -1,19 +1,11 @@
-import { FieldWrapper, PropType } from "@fiber/react";
+import { FieldWrapper, FieldsType } from "@fiber/react";
 import * as SliderPrimitive from "@radix-ui/react-slider";
 import { classNames } from "@rafty/ui";
-import React, { useEffect, useState } from "react";
-import { useFormContext } from "react-hook-form";
+import React from "react";
+import { Controller } from "react-hook-form";
 
-export function ExtendComponent(props: PropType) {
+export function ExtendComponent(props: FieldsType) {
   const { name, field } = props;
-  const [defaultValue, setDefaultValue] = useState([50]);
-
-  const { register, setValue } = useFormContext();
-  register(name);
-
-  useEffect(() => {
-    setValue(name, defaultValue);
-  }, []);
 
   return (
     <FieldWrapper
@@ -21,13 +13,22 @@ export function ExtendComponent(props: PropType) {
       label={field.label}
       description={field.description}
     >
-      <Slider
-        onValueChange={(value) => setDefaultValue(value)}
-        value={defaultValue}
-        max={100}
-        step={1}
+      <Controller
+        name={name}
+        defaultValue={50}
+        render={({ field: { onChange, value, ...register } }) => (
+          <>
+            <Slider
+              {...register}
+              onValueChange={(value) => onChange(value[0])}
+              value={[value]}
+              max={100}
+              step={1}
+            />
+            <div className="text-secondary-500 font-semibold">{value}</div>
+          </>
+        )}
       />
-      <div className="text-secondary-500 font-semibold">{defaultValue}</div>
     </FieldWrapper>
   );
 }

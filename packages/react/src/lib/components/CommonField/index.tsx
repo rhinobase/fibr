@@ -1,13 +1,13 @@
-import { FStringFieldType } from '@fiber/core';
-import { FieldWrapper } from '../FieldWrapper';
-import { CheckboxField } from './CheckboxField';
-import { MultiSelectField } from './MultiSelectField';
-import { ComboboxField } from './ComboboxField';
-import { RadioField } from './RadioField';
-import { SelectField } from './SelectField';
-import { InputField } from './InputField';
-import { FieldsType } from '../../providers';
-import { classNames } from '@rafty/ui';
+import { FStringFieldType } from "@fiber/core";
+import { FieldWrapper } from "../FieldWrapper";
+import { CheckboxField } from "./CheckboxField";
+import { MultiSelectField } from "./MultiSelectField";
+import { ComboboxField } from "./ComboboxField";
+import { RadioField } from "./RadioField";
+import { SelectField } from "./SelectField";
+import { InputField } from "./InputField";
+import { classNames } from "@rafty/ui";
+import { FieldsType } from "../../types";
 
 const LAYOUTS = {
   checkbox: CheckboxField,
@@ -27,7 +27,7 @@ export function CommonField({ name, field }: FieldsType<FStringFieldType>) {
       name={name}
       label={field.label}
       description={field.description}
-      className={classNames(field.hidden ? 'hidden' : 'flex')}
+      className={classNames(field.hidden ? "hidden" : "flex")}
       required={required}
     >
       <Component name={name} field={field} />
