@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react";
+import { FStringFieldType, FStringListType } from "@fiber/core";
 import {
   Command,
   CommandEmpty,
@@ -11,10 +11,10 @@ import {
   PopoverTrigger,
   classNames,
 } from "@rafty/ui";
-import { HiChevronUpDown } from "react-icons/hi2";
-import { Controller, useFormContext } from "react-hook-form";
-import { FStringFieldType, FStringListType } from "@fiber/core";
+import { useState } from "react";
+import { Controller, useController, useFormContext } from "react-hook-form";
 import { HiCheck } from "react-icons/hi";
+import { HiChevronUpDown } from "react-icons/hi2";
 import { FieldsType } from "../../types";
 
 export function findLabel(
@@ -31,39 +31,18 @@ export function findLabel(
   }
 }
 
-export function ComboboxField({ name, field }: FieldsType<FStringFieldType>) {
+export function ComboboxField(props: FieldsType<FStringFieldType>) {
+  const { control } = useFormContext();
   const [isOpen, setOpen] = useState(false);
-
-  const [selected, dispatch] = useReducer(
-    (
-      prev: { label: string; value: string | number } | undefined,
-      cur: string
-    ) => {
-      const _value = prev?.value === cur ? undefined : cur;
-
-      const value = field?.type === "number" ? Number(_value) : _value;
-
-      setOpen(false);
-      // setValue(name, value);
-
-      if (value)
-        return {
-          label: findLabel(value, field?.options?.list ?? []) ?? "No Label",
-          value,
-        };
-
-      return undefined;
-    },
-    undefined
-  );
 
   return (
     <Controller
-      name={name}
-      render={() => (
+      name={props.name}
+      control={control}
+      render={({ field }) => (
         <Popover open={isOpen} onOpenChange={setOpen}>
           <PopoverTrigger
-            isDisabled={field.readOnly as boolean}
+            isDisabled={props.field.readOnly as boolean}
             variant="outline"
             role="combobox"
             aria-expanded={isOpen}
@@ -79,17 +58,24 @@ export function ComboboxField({ name, field }: FieldsType<FStringFieldType>) {
               />
             }
           >
-            {selected?.label ?? `Select ${name}`}
+            {field.value
+              ? findLabel(field.value, props.field.options?.list ?? [])
+              : (props.field.placeholder as string) ?? `Select ${props.name}`}
           </PopoverTrigger>
           <PopoverContent className="!w-[380px] !p-0 md:!w-[700px] lg:!w-[770px]">
             <Command>
-              <CommandInput placeholder={`Search ${name}`} />
+              <CommandInput
+                placeholder={
+                  (props.field.placeholder as string) ?? `Search ${props.name}`
+                }
+              />
               <CommandList>
-                {field.options && (
+                {props.field.options && (
                   <Options
-                    items={field.options.list}
-                    selected={selected}
-                    dispatch={dispatch}
+                    items={props.field.options.list}
+                    type={props.field.type}
+                    name={props.name}
+                    onChange={() => setOpen(false)}
                   />
                 )}
                 <CommandEmpty>No data found</CommandEmpty>
@@ -102,36 +88,39 @@ export function ComboboxField({ name, field }: FieldsType<FStringFieldType>) {
   );
 }
 
-function Options({
-  items,
-  selected,
-  dispatch,
-}: {
+function Options(props: {
   items: FStringListType<string>[];
-  selected?: {
-    label: string;
-    value: string | number;
-  };
-  dispatch: React.Dispatch<string>;
+  type: string;
+  name: string;
+  onChange?: () => void;
 }) {
+  const { control } = useFormContext();
+  const { field } = useController({ name: props.name, control });
   const components: JSX.Element[] = [];
 
-  items.forEach(({ label, value }, index) => {
+  props.items.forEach(({ label, value }, index) => {
     if (typeof value == "string" || typeof value == "number")
       components.push(
         <CommandItem
           key={index}
           value={String(value)}
-          onSelect={dispatch}
+          onSelect={(selected) => {
+            const _value = field.value === selected ? undefined : selected;
+
+            const value = props.type === "number" ? Number(_value) : _value;
+
+            field.onChange(value);
+            props.onChange?.();
+          }}
           className="justify-between"
         >
-          {label} {selected?.value === value && <HiCheck />}
+          {label} {field.value === value && <HiCheck />}
         </CommandItem>
       );
     else
       components.push(
         <CommandGroup key={index} heading={label}>
-          <Options items={value} selected={selected} dispatch={dispatch} />
+          <Options {...props} items={value} />
         </CommandGroup>
       );
   });

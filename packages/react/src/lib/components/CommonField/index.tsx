@@ -20,7 +20,8 @@ const LAYOUTS = {
 export function CommonField({ name, field }: FieldsType<FStringFieldType>) {
   let Component = InputField;
   const required = field.required as boolean | undefined;
-  if (field.options?.layout) Component = LAYOUTS[field.options.layout];
+  if (field.options?.layout && LAYOUTS[field.options.layout])
+    Component = LAYOUTS[field.options.layout];
 
   return (
     <FieldWrapper
