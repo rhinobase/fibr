@@ -2,9 +2,9 @@ import { Controller, useFormContext } from "react-hook-form";
 import { Checkbox, Label, Text } from "@rafty/ui";
 import { FBooleanFieldType } from "@fiber/core";
 import { ReactNode } from "react";
-import { FieldsType } from "../../types";
+import { FieldProps } from "@fiber/react";
 
-export function CheckField({ name, field }: FieldsType<FBooleanFieldType>) {
+export function CheckField({ name, field }: FieldProps<FBooleanFieldType>) {
   const { control } = useFormContext();
   const readOnly = field.readOnly as boolean;
 

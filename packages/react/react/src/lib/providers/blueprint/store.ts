@@ -3,7 +3,7 @@ import { FieldValues, Resolver } from "react-hook-form";
 import { create } from "zustand";
 
 export type BlueprintStoreState<T> = {
-  blueprint: FFormType<T, Resolver<FieldValues, any>>;
+  blueprint: FFormType<T, Resolver<FieldValues>>;
 };
 
 export const createBlueprintStore = <T>(props: BlueprintStoreState<T>) => {

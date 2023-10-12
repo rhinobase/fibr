@@ -1,10 +1,11 @@
 import f from "@fiber/core";
-import { Fiber, Fields } from "@fiber/react";
+import { FiberForm, Fields } from "@fiber/react";
 import { Meta, StoryObj } from "@storybook/react";
 import { boolean, z } from "zod";
-import { DevTool, Form } from "./utils";
+import { DevTool } from "./utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@rafty/ui";
+import { FieldValues, Resolver } from "react-hook-form";
 
 const meta: Meta = {
   title: "Fiber / Required Field",
@@ -26,11 +27,14 @@ const allFieldsSchema = z.object({
     z.object({
       sample: z.string(),
       on_off: boolean(),
-    }),
+    })
   ),
 });
 
-const blueprint = f.form<z.infer<typeof allFieldsSchema>>({
+const blueprint = f.form<
+  z.infer<typeof allFieldsSchema>,
+  Resolver<FieldValues>
+>({
   validation: zodResolver(allFieldsSchema),
   default_values: {
     array_field: [{ sample: "lorem ipsem", on_off: false }],
@@ -97,14 +101,12 @@ const blueprint = f.form<z.infer<typeof allFieldsSchema>>({
 });
 export const Required: Story = {
   render: () => (
-    <Fiber blueprint={blueprint}>
-      <Form>
-        <Fields />
-        <Button type="submit" variant="outline">
-          Submit
-        </Button>
-      </Form>
+    <FiberForm blueprint={blueprint} onSubmit={console.log}>
+      <Fields />
+      <Button type="submit" variant="outline">
+        Submit
+      </Button>
       <DevTool />
-    </Fiber>
+    </FiberForm>
   ),
 };

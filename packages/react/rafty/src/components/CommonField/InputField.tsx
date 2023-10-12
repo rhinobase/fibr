@@ -1,9 +1,9 @@
 import { InputField as Input } from "@rafty/ui";
 import { useFormContext } from "react-hook-form";
 import { FStringFieldType } from "@fiber/core";
-import { FieldsType } from "../../types";
+import { FieldProps } from "@fiber/react";
 
-export function InputField({ name, field }: FieldsType<FStringFieldType>) {
+export function InputField({ name, field }: FieldProps<FStringFieldType>) {
   const { register } = useFormContext();
   const isNumber = field.type === "number";
 

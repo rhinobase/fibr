@@ -1,10 +1,11 @@
-import { FieldWrapper, FieldsType } from "@fiber/react";
+import { FieldProps } from "@fiber/react";
+import { FieldWrapper } from "@fiber/rafty";
 import * as SliderPrimitive from "@radix-ui/react-slider";
 import { classNames } from "@rafty/ui";
 import React from "react";
 import { Controller } from "react-hook-form";
 
-export function ExtendComponent(props: FieldsType) {
+export function ExtendComponent(props: FieldProps) {
   const { name, field } = props;
 
   return (

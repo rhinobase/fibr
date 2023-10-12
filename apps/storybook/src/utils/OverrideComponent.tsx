@@ -1,8 +1,9 @@
-import { FieldWrapper, FieldsType } from "@fiber/react";
+import { FieldProps } from "@fiber/react";
+import { FieldWrapper } from "@fiber/rafty";
 import { InputField } from "@rafty/ui";
 import { useFormContext } from "react-hook-form";
 
-export function OverrideComponent(props: FieldsType) {
+export function OverrideComponent(props: FieldProps) {
   const { name, field } = props;
   const { register, watch } = useFormContext();
   const value = watch(name, "");

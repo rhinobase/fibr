@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "peerDependencies": {
     "@fiber/core": "*",
+    "@fiber/react": "*",
     "@rafty/ui": "*",
     "lodash": "^4.17.21",
     "react": "^18.2.0",

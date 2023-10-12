@@ -1,7 +1,6 @@
-import { ComponentsProvider, ComponentsStoreState } from "./providers";
-import { ReactNode } from "react";
 import _ from "lodash";
-import { DEFAULT_COMPONENTS } from "./DEFAULT_COMPONENTS";
+import { ReactNode } from "react";
+import { ComponentsProvider } from "./providers";
 import { FieldProps } from "./types";
 
 export type FiberProvider = {
@@ -10,7 +9,7 @@ export type FiberProvider = {
 };
 
 export function FiberProvider({ children, plugins = [] }: FiberProvider) {
-  const _components = _.merge(DEFAULT_COMPONENTS, ...plugins);
+  const _components = _.merge({}, ...plugins);
 
   return (
     <ComponentsProvider components={_components}>{children}</ComponentsProvider>

@@ -7,7 +7,7 @@ import { RadioField } from "./RadioField";
 import { SelectField } from "./SelectField";
 import { InputField } from "./InputField";
 import { classNames } from "@rafty/ui";
-import { FieldsType } from "../../types";
+import { FieldProps } from "@fiber/react";
 
 const LAYOUTS = {
   checkbox: CheckboxField,
@@ -17,7 +17,7 @@ const LAYOUTS = {
   select: SelectField,
 } as const;
 
-export function CommonField({ name, field }: FieldsType<FStringFieldType>) {
+export function CommonField({ name, field }: FieldProps<FStringFieldType>) {
   let Component = InputField;
   const required = field.required as boolean | undefined;
   if (field.options?.layout && LAYOUTS[field.options.layout])

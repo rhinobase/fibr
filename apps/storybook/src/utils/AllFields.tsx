@@ -2,9 +2,9 @@ import f from "@fiber/core";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@rafty/ui";
-import { Fiber, Fields } from "@fiber/react";
-import { Form } from "./Form";
+import { FiberForm, Fields } from "@fiber/react";
 import { DevTool } from "./DevTool";
+import { FieldValues, Resolver } from "react-hook-form";
 
 type AllFields = {
   defaultValues?: Record<string, any>;
@@ -39,7 +39,10 @@ const allFieldsSchema = z.object({
 });
 
 export function AllFields(props: AllFields) {
-  const blueprint = f.form<z.infer<typeof allFieldsSchema>>({
+  const blueprint = f.form<
+    z.infer<typeof allFieldsSchema>,
+    Resolver<FieldValues>
+  >({
     validation: zodResolver(allFieldsSchema),
     default_values: props.defaultValues,
     fields: {
@@ -307,14 +310,12 @@ export function AllFields(props: AllFields) {
     },
   });
   return (
-    <Fiber blueprint={blueprint}>
-      <Form>
-        <Fields />
-        <Button type="submit" variant="outline">
-          Submit
-        </Button>
-      </Form>
+    <FiberForm blueprint={blueprint} onSubmit={console.log}>
+      <Fields />
+      <Button type="submit" variant="outline">
+        Submit
+      </Button>
       <DevTool />
-    </Fiber>
+    </FiberForm>
   );
 }

@@ -1,5 +1,5 @@
 import { FObjectFieldType } from "@fiber/core";
-import { RenderField } from "../../RenderField";
+import { RenderField } from "@fiber/react";
 import {
   Accordion,
   AccordionContent,
@@ -8,9 +8,9 @@ import {
   classNames,
 } from "@rafty/ui";
 import { FieldWrapper } from "../FieldWrapper";
-import { FieldsType } from "../../types";
+import { FieldProps } from "@fiber/react";
 
-export function ObjectField({ name, field }: FieldsType<FObjectFieldType>) {
+export function ObjectField({ name, field }: FieldProps<FObjectFieldType>) {
   // All the groups in the object field
   const groupings =
     field.fieldsets?.reduce<Record<string, string>>((prev, cur) => {

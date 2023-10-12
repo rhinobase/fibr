@@ -1,9 +1,10 @@
 import f from "@fiber/core";
-import { Fiber, Fields } from "@fiber/react";
+import { FiberForm, Fields } from "@fiber/react";
 import { Meta, StoryObj } from "@storybook/react";
 import { z } from "zod";
 import { DevTool } from "./utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { FieldValues, Resolver } from "react-hook-form";
 
 const meta: Meta = {
   title: "Fiber / Number",
@@ -21,8 +22,9 @@ const defaultSchema = z.object({
 
 export const Default: Story = {
   render: () => (
-    <Fiber
-      blueprint={f.form<z.infer<typeof defaultSchema>>({
+    <FiberForm
+      onSubmit={console.log}
+      blueprint={f.form<z.infer<typeof defaultSchema>, Resolver<FieldValues>>({
         validation: zodResolver(defaultSchema),
         default_values: {
           readOnly: "Lorem ipsum nothing else",
@@ -50,7 +52,7 @@ export const Default: Story = {
     >
       <Fields />
       <DevTool />
-    </Fiber>
+    </FiberForm>
   ),
 };
 
@@ -62,8 +64,9 @@ const radioSchema = z.object({
 
 export const Radio: Story = {
   render: () => (
-    <Fiber
-      blueprint={f.form<z.infer<typeof radioSchema>>({
+    <FiberForm
+      onSubmit={console.log}
+      blueprint={f.form<z.infer<typeof radioSchema>, Resolver<FieldValues>>({
         validation: zodResolver(radioSchema),
         default_values: {
           readOnly: "Lorem ipsum nothing else",
@@ -139,7 +142,7 @@ export const Radio: Story = {
     >
       <Fields />
       <DevTool />
-    </Fiber>
+    </FiberForm>
   ),
 };
 
@@ -151,8 +154,9 @@ const checkboxSchema = z.object({
 
 export const Checkbox: Story = {
   render: () => (
-    <Fiber
-      blueprint={f.form<z.infer<typeof checkboxSchema>>({
+    <FiberForm
+      onSubmit={console.log}
+      blueprint={f.form<z.infer<typeof checkboxSchema>, Resolver<FieldValues>>({
         validation: zodResolver(checkboxSchema),
         default_values: {
           readOnly: "Lorem ipsum nothing else",
@@ -228,7 +232,7 @@ export const Checkbox: Story = {
     >
       <Fields />
       <DevTool />
-    </Fiber>
+    </FiberForm>
   ),
 };
 
@@ -240,8 +244,9 @@ const comboboxSchema = z.object({
 
 export const Combobox: Story = {
   render: () => (
-    <Fiber
-      blueprint={f.form<z.infer<typeof comboboxSchema>>({
+    <FiberForm
+      onSubmit={console.log}
+      blueprint={f.form<z.infer<typeof comboboxSchema>, Resolver<FieldValues>>({
         validation: zodResolver(comboboxSchema),
         default_values: {
           selector: 12,
@@ -317,7 +322,7 @@ export const Combobox: Story = {
     >
       <Fields />
       <DevTool />
-    </Fiber>
+    </FiberForm>
   ),
 };
 const selectSchema = z.object({
@@ -327,8 +332,9 @@ const selectSchema = z.object({
 });
 export const Select: Story = {
   render: () => (
-    <Fiber
-      blueprint={f.form<z.infer<typeof selectSchema>>({
+    <FiberForm
+      onSubmit={console.log}
+      blueprint={f.form<z.infer<typeof selectSchema>, Resolver<FieldValues>>({
         validation: zodResolver(selectSchema),
         default_values: {
           readOnly: 29229,
@@ -404,7 +410,7 @@ export const Select: Story = {
     >
       <Fields />
       <DevTool />
-    </Fiber>
+    </FiberForm>
   ),
 };
 const multipleSchema = z.object({
@@ -415,8 +421,9 @@ const multipleSchema = z.object({
 
 export const Multiple: Story = {
   render: () => (
-    <Fiber
-      blueprint={f.form<z.infer<typeof multipleSchema>>({
+    <FiberForm
+      onSubmit={console.log}
+      blueprint={f.form<z.infer<typeof multipleSchema>, Resolver<FieldValues>>({
         validation: zodResolver(multipleSchema),
         default_values: {
           change_item: 15,
@@ -492,6 +499,6 @@ export const Multiple: Story = {
     >
       <Fields />
       <DevTool />
-    </Fiber>
+    </FiberForm>
   ),
 };

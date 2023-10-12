@@ -1,9 +1,9 @@
 import { Controller, useController, useFormContext } from "react-hook-form";
 import { Checkbox, ErrorMessage, Text } from "@rafty/ui";
 import { FStringFieldType, FStringListType } from "@fiber/core";
-import { FieldsType } from "../../types";
+import { FieldProps } from "@fiber/react";
 
-export function CheckboxField({ name, field }: FieldsType<FStringFieldType>) {
+export function CheckboxField({ name, field }: FieldProps<FStringFieldType>) {
   const { control } = useFormContext();
 
   if (!field.options) return <ErrorMessage>No options present</ErrorMessage>;

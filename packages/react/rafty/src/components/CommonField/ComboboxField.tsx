@@ -15,7 +15,7 @@ import { useState } from "react";
 import { Controller, useController, useFormContext } from "react-hook-form";
 import { HiCheck } from "react-icons/hi";
 import { HiChevronUpDown } from "react-icons/hi2";
-import { FieldsType } from "../../types";
+import { FieldProps } from "@fiber/react";
 
 export function findLabel(
   value: string | number,
@@ -31,7 +31,7 @@ export function findLabel(
   }
 }
 
-export function ComboboxField(props: FieldsType<FStringFieldType>) {
+export function ComboboxField(props: FieldProps<FStringFieldType>) {
   const { control } = useFormContext();
   const [isOpen, setOpen] = useState(false);
 

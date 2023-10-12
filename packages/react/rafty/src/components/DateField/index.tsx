@@ -2,9 +2,9 @@ import { useFormContext } from "react-hook-form";
 import { FDateFieldType } from "@fiber/core";
 import { FieldWrapper } from "../FieldWrapper";
 import { InputField, classNames } from "@rafty/ui";
-import { FieldsType } from "../../types";
+import { FieldProps } from "@fiber/react";
 
-export function DateField({ name, field }: FieldsType<FDateFieldType>) {
+export function DateField({ name, field }: FieldProps<FDateFieldType>) {
   const { register } = useFormContext();
 
   const readOnly = field.readOnly as boolean | undefined;

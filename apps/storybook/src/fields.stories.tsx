@@ -1,9 +1,10 @@
 import f from "@fiber/core";
-import { Fiber, Fields } from "@fiber/react";
+import { FiberForm, Fields } from "@fiber/react";
 import { Meta, StoryObj } from "@storybook/react";
 import { z } from "zod";
 import { DevTool } from "./utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { FieldValues, Resolver } from "react-hook-form";
 
 const meta: Meta = {
   title: "Fiber / Fields",
@@ -21,7 +22,7 @@ const includeSchema = z.object({
   old_phone: z.string(),
 });
 
-const blueprint = f.form<z.infer<typeof includeSchema>>({
+const blueprint = f.form<z.infer<typeof includeSchema>, Resolver<FieldValues>>({
   validation: zodResolver(includeSchema),
   default_values: {
     new_phone: "sit amet Lorem ipsum",
@@ -54,18 +55,18 @@ const blueprint = f.form<z.infer<typeof includeSchema>>({
 
 export const Include: Story = {
   render: () => (
-    <Fiber blueprint={blueprint}>
+    <FiberForm blueprint={blueprint} onSubmit={console.log}>
       <Fields include={["first_name"]} />
       <DevTool />
-    </Fiber>
+    </FiberForm>
   ),
 };
 
 export const Exclude: Story = {
   render: () => (
-    <Fiber blueprint={blueprint}>
+    <FiberForm blueprint={blueprint} onSubmit={console.log}>
       <Fields exclude={["first_name"]} />
       <DevTool />
-    </Fiber>
+    </FiberForm>
   ),
 };

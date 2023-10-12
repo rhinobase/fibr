@@ -2,9 +2,9 @@ import { Textarea, classNames } from "@rafty/ui";
 import { useFormContext } from "react-hook-form";
 import { FTextFieldType } from "@fiber/core";
 import { FieldWrapper } from "../FieldWrapper";
-import { FieldsType } from "../../types";
+import { FieldProps } from "@fiber/react";
 
-export function TextField({ name, field }: FieldsType<FTextFieldType>) {
+export function TextField({ name, field }: FieldProps<FTextFieldType>) {
   const { register } = useFormContext();
 
   const readOnly = field.readOnly as boolean | undefined;

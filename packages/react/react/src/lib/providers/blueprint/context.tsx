@@ -1,5 +1,4 @@
 import { ReactNode, createContext, useContext, useRef } from "react";
-import { FormProvider, useForm } from "react-hook-form";
 import { useStore } from "zustand";
 import { BlueprintStoreState, createBlueprintStore } from "./store";
 
@@ -15,15 +14,9 @@ export function BlueprintProvider<T>({
 } & BlueprintStoreState<T>) {
   const store = useRef(createBlueprintStore({ blueprint })).current;
 
-  // Adding provider for forms
-  const methods = useForm({
-    resolver: blueprint.validation,
-    defaultValues: blueprint.default_values,
-  });
-
   return (
     <BlueprintContext.Provider value={store}>
-      <FormProvider {...methods}>{children}</FormProvider>
+      {children}
     </BlueprintContext.Provider>
   );
 }

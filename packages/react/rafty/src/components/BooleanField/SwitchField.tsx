@@ -1,9 +1,9 @@
 import { Label, Switch, Text } from "@rafty/ui";
 import { Controller, useFormContext } from "react-hook-form";
 import { FBooleanFieldType } from "@fiber/core";
-import { FieldsType } from "../../types";
+import { FieldProps } from "@fiber/react";
 
-export function SwitchField({ name, field }: FieldsType<FBooleanFieldType>) {
+export function SwitchField({ name, field }: FieldProps<FBooleanFieldType>) {
   const { control } = useFormContext();
 
   const Field = (

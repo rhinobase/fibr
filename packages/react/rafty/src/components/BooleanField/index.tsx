@@ -4,14 +4,14 @@ import { SwitchField } from "./SwitchField";
 import { ErrorMessage, classNames } from "@rafty/ui";
 import { useFormContext } from "react-hook-form";
 import _ from "lodash";
-import { FieldsType } from "../../types";
+import { FieldProps } from "@fiber/react";
 
 const LAYOUTS = {
   switch: SwitchField,
   checkbox: CheckField,
 } as const;
 
-export function BooleanFields({ name, field }: FieldsType<FBooleanFieldType>) {
+export function BooleanFields({ name, field }: FieldProps<FBooleanFieldType>) {
   const {
     formState: { errors },
   } = useFormContext();

@@ -1,9 +1,9 @@
 import { Select, SelectItem } from "@rafty/ui";
 import { useFormContext } from "react-hook-form";
 import { FStringFieldType, FStringListType } from "@fiber/core";
-import { FieldsType } from "../../types";
+import { FieldProps } from "@fiber/react";
 
-export function SelectField({ name, field }: FieldsType<FStringFieldType>) {
+export function SelectField({ name, field }: FieldProps<FStringFieldType>) {
   const { register } = useFormContext();
 
   return (

@@ -16,10 +16,10 @@ import { useState } from "react";
 import { Controller, useController, useFormContext } from "react-hook-form";
 import { HiCheck } from "react-icons/hi";
 import { HiChevronUpDown, HiXMark } from "react-icons/hi2";
-import { FieldsType } from "../../types";
+import { FieldProps } from "@fiber/react";
 import { findLabel } from "./ComboboxField";
 
-export function MultiSelectField(props: FieldsType<FStringFieldType>) {
+export function MultiSelectField(props: FieldProps<FStringFieldType>) {
   const { control } = useFormContext();
   const [isOpen, setOpen] = useState(false);
 

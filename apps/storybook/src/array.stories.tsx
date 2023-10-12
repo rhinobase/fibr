@@ -1,9 +1,10 @@
 import f from "@fiber/core";
-import { Fiber, Fields } from "@fiber/react";
+import { FiberForm, Fields } from "@fiber/react";
 import { Meta, StoryObj } from "@storybook/react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DevTool } from "./utils";
+import { FieldValues, Resolver } from "react-hook-form";
 
 const meta: Meta = {
   title: "Fiber / Array",
@@ -20,8 +21,8 @@ const defaultSchema = z.object({
 });
 export const Default: Story = {
   render: () => (
-    <Fiber
-      blueprint={f.form<z.infer<typeof defaultSchema>>({
+    <FiberForm
+      blueprint={f.form<z.infer<typeof defaultSchema>, Resolver<FieldValues>>({
         validation: zodResolver(defaultSchema),
         default_values: {
           default_page: ["Lorem ipsum"],
@@ -43,10 +44,11 @@ export const Default: Story = {
           }),
         },
       })}
+      onSubmit={console.log}
     >
       <Fields />
       <DevTool />
-    </Fiber>
+    </FiberForm>
   ),
 };
 
@@ -59,8 +61,9 @@ const nestedSchema = z.object({
 });
 export const NestedFields: Story = {
   render: () => (
-    <Fiber
-      blueprint={f.form<z.infer<typeof nestedSchema>>({
+    <FiberForm
+      onSubmit={console.log}
+      blueprint={f.form<z.infer<typeof nestedSchema>, Resolver<FieldValues>>({
         validation: zodResolver(nestedSchema),
         fields: {
           name: f.array({
@@ -105,6 +108,6 @@ export const NestedFields: Story = {
     >
       <Fields />
       <DevTool />
-    </Fiber>
+    </FiberForm>
   ),
 };

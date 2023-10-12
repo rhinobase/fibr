@@ -1,9 +1,10 @@
 import f from "@fiber/core";
-import { Fiber, Fields } from "@fiber/react";
+import { FiberForm, Fields } from "@fiber/react";
 import { Meta, StoryObj } from "@storybook/react";
 import { z } from "zod";
 import { DevTool } from "./utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { FieldValues, Resolver } from "react-hook-form";
 
 const meta: Meta = {
   title: "Fiber / Boolean",
@@ -20,8 +21,9 @@ const defaultSchema = z.object({
 });
 export const Default: Story = {
   render: () => (
-    <Fiber
-      blueprint={f.form<z.infer<typeof defaultSchema>>({
+    <FiberForm
+      onSubmit={console.log}
+      blueprint={f.form<z.infer<typeof defaultSchema>, Resolver<FieldValues>>({
         validation: zodResolver(defaultSchema),
         default_values: {
           read_example: true,
@@ -49,7 +51,7 @@ export const Default: Story = {
     >
       <Fields />
       <DevTool />
-    </Fiber>
+    </FiberForm>
   ),
 };
 
@@ -61,8 +63,9 @@ const switchSchema = z.object({
 
 export const Switch: Story = {
   render: () => (
-    <Fiber
-      blueprint={f.form<z.infer<typeof switchSchema>>({
+    <FiberForm
+      onSubmit={console.log}
+      blueprint={f.form<z.infer<typeof switchSchema>, Resolver<FieldValues>>({
         validation: zodResolver(switchSchema),
         default_values: {
           check_button: true,
@@ -102,6 +105,6 @@ export const Switch: Story = {
     >
       <Fields />
       <DevTool />
-    </Fiber>
+    </FiberForm>
   ),
 };
