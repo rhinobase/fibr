@@ -6,8 +6,5 @@
   },
   "type": "commonjs",
   "main": "./src/index.js",
-  "typings": "./src/index.d.ts",
-  "peerDependencies": {
-    "react-hook-form": "^7.46.2"
-  }
+  "typings": "./src/index.d.ts"
 }
