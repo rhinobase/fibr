@@ -1,15 +1,7 @@
 import { FField } from "../field";
-import { FFieldType } from "../types";
+import { FDateTimeFieldType, FDateTimeOptions } from "../types";
 
-export type FDateTimeOptions = {
-  dateFormat?: string;
-  timeFormat?: string;
-  timeStep?: number;
-};
-
-export type FDateTimeFieldType = FFieldType & { options?: FDateTimeOptions };
-
-class FDateTimeField extends FField implements FDateTimeFieldType {
+export class FDateTimeField extends FField implements FDateTimeFieldType {
   options?: FDateTimeOptions;
 
   constructor(config: Omit<FDateTimeFieldType, "type">) {
@@ -27,5 +19,3 @@ class FDateTimeField extends FField implements FDateTimeFieldType {
     return new FDateTimeField(config);
   }
 }
-
-export const datetime = FDateTimeField.create;

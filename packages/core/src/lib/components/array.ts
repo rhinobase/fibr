@@ -1,16 +1,7 @@
 import { FField } from "../field";
-import { FFieldType } from "../types";
+import { FFieldType, FArrayFieldType, FArrayOptions } from "../types";
 
-type FArrayOptions = {
-  sortable?: boolean;
-};
-
-export type FArrayFieldType = FFieldType & {
-  of: FFieldType;
-  options?: FArrayOptions;
-};
-
-class FArrayField extends FField implements FArrayFieldType {
+export class FArrayField extends FField implements FArrayFieldType {
   of: FFieldType;
   options?: FArrayOptions;
 
@@ -31,5 +22,3 @@ class FArrayField extends FField implements FArrayFieldType {
     return new FArrayField(config);
   }
 }
-
-export const array = FArrayField.create;

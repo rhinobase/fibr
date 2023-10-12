@@ -1,13 +1,7 @@
 import { FField } from "../field";
-import { FFieldType } from "../types";
+import { FDateFieldType, FDateOptions } from "../types";
 
-export type FDateOptions = {
-  dateFormat?: string;
-};
-
-export type FDateFieldType = FFieldType & { options?: FDateOptions };
-
-class FDateField extends FField implements FDateFieldType {
+export class FDateField extends FField implements FDateFieldType {
   options?: FDateOptions;
 
   constructor(config: Omit<FDateFieldType, "type">) {
@@ -23,5 +17,3 @@ class FDateField extends FField implements FDateFieldType {
     return new FDateField(config);
   }
 }
-
-export const date = FDateField.create;

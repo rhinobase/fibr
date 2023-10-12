@@ -1,4 +1,4 @@
-import * as f from "./lib";
+import { f } from "./lib";
+
 export * from "./lib";
-export { f };
 export default f;

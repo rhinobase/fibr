@@ -1,13 +1,7 @@
 import { FField } from "../field";
-import { FFieldType } from "../types";
+import { FBooleanFieldType, FBooleanOptions } from "../types";
 
-type FBooleanOptions = {
-  layout?: "checkbox" | "switch";
-};
-
-export type FBooleanFieldType = FFieldType & { options?: FBooleanOptions };
-
-class FBooleanField extends FField implements FBooleanFieldType {
+export class FBooleanField extends FField implements FBooleanFieldType {
   options?: FBooleanOptions;
 
   constructor(config: Omit<FBooleanFieldType, "type">) {
@@ -23,5 +17,3 @@ class FBooleanField extends FField implements FBooleanFieldType {
     return new FBooleanField(config);
   }
 }
-
-export const boolean = FBooleanField.create;

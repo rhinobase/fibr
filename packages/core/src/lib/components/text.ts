@@ -1,15 +1,7 @@
 import { FWithPlaceholder } from "../placeholder";
-import { FWithPlaceholderType } from "../types";
+import { FTextFieldType, FTextOptions } from "../types";
 
-export type FTextOptions = {
-  rows: number;
-};
-
-export type FTextFieldType = FWithPlaceholderType & {
-  options?: FTextOptions;
-};
-
-class FTextField extends FWithPlaceholder implements FTextFieldType {
+export class FTextField extends FWithPlaceholder implements FTextFieldType {
   options?: FTextOptions;
 
   constructor(config: Omit<FTextFieldType, "type">) {
@@ -22,5 +14,3 @@ class FTextField extends FWithPlaceholder implements FTextFieldType {
     return new FTextField(config);
   }
 }
-
-export const text = FTextField.create;

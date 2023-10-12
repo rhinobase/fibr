@@ -1,9 +1,7 @@
 import { FWithPlaceholder } from "../placeholder";
-import { FStringFieldType, FStringOptions } from "./string";
+import { FNumberFieldType, FStringOptions } from "../types";
 
-export type FNumberFieldType = FStringFieldType<number>;
-
-class FNumberField extends FWithPlaceholder implements FNumberFieldType {
+export class FNumberField extends FWithPlaceholder implements FNumberFieldType {
   options?: FStringOptions<number>;
 
   constructor(config: Omit<FNumberFieldType, "type">) {
@@ -21,5 +19,3 @@ class FNumberField extends FWithPlaceholder implements FNumberFieldType {
     return new FNumberField(config);
   }
 }
-
-export const number = FNumberField.create;

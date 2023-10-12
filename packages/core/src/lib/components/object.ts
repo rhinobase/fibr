@@ -1,13 +1,7 @@
 import { FField } from "../field";
-import { FFieldType } from "../types";
+import { FFieldType, FObjectFieldType } from "../types";
 
-export type FObjectFieldType = FFieldType & {
-  fields: Record<string, FFieldType>;
-  fieldsets?: { value: string; title: string }[];
-  groups?: { value: string; title: string }[];
-};
-
-class FObjectField extends FField implements FObjectFieldType {
+export class FObjectField extends FField implements FObjectFieldType {
   fields: Record<string, FFieldType>;
   fieldsets?: { value: string; title: string }[];
   groups?: { value: string; title: string }[];
@@ -26,5 +20,3 @@ class FObjectField extends FField implements FObjectFieldType {
     return new FObjectField(config);
   }
 }
-
-export const object = FObjectField.create;

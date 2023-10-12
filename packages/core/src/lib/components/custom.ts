@@ -1,11 +1,7 @@
 import { FField } from "../field";
-import { FFieldType } from "../types";
+import { FCustomFieldType } from "../types";
 
-export type FCustomFieldType<T> = FFieldType & {
-  options?: T;
-};
-
-class FCustomField<T = undefined>
+export class FCustomField<T = undefined>
   extends FField
   implements FCustomFieldType<T>
 {
@@ -20,5 +16,3 @@ class FCustomField<T = undefined>
     return new FCustomField(config);
   }
 }
-
-export const custom = FCustomField.create;

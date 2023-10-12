@@ -19,5 +19,3 @@ export class FForm<T, U> implements FFormType<T, U> {
     return new FForm(config);
   }
 }
-
-export const form = FForm.create;

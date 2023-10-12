@@ -1,4 +1,4 @@
-import { FFieldType } from "./field";
+import { FFieldType } from "./fields";
 
 export type FFormType<T, U> = {
   fields: Record<keyof T, FFieldType>;
