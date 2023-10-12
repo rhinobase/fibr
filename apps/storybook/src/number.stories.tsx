@@ -15,9 +15,9 @@ export default meta;
 type Story = StoryObj;
 
 const defaultSchema = z.object({
-  name: z.string(),
-  readOnly: z.string(),
-  hidden: z.string(),
+  name: z.number(),
+  readOnly: z.number(),
+  hidden: z.number(),
 });
 
 export const Default: Story = {
@@ -27,7 +27,7 @@ export const Default: Story = {
       blueprint={f.form<z.infer<typeof defaultSchema>, Resolver<FieldValues>>({
         validation: zodResolver(defaultSchema),
         default_values: {
-          readOnly: "Lorem ipsum nothing else",
+          readOnly: 12,
         },
         fields: {
           name: f.number({
@@ -415,7 +415,7 @@ export const Select: Story = {
 };
 const multipleSchema = z.object({
   name: z.string(),
-  change_item: z.number(),
+  change_item: z.array(z.number()),
   hidden_item: z.string(),
 });
 
@@ -426,7 +426,7 @@ export const Multiple: Story = {
       blueprint={f.form<z.infer<typeof multipleSchema>, Resolver<FieldValues>>({
         validation: zodResolver(multipleSchema),
         default_values: {
-          change_item: 15,
+          change_item: [11],
         },
         fields: {
           name: f.number({

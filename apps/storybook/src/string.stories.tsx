@@ -416,9 +416,9 @@ export const Select: Story = {
 };
 
 const multipleSchema = z.object({
-  name: z.string(),
-  combo_sample: z.string(),
-  drop_example: z.string(),
+  name: z.array(z.string()),
+  combo_sample: z.array(z.string()),
+  drop_example: z.array(z.string()),
 });
 
 export const Multiple: Story = {
@@ -428,7 +428,7 @@ export const Multiple: Story = {
       blueprint={f.form<z.infer<typeof multipleSchema>, Resolver<FieldValues>>({
         validation: zodResolver(multipleSchema),
         default_values: {
-          combo_sample: "Lorem  ipsum dolor sit ame ipsum",
+          combo_sample: ["py-3.10"],
         },
         fields: {
           name: f.string({

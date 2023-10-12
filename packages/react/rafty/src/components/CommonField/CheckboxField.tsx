@@ -40,7 +40,7 @@ function Options(props: {
         <Checkbox
           id={label}
           key={index}
-          checked={field.value.includes(value)}
+          checked={field.value?.includes(value)}
           isReadOnly={props.visible as boolean}
           onCheckedChange={() => {
             const prev = (field.value ?? []) as (string | number)[];

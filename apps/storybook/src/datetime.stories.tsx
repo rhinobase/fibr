@@ -15,9 +15,9 @@ export default meta;
 type Story = StoryObj;
 
 const defaultSchema = z.object({
-  name: z.string(),
-  start_time: z.string(),
-  end_time: z.string(),
+  name: z.date(),
+  start_time: z.date(),
+  end_time: z.date(),
 });
 
 export const Default: Story = {

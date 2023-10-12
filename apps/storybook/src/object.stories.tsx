@@ -35,7 +35,7 @@ export const Default: Story = {
               }),
 
               last_name: f.string({
-                label: "Last Name",
+                label: "Last Name (Read Only)",
                 fieldset: "social",
                 readOnly: true,
               }),
