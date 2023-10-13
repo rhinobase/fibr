@@ -1,5 +1,5 @@
-import f from "@fiber/core";
-import { FiberForm, Fields } from "@fiber/react";
+import f from "@fibr/core";
+import { fibrForm, Fields } from "@fibr/react";
 import { Meta, StoryObj } from "@storybook/react";
 import { boolean, z } from "zod";
 import { DevTool } from "./utils";
@@ -8,7 +8,7 @@ import { Button } from "@rafty/ui";
 import { FieldValues, Resolver } from "react-hook-form";
 
 const meta: Meta = {
-  title: "Fiber / Required Field",
+  title: "fibr / Required Field",
 };
 
 export default meta;
@@ -101,12 +101,12 @@ const blueprint = f.form<
 });
 export const Required: Story = {
   render: () => (
-    <FiberForm blueprint={blueprint} onSubmit={console.log}>
+    <fibrForm blueprint={blueprint} onSubmit={console.log}>
       <Fields />
       <Button type="submit" variant="outline">
         Submit
       </Button>
       <DevTool />
-    </FiberForm>
+    </fibrForm>
   ),
 };

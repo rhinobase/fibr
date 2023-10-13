@@ -1,7 +1,7 @@
 import { InputField as Input } from "@rafty/ui";
 import { useFormContext } from "react-hook-form";
-import { FStringFieldType } from "@fiber/core";
-import { FieldProps } from "@fiber/react";
+import { FStringFieldType } from "@fibr/core";
+import { FieldProps } from "@fibr/react";
 
 export function InputField({ name, field }: FieldProps<FStringFieldType>) {
   const { register } = useFormContext();

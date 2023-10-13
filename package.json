@@ -1,5 +1,5 @@
 {
-  "name": "@fiber/source",
+  "name": "@fibr/source",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -46,6 +46,7 @@
   "devDependencies": {
     "@babel/core": "^7.23.0",
     "@babel/preset-react": "^7.22.15",
+    "@jscutlery/semver": "^3.3.0",
     "@nx/eslint-plugin": "16.10.0",
     "@nx/js": "16.10.0",
     "@nx/linter": "16.10.0",
@@ -90,6 +91,7 @@
     "eslint-plugin-react": "7.32.2",
     "eslint-plugin-react-hooks": "4.6.0",
     "jsdom": "~22.1.0",
+    "ngx-deploy-npm": "^7.0.1",
     "nx": "16.10.0",
     "postcss": "8.4.21",
     "prettier": "^2.8.8",

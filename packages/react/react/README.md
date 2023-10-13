@@ -1,1 +1,1 @@
-# @fiber/react
+# @fibr/react

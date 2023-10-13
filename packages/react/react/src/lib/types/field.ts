@@ -1,4 +1,4 @@
-import { FFieldType } from "@fiber/core";
+import { FFieldType } from "@fibr/core";
 
 export type FieldProps<T = FFieldType> = {
   name: string;

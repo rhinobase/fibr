@@ -30,7 +30,15 @@
         "external": [
           "react",
           "react-dom",
-          "react/jsx-runtime"
+          "react/jsx-runtime",
+          "@fibr/core",
+          "@fibr/react",
+          "@rafty/ui",
+          "lodash",
+          "react",
+          "react-hook-form",
+          "react-icons",
+          "core-js"
         ],
         "rollupConfig": "@nx/react/plugins/bundle-rollup",
         "compiler": "babel",
@@ -41,6 +49,18 @@
             "output": "."
           }
         ]
+      }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "preset": "conventional"
+      }
+    },
+    "deploy": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
       }
     }
   }

@@ -1,10 +1,10 @@
-import { FBooleanFieldType } from "@fiber/core";
+import { FBooleanFieldType } from "@fibr/core";
 import { CheckField } from "./CheckField";
 import { SwitchField } from "./SwitchField";
 import { ErrorMessage, classNames } from "@rafty/ui";
 import { useFormContext } from "react-hook-form";
 import _ from "lodash";
-import { FieldProps } from "@fiber/react";
+import { FieldProps } from "@fibr/react";
 
 const LAYOUTS = {
   switch: SwitchField,

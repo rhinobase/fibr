@@ -1,5 +1,5 @@
-import { FieldProps } from "@fiber/react";
-import { FieldWrapper } from "@fiber/rafty";
+import { FieldProps } from "@fibr/react";
+import { FieldWrapper } from "@fibr/rafty";
 import { InputField } from "@rafty/ui";
 import { useFormContext } from "react-hook-form";
 

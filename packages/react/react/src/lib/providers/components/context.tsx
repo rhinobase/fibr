@@ -24,6 +24,6 @@ export function useComponents<T>(
   selector: (state: ComponentsStoreState) => T
 ): T {
   const store = useContext(ComponentsContext);
-  if (!store) throw new Error("Missing FiberProvider component in the tree");
+  if (!store) throw new Error("Missing fibrProvider component in the tree");
   return useStore(store, selector);
 }

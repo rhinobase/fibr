@@ -1,5 +1,5 @@
-import f from "@fiber/core";
-import { FiberForm, Fields } from "@fiber/react";
+import f from "@fibr/core";
+import { fibrForm, Fields } from "@fibr/react";
 import { Meta, StoryObj } from "@storybook/react";
 import { z } from "zod";
 import { DevTool } from "./utils";
@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues, Resolver } from "react-hook-form";
 
 const meta: Meta = {
-  title: "Fiber / Date",
+  title: "fibr / Date",
 };
 
 export default meta;
@@ -22,7 +22,7 @@ const defaultSchema = z.object({
 
 export const Default: Story = {
   render: () => (
-    <FiberForm
+    <fibrForm
       onSubmit={console.log}
       blueprint={f.form<z.infer<typeof defaultSchema>, Resolver<FieldValues>>({
         validation: zodResolver(defaultSchema),
@@ -49,6 +49,6 @@ export const Default: Story = {
     >
       <Fields />
       <DevTool />
-    </FiberForm>
+    </fibrForm>
   ),
 };

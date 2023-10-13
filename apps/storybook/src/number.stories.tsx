@@ -1,5 +1,5 @@
-import f from "@fiber/core";
-import { FiberForm, Fields } from "@fiber/react";
+import f from "@fibr/core";
+import { fibrForm, Fields } from "@fibr/react";
 import { Meta, StoryObj } from "@storybook/react";
 import { z } from "zod";
 import { DevTool } from "./utils";
@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues, Resolver } from "react-hook-form";
 
 const meta: Meta = {
-  title: "Fiber / Number",
+  title: "fibr / Number",
 };
 
 export default meta;
@@ -22,7 +22,7 @@ const defaultSchema = z.object({
 
 export const Default: Story = {
   render: () => (
-    <FiberForm
+    <fibrForm
       onSubmit={console.log}
       blueprint={f.form<z.infer<typeof defaultSchema>, Resolver<FieldValues>>({
         validation: zodResolver(defaultSchema),
@@ -52,7 +52,7 @@ export const Default: Story = {
     >
       <Fields />
       <DevTool />
-    </FiberForm>
+    </fibrForm>
   ),
 };
 
@@ -64,7 +64,7 @@ const radioSchema = z.object({
 
 export const Radio: Story = {
   render: () => (
-    <FiberForm
+    <fibrForm
       onSubmit={console.log}
       blueprint={f.form<z.infer<typeof radioSchema>, Resolver<FieldValues>>({
         validation: zodResolver(radioSchema),
@@ -142,7 +142,7 @@ export const Radio: Story = {
     >
       <Fields />
       <DevTool />
-    </FiberForm>
+    </fibrForm>
   ),
 };
 
@@ -154,7 +154,7 @@ const checkboxSchema = z.object({
 
 export const Checkbox: Story = {
   render: () => (
-    <FiberForm
+    <fibrForm
       onSubmit={console.log}
       blueprint={f.form<z.infer<typeof checkboxSchema>, Resolver<FieldValues>>({
         validation: zodResolver(checkboxSchema),
@@ -232,7 +232,7 @@ export const Checkbox: Story = {
     >
       <Fields />
       <DevTool />
-    </FiberForm>
+    </fibrForm>
   ),
 };
 
@@ -244,7 +244,7 @@ const comboboxSchema = z.object({
 
 export const Combobox: Story = {
   render: () => (
-    <FiberForm
+    <fibrForm
       onSubmit={console.log}
       blueprint={f.form<z.infer<typeof comboboxSchema>, Resolver<FieldValues>>({
         validation: zodResolver(comboboxSchema),
@@ -322,7 +322,7 @@ export const Combobox: Story = {
     >
       <Fields />
       <DevTool />
-    </FiberForm>
+    </fibrForm>
   ),
 };
 const selectSchema = z.object({
@@ -332,7 +332,7 @@ const selectSchema = z.object({
 });
 export const Select: Story = {
   render: () => (
-    <FiberForm
+    <fibrForm
       onSubmit={console.log}
       blueprint={f.form<z.infer<typeof selectSchema>, Resolver<FieldValues>>({
         validation: zodResolver(selectSchema),
@@ -410,7 +410,7 @@ export const Select: Story = {
     >
       <Fields />
       <DevTool />
-    </FiberForm>
+    </fibrForm>
   ),
 };
 const multipleSchema = z.object({
@@ -421,7 +421,7 @@ const multipleSchema = z.object({
 
 export const Multiple: Story = {
   render: () => (
-    <FiberForm
+    <fibrForm
       onSubmit={console.log}
       blueprint={f.form<z.infer<typeof multipleSchema>, Resolver<FieldValues>>({
         validation: zodResolver(multipleSchema),
@@ -499,6 +499,6 @@ export const Multiple: Story = {
     >
       <Fields />
       <DevTool />
-    </FiberForm>
+    </fibrForm>
   ),
 };

@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import { AllFields } from "./utils";
 
 const meta: Meta = {
-  title: "Fiber / All Fields",
+  title: "fibr / All Fields",
 };
 
 export default meta;

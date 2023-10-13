@@ -1,4 +1,4 @@
-import { FieldProps } from "@fiber/react";
+import { FieldProps } from "@fibr/react";
 import {
   CommonField,
   TextField,

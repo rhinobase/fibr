@@ -1,4 +1,4 @@
-import { FStringFieldType, FStringListType } from "@fiber/core";
+import { FStringFieldType, FStringListType } from "@fibr/core";
 import {
   Command,
   CommandEmpty,
@@ -16,7 +16,7 @@ import { useState } from "react";
 import { Controller, useController, useFormContext } from "react-hook-form";
 import { HiCheck } from "react-icons/hi";
 import { HiChevronUpDown, HiXMark } from "react-icons/hi2";
-import { FieldProps } from "@fiber/react";
+import { FieldProps } from "@fibr/react";
 import { findLabel } from "./ComboboxField";
 
 export function MultiSelectField(props: FieldProps<FStringFieldType>) {

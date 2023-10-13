@@ -9,14 +9,14 @@ import {
 import { BlueprintProvider, BlueprintStoreState } from "./providers";
 import { classNames } from "@rafty/ui";
 
-export type FiberForm<T> = {
+export type FibrForm<T> = {
   children: ReactNode;
   onSubmit: SubmitHandler<FieldValues>;
   onError?: SubmitErrorHandler<FieldValues>;
 } & Pick<BlueprintStoreState<T>, "blueprint"> &
   Pick<HTMLAttributes<HTMLFormElement>, "className" | "style">;
 
-export function FiberForm<T>(props: FiberForm<T>) {
+export function FibrForm<T>(props: FibrForm<T>) {
   // Adding provider for forms
   const methods = useForm({
     resolver: props.blueprint.validation,

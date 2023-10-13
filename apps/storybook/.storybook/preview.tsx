@@ -1,8 +1,8 @@
 import "../styles.css";
 import React from "react";
 import type { Preview } from "@storybook/react";
-import { FiberProvider } from "@fiber/react";
-import raftyPlugin from "@fiber/rafty";
+import { FibrProvider } from "@fibr/react";
+import raftyPlugin from "@fibr/rafty";
 
 const DEFAULT_THEME = "light";
 
@@ -48,9 +48,9 @@ const preview: Preview = {
 
       return (
         <div className="dark:bg-secondary-900 mx-auto flex min-h-screen w-full max-w-3xl flex-col items-center justify-center py-5">
-          <FiberProvider plugins={[raftyPlugin]}>
+          <FibrProvider plugins={[raftyPlugin]}>
             <Story />
-          </FiberProvider>
+          </FibrProvider>
         </div>
       );
     },

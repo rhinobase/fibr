@@ -1,8 +1,8 @@
 import { useFormContext } from "react-hook-form";
-import { FDateFieldType } from "@fiber/core";
+import { FDateFieldType } from "@fibr/core";
 import { FieldWrapper } from "../FieldWrapper";
 import { InputField, classNames } from "@rafty/ui";
-import { FieldProps } from "@fiber/react";
+import { FieldProps } from "@fibr/react";
 
 export function DateField({ name, field }: FieldProps<FDateFieldType>) {
   const { register } = useFormContext();

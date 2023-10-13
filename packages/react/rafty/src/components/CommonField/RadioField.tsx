@@ -1,7 +1,7 @@
 import { RadioGroup, RadioGroupItem, Text } from "@rafty/ui";
 import { Controller, useFormContext } from "react-hook-form";
-import { FStringFieldType, FStringListType } from "@fiber/core";
-import { FieldProps } from "@fiber/react";
+import { FStringFieldType, FStringListType } from "@fibr/core";
+import { FieldProps } from "@fibr/react";
 
 export function RadioField({ name, field }: FieldProps<FStringFieldType>) {
   const { control } = useFormContext();

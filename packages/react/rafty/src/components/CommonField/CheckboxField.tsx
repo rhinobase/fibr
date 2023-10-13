@@ -1,7 +1,7 @@
 import { Controller, useController, useFormContext } from "react-hook-form";
 import { Checkbox, ErrorMessage, Text } from "@rafty/ui";
-import { FStringFieldType, FStringListType } from "@fiber/core";
-import { FieldProps } from "@fiber/react";
+import { FStringFieldType, FStringListType } from "@fibr/core";
+import { FieldProps } from "@fibr/react";
 
 export function CheckboxField({ name, field }: FieldProps<FStringFieldType>) {
   const { control } = useFormContext();

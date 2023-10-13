@@ -1,13 +1,14 @@
 {
-  "name": "@fiber/rafty",
-  "version": "0.0.1",
+  "name": "@fibr/rafty",
+  "version": "0.1.0",
   "peerDependencies": {
-    "@fiber/core": "*",
-    "@fiber/react": "*",
+    "@fibr/core": "*",
+    "@fibr/react": "*",
     "@rafty/ui": "*",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-hook-form": "^7.46.2",
-    "react-icons": "^4.11.0"
+    "react-icons": "^4.11.0",
+    "core-js": "^3.33.0"
   }
 }

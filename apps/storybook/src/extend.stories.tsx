@@ -1,15 +1,15 @@
-import f from "@fiber/core";
-import { FiberForm, FiberProvider, Fields } from "@fiber/react";
+import f from "@fibr/core";
+import { fibrForm, fibrProvider, Fields } from "@fibr/react";
 import { Meta, StoryObj } from "@storybook/react";
 import { z } from "zod";
 import { DevTool, ExtendComponent } from "./utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { OverrideComponent } from "./utils";
 import { FieldValues, Resolver } from "react-hook-form";
-import raftyPlugin from "@fiber/rafty";
+import raftyPlugin from "@fibr/rafty";
 
 const meta: Meta = {
-  title: "Fiber / Extend",
+  title: "fibr / Extend",
 };
 
 export default meta;
@@ -22,7 +22,7 @@ const includeSchema = z.object({
 
 export const Extend: Story = {
   render: () => (
-    <FiberProvider
+    <fibrProvider
       plugins={[
         raftyPlugin,
         {
@@ -30,7 +30,7 @@ export const Extend: Story = {
         },
       ]}
     >
-      <FiberForm
+      <fibrForm
         blueprint={f.form<z.infer<typeof includeSchema>, Resolver<FieldValues>>(
           {
             validation: zodResolver(includeSchema),
@@ -48,14 +48,14 @@ export const Extend: Story = {
       >
         <Fields />
         <DevTool />
-      </FiberForm>
-    </FiberProvider>
+      </fibrForm>
+    </fibrProvider>
   ),
 };
 
 export const Override: Story = {
   render: () => (
-    <FiberProvider
+    <fibrProvider
       plugins={[
         raftyPlugin,
         {
@@ -63,7 +63,7 @@ export const Override: Story = {
         },
       ]}
     >
-      <FiberForm
+      <fibrForm
         blueprint={f.form<z.infer<typeof includeSchema>, Resolver<FieldValues>>(
           {
             validation: zodResolver(includeSchema),
@@ -80,7 +80,7 @@ export const Override: Story = {
       >
         <Fields />
         <DevTool />
-      </FiberForm>
-    </FiberProvider>
+      </fibrForm>
+    </fibrProvider>
   ),
 };

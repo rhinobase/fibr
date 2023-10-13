@@ -1,8 +1,8 @@
-import f from "@fiber/core";
+import f from "@fibr/core";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@rafty/ui";
-import { FiberForm, Fields } from "@fiber/react";
+import { fibrForm, Fields } from "@fibr/react";
 import { DevTool } from "./DevTool";
 import { FieldValues, Resolver } from "react-hook-form";
 
@@ -310,12 +310,12 @@ export function AllFields(props: AllFields) {
     },
   });
   return (
-    <FiberForm blueprint={blueprint} onSubmit={console.log}>
+    <fibrForm blueprint={blueprint} onSubmit={console.log}>
       <Fields />
       <Button type="submit" variant="outline">
         Submit
       </Button>
       <DevTool />
-    </FiberForm>
+    </fibrForm>
   );
 }

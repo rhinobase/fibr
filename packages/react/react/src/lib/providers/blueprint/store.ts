@@ -1,4 +1,4 @@
-import { FFormType } from "@fiber/core";
+import { FFormType } from "@fibr/core";
 import { FieldValues, Resolver } from "react-hook-form";
 import { create } from "zustand";
 

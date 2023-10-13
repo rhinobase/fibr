@@ -1,5 +1,5 @@
-import { FieldProps } from "@fiber/react";
-import { FieldWrapper } from "@fiber/rafty";
+import { FieldProps } from "@fibr/react";
+import { FieldWrapper } from "@fibr/rafty";
 import * as SliderPrimitive from "@radix-ui/react-slider";
 import { classNames } from "@rafty/ui";
 import React from "react";

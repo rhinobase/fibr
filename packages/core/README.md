@@ -1,1 +1,1 @@
-# @fiber/core
+# @fibr/core
