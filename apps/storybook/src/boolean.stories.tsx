@@ -1,5 +1,5 @@
 import f from "@fibr/core";
-import { fibrForm, Fields } from "@fibr/react";
+import { FibrForm, Fields } from "@fibr/react";
 import { Meta, StoryObj } from "@storybook/react";
 import { z } from "zod";
 import { DevTool } from "./utils";
@@ -21,7 +21,7 @@ const defaultSchema = z.object({
 });
 export const Default: Story = {
   render: () => (
-    <fibrForm
+    <FibrForm
       onSubmit={console.log}
       blueprint={f.form<z.infer<typeof defaultSchema>, Resolver<FieldValues>>({
         validation: zodResolver(defaultSchema),
@@ -51,7 +51,7 @@ export const Default: Story = {
     >
       <Fields />
       <DevTool />
-    </fibrForm>
+    </FibrForm>
   ),
 };
 
@@ -63,7 +63,7 @@ const switchSchema = z.object({
 
 export const Switch: Story = {
   render: () => (
-    <fibrForm
+    <FibrForm
       onSubmit={console.log}
       blueprint={f.form<z.infer<typeof switchSchema>, Resolver<FieldValues>>({
         validation: zodResolver(switchSchema),
@@ -105,6 +105,6 @@ export const Switch: Story = {
     >
       <Fields />
       <DevTool />
-    </fibrForm>
+    </FibrForm>
   ),
 };

@@ -1,5 +1,5 @@
 import f from "@fibr/core";
-import { fibrForm, Fields } from "@fibr/react";
+import { FibrForm, Fields } from "@fibr/react";
 import { Meta, StoryObj } from "@storybook/react";
 import { z } from "zod";
 import { DevTool } from "./utils";
@@ -55,18 +55,18 @@ const blueprint = f.form<z.infer<typeof includeSchema>, Resolver<FieldValues>>({
 
 export const Include: Story = {
   render: () => (
-    <fibrForm blueprint={blueprint} onSubmit={console.log}>
+    <FibrForm blueprint={blueprint} onSubmit={console.log}>
       <Fields include={["first_name"]} />
       <DevTool />
-    </fibrForm>
+    </FibrForm>
   ),
 };
 
 export const Exclude: Story = {
   render: () => (
-    <fibrForm blueprint={blueprint} onSubmit={console.log}>
+    <FibrForm blueprint={blueprint} onSubmit={console.log}>
       <Fields exclude={["first_name"]} />
       <DevTool />
-    </fibrForm>
+    </FibrForm>
   ),
 };

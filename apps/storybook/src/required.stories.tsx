@@ -1,5 +1,5 @@
 import f from "@fibr/core";
-import { fibrForm, Fields } from "@fibr/react";
+import { FibrForm, Fields } from "@fibr/react";
 import { Meta, StoryObj } from "@storybook/react";
 import { boolean, z } from "zod";
 import { DevTool } from "./utils";
@@ -101,12 +101,12 @@ const blueprint = f.form<
 });
 export const Required: Story = {
   render: () => (
-    <fibrForm blueprint={blueprint} onSubmit={console.log}>
+    <FibrForm blueprint={blueprint} onSubmit={console.log}>
       <Fields />
       <Button type="submit" variant="outline">
         Submit
       </Button>
       <DevTool />
-    </fibrForm>
+    </FibrForm>
   ),
 };

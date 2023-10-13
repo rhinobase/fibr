@@ -1,5 +1,5 @@
 import f from "@fibr/core";
-import { fibrForm, Fields } from "@fibr/react";
+import { FibrForm, Fields } from "@fibr/react";
 import { Meta, StoryObj } from "@storybook/react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,7 +21,7 @@ const defaultSchema = z.object({
 });
 export const Default: Story = {
   render: () => (
-    <fibrForm
+    <FibrForm
       blueprint={f.form<z.infer<typeof defaultSchema>, Resolver<FieldValues>>({
         validation: zodResolver(defaultSchema),
         default_values: {
@@ -48,7 +48,7 @@ export const Default: Story = {
     >
       <Fields />
       <DevTool />
-    </fibrForm>
+    </FibrForm>
   ),
 };
 
@@ -61,7 +61,7 @@ const nestedSchema = z.object({
 });
 export const NestedFields: Story = {
   render: () => (
-    <fibrForm
+    <FibrForm
       onSubmit={console.log}
       blueprint={f.form<z.infer<typeof nestedSchema>, Resolver<FieldValues>>({
         validation: zodResolver(nestedSchema),
@@ -108,6 +108,6 @@ export const NestedFields: Story = {
     >
       <Fields />
       <DevTool />
-    </fibrForm>
+    </FibrForm>
   ),
 };

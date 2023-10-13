@@ -2,7 +2,7 @@ import f from "@fibr/core";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@rafty/ui";
-import { fibrForm, Fields } from "@fibr/react";
+import { FibrForm, Fields } from "@fibr/react";
 import { DevTool } from "./DevTool";
 import { FieldValues, Resolver } from "react-hook-form";
 
@@ -310,12 +310,12 @@ export function AllFields(props: AllFields) {
     },
   });
   return (
-    <fibrForm blueprint={blueprint} onSubmit={console.log}>
+    <FibrForm blueprint={blueprint} onSubmit={console.log}>
       <Fields />
       <Button type="submit" variant="outline">
         Submit
       </Button>
       <DevTool />
-    </fibrForm>
+    </FibrForm>
   );
 }

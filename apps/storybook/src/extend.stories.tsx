@@ -1,5 +1,5 @@
 import f from "@fibr/core";
-import { fibrForm, fibrProvider, Fields } from "@fibr/react";
+import { FibrForm, FibrProvider, Fields } from "@fibr/react";
 import { Meta, StoryObj } from "@storybook/react";
 import { z } from "zod";
 import { DevTool, ExtendComponent } from "./utils";
@@ -22,7 +22,7 @@ const includeSchema = z.object({
 
 export const Extend: Story = {
   render: () => (
-    <fibrProvider
+    <FibrProvider
       plugins={[
         raftyPlugin,
         {
@@ -30,7 +30,7 @@ export const Extend: Story = {
         },
       ]}
     >
-      <fibrForm
+      <FibrForm
         blueprint={f.form<z.infer<typeof includeSchema>, Resolver<FieldValues>>(
           {
             validation: zodResolver(includeSchema),
@@ -48,14 +48,14 @@ export const Extend: Story = {
       >
         <Fields />
         <DevTool />
-      </fibrForm>
-    </fibrProvider>
+      </FibrForm>
+    </FibrProvider>
   ),
 };
 
 export const Override: Story = {
   render: () => (
-    <fibrProvider
+    <FibrProvider
       plugins={[
         raftyPlugin,
         {
@@ -63,7 +63,7 @@ export const Override: Story = {
         },
       ]}
     >
-      <fibrForm
+      <FibrForm
         blueprint={f.form<z.infer<typeof includeSchema>, Resolver<FieldValues>>(
           {
             validation: zodResolver(includeSchema),
@@ -80,7 +80,7 @@ export const Override: Story = {
       >
         <Fields />
         <DevTool />
-      </fibrForm>
-    </fibrProvider>
+      </FibrForm>
+    </FibrProvider>
   ),
 };
