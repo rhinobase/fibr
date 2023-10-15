@@ -35,7 +35,6 @@
           "lodash",
           "react",
           "react-hook-form",
-          "zustand",
           "core-js"
         ],
         "rollupConfig": "@nx/react/plugins/bundle-rollup",

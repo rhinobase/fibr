@@ -56,7 +56,16 @@ const blueprint = f.form<z.infer<typeof includeSchema>, Resolver<FieldValues>>({
 export const Include: Story = {
   render: () => (
     <FibrForm blueprint={blueprint} onSubmit={console.log}>
-      <Fields include={["first_name"]} />
+      <Fields include="first_name" />
+      <DevTool />
+    </FibrForm>
+  ),
+};
+
+export const IncludeMultiple: Story = {
+  render: () => (
+    <FibrForm blueprint={blueprint} onSubmit={console.log}>
+      <Fields include={["first_name", "last_name"]} />
       <DevTool />
     </FibrForm>
   ),
@@ -65,7 +74,16 @@ export const Include: Story = {
 export const Exclude: Story = {
   render: () => (
     <FibrForm blueprint={blueprint} onSubmit={console.log}>
-      <Fields exclude={["first_name"]} />
+      <Fields exclude="first_name" />
+      <DevTool />
+    </FibrForm>
+  ),
+};
+
+export const ExcludeMultiple: Story = {
+  render: () => (
+    <FibrForm blueprint={blueprint} onSubmit={console.log}>
+      <Fields exclude={["first_name", "last_name"]} />
       <DevTool />
     </FibrForm>
   ),

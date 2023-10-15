@@ -2,7 +2,7 @@ import { useComponents } from "./providers";
 import { FieldProps } from "./types";
 
 export function RenderField(props: FieldProps) {
-  const components = useComponents((state) => state.components);
+  const { components } = useComponents();
 
   const Field = components[props.field.type];
 

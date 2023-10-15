@@ -11,10 +11,6 @@ export class FForm<T, U> implements FFormType<T, U> {
     this.validation = config.validation;
   }
 
-  toJSON() {
-    return {};
-  }
-
   static create<T, U>(config: FFormType<T, U>) {
     return new FForm(config);
   }

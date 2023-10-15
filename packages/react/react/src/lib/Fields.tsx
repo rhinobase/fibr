@@ -3,12 +3,12 @@ import _ from "lodash";
 import { RenderField } from "./RenderField";
 
 type Fields = {
-  include?: string[];
-  exclude?: string[];
+  include?: string | string[];
+  exclude?: string | string[];
 };
 
 export function Fields(props: Fields) {
-  const blueprint = useBlueprint((state) => state.blueprint);
+  const { blueprint } = useBlueprint();
 
   if (props.include && props.exclude)
     throw new Error("Include and Exclude can't be defined simultaneously!");
@@ -16,7 +16,7 @@ export function Fields(props: Fields) {
   let fields;
 
   if (props.include) fields = _.pick(blueprint.fields, props.include);
-  if (props.exclude) fields = _.omit(blueprint.fields, props.exclude);
+  else if (props.exclude) fields = _.omit(blueprint.fields, props.exclude);
   else fields = blueprint.fields;
 
   return Object.entries(fields).map(([name, field], index) => (

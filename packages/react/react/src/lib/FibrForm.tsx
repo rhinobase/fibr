@@ -6,30 +6,35 @@ import {
   SubmitHandler,
   useForm,
 } from "react-hook-form";
-import { BlueprintProvider, BlueprintStoreState } from "./providers";
+import { BlueprintProvider, BlueprintContext } from "./providers";
 import { classNames } from "@rafty/ui";
 
 export type FibrForm<T> = {
   children: ReactNode;
   onSubmit: SubmitHandler<FieldValues>;
   onError?: SubmitErrorHandler<FieldValues>;
-} & Pick<BlueprintStoreState<T>, "blueprint"> &
+} & Pick<BlueprintContext<T>, "blueprint"> &
   Pick<HTMLAttributes<HTMLFormElement>, "className" | "style">;
 
-export function FibrForm<T>(props: FibrForm<T>) {
+export function FibrForm<T>({
+  blueprint,
+  onSubmit,
+  onError,
+  ...props
+}: FibrForm<T>) {
   // Adding provider for forms
   const methods = useForm({
-    resolver: props.blueprint.validation,
-    defaultValues: props.blueprint.default_values,
+    resolver: blueprint.validation,
+    defaultValues: blueprint.default_values,
   });
 
   return (
-    <BlueprintProvider blueprint={props.blueprint}>
+    <BlueprintProvider blueprint={blueprint}>
       <FormProvider {...methods}>
         <form
-          onSubmit={methods.handleSubmit(props.onSubmit, props.onError)}
+          onSubmit={methods.handleSubmit(onSubmit, onError)}
+          {...props}
           className={classNames("space-y-3", props.className)}
-          style={props.style}
         >
           {props.children}
         </form>
