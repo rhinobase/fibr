@@ -32,7 +32,7 @@ export const WithValues: Story = {
         number_multi_field: [1, 12],
         number_radio_field: 20,
         number_select_field: 30,
-        date_field: "2002-05-22",
+        date_field: new Date("2002-05-22"),
         date_time_field: "2002-05-22 11:22",
         object_field: { first_name: "John", last_name: "Cena" },
         text_field: "lorem ipsum",

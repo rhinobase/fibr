@@ -1,12 +1,11 @@
-import { useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { FDateFieldType } from "@fibr/core";
 import { FieldWrapper } from "../FieldWrapper";
-import { InputField, classNames } from "@rafty/ui";
+import { DatePicker, classNames } from "@rafty/ui";
 import { FieldProps } from "@fibr/react";
 
 export function DateField({ name, field }: FieldProps<FDateFieldType>) {
-  const { register } = useFormContext();
-
+  const { control } = useFormContext();
   const readOnly = field.readOnly as boolean | undefined;
   const required = field.required as boolean | undefined;
 
@@ -18,10 +17,17 @@ export function DateField({ name, field }: FieldProps<FDateFieldType>) {
       className={classNames(field.hidden ? "hidden" : "flex")}
       required={required}
     >
-      <InputField
-        {...register(name, { valueAsDate: true })}
-        type="date"
-        readOnly={readOnly}
+      <Controller
+        name={name}
+        control={control}
+        render={({ field: { value, onChange, ref, ...register } }) => (
+          <DatePicker
+            {...register}
+            onSelect={onChange}
+            selected={new Date(value)}
+            disabled={readOnly}
+          />
+        )}
       />
     </FieldWrapper>
   );
