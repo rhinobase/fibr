@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.3.0](https://github.com/rhinobase/fiber/compare/react-0.2.0...react-0.3.0) (2023-10-17)
+
+
+### Bug Fixes
+
+* minor changes and improvements ([9264f08](https://github.com/rhinobase/fiber/commit/9264f0880009bd70ef7b492d76782f1d0c399180))
+
 ## [0.2.0](https://github.com/rhinobase/fiber/compare/react-0.1.0...react-0.2.0) (2023-10-17)
 
 
