@@ -9,6 +9,7 @@
   "dependencies": {
     "@algolia/autocomplete-core": "^1.11.1",
     "@hookform/devtools": "^4.3.1",
+    "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^3.3.1",
     "@mdx-js/loader": "^2.3.0",
     "@mdx-js/react": "^2.3.0",

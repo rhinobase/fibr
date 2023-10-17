@@ -1,5 +1,11 @@
-import { ErrorMessage, FieldControl, Label, Text, classNames } from "@rafty/ui";
-import _ from "lodash";
+import {
+  ErrorMessage as RaftyErrorMessage,
+  FieldControl,
+  Label,
+  Text,
+  classNames,
+} from "@rafty/ui";
+import { ErrorMessage } from "@hookform/error-message";
 import { ReactNode } from "react";
 import { useFormContext } from "react-hook-form";
 
@@ -24,8 +30,6 @@ export function FieldWrapper({
     formState: { errors },
   } = useFormContext();
 
-  const error = _.get(errors, name);
-
   return (
     <FieldControl
       name={name}
@@ -42,7 +46,13 @@ export function FieldWrapper({
       )}
       {label && !description && <Label className="!leading-3">{label}</Label>}
       {children}
-      {error && <ErrorMessage>{error.message?.toString()}</ErrorMessage>}
+      <ErrorMessage
+        errors={errors}
+        name={name}
+        render={({ message }) => (
+          <RaftyErrorMessage>{message}</RaftyErrorMessage>
+        )}
+      />
     </FieldControl>
   );
 }

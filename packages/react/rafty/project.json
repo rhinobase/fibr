@@ -33,6 +33,7 @@
           "react/jsx-runtime",
           "@fibr/core",
           "@fibr/react",
+          "@hookform/error-message",
           "@rafty/ui",
           "lodash",
           "react",
