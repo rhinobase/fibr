@@ -4,7 +4,7 @@ import { FDateTimeFieldType, FDateTimeOptions } from "../types";
 export class FDateTimeField extends FField implements FDateTimeFieldType {
   options?: FDateTimeOptions;
 
-  constructor(config: Omit<FDateTimeFieldType, "type">) {
+  constructor(config: Omit<FDateTimeFieldType, "type"> = {}) {
     super({ ...config, type: "datetime" });
 
     if (config.options)

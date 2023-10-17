@@ -4,7 +4,7 @@ import { FBooleanFieldType, FBooleanOptions } from "../types";
 export class FBooleanField extends FField implements FBooleanFieldType {
   options?: FBooleanOptions;
 
-  constructor(config: Omit<FBooleanFieldType, "type">) {
+  constructor(config: Omit<FBooleanFieldType, "type"> = {}) {
     super({ ...config, type: "boolean" });
 
     if (config.options)

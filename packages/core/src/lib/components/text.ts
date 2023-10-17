@@ -4,7 +4,7 @@ import { FTextFieldType, FTextOptions } from "../types";
 export class FTextField extends FWithPlaceholder implements FTextFieldType {
   options?: FTextOptions;
 
-  constructor(config: Omit<FTextFieldType, "type">) {
+  constructor(config: Omit<FTextFieldType, "type"> = {}) {
     super({ ...config, type: "text" });
 
     this.options = config.options;

@@ -4,7 +4,7 @@ import { FNumberFieldType, FStringOptions } from "../types";
 export class FNumberField extends FWithPlaceholder implements FNumberFieldType {
   options?: FStringOptions<number>;
 
-  constructor(config: Omit<FNumberFieldType, "type">) {
+  constructor(config: Omit<FNumberFieldType, "type"> = {}) {
     super({ ...config, type: "number" });
 
     if (config.options)

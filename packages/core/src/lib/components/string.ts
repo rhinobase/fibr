@@ -7,7 +7,7 @@ export class FStringField
 {
   options?: FStringOptions<string>;
 
-  constructor(config: Omit<FStringFieldType, "type">) {
+  constructor(config: Omit<FStringFieldType, "type"> = {}) {
     super({ ...config, type: "string" });
 
     if (config.options)
