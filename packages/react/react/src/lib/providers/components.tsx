@@ -2,7 +2,7 @@ import { ReactNode, createContext, useContext } from "react";
 import { FieldProps } from "../types";
 
 type ComponentsContext = {
-  components: Record<string, (props: FieldProps) => JSX.Element>;
+  readonly components: Record<string, (props: FieldProps) => JSX.Element>;
 };
 
 const ComponentsContext = createContext<ComponentsContext>({ components: {} });

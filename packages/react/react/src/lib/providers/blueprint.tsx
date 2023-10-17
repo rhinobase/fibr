@@ -3,7 +3,7 @@ import { ReactNode, createContext, useContext } from "react";
 import { FieldValues, Resolver } from "react-hook-form";
 
 export type BlueprintContext<T = any> = {
-  blueprint: FFormType<T, Resolver<FieldValues>>;
+  readonly blueprint: FFormType<T, Resolver<FieldValues>>;
 };
 
 const BlueprintContext = createContext<BlueprintContext>({
