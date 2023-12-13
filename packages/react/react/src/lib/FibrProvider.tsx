@@ -1,10 +1,11 @@
+"use client";
 import _ from "lodash";
-import { ReactNode } from "react";
+import React from "react";
 import { ComponentsProvider } from "./providers";
-import { FieldProps } from "./types";
+import type { FieldProps } from "./types";
 
 export type FibrProvider = {
-  children: ReactNode;
+  children: React.ReactNode;
   plugins?: Record<string, (props: FieldProps) => JSX.Element>[];
   onError?: (errors: unknown) => void;
 };

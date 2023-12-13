@@ -1,5 +1,6 @@
+"use client";
 import { useComponents } from "./providers";
-import { FieldProps } from "./types";
+import type { FieldProps } from "./types";
 
 export function RenderField(props: FieldProps) {
   const { components } = useComponents();

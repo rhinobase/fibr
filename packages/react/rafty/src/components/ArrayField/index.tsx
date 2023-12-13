@@ -1,5 +1,5 @@
-import { FArrayFieldType } from "@fibr/core";
-import { FieldProps } from "@fibr/react";
+import type { FArrayFieldType } from "@fibr/core";
+import type { FieldProps } from "@fibr/react";
 import { classNames } from "@rafty/ui";
 import { FieldWrapper } from "../FieldWrapper";
 import { ListField } from "./ListField";

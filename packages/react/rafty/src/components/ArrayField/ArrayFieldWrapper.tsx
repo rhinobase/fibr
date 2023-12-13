@@ -1,3 +1,4 @@
+"use client";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { Button, classNames } from "@rafty/ui";
 import { HiArrowDown, HiArrowUp, HiPlus, HiTrash } from "react-icons/hi";

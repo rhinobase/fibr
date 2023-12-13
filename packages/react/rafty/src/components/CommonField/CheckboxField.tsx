@@ -1,7 +1,8 @@
-import { Controller, useController, useFormContext } from "react-hook-form";
+"use client";
+import type { FStringFieldType, FStringListType } from "@fibr/core";
+import type { FieldProps } from "@fibr/react";
 import { Checkbox, ErrorMessage, Text } from "@rafty/ui";
-import { FStringFieldType, FStringListType } from "@fibr/core";
-import { FieldProps } from "@fibr/react";
+import { Controller, useController, useFormContext } from "react-hook-form";
 
 export function CheckboxField({ name, field }: FieldProps<FStringFieldType>) {
   const { control } = useFormContext();
@@ -58,14 +59,14 @@ function Options(props: {
           }}
         >
           {label}
-        </Checkbox>
+        </Checkbox>,
       );
     else
       components.push(
         <div key={index} className="space-y-1">
           <Text className="text-sm font-medium opacity-70">{label}</Text>
           <Options {...props} items={value} />
-        </div>
+        </div>,
       );
   });
 

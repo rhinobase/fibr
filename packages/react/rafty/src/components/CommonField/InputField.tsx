@@ -1,7 +1,8 @@
+"use client";
+import type { FStringFieldType } from "@fibr/core";
+import type { FieldProps } from "@fibr/react";
 import { InputField as Input } from "@rafty/ui";
 import { useFormContext } from "react-hook-form";
-import { FStringFieldType } from "@fibr/core";
-import { FieldProps } from "@fibr/react";
 
 export function InputField({ name, field }: FieldProps<FStringFieldType>) {
   const { register } = useFormContext();

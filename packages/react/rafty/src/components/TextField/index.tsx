@@ -1,8 +1,9 @@
+"use client";
+import type { FTextFieldType } from "@fibr/core";
+import type { FieldProps } from "@fibr/react";
 import { Textarea, classNames } from "@rafty/ui";
 import { useFormContext } from "react-hook-form";
-import { FTextFieldType } from "@fibr/core";
 import { FieldWrapper } from "../FieldWrapper";
-import { FieldProps } from "@fibr/react";
 
 export function TextField({ name, field }: FieldProps<FTextFieldType>) {
   const { register } = useFormContext();

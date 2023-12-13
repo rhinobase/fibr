@@ -1,7 +1,8 @@
+"use client";
+import type { FBooleanFieldType } from "@fibr/core";
+import type { FieldProps } from "@fibr/react";
 import { Label, Switch, Text } from "@rafty/ui";
 import { Controller, useFormContext } from "react-hook-form";
-import { FBooleanFieldType } from "@fibr/core";
-import { FieldProps } from "@fibr/react";
 
 export function SwitchField({ name, field }: FieldProps<FBooleanFieldType>) {
   const { control } = useFormContext();

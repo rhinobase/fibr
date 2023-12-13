@@ -1,29 +1,33 @@
-import { HTMLAttributes, ReactNode } from "react";
+"use client";
+import { classNames } from "@rafty/ui";
+import React from "react";
 import {
-  FieldValues,
   FormProvider,
-  SubmitErrorHandler,
-  SubmitHandler,
   useForm,
+  type FieldValues,
+  type SubmitErrorHandler,
+  type SubmitHandler,
 } from "react-hook-form";
+import { Fields } from "./Fields";
 import {
   BlueprintProvider,
-  BlueprintContext,
   useComponents,
+  type BlueprintContext,
 } from "./providers";
-import { classNames } from "@rafty/ui";
 
 export type FibrForm<T extends FieldValues> = {
-  children: ReactNode;
+  children: React.ReactNode;
   onSubmit: SubmitHandler<T>;
   onError?: SubmitErrorHandler<T>;
 } & Pick<BlueprintContext<T>, "blueprint"> &
-  Pick<HTMLAttributes<HTMLFormElement>, "className" | "style">;
+  Pick<React.HTMLAttributes<HTMLFormElement>, "className" | "style">;
 
 export function FibrForm<T extends FieldValues>({
   blueprint,
   onSubmit,
   onError,
+  className,
+  children,
   ...props
 }: FibrForm<T>) {
   const { onError: defaultErrorHandler } = useComponents();
@@ -39,12 +43,12 @@ export function FibrForm<T extends FieldValues>({
         <form
           onSubmit={methods.handleSubmit(
             onSubmit,
-            onError ?? defaultErrorHandler
+            onError ?? defaultErrorHandler,
           )}
           {...props}
-          className={classNames("space-y-3", props.className)}
+          className={classNames("space-y-3", className)}
         >
-          {props.children}
+          {children ?? <Fields />}
         </form>
       </FormProvider>
     </BlueprintProvider>

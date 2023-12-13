@@ -1,5 +1,5 @@
-import { FObjectFieldType } from "@fibr/core";
-import { RenderField } from "@fibr/react";
+import type { FObjectFieldType } from "@fibr/core";
+import { RenderField, type FieldProps } from "@fibr/react";
 import {
   Accordion,
   AccordionContent,
@@ -8,7 +8,6 @@ import {
   classNames,
 } from "@rafty/ui";
 import { FieldWrapper } from "../FieldWrapper";
-import { FieldProps } from "@fibr/react";
 
 export function ObjectField({ name, field }: FieldProps<FObjectFieldType>) {
   // All the groups in the object field
@@ -48,7 +47,7 @@ export function ObjectField({ name, field }: FieldProps<FObjectFieldType>) {
           field.parent?.type === "array"
             ? "p-3"
             : "rounded-md border-2 border-dotted p-5",
-          "h-full space-y-2.5"
+          "h-full space-y-2.5",
         )}
       >
         {Object.entries(groups).map(([value, field_names], index) => (

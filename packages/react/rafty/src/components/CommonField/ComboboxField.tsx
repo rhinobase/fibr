@@ -1,4 +1,6 @@
-import { FStringFieldType, FStringListType } from "@fibr/core";
+"use client";
+import type { FStringFieldType, FStringListType } from "@fibr/core";
+import type { FieldProps } from "@fibr/react";
 import {
   Command,
   CommandEmpty,
@@ -11,15 +13,14 @@ import {
   PopoverTrigger,
   classNames,
 } from "@rafty/ui";
-import { useState } from "react";
+import React from "react";
 import { Controller, useController, useFormContext } from "react-hook-form";
 import { HiCheck } from "react-icons/hi";
 import { HiChevronUpDown } from "react-icons/hi2";
-import { FieldProps } from "@fibr/react";
 
 export function findLabel(
   value: string | number,
-  items: FStringListType<string>[]
+  items: FStringListType<string>[],
 ) {
   let label: string | undefined;
   for (const item of items) {
@@ -33,7 +34,7 @@ export function findLabel(
 
 export function ComboboxField(props: FieldProps<FStringFieldType>) {
   const { control } = useFormContext();
-  const [isOpen, setOpen] = useState(false);
+  const [isOpen, setOpen] = React.useState(false);
 
   return (
     <Controller
@@ -53,7 +54,7 @@ export function ComboboxField(props: FieldProps<FStringFieldType>) {
                   isOpen
                     ? "text-primary-500 dark:text-primary-400"
                     : "text-secondary-500 dark:text-secondary-400",
-                  "shrink-0"
+                  "shrink-0",
                 )}
               />
             }
@@ -115,13 +116,13 @@ function Options(props: {
           className="justify-between"
         >
           {label} {field.value === value && <HiCheck />}
-        </CommandItem>
+        </CommandItem>,
       );
     else
       components.push(
         <CommandGroup key={index} heading={label}>
           <Options {...props} items={value} />
-        </CommandGroup>
+        </CommandGroup>,
       );
   });
 

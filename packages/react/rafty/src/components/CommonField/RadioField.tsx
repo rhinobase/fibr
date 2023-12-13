@@ -1,7 +1,8 @@
+"use client";
+import type { FStringFieldType, FStringListType } from "@fibr/core";
+import type { FieldProps } from "@fibr/react";
 import { RadioGroup, RadioGroupItem, Text } from "@rafty/ui";
 import { Controller, useFormContext } from "react-hook-form";
-import { FStringFieldType, FStringListType } from "@fibr/core";
-import { FieldProps } from "@fibr/react";
 
 export function RadioField({ name, field }: FieldProps<FStringFieldType>) {
   const { control } = useFormContext();
@@ -32,14 +33,14 @@ function Options({ items }: { items: FStringListType<string>[] }) {
       components.push(
         <RadioGroupItem key={index} value={value as string} id={label}>
           {label}
-        </RadioGroupItem>
+        </RadioGroupItem>,
       );
     else
       components.push(
         <div key={index} className="space-y-1">
           <Text className="text-sm font-medium opacity-70">{label}</Text>
           <Options items={value} />
-        </div>
+        </div>,
       );
   });
 

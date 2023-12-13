@@ -1,12 +1,13 @@
-import { FFormType } from "@fibr/core";
-import { ReactNode, createContext, useContext } from "react";
+"use client";
+import type { FFormType } from "@fibr/core";
+import React from "react";
 import { FieldValues, Resolver } from "react-hook-form";
 
 export type BlueprintContext<T extends FieldValues = any> = {
   readonly blueprint: FFormType<T, Resolver<T, any>>;
 };
 
-const BlueprintContext = createContext<BlueprintContext>({
+const BlueprintContext = React.createContext<BlueprintContext>({
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   blueprint: null,
@@ -15,7 +16,7 @@ const BlueprintContext = createContext<BlueprintContext>({
 export function BlueprintProvider<T extends FieldValues>({
   children,
   blueprint,
-}: { children: ReactNode } & BlueprintContext<T>) {
+}: { children: React.ReactNode } & BlueprintContext<T>) {
   return (
     <BlueprintContext.Provider value={{ blueprint }}>
       {children}
@@ -23,4 +24,4 @@ export function BlueprintProvider<T extends FieldValues>({
   );
 }
 
-export const useBlueprint = () => useContext(BlueprintContext);
+export const useBlueprint = () => React.useContext(BlueprintContext);

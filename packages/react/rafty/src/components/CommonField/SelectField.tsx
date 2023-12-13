@@ -1,7 +1,8 @@
+"use client";
+import type { FStringFieldType, FStringListType } from "@fibr/core";
+import type { FieldProps } from "@fibr/react";
 import { Select, SelectItem } from "@rafty/ui";
 import { useFormContext } from "react-hook-form";
-import { FStringFieldType, FStringListType } from "@fibr/core";
-import { FieldProps } from "@fibr/react";
 
 export function SelectField({ name, field }: FieldProps<FStringFieldType>) {
   const { register } = useFormContext();
@@ -25,7 +26,7 @@ function Options({ items }: { items: FStringListType<string>[] }) {
       components.push(
         <SelectItem key={index} value={value as string}>
           {label}
-        </SelectItem>
+        </SelectItem>,
       );
     else components.push(<Options key={index} items={value} />);
   });

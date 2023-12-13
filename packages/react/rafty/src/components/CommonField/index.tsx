@@ -1,13 +1,13 @@
-import { FStringFieldType } from "@fibr/core";
+import type { FStringFieldType } from "@fibr/core";
+import type { FieldProps } from "@fibr/react";
+import { classNames } from "@rafty/ui";
 import { FieldWrapper } from "../FieldWrapper";
 import { CheckboxField } from "./CheckboxField";
-import { MultiSelectField } from "./MultiSelectField";
 import { ComboboxField } from "./ComboboxField";
+import { InputField } from "./InputField";
+import { MultiSelectField } from "./MultiSelectField";
 import { RadioField } from "./RadioField";
 import { SelectField } from "./SelectField";
-import { InputField } from "./InputField";
-import { classNames } from "@rafty/ui";
-import { FieldProps } from "@fibr/react";
 
 const LAYOUTS = {
   checkbox: CheckboxField,

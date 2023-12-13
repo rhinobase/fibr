@@ -1,6 +1,6 @@
-import { FArrayFieldType } from "@fibr/core";
+import type { FArrayFieldType } from "@fibr/core";
+import { type FieldProps, RenderField } from "@fibr/react";
 import { ArrayFieldWrapper } from "./ArrayFieldWrapper";
-import { RenderField, FieldProps } from "@fibr/react";
 
 export function ListField({ name, field }: FieldProps<FArrayFieldType>) {
   return (

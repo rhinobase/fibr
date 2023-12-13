@@ -1,8 +1,9 @@
-import { useBlueprint } from "./providers";
+"use client";
 import _ from "lodash";
 import { RenderField } from "./RenderField";
+import { useBlueprint } from "./providers";
 
-type Fields = {
+export type Fields = {
   include?: string | string[];
   exclude?: string | string[];
 };

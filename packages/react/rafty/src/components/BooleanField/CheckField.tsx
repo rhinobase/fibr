@@ -1,8 +1,9 @@
-import { Controller, useFormContext } from "react-hook-form";
+"use client";
+import type { FBooleanFieldType } from "@fibr/core";
+import type { FieldProps } from "@fibr/react";
 import { Checkbox, Label, Text } from "@rafty/ui";
-import { FBooleanFieldType } from "@fibr/core";
-import { ReactNode } from "react";
-import { FieldProps } from "@fibr/react";
+import React from "react";
+import { Controller, useFormContext } from "react-hook-form";
 
 export function CheckField({ name, field }: FieldProps<FBooleanFieldType>) {
   const { control } = useFormContext();
@@ -10,7 +11,7 @@ export function CheckField({ name, field }: FieldProps<FBooleanFieldType>) {
 
   const required = field.required as boolean | undefined;
 
-  const CheckboxField = (props: { children?: ReactNode }) => {
+  const CheckboxField = (props: { children?: React.ReactNode }) => {
     return (
       <Controller
         name={name}

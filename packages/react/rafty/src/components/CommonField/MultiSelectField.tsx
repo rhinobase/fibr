@@ -1,4 +1,6 @@
-import { FStringFieldType, FStringListType } from "@fibr/core";
+"use client";
+import type { FStringFieldType, FStringListType } from "@fibr/core";
+import type { FieldProps } from "@fibr/react";
 import {
   Command,
   CommandEmpty,
@@ -12,16 +14,15 @@ import {
   Text,
   classNames,
 } from "@rafty/ui";
-import { useState } from "react";
+import React from "react";
 import { Controller, useController, useFormContext } from "react-hook-form";
 import { HiCheck } from "react-icons/hi";
 import { HiChevronUpDown, HiXMark } from "react-icons/hi2";
-import { FieldProps } from "@fibr/react";
 import { findLabel } from "./ComboboxField";
 
 export function MultiSelectField(props: FieldProps<FStringFieldType>) {
   const { control } = useFormContext();
-  const [isOpen, setOpen] = useState(false);
+  const [isOpen, setOpen] = React.useState(false);
 
   return (
     <Controller
@@ -41,7 +42,7 @@ export function MultiSelectField(props: FieldProps<FStringFieldType>) {
                   isOpen
                     ? "text-primary-500 dark:text-primary-400"
                     : "text-secondary-500 dark:text-secondary-400",
-                  "shrink-0"
+                  "shrink-0",
                 )}
               />
             }
@@ -67,9 +68,9 @@ export function MultiSelectField(props: FieldProps<FStringFieldType>) {
                         // Removing the value
                         field.value.splice(
                           field.value.findIndex(
-                            (item: string | number) => item == value
+                            (item: string | number) => item == value,
                           ),
-                          1
+                          1,
                         );
 
                         // Saving the new value array
@@ -86,7 +87,7 @@ export function MultiSelectField(props: FieldProps<FStringFieldType>) {
               className={classNames(
                 field.value?.length > 1 ? "visible" : "invisible",
                 "absolute right-8 rounded p-0.5",
-                "dark:focus:ring-secondary-100 dark:focus:ring-offset-secondary-900 text-red-500 hover:bg-red-200/40 focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-1 dark:text-red-300 dark:hover:bg-red-300/10"
+                "dark:focus:ring-secondary-100 dark:focus:ring-offset-secondary-900 text-red-500 hover:bg-red-200/40 focus:outline-none focus:ring-2 focus:ring-red-200 focus:ring-offset-1 dark:text-red-300 dark:hover:bg-red-300/10",
               )}
               onClick={(event) => {
                 event.preventDefault();
@@ -157,13 +158,13 @@ function Options(props: {
           {field.value.find((item: string | number) => item === value) && (
             <HiCheck />
           )}
-        </CommandItem>
+        </CommandItem>,
       );
     else
       components.push(
         <CommandGroup key={index} heading={label}>
           <Options {...props} items={value} />
-        </CommandGroup>
+        </CommandGroup>,
       );
   });
 
