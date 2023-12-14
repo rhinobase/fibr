@@ -155,7 +155,7 @@ function Options(props: {
           className="justify-between"
         >
           {label}
-          {field.value.find((item: string | number) => item === value) && (
+          {field.value?.find((item: string | number) => item === value) && (
             <HiCheck />
           )}
         </CommandItem>,

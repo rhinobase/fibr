@@ -24,8 +24,8 @@ export function DateField({ name, field }: FieldProps<FDateFieldType>) {
         render={({ field: { value, onChange, ref, ...register } }) => (
           <DatePicker
             {...register}
+            selected={value}
             onSelect={onChange}
-            selected={new Date(value)}
             disabled={readOnly}
           />
         )}

@@ -4,15 +4,15 @@ import React from "react";
 import {
   FormProvider,
   useForm,
-  type FieldValues,
-  type SubmitErrorHandler,
-  type SubmitHandler,
+  FieldValues,
+  SubmitErrorHandler,
+  SubmitHandler,
 } from "react-hook-form";
 import { Fields } from "./Fields";
 import {
   BlueprintProvider,
   useComponents,
-  type BlueprintContext,
+  BlueprintContext,
 } from "./providers";
 
 export type FibrForm<T extends FieldValues> = {
