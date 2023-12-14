@@ -2,7 +2,8 @@
   "name": "@fibr/core",
   "version": "0.3.0",
   "peerDependencies": {
-    "@swc/helpers": "~0.5.0"
+    "@swc/helpers": "~0.5.0",
+    "lodash": "^4.17.21"
   },
   "type": "commonjs",
   "main": "./src/index.js",

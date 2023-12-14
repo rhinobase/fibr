@@ -1,27 +1,38 @@
 import { FFieldType } from "./types";
-import { getValue } from "./utils";
+import _ from "lodash";
 
-export class FField implements FFieldType {
+export class FField<T extends Record<string, unknown>>
+  implements FFieldType<T>
+{
   type: string;
   label?: string;
   description?: string;
   fieldset?: string;
   group?: string;
-  parent?: FFieldType;
   private _hidden?: boolean | (() => boolean);
   private _readOnly?: boolean | (() => boolean);
   private _required?: boolean | (() => boolean);
+  options?: T;
 
-  constructor(config: FFieldType) {
+  constructor(config: FFieldType<T>) {
+    const {
+      hidden = false,
+      readOnly = false,
+      required = false,
+      options = {},
+      defaults = {},
+    } = config;
+
     this.type = config.type;
     this.label = config.label;
     this.description = config.description;
-    this._hidden = config.hidden ?? false;
-    this._readOnly = config.readOnly ?? false;
-    this._required = config.required ?? false;
+    this._hidden = hidden;
+    this._readOnly = readOnly;
+    this._required = required;
     this.fieldset = config.fieldset;
     this.group = config.group;
-    this.parent = config.parent;
+
+    this.options = _.merge(options, defaults) as T;
   }
 
   get hidden() {
@@ -35,4 +46,22 @@ export class FField implements FFieldType {
   get required() {
     return getValue(this._required);
   }
+
+  toJson() {
+    // TODO: Need to implement this!
+    return { type: this.type };
+  }
+
+  static create(config: FFieldType) {
+    return new FField(config);
+  }
+}
+
+type Fn = (...args: unknown[]) => unknown;
+function getValue<
+  Provided,
+  T = Provided extends Fn ? ReturnType<Provided> : Provided,
+>(valueOrFn?: Provided): T | undefined {
+  if (valueOrFn == undefined) return undefined;
+  return typeof valueOrFn === "function" ? valueOrFn() : valueOrFn;
 }
