@@ -1,5 +1,5 @@
 import { FFieldType } from "./types";
-import _ from "lodash";
+import _merge from "lodash.merge";
 
 export class FField<T extends Record<string, unknown>>
   implements FFieldType<T>
@@ -32,7 +32,7 @@ export class FField<T extends Record<string, unknown>>
     this.fieldset = config.fieldset;
     this.group = config.group;
 
-    this.options = _.merge(options, defaults) as T;
+    this.options = _merge(options, defaults) as T;
   }
 
   get hidden() {
