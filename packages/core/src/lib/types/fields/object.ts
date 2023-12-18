@@ -1,4 +1,4 @@
-import { FFieldType } from "./field";
+import { FFieldType } from "../field";
 
 export type FObjectOptions = {
   fields: Record<string, FFieldType>;

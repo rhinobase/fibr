@@ -1,3 +1,9 @@
 export * from "./types";
-export * from "./field";
-export * from "./main";
+
+import { FField } from "./field";
+import { FForm } from "./form";
+
+export const f = {
+  form: FForm.create,
+  field: FField.create,
+};
