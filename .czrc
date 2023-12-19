@@ -11,14 +11,6 @@
     {
       "value": "react",
       "name": "react:                anything React specific"
-    },
-    {
-      "value": "plugins",
-      "name": "plugins:              anything plugins specific"
-    },
-    {
-      "value": "stroybook",
-      "name": "stroybook:            anything Stroybook specific"
     }
   ],
   "scopesSearchValue": true,
