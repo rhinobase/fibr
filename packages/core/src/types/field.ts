@@ -12,5 +12,4 @@ export type FFieldType<
   group?: string;
   // For storing data
   options?: T;
-  defaults?: Partial<T>;
 };

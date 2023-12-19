@@ -75,6 +75,9 @@
         "style": "css",
         "linter": "eslint"
       }
+    },
+    "@nx/workspace:move": {
+      "projectNameAndRootFormat": "as-provided"
     }
   }
 }

@@ -1,4 +1,2 @@
-import { f } from "./lib";
-
-export * from "./lib";
-export default f;
+export * from "./types";
+export * from "./utils";

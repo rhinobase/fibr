@@ -1,51 +1,43 @@
 {
-  "name": "rafty",
+  "name": "react",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/react/rafty/src",
+  "sourceRoot": "packages/react/src",
   "projectType": "library",
   "tags": [],
   "targets": {
     "lint": {
       "executor": "@nx/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "packages/react/rafty/**/*.{ts,tsx,js,jsx}",
-          "packages/react/rafty/package.json"
+          "packages/react/**/*.{ts,tsx,js,jsx}",
+          "packages/react/package.json"
         ]
       }
     },
     "build": {
       "executor": "@nx/rollup:rollup",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/react/rafty",
-        "tsConfig": "packages/react/rafty/tsconfig.lib.json",
-        "project": "packages/react/rafty/package.json",
-        "entryFile": "packages/react/rafty/src/index.ts",
+        "outputPath": "dist/packages/react",
+        "tsConfig": "packages/react/tsconfig.lib.json",
+        "project": "packages/react/package.json",
+        "entryFile": "packages/react/src/index.ts",
         "external": [
           "react",
           "react-dom",
           "react/jsx-runtime",
           "@fibr/core",
-          "@fibr/react",
-          "@hookform/error-message",
-          "@rafty/ui",
           "lodash",
           "react",
           "react-hook-form",
-          "react-icons",
           "core-js"
         ],
         "rollupConfig": "@nx/react/plugins/bundle-rollup",
         "compiler": "babel",
         "assets": [
           {
-            "glob": "packages/react/rafty/README.md",
+            "glob": "packages/react/README.md",
             "input": ".",
             "output": "."
           }
