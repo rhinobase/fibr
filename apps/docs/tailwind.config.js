@@ -9,7 +9,7 @@ module.exports = {
   content: [
     join(
       __dirname,
-      "{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,mdx}"
+      "{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,mdx}",
     ),
     "../../node_modules/@rafty/ui/**/*.{js,cjs}",
     ...createGlobPatternsForDependencies(__dirname),

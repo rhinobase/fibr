@@ -129,7 +129,7 @@ function CodePanel({
 
   if (!code) {
     throw new Error(
-      "`CodePanel` requires a `code` prop, or a child with a `code` prop."
+      "`CodePanel` requires a `code` prop, or a child with a `code` prop.",
     );
   }
 
@@ -165,7 +165,7 @@ function CodeGroupHeader({
         <h3
           className={classNames(
             "dark:text my-auto mr-auto text-xs font-semibold text-white",
-            !hasTabs ? "py-3" : "py-0"
+            !hasTabs ? "py-3" : "py-0",
           )}
         >
           {title}
@@ -253,7 +253,7 @@ const usePreferredLanguageStore = create<{
     set((state) => ({
       preferredLanguages: [
         ...state.preferredLanguages.filter(
-          (preferredLanguage) => preferredLanguage !== language
+          (preferredLanguage) => preferredLanguage !== language,
         ),
         language,
       ],
@@ -265,7 +265,7 @@ function useTabGroupProps(availableLanguages: Array<string>) {
     usePreferredLanguageStore();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const activeLanguage = [...availableLanguages].sort(
-    (a, z) => preferredLanguages.indexOf(z) - preferredLanguages.indexOf(a)
+    (a, z) => preferredLanguages.indexOf(z) - preferredLanguages.indexOf(a),
   )[0];
   const languageIndex = availableLanguages.indexOf(activeLanguage);
   const newSelectedIndex = languageIndex === -1 ? selectedIndex : languageIndex;
@@ -281,7 +281,7 @@ function useTabGroupProps(availableLanguages: Array<string>) {
     selectedIndex,
     onChange: (newSelectedIndex: number) => {
       preventLayoutShift(() =>
-        addPreferredLanguage(availableLanguages[newSelectedIndex])
+        addPreferredLanguage(availableLanguages[newSelectedIndex]),
       );
     },
   };
@@ -337,7 +337,7 @@ export function Code({
   if (isGrouped) {
     if (typeof children !== "string") {
       throw new Error(
-        "`Code` children must be a string when nested inside a `CodeGroup`."
+        "`Code` children must be a string when nested inside a `CodeGroup`.",
       );
     }
     return <code {...props} dangerouslySetInnerHTML={{ __html: children }} />;

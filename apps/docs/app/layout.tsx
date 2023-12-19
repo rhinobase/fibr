@@ -24,7 +24,7 @@ export default async function RootLayout({
     pages.map(async (filename) => [
       "/" + filename.replace(/(^|\/)page\.mdx$/, ""),
       (await import(`./${filename}`)).sections,
-    ])
+    ]),
   )) as Array<[string, Array<Section>]>;
   const allSections = Object.fromEntries(allSectionsEntries);
 
