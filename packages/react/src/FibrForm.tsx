@@ -1,6 +1,5 @@
 "use client";
-import { classNames } from "@rafty/ui";
-import React from "react";
+import { HTMLAttributes, PropsWithChildren } from "react";
 import {
   FormProvider,
   useForm,
@@ -15,12 +14,12 @@ import {
   BlueprintContext,
 } from "./providers";
 
-export type FibrForm<T extends FieldValues> = {
-  children: React.ReactNode;
+export type FibrForm<T extends FieldValues> = PropsWithChildren<{
   onSubmit: SubmitHandler<T>;
   onError?: SubmitErrorHandler<T>;
-} & Pick<BlueprintContext<T>, "blueprint"> &
-  Pick<React.HTMLAttributes<HTMLFormElement>, "className" | "style">;
+}> &
+  Pick<BlueprintContext<T>, "blueprint"> &
+  Pick<HTMLAttributes<HTMLFormElement>, "className" | "style">;
 
 export function FibrForm<T extends FieldValues>({
   blueprint,
@@ -46,7 +45,7 @@ export function FibrForm<T extends FieldValues>({
             onError ?? defaultErrorHandler,
           )}
           {...props}
-          className={classNames("space-y-3", className)}
+          className={`space-y-3 ${className ?? ""}`.trim()}
         >
           {children ?? <Fields />}
         </form>

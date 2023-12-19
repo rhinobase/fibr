@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import { PropsWithChildren, createContext, useContext } from "react";
 import type { FieldProps } from "../types";
 
 type ComponentsContext = {
@@ -7,7 +7,7 @@ type ComponentsContext = {
   readonly onError?: (errors: unknown) => void;
 };
 
-const ComponentsContext = React.createContext<ComponentsContext>({
+const ComponentsContext = createContext<ComponentsContext>({
   components: {},
 });
 
@@ -15,7 +15,7 @@ export function ComponentsProvider({
   children,
   components,
   onError,
-}: { children: React.ReactNode } & ComponentsContext) {
+}: PropsWithChildren<ComponentsContext>) {
   return (
     <ComponentsContext.Provider value={{ components, onError }}>
       {children}
@@ -23,4 +23,4 @@ export function ComponentsProvider({
   );
 }
 
-export const useComponents = () => React.useContext(ComponentsContext);
+export const useComponents = () => useContext(ComponentsContext);
