@@ -24,6 +24,9 @@ const nextConfig = {
     svgr: false,
   },
   pageExtensions: ["js", "jsx", "ts", "tsx", "mdx"],
+  experimental: {
+    optimizePackageImports: ["@rafty/ui"],
+  },
 };
 
 const plugins = [withSearch, withMDX, withNx];
