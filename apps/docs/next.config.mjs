@@ -1,5 +1,5 @@
-import { composePlugins, withNx } from "@nx/next";
 import nextMDX from "@next/mdx";
+import { composePlugins, withNx } from "@nx/next";
 
 import { recmaPlugins } from "./mdx/recma.mjs";
 import { rehypePlugins } from "./mdx/rehype.mjs";

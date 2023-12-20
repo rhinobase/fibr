@@ -1,11 +1,11 @@
 "use client";
-import { useEffect, useRef } from "react";
-import Link from "next/link";
 import { useInView } from "framer-motion";
+import Link from "next/link";
+import { useEffect, useRef } from "react";
+import { HiLink } from "react-icons/hi2";
 import { useSectionStore } from "../components/SectionProvider";
 import { Tag } from "../components/Tag";
 import { remToPx } from "../lib/remToPx";
-import { HiLink } from "react-icons/hi2";
 
 function Eyebrow({ tag, label }: { tag?: string; label?: string }) {
   if (!tag && !label) {

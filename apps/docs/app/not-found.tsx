@@ -1,6 +1,6 @@
-import { HeroPattern } from "../components/HeroPattern";
 import Link from "next/link";
 import { HiArrowRight } from "react-icons/hi";
+import { HeroPattern } from "../components/HeroPattern";
 
 export default function NotFound() {
   return (

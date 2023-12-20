@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Heading } from "../components/Heading";
 import { HiArrowRight } from "react-icons/hi";
+import { Heading } from "../components/Heading";
 
 const guides = [
   {

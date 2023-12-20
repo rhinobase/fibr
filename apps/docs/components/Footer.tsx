@@ -1,10 +1,10 @@
 "use client";
+import { Button } from "@rafty/ui";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { navigation } from "../components/Navigation";
-import { Button } from "@rafty/ui";
-import { HiArrowRight, HiArrowLeft } from "react-icons/hi";
 import { BsDiscord, BsGithub, BsTwitter } from "react-icons/bs";
+import { HiArrowLeft, HiArrowRight } from "react-icons/hi";
+import { navigation } from "../components/Navigation";
 
 function PageLink({
   label,

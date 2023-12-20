@@ -1,14 +1,10 @@
 "use client";
 import {
-  forwardRef,
-  Fragment,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-} from "react";
-import Highlighter from "react-highlight-words";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+  type AutocompleteApi,
+  type AutocompleteCollection,
+  type AutocompleteState,
+  createAutocomplete,
+} from "@algolia/autocomplete-core";
 import {
   Button,
   DialogContent,
@@ -16,16 +12,20 @@ import {
   InputField,
   Kbd,
 } from "@rafty/ui";
+import { Dialog, classNames } from "@rafty/ui";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
-  type AutocompleteApi,
-  createAutocomplete,
-  type AutocompleteState,
-  type AutocompleteCollection,
-} from "@algolia/autocomplete-core";
-import { classNames, Dialog } from "@rafty/ui";
+  Fragment,
+  forwardRef,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from "react";
+import Highlighter from "react-highlight-words";
+import { HiMagnifyingGlass } from "react-icons/hi2";
 import { navigation } from "../components/Navigation";
 import { type Result } from "../mdx/search.mjs";
-import { HiMagnifyingGlass } from "react-icons/hi2";
 import { useSearchDialog } from "./store";
 
 type EmptyObject = Record<string, never>;

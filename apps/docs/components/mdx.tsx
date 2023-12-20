@@ -1,9 +1,9 @@
-import Link from "next/link";
 import { classNames } from "@rafty/ui";
+import Link from "next/link";
+import { HiInformationCircle } from "react-icons/hi2";
 import { Feedback } from "../components/Feedback";
 import { Heading } from "../components/Heading";
 import { Prose } from "../components/Prose";
-import { HiInformationCircle } from "react-icons/hi2";
 
 export const a = Link;
 export { CodeGroup, Code as code, Pre as pre } from "../components/Code";

@@ -1,5 +1,13 @@
 "use client";
 import {
+  Button,
+  Tab,
+  TabContent,
+  TabList,
+  TabTrigger,
+  classNames,
+} from "@rafty/ui";
+import {
   Children,
   createContext,
   isValidElement,
@@ -8,17 +16,9 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  Button,
-  Tab,
-  TabContent,
-  TabList,
-  TabTrigger,
-  classNames,
-} from "@rafty/ui";
+import { HiCheck, HiOutlineDocumentDuplicate } from "react-icons/hi";
 import { create } from "zustand";
 import { Tag } from "../components/Tag";
-import { HiCheck, HiOutlineDocumentDuplicate } from "react-icons/hi";
 
 const languageNames: Record<string, string> = {
   js: "JavaScript",

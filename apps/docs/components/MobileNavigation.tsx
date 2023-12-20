@@ -1,7 +1,4 @@
 "use client";
-import { createContext, useContext, useEffect, useRef } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
-import { Navigation } from "../components/Navigation";
 import {
   Button,
   Drawer,
@@ -9,8 +6,11 @@ import {
   DrawerContent,
   DrawerOverlay,
 } from "@rafty/ui";
-import { useDrawerDialog } from "./store";
+import { usePathname, useSearchParams } from "next/navigation";
+import { createContext, useContext, useEffect, useRef } from "react";
 import { HiMenu } from "react-icons/hi";
+import { Navigation } from "../components/Navigation";
+import { useDrawerDialog } from "./store";
 
 const IsInsideMobileNavigationContext = createContext(false);
 

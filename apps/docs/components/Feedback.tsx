@@ -1,6 +1,6 @@
 "use client";
-import { useState } from "react";
 import { Button } from "@rafty/ui";
+import { useState } from "react";
 import { HiCheckCircle } from "react-icons/hi2";
 
 export function Feedback() {

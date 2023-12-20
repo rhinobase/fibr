@@ -1,12 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
+import { HiArrowRight } from "react-icons/hi";
 import { Heading } from "../components/Heading";
 import logoGo from "../public/logos/go.svg";
 import logoNode from "../public/logos/node.svg";
 import logoPhp from "../public/logos/php.svg";
 import logoPython from "../public/logos/python.svg";
 import logoRuby from "../public/logos/ruby.svg";
-import Link from "next/link";
-import { HiArrowRight } from "react-icons/hi";
 
 const libraries = [
   {

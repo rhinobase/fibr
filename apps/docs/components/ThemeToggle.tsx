@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
 import { Button } from "@rafty/ui";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 import { HiOutlineMoon, HiOutlineSun } from "react-icons/hi";
 
 export function ThemeToggle() {

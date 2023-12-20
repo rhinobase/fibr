@@ -1,11 +1,11 @@
 import glob from "fast-glob";
 
-import { Providers } from "./providers";
 import { Layout } from "../components/Layout";
+import { Providers } from "./providers";
 
-import "./globals.css";
 import { type Metadata } from "next";
 import { type Section } from "../components/SectionProvider";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: {

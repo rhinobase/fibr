@@ -1,15 +1,15 @@
 "use client";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
+import { Suspense } from "react";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { Logo } from "../components/Logo";
 import { Navigation } from "../components/Navigation";
 import { type Section, SectionProvider } from "../components/SectionProvider";
-import { SearchDialog } from "./Search";
-import { Suspense } from "react";
 import { MobileNavigationDialog } from "./MobileNavigation";
+import { SearchDialog } from "./Search";
 
 export function Layout({
   children,
