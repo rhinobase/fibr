@@ -1,6 +1,6 @@
 import { slugifyWithCounter } from "@sindresorhus/slugify";
 import * as acorn from "acorn";
-import { toString } from "mdast-util-to-string";
+import { toString as _toString } from "mdast-util-to-string";
 import { mdxAnnotations } from "mdx-annotations";
 import shiki from "shiki";
 import { visit } from "unist-util-visit";
@@ -56,7 +56,7 @@ function rehypeSlugify() {
     const slugify = slugifyWithCounter();
     visit(tree, "element", (node) => {
       if (node.tagName === "h2" && !node.properties.id) {
-        node.properties.id = slugify(toString(node));
+        node.properties.id = slugify(_toString(node));
       }
     });
   };

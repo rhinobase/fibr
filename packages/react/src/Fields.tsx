@@ -20,7 +20,7 @@ export function Fields(props: Fields) {
   else if (props.exclude) fields = _.omit(blueprint.fields, props.exclude);
   else fields = blueprint.fields;
 
-  return Object.entries(fields).map(([name, field], index) => (
-    <RenderField key={index} name={name} field={field} />
+  return Object.entries(fields).map(([name, field]) => (
+    <RenderField key={name} name={name} field={field} />
   ));
 }

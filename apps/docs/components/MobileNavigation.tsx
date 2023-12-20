@@ -1,4 +1,5 @@
 "use client";
+import { Bars3Icon } from "@heroicons/react/24/outline";
 import {
   Button,
   Drawer,
@@ -8,7 +9,6 @@ import {
 } from "@rafty/ui";
 import { usePathname, useSearchParams } from "next/navigation";
 import { createContext, useContext, useEffect, useRef } from "react";
-import { HiMenu } from "react-icons/hi";
 import { Navigation } from "../components/Navigation";
 import { useDrawerDialog } from "./store";
 
@@ -58,7 +58,7 @@ export function MobileNavigation() {
         variant="ghost"
         onClick={() => setOpen(true)}
       >
-        <HiMenu size={20} />
+        <Bars3Icon width={20} height={20} />
       </Button>
     </IsInsideMobileNavigationContext.Provider>
   );

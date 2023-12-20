@@ -1,4 +1,5 @@
 "use client";
+import { CheckIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import {
   Button,
   Tab,
@@ -16,7 +17,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { HiCheck, HiOutlineDocumentDuplicate } from "react-icons/hi";
 import { create } from "zustand";
 import { Tag } from "../components/Tag";
 
@@ -74,9 +74,9 @@ function CopyButton({ code }: { code: string }) {
         }}
         leftIcon={
           copied ? (
-            <HiCheck className="text-primary-400" size={15} />
+            <CheckIcon className="text-primary-400" width={16} height={16} />
           ) : (
-            <HiOutlineDocumentDuplicate size={15} />
+            <DocumentDuplicateIcon width={16} height={16} />
           )
         }
       >
@@ -340,6 +340,7 @@ export function Code({
         "`Code` children must be a string when nested inside a `CodeGroup`.",
       );
     }
+    // biome-ignore lint/security/noDangerouslySetInnerHtml: for showing code string
     return <code {...props} dangerouslySetInnerHTML={{ __html: children }} />;
   }
 

@@ -1,9 +1,9 @@
 "use client";
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { Button } from "@rafty/ui";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BsDiscord, BsGithub, BsTwitter } from "react-icons/bs";
-import { HiArrowLeft, HiArrowRight } from "react-icons/hi";
 import { navigation } from "../components/Navigation";
 
 function PageLink({
@@ -22,8 +22,12 @@ function PageLink({
           className="!bg-secondary-100 hover:!bg-secondary-200 dark:!bg-secondary-800 dark:border-secondary-700 dark:hover:!bg-secondary-700/70 !rounded-full !py-1 focus:ring-0"
           aria-label={`${label}: ${page.title}`}
           variant="solid"
-          leftIcon={previous ? <HiArrowLeft /> : undefined}
-          rightIcon={!previous ? <HiArrowRight /> : undefined}
+          leftIcon={
+            previous ? <ArrowLeftIcon width={16} height={16} /> : undefined
+          }
+          rightIcon={
+            !previous ? <ArrowRightIcon width={16} height={16} /> : undefined
+          }
         >
           {label}
         </Button>
@@ -97,8 +101,8 @@ function SmallPrint() {
         &copy; Copyright {new Date().getFullYear()}. All rights reserved.
       </p>
       <div className="flex items-center gap-5">
-        {SOCIALS.map(({ name, icon: Icon, link }, index) => (
-          <Link href={link} key={index}>
+        {SOCIALS.map(({ name, icon: Icon, link }) => (
+          <Link href={link} key={name}>
             <Icon
               size={17}
               className="hover:fill-secondary-900 fill-secondary-500 dark:hover:fill-secondary-300 dark:fill-secondary-500 transition-all"

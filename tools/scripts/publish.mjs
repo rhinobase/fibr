@@ -49,11 +49,11 @@ process.chdir(outputPath);
 
 // Updating the version in "package.json" before publishing
 try {
-  const json = JSON.parse(readFileSync(`package.json`).toString());
+  const json = JSON.parse(readFileSync("package.json").toString());
   json.version = version;
-  writeFileSync(`package.json`, JSON.stringify(json, null, 2));
+  writeFileSync("package.json", JSON.stringify(json, null, 2));
 } catch (e) {
-  console.error(`Error reading package.json file from library build output.`);
+  console.error("Error reading package.json file from library build output.");
 }
 
 // Execute "npm publish" to publish

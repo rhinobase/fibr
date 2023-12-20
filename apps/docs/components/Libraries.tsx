@@ -1,6 +1,6 @@
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
-import { HiArrowRight } from "react-icons/hi";
 import { Heading } from "../components/Heading";
 import logoGo from "../public/logos/go.svg";
 import logoNode from "../public/logos/node.svg";
@@ -68,7 +68,7 @@ export function Libraries() {
                 className="text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 mt-4 flex w-max items-center gap-1.5 font-semibold transition-all"
               >
                 <p>Read more</p>
-                <HiArrowRight />
+                <ArrowRightIcon width={16} height={16} />
               </Link>
             </div>
             <Image

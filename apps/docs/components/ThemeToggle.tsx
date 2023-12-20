@@ -1,7 +1,7 @@
+import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
 import { Button } from "@rafty/ui";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { HiOutlineMoon, HiOutlineSun } from "react-icons/hi";
 
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
@@ -20,8 +20,16 @@ export function ThemeToggle() {
       aria-label={mounted ? `Switch to ${otherTheme} theme` : "Toggle theme"}
       onClick={() => setTheme(otherTheme)}
     >
-      <HiOutlineSun className="stroke-secondary-900 dark:hidden " />
-      <HiOutlineMoon className="hidden stroke-white dark:block" />
+      <SunIcon
+        className="stroke-secondary-900 dark:hidden"
+        width={16}
+        height={16}
+      />
+      <MoonIcon
+        className="hidden stroke-white dark:block"
+        width={16}
+        height={16}
+      />
     </Button>
   );
 }

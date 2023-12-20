@@ -38,6 +38,7 @@ export function GridPattern({
       />
       {squares && (
         <svg x={x} y={y} className="overflow-visible">
+          <title>square</title>
           {squares.map(([x, y]) => (
             <rect
               strokeWidth="0"

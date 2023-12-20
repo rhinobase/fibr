@@ -1,7 +1,7 @@
 "use client";
+import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { Button } from "@rafty/ui";
 import { useState } from "react";
-import { HiCheckCircle } from "react-icons/hi2";
 
 export function Feedback() {
   const [submitted, setSubmitted] = useState(false);
@@ -47,9 +47,10 @@ export function Feedback() {
           style={{ opacity: 1 }}
         >
           <div className="bg-primary-50/50 text-primary-900 ring-primary-500/20 dark:bg-primary-500/5 dark:text-primary-200 dark:ring-primary-500/30 flex items-center gap-3 rounded-full py-1 pl-1.5 pr-3 text-sm ring-1 ring-inset">
-            <HiCheckCircle
+            <CheckCircleIcon
               className="text-primary-500 rounded-full bg-white"
-              size={25}
+              height={25}
+              width={25}
             />
             Thanks for your feedback!
           </div>

@@ -3,7 +3,7 @@ import * as path from "path";
 import * as url from "url";
 import { slugifyWithCounter } from "@sindresorhus/slugify";
 import glob from "fast-glob";
-import { toString } from "mdast-util-to-string";
+import { toString as _toString } from "mdast-util-to-string";
 import { remark } from "remark";
 import remarkMdx from "remark-mdx";
 import { createLoader } from "simple-functional-loader";
@@ -31,7 +31,7 @@ function extractSections() {
 
     visit(tree, (node) => {
       if (node.type === "heading" || node.type === "paragraph") {
-        const content = toString(excludeObjectExpressions(node));
+        const content = _toString(excludeObjectExpressions(node));
         if (node.type === "heading" && node.depth <= 2) {
           const hash = node.depth === 1 ? null : slugify(content);
           sections.push([content, hash, []]);
@@ -58,7 +58,7 @@ export default function A(nextConfig = {}) {
 
             const files = glob.sync("**/*.mdx", { cwd: appDir });
             const data = files.map((file) => {
-              const url = "/" + file.replace(/(^|\/)page\.mdx$/, "");
+              const url = `/${file.replace(/(^|\/)page\.mdx$/, "")}`;
               const mdx = fs.readFileSync(path.join(appDir, file), "utf8");
 
               let sections = [];

@@ -149,5 +149,8 @@ export function SectionProvider({
 
 export function useSectionStore<T>(selector: (state: SectionState) => T) {
   const store = useContext(SectionStoreContext);
-  return useStore(store!, selector);
+
+  if (!store) throw new Error("Unable to get context for SelectionStore!");
+
+  return useStore(store, selector);
 }

@@ -1,8 +1,8 @@
 "use client";
+import { LinkIcon } from "@heroicons/react/24/outline";
 import { useInView } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
-import { HiLink } from "react-icons/hi2";
 import { useSectionStore } from "../components/SectionProvider";
 import { Tag } from "../components/Tag";
 import { remToPx } from "../lib/remToPx";
@@ -42,7 +42,7 @@ function Anchor({
       {inView && (
         <div className="absolute ml-[calc(-1*var(--width))] mt-1 hidden w-[var(--width)] opacity-0 transition [--width:calc(2.625rem+0.5px+50%-min(50%,calc(theme(maxWidth.lg)+theme(spacing.8))))] group-hover:opacity-100 group-focus:opacity-100 md:block lg:z-50 2xl:[--width:theme(spacing.10)]">
           <div className="group/anchor bg-secondary-50 ring-secondary-300 hover:ring-secondary-500 dark:bg-secondary-800 dark:ring-secondary-700 dark:hover:bg-secondary-700 dark:hover:ring-secondary-600 flex h-5 w-5 items-center rounded-lg p-1 ring-1 ring-inset transition">
-            <HiLink />
+            <LinkIcon width={16} height={16} />
           </div>
         </div>
       )}

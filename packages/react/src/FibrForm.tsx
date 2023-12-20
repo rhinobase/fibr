@@ -1,6 +1,7 @@
 "use client";
 import { HTMLAttributes, PropsWithChildren } from "react";
 import {
+  DefaultValues,
   FieldValues,
   FormProvider,
   SubmitErrorHandler,
@@ -9,7 +10,7 @@ import {
 } from "react-hook-form";
 import { Fields } from "./Fields";
 import {
-  BlueprintContext,
+  BlueprintContextType,
   BlueprintProvider,
   useComponents,
 } from "./providers";
@@ -18,7 +19,7 @@ export type FibrForm<T extends FieldValues> = PropsWithChildren<{
   onSubmit: SubmitHandler<T>;
   onError?: SubmitErrorHandler<T>;
 }> &
-  Pick<BlueprintContext<T>, "blueprint"> &
+  Pick<BlueprintContextType<T>, "blueprint"> &
   Pick<HTMLAttributes<HTMLFormElement>, "className" | "style">;
 
 export function FibrForm<T extends FieldValues>({
@@ -33,7 +34,7 @@ export function FibrForm<T extends FieldValues>({
   // Adding provider for formsz
   const methods = useForm({
     resolver: blueprint.validation,
-    defaultValues: blueprint.default_values as any,
+    defaultValues: blueprint.default_values as DefaultValues<T>,
   });
 
   return (

@@ -1,5 +1,5 @@
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { HiArrowRight } from "react-icons/hi";
 import { Heading } from "../components/Heading";
 
 const guides = [
@@ -47,7 +47,7 @@ export function Guides() {
               className="text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 mt-4 flex w-max items-center gap-1.5 font-semibold transition-all"
             >
               <p>Read more</p>
-              <HiArrowRight />
+              <ArrowRightIcon width={16} height={16} />
             </Link>
           </div>
         ))}
