@@ -1,4 +1,3 @@
 export * from "./providers";
-export { Fields } from "./Fields";
-export { RenderField } from "./RenderField";
-export type { FFieldType } from "./types";
+export { Weaver, Thread } from "./components";
+export type { ThreadType } from "./types";

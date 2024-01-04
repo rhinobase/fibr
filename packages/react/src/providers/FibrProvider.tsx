@@ -1,9 +1,9 @@
 "use client";
 import { PropsWithChildren, createContext, useContext } from "react";
-import type { RenderField } from "../RenderField";
+import type { Thread } from "../components/Thread";
 
 type FibrContextType = {
-  readonly components: Record<string, (props: RenderField) => JSX.Element>;
+  readonly components: Record<string, (props: Thread) => JSX.Element>;
   readonly onError?: (errors: unknown) => void;
 };
 

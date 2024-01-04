@@ -1,9 +1,10 @@
 "use client";
 import { PropsWithChildren, createContext, useContext } from "react";
 import { Blueprint } from "../types";
+import { Weaver } from "../components/Weaver";
 
 type BlueprintContextType = {
-  readonly blueprint: Blueprint["blueprint"];
+  readonly blueprint: Blueprint;
 };
 
 const BlueprintContext = createContext<BlueprintContextType>({
@@ -16,7 +17,7 @@ export function BlueprintProvider({
 }: PropsWithChildren<BlueprintContextType>) {
   return (
     <BlueprintContext.Provider value={{ blueprint }}>
-      {children}
+      {children ?? <Weaver />}
     </BlueprintContext.Provider>
   );
 }

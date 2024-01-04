@@ -1,2 +1,2 @@
-export type { FFieldType } from "./field";
+export type { ThreadType } from "./thread";
 export type { Blueprint } from "./blueprint";

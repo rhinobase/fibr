@@ -1,4 +1,4 @@
-export type FFieldType<
+export type ThreadType<
   T extends Record<string, unknown> = Record<string, unknown>,
 > = {
   type: string;
