@@ -5,10 +5,6 @@
       "name": "web:                  anything Website specific"
     },
     {
-      "value": "core",
-      "name": "core:                 anything Core specific"
-    },
-    {
       "value": "react",
       "name": "react:                anything React specific"
     }

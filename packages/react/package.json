@@ -25,10 +25,9 @@
     "url": "https://github.com/rhinobase/fibr/issues"
   },
   "dependencies": {
-    "@fibr/core": "*",
     "lodash": "^4.17.21",
     "react-hook-form": "^7.46.2",
-    "core-js": "^3.33.0"
+    "@swc/helpers": "^0.5.3"
   },
   "peerDependencies": {
     "react": "^18.2.0"

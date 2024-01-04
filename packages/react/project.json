@@ -7,7 +7,9 @@
   "targets": {
     "lint": {
       "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
         "lintFilePatterns": [
           "packages/react/**/*.{ts,tsx,js,jsx}",
@@ -17,22 +19,14 @@
     },
     "build": {
       "executor": "@nx/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/packages/react",
         "tsConfig": "packages/react/tsconfig.lib.json",
         "project": "packages/react/package.json",
         "entryFile": "packages/react/src/index.ts",
-        "external": [
-          "react",
-          "react-dom",
-          "react/jsx-runtime",
-          "@fibr/core",
-          "lodash",
-          "react",
-          "react-hook-form",
-          "core-js"
-        ],
         "rollupConfig": "packages/react/rollup.config.js",
         "compiler": "swc",
         "assets": [

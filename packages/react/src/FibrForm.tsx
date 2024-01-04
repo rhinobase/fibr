@@ -1,7 +1,6 @@
 "use client";
 import { HTMLAttributes, PropsWithChildren } from "react";
 import {
-  DefaultValues,
   FieldValues,
   FormProvider,
   SubmitErrorHandler,
@@ -9,33 +8,33 @@ import {
   useForm,
 } from "react-hook-form";
 import { Fields } from "./Fields";
-import {
-  BlueprintContextType,
-  BlueprintProvider,
-  useComponents,
-} from "./providers";
+import { BlueprintProvider, useFibr } from "./providers";
+import { Blueprint } from "./types";
 
-export type FibrForm<T extends FieldValues> = PropsWithChildren<{
-  onSubmit: SubmitHandler<T>;
-  onError?: SubmitErrorHandler<T>;
-}> &
-  Pick<BlueprintContextType<T>, "blueprint"> &
-  Pick<HTMLAttributes<HTMLFormElement>, "className" | "style">;
+export type FibrForm<
+  TFieldValues extends FieldValues,
+  TContext,
+> = PropsWithChildren<
+  {
+    onSubmit: SubmitHandler<TFieldValues>;
+    onError?: SubmitErrorHandler<TFieldValues>;
+  } & Blueprint<TFieldValues, TContext> &
+    Pick<HTMLAttributes<HTMLFormElement>, "className" | "style">
+>;
 
-export function FibrForm<T extends FieldValues>({
+export function FibrForm<TFieldValues extends FieldValues, TContext>({
   blueprint,
   onSubmit,
   onError,
   className,
+  style,
   children,
   ...props
-}: FibrForm<T>) {
-  const { onError: defaultErrorHandler } = useComponents();
-  // Adding provider for formsz
-  const methods = useForm({
-    resolver: blueprint.validation,
-    defaultValues: blueprint.default_values as DefaultValues<T>,
-  });
+}: FibrForm<TFieldValues, TContext>) {
+  const { onError: defaultErrorHandler } = useFibr();
+
+  // Adding provider for forms
+  const methods = useForm(props);
 
   return (
     <BlueprintProvider blueprint={blueprint}>
@@ -45,8 +44,8 @@ export function FibrForm<T extends FieldValues>({
             onSubmit,
             onError ?? defaultErrorHandler,
           )}
-          {...props}
-          className={`space-y-3 ${className ?? ""}`.trim()}
+          style={style}
+          className={className}
         >
           {children ?? <Fields />}
         </form>

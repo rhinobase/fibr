@@ -1,6 +1,15 @@
-import type { FFieldType } from "@fibr/core";
-
-export type FieldProps<T = FFieldType> = {
-  name: string;
-  field: T;
+export type FFieldType<
+  T extends Record<string, unknown> = Record<string, unknown>,
+> = {
+  type: string;
+  label?: string;
+  description?: string;
+  hidden?: boolean | (() => boolean);
+  readOnly?: boolean | (() => boolean);
+  required?: boolean | (() => boolean);
+  // For Object
+  fieldset?: string;
+  group?: string;
+  // For storing data
+  options?: T;
 };

@@ -16,7 +16,7 @@
     "loose": true
   },
   "module": {
-    "type": "commonjs"
+    "type": "es6"
   },
   "minify": true,
   "sourceMaps": false,
@@ -25,7 +25,6 @@
     ".*\\.spec.tsx?$",
     ".*\\.test.tsx?$",
     "./src/jest-setup.ts$",
-    "./**/jest-setup.ts$",
-    ".*.js$"
+    "./**/jest-setup.ts$"
   ]
 }

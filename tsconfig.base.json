@@ -15,7 +15,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@fibr/core": ["packages/core/src/index.ts"],
       "@fibr/react": ["packages/react/src/index.ts"]
     }
   },

@@ -1,17 +1,21 @@
 "use client";
-import { useComponents } from "./providers";
-import type { FieldProps } from "./types";
+import { useFibr } from "./providers";
+import { FFieldType } from "./types";
 
-export function RenderField(props: FieldProps) {
-  const { components } = useComponents();
+export type RenderField = {
+  name: string;
+} & FFieldType;
 
-  const Field = components[props.field.type];
+export function RenderField(props: RenderField) {
+  const { components } = useFibr();
+
+  const Field = components[props.type];
 
   // No component found
   if (!Field)
     return (
       <p>
-        Field type of <kbd>{props.field.type}</kbd> for the field with name{" "}
+        Field type of <kbd>{props.type}</kbd> for the field with name{" "}
         <kbd>{props.name}</kbd> doesn't exist!
       </p>
     );
