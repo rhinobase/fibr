@@ -1,12 +1,8 @@
 "use client";
 import { useFibr } from "../providers";
-import type { ThreadType } from "../types";
+import type { ThreadWithNameType } from "../types";
 
-export type Thread = {
-  name: string;
-} & ThreadType;
-
-export function Thread(props: Thread) {
+export function Thread(props: ThreadWithNameType) {
   const { components } = useFibr();
 
   const Comp = components[props.type];

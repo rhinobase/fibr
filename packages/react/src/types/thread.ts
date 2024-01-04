@@ -13,3 +13,7 @@ export type ThreadType<
   // For storing data
   options?: T;
 };
+
+export type ThreadWithNameType<
+  T extends Record<string, unknown> = Record<string, unknown>,
+> = { name: string } & ThreadType<T>;
