@@ -1,7 +1,7 @@
 "use client";
 import _ from "lodash";
-import { Thread } from "./Thread";
 import { useBlueprint } from "../providers";
+import { Thread } from "./Thread";
 
 export type Weaver = {
   include?: string | string[];
