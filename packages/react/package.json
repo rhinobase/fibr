@@ -25,11 +25,11 @@
     "url": "https://github.com/rhinobase/fibr/issues"
   },
   "dependencies": {
-    "@swc/helpers": "^0.5.3",
-    "lodash": "^4.17.21"
+    "@swc/helpers": "^0.5.3"
   },
   "peerDependencies": {
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "lodash": "^4.17.21"
   },
   "sideEffects": false
 }
