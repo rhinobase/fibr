@@ -1,13 +1,18 @@
 import { classNames } from "@rafty/ui";
+import { ComponentPropsWithoutRef, ElementType } from "react";
 
-export function Prose<T extends React.ElementType = "div">({
+export type Prose<T extends ElementType> = Omit<
+  ComponentPropsWithoutRef<T>,
+  "as"
+> & {
+  as?: T;
+};
+
+export function Prose<T extends ElementType = "div">({
   as,
   className,
   ...props
-}: Omit<React.ComponentPropsWithoutRef<T>, "as" | "className"> & {
-  as?: T;
-  className?: string;
-}) {
+}: Prose<T>) {
   const Component = as ?? "div";
 
   return (

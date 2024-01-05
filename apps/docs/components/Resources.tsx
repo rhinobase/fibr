@@ -6,25 +6,15 @@ import {
   useMotionValue,
 } from "framer-motion";
 import Link from "next/link";
-import { GridPattern } from "../components/GridPattern";
-import { Heading } from "../components/Heading";
-import { ChatBubbleIcon } from "../components/icons/ChatBubbleIcon";
-import { EnvelopeIcon } from "../components/icons/EnvelopeIcon";
-import { UserIcon } from "../components/icons/UserIcon";
-import { UsersIcon } from "../components/icons/UsersIcon";
+import { ComponentType } from "react";
+import { GridPattern } from "./GridPattern";
+import { Heading } from "./Heading";
+import { ChatBubbleIcon } from "./icons/ChatBubbleIcon";
+import { EnvelopeIcon } from "./icons/EnvelopeIcon";
+import { UserIcon } from "./icons/UserIcon";
+import { UsersIcon } from "./icons/UsersIcon";
 
-interface Resource {
-  href: string;
-  name: string;
-  description: string;
-  icon: React.ComponentType<{ className?: string }>;
-  pattern: Omit<
-    React.ComponentPropsWithoutRef<typeof GridPattern>,
-    "width" | "height" | "x"
-  >;
-}
-
-const resources: Array<Resource> = [
+const RESOURCES: Resource[] = [
   {
     href: "/contacts",
     name: "Contacts",
@@ -80,6 +70,52 @@ const resources: Array<Resource> = [
   },
 ];
 
+type Resource = {
+  href: string;
+  name: string;
+  description: string;
+  icon: ComponentType<{ className?: string }>;
+  pattern: Omit<GridPattern, "width" | "height" | "x">;
+};
+
+function Resource({ name, description, href, icon, pattern }: Resource) {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  function onMouseMove({
+    currentTarget,
+    clientX,
+    clientY,
+  }: React.MouseEvent<HTMLDivElement>) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
+  return (
+    <div
+      key={href}
+      onMouseMove={onMouseMove}
+      className="dark:bg-white/2.5 bg-secondary-50 hover:shadow-secondary-900/5 group relative flex rounded-2xl transition-shadow hover:shadow-md dark:hover:shadow-black/5"
+    >
+      <ResourcePattern {...pattern} mouseX={mouseX} mouseY={mouseY} />
+      <div className="ring-secondary-900/7.5 group-hover:ring-secondary-900/10 absolute inset-0 rounded-2xl ring-1 ring-inset dark:ring-white/10 dark:group-hover:ring-white/20" />
+      <div className="relative rounded-2xl px-4 pb-4 pt-16">
+        <ResourceIcon icon={icon} />
+        <h3 className="text-secondary-900 mt-4 text-sm font-semibold leading-7 dark:text-white">
+          <Link href={href}>
+            <span className="absolute inset-0 rounded-2xl" />
+            {name}
+          </Link>
+        </h3>
+        <p className="text-secondary-600 dark:text-secondary-400 mt-1 text-sm">
+          {description}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function ResourceIcon({ icon: Icon }: { icon: Resource["icon"] }) {
   return (
     <div className="dark:bg-white/7.5 dark:ring-white/15 bg-secondary-900/5 ring-secondary-900/25 group-hover:ring-secondary-900/25 dark:group-hover:bg-primary-300/10 dark:group-hover:ring-primary-400 flex h-7 w-7 items-center justify-center rounded-full ring-1 backdrop-blur-[2px] transition duration-300 group-hover:bg-white/50">
@@ -130,44 +166,6 @@ function ResourcePattern({
   );
 }
 
-function Resource({ resource }: { resource: Resource }) {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  function onMouseMove({
-    currentTarget,
-    clientX,
-    clientY,
-  }: React.MouseEvent<HTMLDivElement>) {
-    const { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
-  }
-
-  return (
-    <div
-      key={resource.href}
-      onMouseMove={onMouseMove}
-      className="dark:bg-white/2.5 bg-secondary-50 hover:shadow-secondary-900/5 group relative flex rounded-2xl transition-shadow hover:shadow-md dark:hover:shadow-black/5"
-    >
-      <ResourcePattern {...resource.pattern} mouseX={mouseX} mouseY={mouseY} />
-      <div className="ring-secondary-900/7.5 group-hover:ring-secondary-900/10 absolute inset-0 rounded-2xl ring-1 ring-inset dark:ring-white/10 dark:group-hover:ring-white/20" />
-      <div className="relative rounded-2xl px-4 pb-4 pt-16">
-        <ResourceIcon icon={resource.icon} />
-        <h3 className="text-secondary-900 mt-4 text-sm font-semibold leading-7 dark:text-white">
-          <Link href={resource.href}>
-            <span className="absolute inset-0 rounded-2xl" />
-            {resource.name}
-          </Link>
-        </h3>
-        <p className="text-secondary-600 dark:text-secondary-400 mt-1 text-sm">
-          {resource.description}
-        </p>
-      </div>
-    </div>
-  );
-}
-
 export function Resources() {
   return (
     <div className="my-16 xl:max-w-none">
@@ -175,8 +173,8 @@ export function Resources() {
         Resources
       </Heading>
       <div className="not-prose border-secondary-900/5 mt-4 grid grid-cols-1 gap-8 border-t pt-10 dark:border-white/5 sm:grid-cols-2 xl:grid-cols-4">
-        {resources.map((resource) => (
-          <Resource key={resource.href} resource={resource} />
+        {RESOURCES.map((resource) => (
+          <Resource key={resource.name} {...resource} />
         ))}
       </div>
     </div>

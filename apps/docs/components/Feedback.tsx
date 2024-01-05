@@ -48,7 +48,7 @@ export function Feedback() {
         >
           <div className="bg-primary-50/50 text-primary-900 ring-primary-500/20 dark:bg-primary-500/5 dark:text-primary-200 dark:ring-primary-500/30 flex items-center gap-3 rounded-full py-1 pl-1.5 pr-3 text-sm ring-1 ring-inset">
             <CheckCircleIcon
-              className="text-primary-500 rounded-full bg-white"
+              className="text-primary-500 rounded-full bg-white stroke-2"
               height={25}
               width={25}
             />

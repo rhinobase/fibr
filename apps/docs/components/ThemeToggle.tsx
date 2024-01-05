@@ -21,12 +21,12 @@ export function ThemeToggle() {
       onClick={() => setTheme(otherTheme)}
     >
       <SunIcon
-        className="stroke-secondary-900 dark:hidden"
+        className="stroke-secondary-900 stroke-2 dark:hidden"
         width={16}
         height={16}
       />
       <MoonIcon
-        className="hidden stroke-white dark:block"
+        className="hidden stroke-white stroke-2 dark:block"
         width={16}
         height={16}
       />

@@ -1,24 +1,22 @@
 import { classNames } from "@rafty/ui";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
-import { forwardRef } from "react";
-import { Logo } from "../components/Logo";
+import { HTMLAttributes, PropsWithChildren, forwardRef } from "react";
+import { Button } from "./Button";
+import { Logo } from "./Logo";
 import {
   MobileNavigation,
   useIsInsideMobileNavigation,
-} from "../components/MobileNavigation";
-import { MobileSearch, Search } from "../components/Search";
-import { ThemeToggle } from "../components/ThemeToggle";
-import ButtonClass from "./Button";
+} from "./MobileNavigation";
+import { MobileSearch, Search } from "./Search";
+import { ThemeToggle } from "./ThemeToggle";
 import { useDrawerDialog } from "./store";
 
-function TopLevelNavItem({
-  href,
-  children,
-}: {
+type TopLevelNavItem = PropsWithChildren<{
   href: string;
-  children: React.ReactNode;
-}) {
+}>;
+
+function TopLevelNavItem({ href, children }: TopLevelNavItem) {
   return (
     <li>
       <Link
@@ -31,10 +29,12 @@ function TopLevelNavItem({
   );
 }
 
-export const Header = forwardRef<
-  React.ElementRef<"div">,
-  { className?: string }
->(function Header({ className }, ref) {
+export type Header = Pick<HTMLAttributes<HTMLDivElement>, "className">;
+
+export const Header = forwardRef<HTMLDivElement, Header>(function Header(
+  { className },
+  forwardedRef,
+) {
   const { isOpen: mobileNavIsOpen } = useDrawerDialog();
   const isInsideMobileNavigation = useIsInsideMobileNavigation();
 
@@ -44,7 +44,7 @@ export const Header = forwardRef<
 
   return (
     <motion.div
-      ref={ref}
+      ref={forwardedRef}
       className={classNames(
         className,
         "fixed inset-x-0 top-0 z-50 flex h-14 items-center justify-between gap-12 px-4 transition sm:px-6 lg:left-72 lg:z-30 lg:px-8 xl:left-80",
@@ -90,7 +90,7 @@ export const Header = forwardRef<
         </div>
         <div className="hidden min-[416px]:contents">
           <Link href="#">
-            <ButtonClass name="Sign in" />
+            <Button name="Sign in" />
           </Link>
         </div>
       </div>

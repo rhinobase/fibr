@@ -1,4 +1,6 @@
-export function ShirtIcon(props: React.ComponentPropsWithoutRef<"svg">) {
+import { IconType } from "./icon";
+
+export function ShirtIcon(props: IconType) {
   return (
     <svg viewBox="0 0 20 20" aria-hidden="true" {...props}>
       <path

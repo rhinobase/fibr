@@ -1,4 +1,6 @@
-export function ShapesIcon(props: React.ComponentPropsWithoutRef<"svg">) {
+import { IconType } from "./icon";
+
+export function ShapesIcon(props: IconType) {
   return (
     <svg viewBox="0 0 20 20" aria-hidden="true" {...props}>
       <path

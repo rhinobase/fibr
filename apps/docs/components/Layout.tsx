@@ -2,22 +2,20 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Suspense } from "react";
-import { Footer } from "../components/Footer";
-import { Header } from "../components/Header";
-import { Logo } from "../components/Logo";
-import { Navigation } from "../components/Navigation";
-import { type Section, SectionProvider } from "../components/SectionProvider";
+import { PropsWithChildren, Suspense } from "react";
+import { Footer } from "./Footer";
+import { Header } from "./Header";
+import { Logo } from "./Logo";
 import { MobileNavigationDialog } from "./MobileNavigation";
+import { Navigation } from "./Navigation";
 import { SearchDialog } from "./Search";
+import { type Section, SectionProvider } from "./SectionProvider";
 
-export function Layout({
-  children,
-  allSections,
-}: {
-  children: React.ReactNode;
+export type Layout = PropsWithChildren<{
   allSections: Record<string, Array<Section>>;
-}) {
+}>;
+
+export function Layout({ children, allSections }: Layout) {
   const pathname = usePathname();
 
   return (

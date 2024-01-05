@@ -4,17 +4,15 @@ import { Button } from "@rafty/ui";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BsDiscord, BsGithub, BsTwitter } from "react-icons/bs";
-import { navigation } from "../components/Navigation";
+import { NAVIGATION } from "./Navigation";
 
-function PageLink({
-  label,
-  page,
-  previous = false,
-}: {
+type PageLink = {
   label: string;
   page: { href: string; title: string };
   previous?: boolean;
-}) {
+};
+
+function PageLink({ label, page, previous = false }: PageLink) {
   return (
     <>
       <Link href={page.href}>
@@ -23,10 +21,14 @@ function PageLink({
           aria-label={`${label}: ${page.title}`}
           variant="solid"
           leftIcon={
-            previous ? <ArrowLeftIcon width={16} height={16} /> : undefined
+            previous ? (
+              <ArrowLeftIcon width={16} height={16} className="stroke-2" />
+            ) : undefined
           }
           rightIcon={
-            !previous ? <ArrowRightIcon width={16} height={16} /> : undefined
+            !previous ? (
+              <ArrowRightIcon width={16} height={16} className="stroke-2" />
+            ) : undefined
           }
         >
           {label}
@@ -46,8 +48,8 @@ function PageLink({
 
 function PageNavigation() {
   const pathname = usePathname();
-  const allPages = navigation.flatMap((group) => group.links);
-  const currentPageIndex = allPages.findIndex((page) => page.href === pathname);
+  const allPages = NAVIGATION.flatMap(({ links }) => links);
+  const currentPageIndex = allPages.findIndex(({ href }) => href === pathname);
 
   if (currentPageIndex === -1) {
     return null;

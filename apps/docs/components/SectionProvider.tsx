@@ -8,18 +8,19 @@ import {
 } from "react";
 import { type StoreApi, createStore, useStore } from "zustand";
 import { remToPx } from "../lib/remToPx";
-export interface Section {
+
+export type Section = {
   id: string;
   title: string;
   offsetRem?: number;
   tag?: string;
   headingRef?: React.RefObject<HTMLHeadingElement>;
-}
+};
 
-interface SectionState {
-  sections: Array<Section>;
-  visibleSections: Array<string>;
-  setVisibleSections: (visibleSections: Array<string>) => void;
+type SectionState = {
+  sections: Section[];
+  visibleSections: string[];
+  setVisibleSections: (visibleSections: string[]) => void;
   registerHeading: ({
     id,
     ref,
@@ -29,9 +30,9 @@ interface SectionState {
     ref: React.RefObject<HTMLHeadingElement>;
     offsetRem: number;
   }) => void;
-}
+};
 
-function createSectionStore(sections: Array<Section>) {
+function createSectionStore(sections: Section[]) {
   return createStore<SectionState>()((set) => ({
     sections,
     visibleSections: [],

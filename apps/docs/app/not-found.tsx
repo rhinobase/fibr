@@ -21,7 +21,7 @@ export default function NotFound() {
           className="text-primary-500 hover:text-primary-500/90 mt-8 flex w-max items-center gap-1.5 font-semibold"
         >
           <p>Back to docs</p>
-          <ArrowRightIcon />
+          <ArrowRightIcon width={16} height={16} className="stroke-2" />
         </Link>
       </div>
     </>

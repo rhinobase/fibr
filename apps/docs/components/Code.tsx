@@ -10,6 +10,8 @@ import {
 } from "@rafty/ui";
 import {
   Children,
+  HTMLAttributes,
+  PropsWithChildren,
   createContext,
   isValidElement,
   useContext,
@@ -18,7 +20,7 @@ import {
   useState,
 } from "react";
 import { create } from "zustand";
-import { Tag } from "../components/Tag";
+import { Tag } from "./Tag";
 
 const languageNames: Record<string, string> = {
   js: "JavaScript",
@@ -31,13 +33,12 @@ const languageNames: Record<string, string> = {
   go: "Go",
 };
 
-function getPanelTitle({
-  title,
-  language,
-}: {
+type getPanelTitle = {
   title?: string;
   language?: string;
-}) {
+};
+
+function getPanelTitle({ title, language }: getPanelTitle) {
   if (title) {
     return title;
   }
@@ -47,7 +48,9 @@ function getPanelTitle({
   return "Code";
 }
 
-function CopyButton({ code }: { code: string }) {
+type CopyButton = { code: string };
+
+function CopyButton({ code }: CopyButton) {
   const [copyCount, setCopyCount] = useState(0);
   const copied = copyCount > 0;
 
@@ -74,9 +77,17 @@ function CopyButton({ code }: { code: string }) {
         }}
         leftIcon={
           copied ? (
-            <CheckIcon className="text-primary-400" width={16} height={16} />
+            <CheckIcon
+              className="text-primary-400 stroke-2"
+              width={16}
+              height={16}
+            />
           ) : (
-            <DocumentDuplicateIcon width={16} height={16} />
+            <DocumentDuplicateIcon
+              width={16}
+              height={16}
+              className="stroke-2"
+            />
           )
         }
       >
@@ -86,7 +97,9 @@ function CopyButton({ code }: { code: string }) {
   );
 }
 
-function CodePanelHeader({ tag, label }: { tag?: string; label?: string }) {
+type CodePanelHeader = { tag?: string; label?: string };
+
+function CodePanelHeader({ tag, label }: CodePanelHeader) {
   if (!tag && !label) {
     return null;
   }
@@ -108,17 +121,13 @@ function CodePanelHeader({ tag, label }: { tag?: string; label?: string }) {
   );
 }
 
-function CodePanel({
-  children,
-  tag,
-  label,
-  code,
-}: {
-  children: React.ReactNode;
+type CodePanel = PropsWithChildren<{
   tag?: string;
   label?: string;
   code?: string;
-}) {
+}>;
+
+function CodePanel({ children, tag, label, code }: CodePanel) {
   const child = Children.only(children);
 
   if (isValidElement(child)) {
@@ -146,13 +155,11 @@ function CodePanel({
   );
 }
 
-function CodeGroupHeader({
-  title,
-  children,
-}: {
+type CodeGroupHeader = PropsWithChildren<{
   title: string;
-  children: React.ReactNode;
-}) {
+}>;
+
+function CodeGroupHeader({ title, children }: CodeGroupHeader) {
   const hasTabs = Children.count(children) > 1;
 
   if (!title && !hasTabs) {
@@ -189,10 +196,9 @@ function CodeGroupHeader({
   );
 }
 
-function CodeGroupPanels({
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<typeof CodePanel>) {
+type CodeGroupPanels = CodePanel;
+
+function CodeGroupPanels({ children, ...props }: CodeGroupPanels) {
   const hasTabs = Children.count(children) > 1;
 
   if (hasTabs) {
@@ -289,11 +295,11 @@ function useTabGroupProps(availableLanguages: Array<string>) {
 
 const CodeGroupContext = createContext(false);
 
-export function CodeGroup({
-  children,
-  title,
-  ...props
-}: React.ComponentPropsWithoutRef<typeof CodeGroupPanels> & { title: string }) {
+export type CodeGroup = CodeGroupPanels & {
+  title: string;
+};
+
+export function CodeGroup({ children, title, ...props }: CodeGroup) {
   const languages =
     Children.map(children, (child) => {
       const title = getPanelTitle(isValidElement(child) ? child.props : {});
@@ -328,10 +334,9 @@ export function CodeGroup({
   );
 }
 
-export function Code({
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<"code">) {
+export type Code = HTMLAttributes<HTMLElement>;
+
+export function Code({ children, ...props }: Code) {
   const isGrouped = useContext(CodeGroupContext);
 
   if (isGrouped) {
@@ -347,10 +352,9 @@ export function Code({
   return <code {...props}>{children}</code>;
 }
 
-export function Pre({
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<typeof CodeGroup>) {
+export type Pre = CodeGroup;
+
+export function Pre({ children, ...props }: Pre) {
   const isGrouped = useContext(CodeGroupContext);
 
   if (isGrouped) {

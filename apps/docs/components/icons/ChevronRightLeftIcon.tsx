@@ -1,6 +1,6 @@
-export function ChevronRightLeftIcon(
-  props: React.ComponentPropsWithoutRef<"svg">,
-) {
+import { IconType } from "./icon";
+
+export function ChevronRightLeftIcon(props: IconType) {
   return (
     <svg viewBox="0 0 20 20" aria-hidden="true" {...props}>
       <path

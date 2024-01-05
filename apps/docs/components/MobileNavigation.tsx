@@ -9,7 +9,7 @@ import {
 } from "@rafty/ui";
 import { usePathname, useSearchParams } from "next/navigation";
 import { createContext, useContext, useEffect, useRef } from "react";
-import { Navigation } from "../components/Navigation";
+import { Navigation } from "./Navigation";
 import { useDrawerDialog } from "./store";
 
 const IsInsideMobileNavigationContext = createContext(false);
@@ -58,7 +58,7 @@ export function MobileNavigation() {
         variant="ghost"
         onClick={() => setOpen(true)}
       >
-        <Bars3Icon width={20} height={20} />
+        <Bars3Icon width={20} height={20} className="stroke-2" />
       </Button>
     </IsInsideMobileNavigationContext.Provider>
   );

@@ -14,18 +14,21 @@ const FibrContext = createContext<FibrContextType>({
   components: {},
 });
 
+type PluginType = FibrContextType["components"];
+
 export function FibrProvider({
   children,
   plugins,
   onError,
 }: PropsWithChildren<
-  { plugins: FibrContextType["components"][] } & Pick<
-    FibrContextType,
-    "onError"
-  >
+  {
+    plugins: PluginType | PluginType[];
+  } & Pick<FibrContextType, "onError">
 >) {
   // Merging all the components
-  const components = Object.assign({}, ...plugins);
+  const components = Array.isArray(plugins)
+    ? Object.assign({}, ...plugins)
+    : plugins;
 
   return (
     <FibrContext.Provider value={{ components, onError }}>

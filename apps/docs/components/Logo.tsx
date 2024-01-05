@@ -1,4 +1,8 @@
-export function Logo(props: React.ComponentPropsWithoutRef<"svg">) {
+import { SVGProps } from "react";
+
+export type Logo = SVGProps<SVGSVGElement>;
+
+export function Logo(props: Logo) {
   return (
     <svg viewBox="0 0 99 24" aria-hidden="true" {...props}>
       <path
