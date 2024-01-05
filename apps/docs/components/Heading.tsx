@@ -1,13 +1,15 @@
 "use client";
-import { useEffect, useRef } from "react";
-import Link from "next/link";
+import { LinkIcon } from "@heroicons/react/24/outline";
 import { useInView } from "framer-motion";
-import { useSectionStore } from "../components/SectionProvider";
-import { Tag } from "../components/Tag";
+import Link from "next/link";
+import { HTMLAttributes, PropsWithChildren, useEffect, useRef } from "react";
 import { remToPx } from "../lib/remToPx";
-import { HiLink } from "react-icons/hi2";
+import { useSectionStore } from "./SectionProvider";
+import { Tag } from "./Tag";
 
-function Eyebrow({ tag, label }: { tag?: string; label?: string }) {
+type Eyebrow = { tag?: string; label?: string };
+
+function Eyebrow({ tag, label }: Eyebrow) {
   if (!tag && !label) {
     return null;
   }
@@ -25,15 +27,12 @@ function Eyebrow({ tag, label }: { tag?: string; label?: string }) {
   );
 }
 
-function Anchor({
-  id,
-  inView,
-  children,
-}: {
+type Anchor = PropsWithChildren<{
   id: string;
   inView: boolean;
-  children: React.ReactNode;
-}) {
+}>;
+
+function Anchor({ id, inView, children }: Anchor) {
   return (
     <Link
       href={`#${id}`}
@@ -42,7 +41,7 @@ function Anchor({
       {inView && (
         <div className="absolute ml-[calc(-1*var(--width))] mt-1 hidden w-[var(--width)] opacity-0 transition [--width:calc(2.625rem+0.5px+50%-min(50%,calc(theme(maxWidth.lg)+theme(spacing.8))))] group-hover:opacity-100 group-focus:opacity-100 md:block lg:z-50 2xl:[--width:theme(spacing.10)]">
           <div className="group/anchor bg-secondary-50 ring-secondary-300 hover:ring-secondary-500 dark:bg-secondary-800 dark:ring-secondary-700 dark:hover:bg-secondary-700 dark:hover:ring-secondary-600 flex h-5 w-5 items-center rounded-lg p-1 ring-1 ring-inset transition">
-            <HiLink />
+            <LinkIcon width={16} height={16} className="stroke-2" />
           </div>
         </div>
       )}
@@ -51,6 +50,14 @@ function Anchor({
   );
 }
 
+export type Heading<Level> = HTMLAttributes<HTMLHeadingElement> & {
+  id: string;
+  tag?: string;
+  label?: string;
+  level?: Level;
+  anchor?: boolean;
+};
+
 export function Heading<Level extends 2 | 3>({
   children,
   tag,
@@ -58,13 +65,7 @@ export function Heading<Level extends 2 | 3>({
   level,
   anchor = true,
   ...props
-}: React.ComponentPropsWithoutRef<`h${Level}`> & {
-  id: string;
-  tag?: string;
-  label?: string;
-  level?: Level;
-  anchor?: boolean;
-}) {
+}: Heading<Level>) {
   level = level ?? (2 as Level);
   const Component = `h${level}` as "h2" | "h3";
   const ref = useRef<HTMLHeadingElement>(null);

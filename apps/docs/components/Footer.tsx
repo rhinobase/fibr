@@ -1,29 +1,35 @@
 "use client";
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { Button } from "@rafty/ui";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { navigation } from "../components/Navigation";
-import { Button } from "@rafty/ui";
-import { HiArrowRight, HiArrowLeft } from "react-icons/hi";
 import { BsDiscord, BsGithub, BsTwitter } from "react-icons/bs";
+import { NAVIGATION } from "./Navigation";
 
-function PageLink({
-  label,
-  page,
-  previous = false,
-}: {
+type PageLink = {
   label: string;
   page: { href: string; title: string };
   previous?: boolean;
-}) {
+};
+
+function PageLink({ label, page, previous = false }: PageLink) {
   return (
     <>
       <Link href={page.href}>
         <Button
-          className="!bg-secondary-100 hover:!bg-secondary-200 dark:!bg-secondary-800 dark:border-secondary-700 dark:hover:!bg-secondary-700/70 !rounded-full !py-1 focus:ring-0"
+          className="bg-secondary-100 hover:bg-secondary-200 dark:bg-secondary-800 dark:border-secondary-700 dark:hover:bg-secondary-700/70 rounded-full py-1 focus:ring-0"
           aria-label={`${label}: ${page.title}`}
           variant="solid"
-          leftIcon={previous ? <HiArrowLeft /> : undefined}
-          rightIcon={!previous ? <HiArrowRight /> : undefined}
+          leftIcon={
+            previous ? (
+              <ArrowLeftIcon width={16} height={16} className="stroke-2" />
+            ) : undefined
+          }
+          rightIcon={
+            !previous ? (
+              <ArrowRightIcon width={16} height={16} className="stroke-2" />
+            ) : undefined
+          }
         >
           {label}
         </Button>
@@ -42,8 +48,8 @@ function PageLink({
 
 function PageNavigation() {
   const pathname = usePathname();
-  const allPages = navigation.flatMap((group) => group.links);
-  const currentPageIndex = allPages.findIndex((page) => page.href === pathname);
+  const allPages = NAVIGATION.flatMap(({ links }) => links);
+  const currentPageIndex = allPages.findIndex(({ href }) => href === pathname);
 
   if (currentPageIndex === -1) {
     return null;
@@ -92,13 +98,13 @@ const SOCIALS = [
 
 function SmallPrint() {
   return (
-    <div className="border-secondary-900/5 flex flex-col items-center justify-between gap-5 border-t pt-8 dark:border-white/5 sm:flex-row">
+    <div className="border-secondary-900/5 flex flex-col items-center justify-between gap-5 border-t pt-8 sm:flex-row dark:border-white/5">
       <p className="text-secondary-600 dark:text-secondary-400 text-xs">
         &copy; Copyright {new Date().getFullYear()}. All rights reserved.
       </p>
       <div className="flex items-center gap-5">
-        {SOCIALS.map(({ name, icon: Icon, link }, index) => (
-          <Link href={link} key={index}>
+        {SOCIALS.map(({ name, icon: Icon, link }) => (
+          <Link href={link} key={name}>
             <Icon
               size={17}
               className="hover:fill-secondary-900 fill-secondary-500 dark:hover:fill-secondary-300 dark:fill-secondary-500 transition-all"

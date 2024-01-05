@@ -1,13 +1,5 @@
 "use client";
-import {
-  Children,
-  createContext,
-  isValidElement,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { CheckIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import {
   Button,
   Tab,
@@ -16,9 +8,19 @@ import {
   TabTrigger,
   classNames,
 } from "@rafty/ui";
+import {
+  Children,
+  HTMLAttributes,
+  PropsWithChildren,
+  createContext,
+  isValidElement,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { create } from "zustand";
-import { Tag } from "../components/Tag";
-import { HiCheck, HiOutlineDocumentDuplicate } from "react-icons/hi";
+import { Tag } from "./Tag";
 
 const languageNames: Record<string, string> = {
   js: "JavaScript",
@@ -31,13 +33,12 @@ const languageNames: Record<string, string> = {
   go: "Go",
 };
 
-function getPanelTitle({
-  title,
-  language,
-}: {
+type getPanelTitle = {
   title?: string;
   language?: string;
-}) {
+};
+
+function getPanelTitle({ title, language }: getPanelTitle) {
   if (title) {
     return title;
   }
@@ -47,7 +48,9 @@ function getPanelTitle({
   return "Code";
 }
 
-function CopyButton({ code }: { code: string }) {
+type CopyButton = { code: string };
+
+function CopyButton({ code }: CopyButton) {
   const [copyCount, setCopyCount] = useState(0);
   const copied = copyCount > 0;
 
@@ -61,12 +64,12 @@ function CopyButton({ code }: { code: string }) {
   }, [copyCount]);
 
   return (
-    <div className="invisible absolute right-4 top-3.5 !rounded-full bg-black/20 backdrop-blur transition-all group-hover:visible">
+    <div className="invisible absolute right-4 top-3.5 rounded-full bg-black/20 backdrop-blur transition-all group-hover:visible">
       <Button
         type="button"
         variant="ghost"
         size="sm"
-        className="!text-secondary-100 invisible !rounded-full group-hover:visible"
+        className="text-secondary-100 invisible rounded-full group-hover:visible"
         onClick={() => {
           window.navigator.clipboard.writeText(code).then(() => {
             setCopyCount((count) => count + 1);
@@ -74,9 +77,17 @@ function CopyButton({ code }: { code: string }) {
         }}
         leftIcon={
           copied ? (
-            <HiCheck className="text-primary-400" size={15} />
+            <CheckIcon
+              className="text-primary-400 stroke-2"
+              width={16}
+              height={16}
+            />
           ) : (
-            <HiOutlineDocumentDuplicate size={15} />
+            <DocumentDuplicateIcon
+              width={16}
+              height={16}
+              className="stroke-2"
+            />
           )
         }
       >
@@ -86,7 +97,9 @@ function CopyButton({ code }: { code: string }) {
   );
 }
 
-function CodePanelHeader({ tag, label }: { tag?: string; label?: string }) {
+type CodePanelHeader = { tag?: string; label?: string };
+
+function CodePanelHeader({ tag, label }: CodePanelHeader) {
   if (!tag && !label) {
     return null;
   }
@@ -108,17 +121,13 @@ function CodePanelHeader({ tag, label }: { tag?: string; label?: string }) {
   );
 }
 
-function CodePanel({
-  children,
-  tag,
-  label,
-  code,
-}: {
-  children: React.ReactNode;
+type CodePanel = PropsWithChildren<{
   tag?: string;
   label?: string;
   code?: string;
-}) {
+}>;
+
+function CodePanel({ children, tag, label, code }: CodePanel) {
   const child = Children.only(children);
 
   if (isValidElement(child)) {
@@ -129,7 +138,7 @@ function CodePanel({
 
   if (!code) {
     throw new Error(
-      "`CodePanel` requires a `code` prop, or a child with a `code` prop."
+      "`CodePanel` requires a `code` prop, or a child with a `code` prop.",
     );
   }
 
@@ -146,13 +155,11 @@ function CodePanel({
   );
 }
 
-function CodeGroupHeader({
-  title,
-  children,
-}: {
+type CodeGroupHeader = PropsWithChildren<{
   title: string;
-  children: React.ReactNode;
-}) {
+}>;
+
+function CodeGroupHeader({ title, children }: CodeGroupHeader) {
   const hasTabs = Children.count(children) > 1;
 
   if (!title && !hasTabs) {
@@ -165,18 +172,18 @@ function CodeGroupHeader({
         <h3
           className={classNames(
             "dark:text my-auto mr-auto text-xs font-semibold text-white",
-            !hasTabs ? "py-3" : "py-0"
+            !hasTabs ? "py-3" : "py-0",
           )}
         >
           {title}
         </h3>
       )}
       {hasTabs && (
-        <TabList className="!border-none">
+        <TabList className="border-none">
           {Children.map(children, (child) => (
             <TabTrigger
               value={getPanelTitle(isValidElement(child) ? child.props : {})}
-              className="hover:text-secondary-400 data-[state='active']:!text-primary-400 data-[state='active']:dark:!border-b-primary-500 py-3"
+              className="hover:text-secondary-400 data-[state='active']:text-primary-400 data-[state='active']:dark:border-b-primary-500 py-3"
             >
               {isValidElement(child)
                 ? getPanelTitle(child.props || {})
@@ -189,10 +196,9 @@ function CodeGroupHeader({
   );
 }
 
-function CodeGroupPanels({
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<typeof CodePanel>) {
+type CodeGroupPanels = CodePanel;
+
+function CodeGroupPanels({ children, ...props }: CodeGroupPanels) {
   const hasTabs = Children.count(children) > 1;
 
   if (hasTabs) {
@@ -253,7 +259,7 @@ const usePreferredLanguageStore = create<{
     set((state) => ({
       preferredLanguages: [
         ...state.preferredLanguages.filter(
-          (preferredLanguage) => preferredLanguage !== language
+          (preferredLanguage) => preferredLanguage !== language,
         ),
         language,
       ],
@@ -265,7 +271,7 @@ function useTabGroupProps(availableLanguages: Array<string>) {
     usePreferredLanguageStore();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const activeLanguage = [...availableLanguages].sort(
-    (a, z) => preferredLanguages.indexOf(z) - preferredLanguages.indexOf(a)
+    (a, z) => preferredLanguages.indexOf(z) - preferredLanguages.indexOf(a),
   )[0];
   const languageIndex = availableLanguages.indexOf(activeLanguage);
   const newSelectedIndex = languageIndex === -1 ? selectedIndex : languageIndex;
@@ -281,7 +287,7 @@ function useTabGroupProps(availableLanguages: Array<string>) {
     selectedIndex,
     onChange: (newSelectedIndex: number) => {
       preventLayoutShift(() =>
-        addPreferredLanguage(availableLanguages[newSelectedIndex])
+        addPreferredLanguage(availableLanguages[newSelectedIndex]),
       );
     },
   };
@@ -289,11 +295,11 @@ function useTabGroupProps(availableLanguages: Array<string>) {
 
 const CodeGroupContext = createContext(false);
 
-export function CodeGroup({
-  children,
-  title,
-  ...props
-}: React.ComponentPropsWithoutRef<typeof CodeGroupPanels> & { title: string }) {
+export type CodeGroup = CodeGroupPanels & {
+  title: string;
+};
+
+export function CodeGroup({ children, title, ...props }: CodeGroup) {
   const languages =
     Children.map(children, (child) => {
       const title = getPanelTitle(isValidElement(child) ? child.props : {});
@@ -328,28 +334,27 @@ export function CodeGroup({
   );
 }
 
-export function Code({
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<"code">) {
+export type Code = HTMLAttributes<HTMLElement>;
+
+export function Code({ children, ...props }: Code) {
   const isGrouped = useContext(CodeGroupContext);
 
   if (isGrouped) {
     if (typeof children !== "string") {
       throw new Error(
-        "`Code` children must be a string when nested inside a `CodeGroup`."
+        "`Code` children must be a string when nested inside a `CodeGroup`.",
       );
     }
+    // biome-ignore lint/security/noDangerouslySetInnerHtml: for showing code string
     return <code {...props} dangerouslySetInnerHTML={{ __html: children }} />;
   }
 
   return <code {...props}>{children}</code>;
 }
 
-export function Pre({
-  children,
-  ...props
-}: React.ComponentPropsWithoutRef<typeof CodeGroup>) {
+export type Pre = CodeGroup;
+
+export function Pre({ children, ...props }: Pre) {
   const isGrouped = useContext(CodeGroupContext);
 
   if (isGrouped) {

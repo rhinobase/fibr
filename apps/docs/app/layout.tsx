@@ -1,11 +1,10 @@
 import glob from "fast-glob";
-
-import { Providers } from "./providers";
-import { Layout } from "../components/Layout";
-
-import "./globals.css";
 import { type Metadata } from "next";
+import { PropsWithChildren } from "react";
+import { Layout } from "../components/Layout";
 import { type Section } from "../components/SectionProvider";
+import "./globals.css";
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: {
@@ -14,17 +13,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function RootLayout({ children }: PropsWithChildren) {
   const pages = await glob("**/*.mdx", { cwd: "./app" });
   const allSectionsEntries = (await Promise.all(
     pages.map(async (filename) => [
-      "/" + filename.replace(/(^|\/)page\.mdx$/, ""),
+      `/${filename.replace(/(^|\/)page\.mdx$/, "")}`,
       (await import(`./${filename}`)).sections,
-    ])
+    ]),
   )) as Array<[string, Array<Section>]>;
   const allSections = Object.fromEntries(allSectionsEntries);
 

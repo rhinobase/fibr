@@ -1,5 +1,5 @@
-import { composePlugins, withNx } from "@nx/next";
 import nextMDX from "@next/mdx";
+import { composePlugins, withNx } from "@nx/next";
 
 import { recmaPlugins } from "./mdx/recma.mjs";
 import { rehypePlugins } from "./mdx/rehype.mjs";
@@ -24,6 +24,9 @@ const nextConfig = {
     svgr: false,
   },
   pageExtensions: ["js", "jsx", "ts", "tsx", "mdx"],
+  experimental: {
+    optimizePackageImports: ["@rafty/ui"],
+  },
 };
 
 const plugins = [withSearch, withMDX, withNx];

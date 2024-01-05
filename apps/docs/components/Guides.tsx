@@ -1,8 +1,8 @@
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { Heading } from "../components/Heading";
-import { HiArrowRight } from "react-icons/hi";
+import { Heading } from "./Heading";
 
-const guides = [
+const GUIDES = [
   {
     href: "/authentication",
     name: "Authentication",
@@ -34,20 +34,20 @@ export function Guides() {
         Guides
       </Heading>
       <div className="not-prose border-secondary-900/5 mt-4 grid grid-cols-1 gap-8 border-t pt-10 dark:border-white/5 sm:grid-cols-2 xl:grid-cols-4">
-        {guides.map((guide) => (
-          <div key={guide.href}>
+        {GUIDES.map(({ name, description, href }) => (
+          <div key={href}>
             <h3 className="text-secondary-900 text-sm font-semibold dark:text-white">
-              {guide.name}
+              {name}
             </h3>
             <p className="text-secondary-600 dark:text-secondary-400 mt-1 text-sm">
-              {guide.description}
+              {description}
             </p>
             <Link
-              href={guide.href}
+              href={href}
               className="text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 mt-4 flex w-max items-center gap-1.5 font-semibold transition-all"
             >
               <p>Read more</p>
-              <HiArrowRight />
+              <ArrowRightIcon width={16} height={16} className="stroke-2" />
             </Link>
           </div>
         ))}

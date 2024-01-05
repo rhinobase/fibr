@@ -1,31 +1,33 @@
 "use client";
 import {
-  forwardRef,
+  type AutocompleteApi,
+  type AutocompleteCollection,
+  type AutocompleteState,
+  createAutocomplete,
+} from "@algolia/autocomplete-core";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogOverlay,
+  InputField,
+  Kbd,
+  classNames,
+} from "@rafty/ui";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
   Fragment,
+  SVGProps,
+  forwardRef,
   useEffect,
   useId,
   useRef,
   useState,
 } from "react";
 import Highlighter from "react-highlight-words";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import {
-  Button,
-  DialogContent,
-  DialogOverlay,
-  InputField,
-  Kbd,
-} from "@rafty/ui";
-import {
-  type AutocompleteApi,
-  createAutocomplete,
-  type AutocompleteState,
-  type AutocompleteCollection,
-} from "@algolia/autocomplete-core";
-import { classNames, Dialog } from "@rafty/ui";
-import { navigation } from "../components/Navigation";
 import { type Result } from "../mdx/search.mjs";
-import { HiMagnifyingGlass } from "react-icons/hi2";
+import { NAVIGATION } from "./Navigation";
 import { useSearchDialog } from "./store";
 
 type EmptyObject = Record<string, never>;
@@ -37,7 +39,9 @@ type Autocomplete = AutocompleteApi<
   React.KeyboardEvent
 >;
 
-function useAutocomplete({ close }: { close: () => void }) {
+type useAutocomplete = { close: () => void };
+
+function useAutocomplete({ close }: useAutocomplete) {
   const id = useId();
   const router = useRouter();
   const [autocompleteState, setAutocompleteState] = useState<
@@ -94,13 +98,15 @@ function useAutocomplete({ close }: { close: () => void }) {
           ];
         });
       },
-    })
+    }),
   );
 
   return { autocomplete, autocompleteState };
 }
 
-function NoResultsIcon(props: React.ComponentPropsWithoutRef<"svg">) {
+type IconType = SVGProps<SVGSVGElement>;
+
+function NoResultsIcon(props: IconType) {
   return (
     <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" {...props}>
       <path
@@ -112,7 +118,7 @@ function NoResultsIcon(props: React.ComponentPropsWithoutRef<"svg">) {
   );
 }
 
-function LoadingIcon(props: React.ComponentPropsWithoutRef<"svg">) {
+function LoadingIcon(props: IconType) {
   const id = useId();
 
   return (
@@ -141,7 +147,9 @@ function LoadingIcon(props: React.ComponentPropsWithoutRef<"svg">) {
   );
 }
 
-function HighlightQuery({ text, query }: { text: string; query: string }) {
+type HighlightQuery = { text: string; query: string };
+
+function HighlightQuery({ text, query }: HighlightQuery) {
   return (
     <Highlighter
       highlightClassName="underline bg-transparent text-primary-500"
@@ -152,26 +160,28 @@ function HighlightQuery({ text, query }: { text: string; query: string }) {
   );
 }
 
+type SearchResult = {
+  result: Result;
+  resultIndex: number;
+  autocomplete: Autocomplete;
+  collection: AutocompleteCollection<Result>;
+  query: string;
+};
+
 function SearchResult({
   result,
   resultIndex,
   autocomplete,
   collection,
   query,
-}: {
-  result: Result;
-  resultIndex: number;
-  autocomplete: Autocomplete;
-  collection: AutocompleteCollection<Result>;
-  query: string;
-}) {
+}: SearchResult) {
   const id = useId();
 
-  const sectionTitle = navigation.find((section) =>
-    section.links.find((link) => link.href === result.url.split("#")[0])
+  const sectionTitle = NAVIGATION.find(({ links }) =>
+    links.find((link) => link.href === result.url.split("#")[0]),
   )?.title;
   const hierarchy = [sectionTitle, result.pageTitle].filter(
-    (x): x is string => typeof x === "string"
+    (x): x is string => typeof x === "string",
   );
 
   return (
@@ -179,7 +189,7 @@ function SearchResult({
       className={classNames(
         "aria-selected:bg-secondary-50 dark:aria-selected:bg-secondary-800/50 group block cursor-default px-4 py-3",
         resultIndex > 0 &&
-          "border-secondary-100 dark:border-secondary-800 border-t"
+          "border-secondary-100 dark:border-secondary-800 border-t",
       )}
       aria-labelledby={`${id}-hierarchy ${id}-title`}
       {...autocomplete.getItemProps({
@@ -200,12 +210,12 @@ function SearchResult({
           aria-hidden="true"
           className="text-2xs text-secondary-500 mt-1 truncate whitespace-nowrap"
         >
-          {hierarchy.map((item, itemIndex, items) => (
-            <Fragment key={itemIndex}>
+          {hierarchy.map((item, index, items) => (
+            <Fragment key={item}>
               <HighlightQuery text={item} query={query} />
               <span
                 className={
-                  itemIndex === items.length - 1
+                  index === items.length - 1
                     ? "sr-only"
                     : "text-secondary-300 dark:text-secondary-700 mx-2"
                 }
@@ -220,15 +230,13 @@ function SearchResult({
   );
 }
 
-function SearchResults({
-  autocomplete,
-  query,
-  collection,
-}: {
+type SearchResults = {
   autocomplete: Autocomplete;
   query: string;
   collection: AutocompleteCollection<Result>;
-}) {
+};
+
+function SearchResults({ autocomplete, query, collection }: SearchResults) {
   if (collection.items.length === 0) {
     return (
       <div className="p-6 text-center">
@@ -260,52 +268,58 @@ function SearchResults({
   );
 }
 
-const SearchInput = forwardRef<
-  React.ElementRef<"input">,
-  {
-    autocomplete: Autocomplete;
-    autocompleteState: AutocompleteState<Result> | EmptyObject;
-    onClose: () => void;
-  }
->(function SearchInput({ autocomplete, autocompleteState, onClose }, inputRef) {
-  const inputProps = autocomplete.getInputProps({ inputElement: null });
+type SearchInput = {
+  autocomplete: Autocomplete;
+  autocompleteState: AutocompleteState<Result> | EmptyObject;
+  onClose: () => void;
+};
 
-  return (
-    <div className="group relative flex h-12">
-      <HiMagnifyingGlass className="absolute left-2 top-4 " />
-      <InputField
-        ref={inputRef}
-        {...inputProps}
-        className="pl-8"
-        onKeyDown={(event) => {
-          if (
-            event.key === "Escape" &&
-            !autocompleteState.isOpen &&
-            autocompleteState.query === ""
-          ) {
-            if (document.activeElement instanceof HTMLElement) {
-              document.activeElement.blur();
+const SearchInput = forwardRef<HTMLInputElement, SearchInput>(
+  ({ autocomplete, autocompleteState, onClose }, forwardedRef) => {
+    const inputProps = autocomplete.getInputProps({ inputElement: null });
+
+    return (
+      <div className="group relative flex h-12">
+        <MagnifyingGlassIcon
+          className="absolute left-2 top-4 stroke-2"
+          height={16}
+          width={16}
+        />
+        <InputField
+          ref={forwardedRef}
+          {...inputProps}
+          className="pl-8"
+          onKeyDown={(event) => {
+            if (
+              event.key === "Escape" &&
+              !autocompleteState.isOpen &&
+              autocompleteState.query === ""
+            ) {
+              if (document.activeElement instanceof HTMLElement) {
+                document.activeElement.blur();
+              }
+
+              onClose();
+            } else {
+              inputProps.onKeyDown(event);
             }
-
-            onClose();
-          } else {
-            inputProps.onKeyDown(event);
-          }
-        }}
-      />
-      {autocompleteState.status === "stalled" && (
-        <div className="absolute inset-y-0 right-3 flex items-center">
-          <LoadingIcon className="stroke-secondary-200 text-secondary-900 dark:stroke-secondary-800 dark:text-primary-400 h-5 w-5 animate-spin" />
-        </div>
-      )}
-    </div>
-  );
-});
+          }}
+        />
+        {autocompleteState.status === "stalled" && (
+          <div className="absolute inset-y-0 right-3 flex items-center">
+            <LoadingIcon className="stroke-secondary-200 text-secondary-900 dark:stroke-secondary-800 dark:text-primary-400 h-5 w-5 animate-spin" />
+          </div>
+        )}
+      </div>
+    );
+  },
+);
+SearchInput.displayName = "SearchInput";
 
 export function SearchDialog() {
-  const formRef = useRef<React.ElementRef<"form">>(null);
-  const panelRef = useRef<React.ElementRef<"div">>(null);
-  const inputRef = useRef<React.ElementRef<typeof SearchInput>>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const { isOpen, setOpen } = useSearchDialog();
 
@@ -317,18 +331,19 @@ export function SearchDialog() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: we need this to update state on page change
   useEffect(() => {
     setOpen(false);
-  }, [pathname, searchParams]);
-
-  const keyDownHandler = (event: KeyboardEvent) => {
-    if (event.ctrlKey && event.key === "q") {
-      setOpen(true);
-    }
-  };
+  }, [pathname, searchParams, setOpen]);
 
   useEffect(() => {
     if (!isOpen) {
+      const keyDownHandler = (event: KeyboardEvent) => {
+        if (event.ctrlKey && event.key === "q") {
+          setOpen(true);
+        }
+      };
+
       window.addEventListener("keydown", keyDownHandler);
       return () => {
         window.removeEventListener("keydown", keyDownHandler);
@@ -341,7 +356,7 @@ export function SearchDialog() {
       <DialogOverlay />
       <DialogContent
         showCloseButton={false}
-        className="dark:!bg-secondary-900 !top-[15%] max-w-[370px] !-translate-y-0 !p-0 lg:max-w-[40rem]"
+        className="dark:bg-secondary-900 top-[15%] max-w-[370px] -translate-y-0 p-0 lg:max-w-[40rem]"
       >
         <div {...autocomplete.getRootProps({})}>
           <form
@@ -382,7 +397,7 @@ export function Search() {
 
   useEffect(() => {
     setModifierKey(
-      /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) ? "⌘" : "Ctrl "
+      /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) ? "⌘" : "Ctrl ",
     );
   }, []);
 
@@ -390,11 +405,11 @@ export function Search() {
     <div className="hidden lg:block lg:max-w-md lg:flex-auto">
       <Button
         type="button"
-        className="w-[470px] gap-2 !rounded-full !py-1"
+        className="w-[470px] gap-2 rounded-full py-1"
         variant="outline"
         onClick={() => setOpen(true)}
       >
-        <HiMagnifyingGlass />
+        <MagnifyingGlassIcon height={16} width={16} className="stroke-2" />
         Find something...
         <div className="flex-1" />
         <div>
@@ -417,7 +432,7 @@ export function MobileSearch() {
         aria-label="Find something..."
         onClick={() => setOpen(true)}
       >
-        <HiMagnifyingGlass />
+        <MagnifyingGlassIcon height={16} width={16} className="stroke-2" />
       </Button>
     </div>
   );

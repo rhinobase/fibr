@@ -26,7 +26,7 @@ module.exports = {
           "--tw-prose-invert-links": theme("colors.primary.400"),
           "--tw-prose-invert-links-hover": theme("colors.primary.300"),
           "--tw-prose-invert-links-underline": theme(
-            "colors.primary.300 / 0.3"
+            "colors.primary.300 / 0.3",
           ),
           "--tw-prose-invert-bold": theme("colors.white"),
           "--tw-prose-invert-counters": theme("colors.secondary.400"),

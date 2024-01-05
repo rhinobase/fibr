@@ -1,21 +1,26 @@
 "use client";
-import { useRef } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { classNames } from "@rafty/ui";
 import { AnimatePresence, motion, useIsPresent } from "framer-motion";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  HTMLAttributes,
+  LiHTMLAttributes,
+  PropsWithChildren,
+  useRef,
+} from "react";
 import { useIsInsideMobileNavigation } from "../components/MobileNavigation";
 import { useSectionStore } from "../components/SectionProvider";
 import { Tag } from "../components/Tag";
 import { remToPx } from "../lib/remToPx";
 
-interface NavGroup {
+type NavGroupType = {
   title: string;
-  links: Array<{
+  links: {
     title: string;
     href: string;
-  }>;
-}
+  }[];
+};
 
 function useInitialValue<T>(value: T, condition = true) {
   const initialValue = useRef(value).current;
@@ -25,10 +30,9 @@ function useInitialValue<T>(value: T, condition = true) {
 function TopLevelNavItem({
   href,
   children,
-}: {
+}: PropsWithChildren<{
   href: string;
-  children: React.ReactNode;
-}) {
+}>) {
   return (
     <li className="md:hidden">
       <Link
@@ -47,13 +51,12 @@ function NavLink({
   tag,
   active = false,
   isAnchorLink = false,
-}: {
+}: PropsWithChildren<{
   href: string;
-  children: React.ReactNode;
   tag?: string;
   active?: boolean;
   isAnchorLink?: boolean;
-}) {
+}>) {
   return (
     <Link
       href={href}
@@ -80,7 +83,7 @@ function VisibleSectionHighlight({
   group,
   pathname,
 }: {
-  group: NavGroup;
+  group: NavGroupType;
   pathname: string;
 }) {
   const [sections, visibleSections] = useInitialValue(
@@ -122,7 +125,7 @@ function ActivePageMarker({
   group,
   pathname,
 }: {
-  group: NavGroup;
+  group: NavGroupType;
   pathname: string;
 }) {
   const itemHeight = remToPx(2);
@@ -148,9 +151,8 @@ function NavigationGroup({
   group,
   className,
 }: {
-  group: NavGroup;
-  className?: string;
-}) {
+  group: NavGroupType;
+} & Pick<LiHTMLAttributes<HTMLLinkElement>, "className">) {
   // If this is the mobile navigation then we always render the initial
   // state, so that the state does not change during the close animation.
   // The state will still update when we re-open (re-render) the navigation.
@@ -186,7 +188,7 @@ function NavigationGroup({
             <ActivePageMarker group={group} pathname={pathname} />
           )}
         </AnimatePresence>
-        <ul role="list" className="border-l border-transparent">
+        <ul className="border-l border-transparent">
           {group.links.map((link) => (
             <motion.li key={link.href} layout="position" className="relative">
               <NavLink href={link.href} active={link.href === pathname}>
@@ -228,7 +230,7 @@ function NavigationGroup({
   );
 }
 
-export const navigation: Array<NavGroup> = [
+export const NAVIGATION: NavGroupType[] = [
   {
     title: "Guides",
     links: [
@@ -253,14 +255,14 @@ export const navigation: Array<NavGroup> = [
   },
 ];
 
-export function Navigation(props: React.ComponentPropsWithoutRef<"nav">) {
+export function Navigation(props: HTMLAttributes<HTMLElement>) {
   return (
     <nav {...props}>
-      <ul role="list">
+      <ul>
         <TopLevelNavItem href="/">API</TopLevelNavItem>
         <TopLevelNavItem href="#">Documentation</TopLevelNavItem>
         <TopLevelNavItem href="#">Support</TopLevelNavItem>
-        {navigation.map((group, groupIndex) => (
+        {NAVIGATION.map((group, groupIndex) => (
           <NavigationGroup
             key={group.title}
             group={group}

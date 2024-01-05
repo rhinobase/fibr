@@ -1,0 +1,35 @@
+{
+  "name": "@fibr/react",
+  "version": "0.3.0",
+  "description": "Extensible form builder for react",
+  "license": "MIT",
+  "keywords": [
+    "form",
+    "builder",
+    "automatic",
+    "react",
+    "blueprint",
+    "schema",
+    "json"
+  ],
+  "homepage": "https://fibr.rhinobase.io/",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhinobase/fibr.git",
+    "directory": "packages/react"
+  },
+  "bugs": {
+    "url": "https://github.com/rhinobase/fibr/issues"
+  },
+  "dependencies": {
+    "@swc/helpers": "^0.5.3",
+    "lodash": "^4.17.21"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0"
+  },
+  "sideEffects": false
+}

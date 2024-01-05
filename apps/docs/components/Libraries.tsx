@@ -1,14 +1,14 @@
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import { Heading } from "../components/Heading";
+import Link from "next/link";
 import logoGo from "../public/logos/go.svg";
 import logoNode from "../public/logos/node.svg";
 import logoPhp from "../public/logos/php.svg";
 import logoPython from "../public/logos/python.svg";
 import logoRuby from "../public/logos/ruby.svg";
-import Link from "next/link";
-import { HiArrowRight } from "react-icons/hi";
+import { Heading } from "./Heading";
 
-const libraries = [
+const LIBRARIES = [
   {
     href: "#",
     name: "PHP",
@@ -53,30 +53,24 @@ export function Libraries() {
         Official libraries
       </Heading>
       <div className="not-prose border-secondary-900/5 mt-4 grid grid-cols-1 gap-x-6 gap-y-10 border-t pt-10 dark:border-white/5 sm:grid-cols-2 xl:max-w-none xl:grid-cols-3">
-        {libraries.map((library) => (
-          <div key={library.name} className="flex flex-row-reverse gap-6">
+        {LIBRARIES.map(({ name, description, logo, href }) => (
+          <div key={name} className="flex flex-row-reverse gap-6">
             <div className="flex-auto">
               <h3 className="text-secondary-900 text-sm font-semibold dark:text-white">
-                {library.name}
+                {name}
               </h3>
               <p className="text-secondary-600 dark:text-secondary-400 mt-1 text-sm">
-                {library.description}
+                {description}
               </p>
-
               <Link
-                href={library.href}
+                href={href}
                 className="text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 mt-4 flex w-max items-center gap-1.5 font-semibold transition-all"
               >
                 <p>Read more</p>
-                <HiArrowRight />
+                <ArrowRightIcon width={16} height={16} className="stroke-2" />
               </Link>
             </div>
-            <Image
-              src={library.logo}
-              alt=""
-              className="h-12 w-12"
-              unoptimized
-            />
+            <Image src={logo} alt={name} className="h-12 w-12" unoptimized />
           </div>
         ))}
       </div>

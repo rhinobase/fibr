@@ -8,18 +8,19 @@ import {
 } from "react";
 import { type StoreApi, createStore, useStore } from "zustand";
 import { remToPx } from "../lib/remToPx";
-export interface Section {
+
+export type Section = {
   id: string;
   title: string;
   offsetRem?: number;
   tag?: string;
   headingRef?: React.RefObject<HTMLHeadingElement>;
-}
+};
 
-interface SectionState {
-  sections: Array<Section>;
-  visibleSections: Array<string>;
-  setVisibleSections: (visibleSections: Array<string>) => void;
+type SectionState = {
+  sections: Section[];
+  visibleSections: string[];
+  setVisibleSections: (visibleSections: string[]) => void;
   registerHeading: ({
     id,
     ref,
@@ -29,9 +30,9 @@ interface SectionState {
     ref: React.RefObject<HTMLHeadingElement>;
     offsetRem: number;
   }) => void;
-}
+};
 
-function createSectionStore(sections: Array<Section>) {
+function createSectionStore(sections: Section[]) {
   return createStore<SectionState>()((set) => ({
     sections,
     visibleSections: [],
@@ -39,7 +40,7 @@ function createSectionStore(sections: Array<Section>) {
       set((state) =>
         state.visibleSections.join() === visibleSections.join()
           ? {}
-          : { visibleSections }
+          : { visibleSections },
       ),
     registerHeading: ({ id, ref, offsetRem }) =>
       set((state) => {
@@ -62,7 +63,7 @@ function createSectionStore(sections: Array<Section>) {
 function useVisibleSections(sectionStore: StoreApi<SectionState>) {
   const setVisibleSections = useStore(
     sectionStore,
-    (s) => s.setVisibleSections
+    (s) => s.setVisibleSections,
   );
   const sections = useStore(sectionStore, (s) => s.sections);
 
@@ -149,5 +150,8 @@ export function SectionProvider({
 
 export function useSectionStore<T>(selector: (state: SectionState) => T) {
   const store = useContext(SectionStoreContext);
-  return useStore(store!, selector);
+
+  if (!store) throw new Error("Unable to get context for SelectionStore!");
+
+  return useStore(store, selector);
 }

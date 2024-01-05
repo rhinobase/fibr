@@ -2,9 +2,8 @@ import { Guides } from "../components/Guides";
 import { Resources } from "../components/Resources";
 import { HeroPattern } from "../components/HeroPattern";
 import { Button, Text } from "@rafty/ui";
-import { HiArrowRight } from "react-icons/hi";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import ButtonClass from "../components/Button";
 
 export const metadata = {
   title: "API Documentation",
@@ -25,10 +24,15 @@ Use the Protocol API to access contacts, conversations, group messages, and more
 
 <div className="not-prose mb-16 mt-6 flex gap-3">
   <Link href="/quickstart">
-    <ButtonClass name="Quickstart" righticon={<HiArrowRight />} />
+    <Button
+      colorScheme="primary"
+      righticon={<ArrowRightIcon width={16} height={16} className="stroke-2" />}
+    >
+      Quickstart
+    </Button>
   </Link>
   <Link href="/sdks">
-    <Button variant="outline" className="!rounded-full !py-1">
+    <Button variant="outline" className="rounded-full py-1">
       Explore SDKs
     </Button>
   </Link>
@@ -44,7 +48,7 @@ To get started, create a new application in your [developer settings](#), then r
     className="text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 flex w-max items-center gap-1.5 font-semibold transition-all"
   >
     <Text>Get your API key</Text>
-    <HiArrowRight />
+    <ArrowRightIcon width={16} height={16} />
   </Link>
 </div>
 

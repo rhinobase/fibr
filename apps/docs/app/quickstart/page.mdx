@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { HiArrowRight } from "react-icons/hi";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
 export const metadata = {
   title: "Quickstart",
@@ -50,7 +50,7 @@ composer require protocol/sdk
     className="text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 mt-4 flex w-max items-center gap-1.5 font-semibold transition-all"
   >
     <p>Check out our list of first-party SDKs</p>
-    <HiArrowRight />
+    <ArrowRightIcon width={16} height={16} className="stroke-2" />
   </Link>
 </div>
 
@@ -96,7 +96,7 @@ $client->conversations->list();
     className="text-primary-500 hover:text-primary-500/90 flex w-max items-center gap-1.5 font-semibold"
   >
     <p>Get your API key</p>
-    <HiArrowRight />
+    <ArrowRightIcon width={16} height={16} className="stroke-2" />
   </Link>
 </div>
 

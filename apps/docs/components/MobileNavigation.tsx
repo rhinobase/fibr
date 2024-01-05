@@ -1,7 +1,5 @@
 "use client";
-import { createContext, useContext, useEffect, useRef } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
-import { Navigation } from "../components/Navigation";
+import { Bars3Icon } from "@heroicons/react/24/outline";
 import {
   Button,
   Drawer,
@@ -9,8 +7,10 @@ import {
   DrawerContent,
   DrawerOverlay,
 } from "@rafty/ui";
+import { usePathname, useSearchParams } from "next/navigation";
+import { createContext, useContext, useEffect, useRef } from "react";
+import { Navigation } from "./Navigation";
 import { useDrawerDialog } from "./store";
-import { HiMenu } from "react-icons/hi";
 
 const IsInsideMobileNavigationContext = createContext(false);
 
@@ -35,8 +35,8 @@ export function MobileNavigationDialog() {
       side="left"
     >
       <DrawerOverlay />
-      <DrawerContent className="!h-full !w-full !max-w-[70vw] !p-0 !py-6">
-        <DrawerClose className="!z-[60]" />
+      <DrawerContent className="h-full w-full max-w-[70vw] p-0 py-6">
+        <DrawerClose className="z-[60]" />
         <Navigation className="h-full px-6 pb-6" />
       </DrawerContent>
     </Drawer>
@@ -58,7 +58,7 @@ export function MobileNavigation() {
         variant="ghost"
         onClick={() => setOpen(true)}
       >
-        <HiMenu size={20} />
+        <Bars3Icon width={20} height={20} className="stroke-2" />
       </Button>
     </IsInsideMobileNavigationContext.Provider>
   );

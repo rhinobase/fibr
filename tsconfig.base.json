@@ -15,9 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@fibr/core": ["packages/core/src/index.ts"],
-      "@fibr/rafty": ["packages/react/rafty/src/index.ts"],
-      "@fibr/react": ["packages/react/react/src/index.ts"]
+      "@fibr/react": ["packages/react/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

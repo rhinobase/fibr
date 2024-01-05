@@ -1,14 +1,15 @@
-import Link from "next/link";
+import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { classNames } from "@rafty/ui";
-import { Feedback } from "../components/Feedback";
-import { Heading } from "../components/Heading";
-import { Prose } from "../components/Prose";
-import { HiInformationCircle } from "react-icons/hi2";
+import Link from "next/link";
+import { PropsWithChildren } from "react";
+import { Feedback } from "./Feedback";
+import { Heading } from "./Heading";
+import { Prose } from "./Prose";
 
 export const a = Link;
-export { CodeGroup, Code as code, Pre as pre } from "../components/Code";
+export { CodeGroup, Code as code, Pre as pre } from "./Code";
 
-export function wrapper({ children }: { children: React.ReactNode }) {
+export function wrapper({ children }: PropsWithChildren) {
   return (
     <article className="flex h-full flex-col pb-10 pt-16">
       <Prose className="flex-auto">{children}</Prose>
@@ -19,17 +20,15 @@ export function wrapper({ children }: { children: React.ReactNode }) {
   );
 }
 
-export const h2 = function H2(
-  props: Omit<React.ComponentPropsWithoutRef<typeof Heading>, "level">,
-) {
+export const h2 = function H2(props: Omit<Heading<2>, "level">) {
   return <Heading level={2} {...props} />;
 };
 
-export function Note({ children }: { children: React.ReactNode }) {
+export function Note({ children }: PropsWithChildren) {
   return (
     <div className="bg-primary-50/50 border-primary-500/20 text-primary-900 dark:border-primary-500/30 dark:bg-primary-500/5 dark:text-primary-200 my-6 flex gap-2.5 rounded-2xl border p-4 leading-6 dark:[--tw-prose-links-hover:theme(colors.primary.300)] dark:[--tw-prose-links:theme(colors.white)]">
       <div>
-        <HiInformationCircle size={20} />
+        <InformationCircleIcon width={20} height={20} className="stroke-2" />
       </div>
       <div className="leading-snug [&>:first-child]:mt-0 [&>:last-child]:mb-0">
         {children}
@@ -38,7 +37,7 @@ export function Note({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function Row({ children }: { children: React.ReactNode }) {
+export function Row({ children }: PropsWithChildren) {
   return (
     <div className="grid grid-cols-1 items-start gap-x-16 gap-y-10 xl:max-w-none xl:grid-cols-2">
       {children}
@@ -49,10 +48,9 @@ export function Row({ children }: { children: React.ReactNode }) {
 export function Col({
   children,
   sticky = false,
-}: {
-  children: React.ReactNode;
+}: PropsWithChildren<{
   sticky?: boolean;
-}) {
+}>) {
   return (
     <div
       className={classNames(
@@ -65,13 +63,10 @@ export function Col({
   );
 }
 
-export function Properties({ children }: { children: React.ReactNode }) {
+export function Properties({ children }: PropsWithChildren) {
   return (
     <div className="my-6">
-      <ul
-        role="list"
-        className="divide-secondary-900/5 m-0 max-w-[calc(theme(maxWidth.lg)-theme(spacing.8))] list-none divide-y p-0 dark:divide-white/5"
-      >
+      <ul className="divide-secondary-900/5 m-0 max-w-[calc(theme(maxWidth.lg)-theme(spacing.8))] list-none divide-y p-0 dark:divide-white/5">
         {children}
       </ul>
     </div>
@@ -82,11 +77,10 @@ export function Property({
   name,
   children,
   type,
-}: {
+}: PropsWithChildren<{
   name: string;
-  children: React.ReactNode;
   type?: string;
-}) {
+}>) {
   return (
     <li className="m-0 px-0 py-4 first:pt-0 last:pb-0">
       <dl className="m-0 flex flex-wrap items-center gap-x-3 gap-y-2">

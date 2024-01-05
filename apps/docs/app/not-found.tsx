@@ -1,6 +1,6 @@
-import { HeroPattern } from "../components/HeroPattern";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { HiArrowRight } from "react-icons/hi";
+import { HeroPattern } from "../components/HeroPattern";
 
 export default function NotFound() {
   return (
@@ -21,7 +21,7 @@ export default function NotFound() {
           className="text-primary-500 hover:text-primary-500/90 mt-8 flex w-max items-center gap-1.5 font-semibold"
         >
           <p>Back to docs</p>
-          <HiArrowRight />
+          <ArrowRightIcon width={16} height={16} className="stroke-2" />
         </Link>
       </div>
     </>
