@@ -356,7 +356,7 @@ export function SearchDialog() {
       <DialogOverlay />
       <DialogContent
         showCloseButton={false}
-        className="dark:!bg-secondary-900 !top-[15%] max-w-[370px] !-translate-y-0 !p-0 lg:max-w-[40rem]"
+        className="dark:bg-secondary-900 top-[15%] max-w-[370px] -translate-y-0 p-0 lg:max-w-[40rem]"
       >
         <div {...autocomplete.getRootProps({})}>
           <form
@@ -405,7 +405,7 @@ export function Search() {
     <div className="hidden lg:block lg:max-w-md lg:flex-auto">
       <Button
         type="button"
-        className="w-[470px] gap-2 !rounded-full !py-1"
+        className="w-[470px] gap-2 rounded-full py-1"
         variant="outline"
         onClick={() => setOpen(true)}
       >

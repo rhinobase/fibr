@@ -24,7 +24,7 @@ export function Feedback() {
             <Button
               data-response="yes"
               variant="outline"
-              className="!rounded-l-full !py-1"
+              className="rounded-l-full py-1"
               type="submit"
               onClick={onSubmit}
             >
@@ -33,7 +33,7 @@ export function Feedback() {
             <Button
               data-response="no"
               variant="outline"
-              className="!rounded-r-full border-l-0 !py-1"
+              className="rounded-r-full border-l-0 py-1"
               type="submit"
               onClick={onSubmit}
             >

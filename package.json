@@ -14,7 +14,7 @@
     "@mdx-js/loader": "^2.3.0",
     "@mdx-js/react": "^2.3.0",
     "@next/mdx": "^13.5.6",
-    "@rafty/ui": "^1.4.1",
+    "@rafty/ui": "^1.4.2",
     "@sindresorhus/slugify": "^2.2.1",
     "@swc/helpers": "~0.5.3",
     "@tailwindcss/typography": "^0.5.9",
@@ -85,7 +85,7 @@
     "prettier-plugin-tailwindcss": "^0.5.9",
     "rollup-plugin-preserve-directives": "^0.2.0",
     "sharp": "^0.32.6",
-    "tailwindcss": "3.3.3",
+    "tailwindcss": "3.4.0",
     "ts-node": "10.9.1",
     "typescript": "~5.3.3",
     "verdaccio": "^5.29.0"

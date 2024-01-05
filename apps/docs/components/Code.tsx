@@ -64,12 +64,12 @@ function CopyButton({ code }: CopyButton) {
   }, [copyCount]);
 
   return (
-    <div className="invisible absolute right-4 top-3.5 !rounded-full bg-black/20 backdrop-blur transition-all group-hover:visible">
+    <div className="invisible absolute right-4 top-3.5 rounded-full bg-black/20 backdrop-blur transition-all group-hover:visible">
       <Button
         type="button"
         variant="ghost"
         size="sm"
-        className="!text-secondary-100 invisible !rounded-full group-hover:visible"
+        className="text-secondary-100 invisible rounded-full group-hover:visible"
         onClick={() => {
           window.navigator.clipboard.writeText(code).then(() => {
             setCopyCount((count) => count + 1);
@@ -179,11 +179,11 @@ function CodeGroupHeader({ title, children }: CodeGroupHeader) {
         </h3>
       )}
       {hasTabs && (
-        <TabList className="!border-none">
+        <TabList className="border-none">
           {Children.map(children, (child) => (
             <TabTrigger
               value={getPanelTitle(isValidElement(child) ? child.props : {})}
-              className="hover:text-secondary-400 data-[state='active']:!text-primary-400 data-[state='active']:dark:!border-b-primary-500 py-3"
+              className="hover:text-secondary-400 data-[state='active']:text-primary-400 data-[state='active']:dark:border-b-primary-500 py-3"
             >
               {isValidElement(child)
                 ? getPanelTitle(child.props || {})
