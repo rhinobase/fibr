@@ -4,7 +4,6 @@ import { HeroPattern } from "../components/HeroPattern";
 import { Button, Text } from "@rafty/ui";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import ButtonClass from "../components/Button";
 
 export const metadata = {
   title: "API Documentation",
@@ -25,10 +24,12 @@ Use the Protocol API to access contacts, conversations, group messages, and more
 
 <div className="not-prose mb-16 mt-6 flex gap-3">
   <Link href="/quickstart">
-    <ButtonClass
-      name="Quickstart"
+    <Button
+      colorScheme="primary"
       righticon={<ArrowRightIcon width={16} height={16} className="stroke-2" />}
-    />
+    >
+      Quickstart
+    </Button>
   </Link>
   <Link href="/sdks">
     <Button variant="outline" className="!rounded-full !py-1">

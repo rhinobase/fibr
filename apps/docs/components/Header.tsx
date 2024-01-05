@@ -1,8 +1,7 @@
-import { classNames } from "@rafty/ui";
+import { Button, classNames } from "@rafty/ui";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { HTMLAttributes, PropsWithChildren, forwardRef } from "react";
-import { Button } from "./Button";
 import { Logo } from "./Logo";
 import {
   MobileNavigation,
@@ -90,7 +89,7 @@ export const Header = forwardRef<HTMLDivElement, Header>(function Header(
         </div>
         <div className="hidden min-[416px]:contents">
           <Link href="#">
-            <Button name="Sign in" />
+            <Button colorScheme="primary">Sign in</Button>
           </Link>
         </div>
       </div>
