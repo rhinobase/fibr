@@ -1,4 +1,4 @@
-import { Button, classNames } from "@rafty/ui";
+import { classNames } from "@rafty/ui";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { HTMLAttributes, PropsWithChildren, forwardRef } from "react";
@@ -48,7 +48,7 @@ export const Header = forwardRef<HTMLDivElement, Header>(function Header(
         className,
         "fixed inset-x-0 top-0 z-50 flex h-14 items-center justify-between gap-12 px-4 transition sm:px-6 lg:left-72 lg:z-30 lg:px-8 xl:left-80",
         !isInsideMobileNavigation &&
-          "backdrop-blur-sm dark:backdrop-blur lg:left-72 xl:left-80",
+          "backdrop-blur-sm lg:left-72 xl:left-80 dark:backdrop-blur",
         isInsideMobileNavigation
           ? "dark:bg-secondary-900 bg-white"
           : "dark:bg-secondary-900/[var(--bg-opacity-dark)] bg-white/[var(--bg-opacity-light)]",
@@ -82,15 +82,10 @@ export const Header = forwardRef<HTMLDivElement, Header>(function Header(
             <TopLevelNavItem href="#">Support</TopLevelNavItem>
           </ul>
         </nav>
-        <div className="dark:bg-white/15 bg-secondary-900/10 hidden h-5 w-px md:block" />
+        <div className="bg-secondary-900/10 hidden h-5 w-px md:block dark:bg-white/15" />
         <div className="flex gap-4">
           <MobileSearch />
           <ThemeToggle />
-        </div>
-        <div className="hidden min-[416px]:contents">
-          <Link href="#">
-            <Button colorScheme="primary">Sign in</Button>
-          </Link>
         </div>
       </div>
     </motion.div>

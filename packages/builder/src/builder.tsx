@@ -5,5 +5,3 @@ export function Builder() {
     </div>
   );
 }
-
-export default Builder;
