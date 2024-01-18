@@ -1,10 +1,13 @@
 "use client";
-import { type PropsWithChildren, createContext, useContext } from "react";
-import type { ThreadType } from "../types";
+import {
+  type PropsWithChildren,
+  type ReactNode,
+  createContext,
+  useContext,
+} from "react";
 
 type FibrContextType = {
-  readonly components: Record<string, (props: ThreadType) => JSX.Element>;
-  readonly onError?: (errors: unknown) => void;
+  readonly components: Record<string, () => ReactNode>;
 };
 
 const FibrContext = createContext<FibrContextType>({
@@ -16,19 +19,16 @@ type PluginType = FibrContextType["components"];
 export function FibrProvider({
   children,
   plugins,
-  onError,
-}: PropsWithChildren<
-  {
-    plugins: PluginType | PluginType[];
-  } & Pick<FibrContextType, "onError">
->) {
+}: PropsWithChildren<{
+  plugins: PluginType | PluginType[];
+}>) {
   // Merging all the components
   const components = Array.isArray(plugins)
     ? Object.assign({}, ...plugins)
     : plugins;
 
   return (
-    <FibrContext.Provider value={{ components, onError }}>
+    <FibrContext.Provider value={{ components }}>
       {children}
     </FibrContext.Provider>
   );
