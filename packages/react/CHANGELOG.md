@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.5.0](https://github.com/rhinobase/fibr/compare/react-0.4.1...react-0.5.0) (2024-01-18)
+
+
+### Bug Fixes
+
+* **react:** major improvements ([db14620](https://github.com/rhinobase/fibr/commit/db1462068c1db17a34ab17c18dc9bcdc124ebc21))
+
 ## [0.4.1](https://github.com/rhinobase/fibr/compare/react-0.4.0...react-0.4.1) (2024-01-05)
 
 ## [0.4.0](https://github.com/rhinobase/fibr/compare/react-0.3.0...react-0.4.0) (2024-01-05)
