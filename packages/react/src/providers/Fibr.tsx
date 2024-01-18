@@ -1,12 +1,9 @@
 "use client";
-import { PropsWithChildren, createContext, useContext } from "react";
-import type { ThreadWithNameType } from "../types";
+import { type PropsWithChildren, createContext, useContext } from "react";
+import type { ThreadType } from "../types";
 
 type FibrContextType = {
-  readonly components: Record<
-    string,
-    (props: ThreadWithNameType) => JSX.Element
-  >;
+  readonly components: Record<string, (props: ThreadType) => JSX.Element>;
   readonly onError?: (errors: unknown) => void;
 };
 

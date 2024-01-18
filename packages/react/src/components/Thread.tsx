@@ -1,21 +1,21 @@
 "use client";
-import { useFibr } from "../providers";
-import type { ThreadWithNameType } from "../types";
+import { Fragment } from "react";
+import { useFibr, useWeaver } from "../providers";
+import type { ThreadType } from "../types";
+import { ComponentNotFound } from "./ComponentNotFound";
 
-export function Thread(props: ThreadWithNameType) {
+export function Thread(props?: ThreadType) {
+  const { blueprint, wrapper: Wrapper = Fragment } = useWeaver();
   const { components } = useFibr();
 
-  const Comp = components[props.type];
+  const config = props ?? blueprint;
 
-  // No component found
-  if (!Comp)
-    return (
-      <p>
-        Component of type <kbd>{props.type}</kbd> for the component with name{" "}
-        <kbd>{props.name}</kbd> doesn't exist!
-      </p>
-    );
+  const Component = components[config.type] ?? ComponentNotFound;
 
   // Returning the component
-  return <Comp {...props} />;
+  return (
+    <Wrapper {...config}>
+      <Component {...config} />
+    </Wrapper>
+  );
 }
