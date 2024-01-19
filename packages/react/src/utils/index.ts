@@ -1,1 +1,1 @@
-export { createThread } from "./create";
+export { createThread } from "./thread";
