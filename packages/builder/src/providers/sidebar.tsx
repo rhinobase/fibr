@@ -26,7 +26,7 @@ export type TabPayload = {
 };
 
 function useSidebarManager() {
-  const [active, setActive] = useState<string>();
+  const [active, setActive] = useState<string | null>(null);
   const [tabs, setTabs] = useReducer(
     (prev: Map<string, Omit<TabPayload, "name">>, cur: TabPayload) => {
       const { name, ...data } = cur;
@@ -45,7 +45,7 @@ function useSidebarManager() {
   }
 
   function onActiveChange(name: string) {
-    setActive(name);
+    setActive((prev) => (prev !== name ? name : null));
   }
 
   return { tabs, addTab, active, onActiveChange };

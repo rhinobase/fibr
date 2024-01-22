@@ -1,4 +1,4 @@
-import { Squares2X2Icon } from "@heroicons/react/24/outline";
+import { Squares2X2Icon, ListBulletIcon } from "@heroicons/react/24/outline";
 import { Canvas } from "./Canvas";
 import { Container } from "./Container";
 import { Footer } from "./Footer";
@@ -17,14 +17,14 @@ export function Builder() {
           <SidebarItem
             name="palette"
             label="Palette"
-            icon={<Squares2X2Icon className="h-5 w-5" />}
+            icon={<Squares2X2Icon className="h-5 w-5 stroke-2" />}
           >
             Palette Tab Content
           </SidebarItem>
           <SidebarItem
             name="over"
             label="Over"
-            icon={<Squares2X2Icon className="h-5 w-5" />}
+            icon={<ListBulletIcon className="h-5 w-5 stroke-2" />}
           >
             Over Tab Content
           </SidebarItem>
