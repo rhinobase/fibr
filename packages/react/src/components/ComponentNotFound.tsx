@@ -1,10 +1,11 @@
 "use client";
-import type { ThreadType } from "../types";
+import { useThread } from "../providers";
 
-export function ComponentNotFound(props: ThreadType) {
+export function ComponentNotFound() {
+  const { type } = useThread();
   return (
     <p>
-      Component of type <kbd>{props.type}</kbd> doesn't exist!
+      Component of type <kbd>{type}</kbd> doesn't exist!
     </p>
   );
 }

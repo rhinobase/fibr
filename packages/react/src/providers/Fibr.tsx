@@ -5,6 +5,7 @@ import {
   createContext,
   useContext,
 } from "react";
+import { ComponentNotFound } from "../components";
 
 type FibrContextType = {
   readonly components: Record<string, () => ReactNode>;
@@ -22,7 +23,7 @@ export function FibrProvider({
 }>) {
   // Merging all the components
   const components = Array.isArray(plugins)
-    ? Object.assign({}, ...plugins)
+    ? Object.assign({ default: ComponentNotFound }, ...plugins)
     : plugins;
 
   return (

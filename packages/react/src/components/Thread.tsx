@@ -2,7 +2,6 @@
 import { Fragment } from "react";
 import { ThreadProvider, useFibr, useWeaver } from "../providers";
 import type { ThreadType } from "../types";
-import { ComponentNotFound } from "./ComponentNotFound";
 
 export function Thread<T extends Record<string, unknown>>(
   props: ThreadType<T>,
@@ -10,7 +9,7 @@ export function Thread<T extends Record<string, unknown>>(
   const { wrapper: Wrapper = Fragment } = useWeaver();
   const { components } = useFibr();
 
-  const Component = components[props.type] ?? ComponentNotFound;
+  const Component = components[props.type] ?? components.default;
 
   // Returning the component
   return (
