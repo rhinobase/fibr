@@ -10,9 +10,7 @@ type FibrContextType = {
   readonly components: Record<string, () => ReactNode>;
 };
 
-const FibrContext = createContext<FibrContextType>({
-  components: {},
-});
+const FibrContext = createContext<FibrContextType | null>(null);
 
 type PluginType = FibrContextType["components"];
 
@@ -34,4 +32,10 @@ export function FibrProvider({
   );
 }
 
-export const useFibr = () => useContext(FibrContext);
+export function useFibr() {
+  const context = useContext(FibrContext);
+
+  if (!context) throw new Error("Missing FibrContext.Provider in the tree");
+
+  return context;
+}
