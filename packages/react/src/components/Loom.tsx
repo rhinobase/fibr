@@ -1,9 +1,10 @@
-"use client";
-import { useWeaver } from "../providers";
+import { ThreadType } from "../types";
 import { Thread } from "./Thread";
 
-export function Loom() {
-  const { blueprint } = useWeaver();
+export type Loom = {
+  blueprint: ThreadType;
+};
 
+export function Loom({ blueprint }: Loom) {
   return <Thread {...blueprint} />;
 }
