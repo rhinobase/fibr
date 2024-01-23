@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.5.2](https://github.com/rhinobase/fiber/compare/react-0.5.1...react-0.5.2) (2024-01-23)
+
 ## [0.5.1](https://github.com/rhinobase/fibr/compare/react-0.5.0...react-0.5.1) (2024-01-18)
 
 
