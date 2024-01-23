@@ -9,6 +9,7 @@ import {
 } from "react";
 import _ from "lodash";
 import { nanoid } from "nanoid";
+import { arrayMove } from "@dnd-kit/sortable";
 
 type BlueprintContextType = ReturnType<typeof useBlueprintManager>;
 
@@ -30,7 +31,7 @@ function useBlueprintManager() {
   // Get all fields
   const allFields = useCallback(
     (): ThreadWithIdType[] =>
-      Array.from(fields.entries()).map(([id, field]) => ({
+      Array.from(fields).map(([id, field]) => ({
         id,
         ...field,
       })),
@@ -86,6 +87,16 @@ function useBlueprintManager() {
     });
   }, []);
 
+  // Move field
+  const moveField = useCallback((from: string, to: string) => {
+    setFields((fields) => {
+      const tmp = Array.from(fields);
+      const oldIndex = tmp.findIndex((val) => val[0] === from);
+      const newIndex = tmp.findIndex((val) => val[0] === to);
+      return new Map(arrayMove(tmp, oldIndex, newIndex));
+    });
+  }, []);
+
   return {
     fields: {
       all: allFields,
@@ -93,6 +104,7 @@ function useBlueprintManager() {
       add: addField,
       update: updateField,
       delete: deleteField,
+      move: moveField,
     },
   };
 }
