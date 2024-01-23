@@ -1,2 +1,2 @@
 export { Thread } from "./Thread";
-export { Weaver } from "./Weaver";
+export { Loom } from "./Loom";

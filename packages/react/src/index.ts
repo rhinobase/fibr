@@ -1,3 +1,4 @@
 export * from "./components";
 export * from "./providers";
-export type { ThreadType, ThreadWithNameType } from "./types";
+export type { ThreadType, ThreadWithIdType } from "./types";
+export { createThread } from "./utils";
