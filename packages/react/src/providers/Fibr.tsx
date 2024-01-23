@@ -5,7 +5,7 @@ import {
   createContext,
   useContext,
 } from "react";
-import { ComponentNotFound } from "../components";
+import { ComponentNotFound } from "../components/ComponentNotFound";
 
 type FibrContextType = {
   readonly components: Record<string, () => ReactNode>;
