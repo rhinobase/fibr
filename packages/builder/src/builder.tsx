@@ -11,7 +11,7 @@ import { Sidebar, SidebarItem } from "./sidebar";
 export function Builder() {
   return (
     <Workspace>
-      <Header />
+      <Header className="justify-center">Header</Header>
       <Container>
         <Sidebar>
           <SidebarItem
@@ -30,11 +30,11 @@ export function Builder() {
           </SidebarItem>
         </Sidebar>
         <Canvas>
-          <Screen />
+          <Screen className="flex items-center justify-center">Screen</Screen>
         </Canvas>
         <Settings />
       </Container>
-      <Footer />
+      <Footer className="justify-center">Footer</Footer>
     </Workspace>
   );
 }
