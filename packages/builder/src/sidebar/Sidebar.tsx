@@ -6,7 +6,7 @@ import { SidebarProvider, useSidebar } from "../providers";
 export function Sidebar({ children }: PropsWithChildren) {
   return (
     <SidebarProvider>
-      <div className="flex h-full w-80 items-center justify-center">
+      <div className="h-full max-w-80">
         <SidebarTray>{children}</SidebarTray>
       </div>
     </SidebarProvider>
@@ -17,7 +17,7 @@ function SidebarTray({ children }: PropsWithChildren) {
   const { tabs, active, onActiveChange } = useSidebar();
 
   return (
-    <Tab value={active ?? ""} orientation="vertical" className="h-full w-full">
+    <Tab value={active ?? ""} orientation="vertical" className="h-full">
       <TabList className="p-1">
         {Array.from(tabs.entries()).map(([name, { icon }]) => (
           <TabTrigger
