@@ -1,1 +1,1 @@
-export { SidebarProvider, useSidebar } from "./sidebar";
+export { useBuilder, BuilderProvider } from "./builder";

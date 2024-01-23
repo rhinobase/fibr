@@ -8,7 +8,7 @@ export const Screen = forwardRef<HTMLDivElement, Screen>(
     <div
       {...props}
       className={classNames(
-        "h-[500px] w-[500px] bg-white shadow-lg shadow-black/5",
+        "dark:bg-secondary-950 bg-white shadow-lg shadow-black/5 dark:shadow-transparent",
         className,
       )}
       ref={forwardedRef}

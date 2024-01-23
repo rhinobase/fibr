@@ -13,7 +13,7 @@ export const Settings = forwardRef<HTMLDivElement, Settings>(
       <div
         {...props}
         className={classNames(
-          "border-secondary-200 dark:border-secondary-800 flex h-full w-80 items-center justify-center border-l p-4 text-center",
+          "border-secondary-200 dark:border-secondary-800 flex h-full w-96 items-center justify-center border-l p-4 text-center",
           className,
         )}
         ref={forwardedRef}

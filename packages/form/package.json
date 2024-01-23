@@ -1,4 +1,13 @@
 {
   "name": "@fibr/form-builder",
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "dependencies": {
+    "@swc/helpers": "^0.5.3",
+    "@fibr/builder": "*",
+    "@fibr/react": "*",
+    "@heroicons/react": "^2.1.1"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0"
+  }
 }

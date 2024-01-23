@@ -4,6 +4,8 @@ export type ThreadType<
   type: string;
 } & T;
 
-export type ThreadWithIdType<T extends Record<string, unknown>> = {
+export type ThreadWithIdType<
+  T extends Record<string, unknown> = Record<string, unknown>,
+> = {
   id: string;
 } & ThreadType<T>;
