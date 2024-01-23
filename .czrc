@@ -7,6 +7,10 @@
     {
       "value": "react",
       "name": "react:                anything React specific"
+    },
+    {
+      "value": "builder",
+      "name": "builder:              anything Builder specific"
     }
   ],
   "scopesSearchValue": true,
