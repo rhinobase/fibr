@@ -1,6 +1,6 @@
 "use client";
-import { Builder } from "@fibr/builder";
+import { FormBuilder } from "@fibr/form-builder";
 
 export default function Playground() {
-  return <Builder />;
+  return <FormBuilder />;
 }

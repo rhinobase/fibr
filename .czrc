@@ -11,6 +11,10 @@
     {
       "value": "builder",
       "name": "builder:              anything Builder specific"
+    },
+    {
+      "value": "form",
+      "name": "form:                 anything Form Builder specific"
     }
   ],
   "scopesSearchValue": true,
