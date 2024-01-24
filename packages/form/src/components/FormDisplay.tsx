@@ -19,5 +19,5 @@ export function FormDisplay() {
 }
 
 function FieldWrapper({ children }: PropsWithChildren) {
-  return <div>{children}</div>;
+  return <div className="h-[200px]">{children}</div>;
 }

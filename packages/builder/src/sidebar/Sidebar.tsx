@@ -5,9 +5,9 @@ import { useBuilder } from "../providers";
 
 export function Sidebar({ children }: PropsWithChildren) {
   return (
-    <div className="h-full w-96">
+    <aside className="h-full w-96">
       <SidebarTray>{children}</SidebarTray>
-    </div>
+    </aside>
   );
 }
 
