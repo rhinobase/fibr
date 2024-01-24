@@ -29,13 +29,17 @@ export function QuickActions({ children }: QuickActions) {
   } = useBlueprint();
 
   return (
-    <HoverCard openDelay={300} open={selected === id ? true : undefined}>
+    <HoverCard
+      openDelay={50}
+      closeDelay={100}
+      open={selected === id ? true : undefined}
+    >
       <HoverCardTrigger asChild>{children}</HoverCardTrigger>
       <HoverCardContent
         side="right"
         sideOffset={10}
         align="start"
-        className="space-y-1.5 border-none bg-transparent p-0 shadow-none transition-all duration-500 ease-in-out"
+        className="space-y-1.5 border-none bg-transparent p-0 shadow-none transition-opacity data-[state=closed]:ease-out data-[state=open]:ease-in"
       >
         <IdEditField />
         <QuickActionButtons />
@@ -63,16 +67,16 @@ enum Direction {
 function QuickActionButtons() {
   const { id } = useThread();
   const {
-    fields: { all, move, remove, findIndex, duplicate },
+    fields: { fields, all, move, remove, findIndex, duplicate, select },
   } = useBlueprint();
 
   const index = findIndex(id);
 
-  if (!index) return <></>;
+  if (index == null) return <></>;
 
   const moveComponent = (direction: Direction) => {
     const components = all();
-
+    select(id);
     move(id, components[index + direction].id);
   };
 
@@ -85,7 +89,7 @@ function QuickActionButtons() {
           action={() => moveComponent(Direction.UP)}
         />
       )}
-      {index < 10 && (
+      {index < fields.size - 1 && (
         <ActionButton
           name="Move down"
           icon={MdOutlineArrowDownward}

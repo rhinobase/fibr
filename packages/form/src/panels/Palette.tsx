@@ -3,8 +3,8 @@ import {
   Squares2X2Icon,
   ViewfinderCircleIcon,
 } from "@heroicons/react/24/outline";
-import { PaletteCard } from "../components";
 import { SearchField } from "@rafty/ui";
+import { PaletteCard } from "../components";
 
 const FIELDS: PaletteCard[] = [
   {

@@ -1,5 +1,5 @@
-import { Container, Footer, Header, Sidebar, Workspace } from "@fibr/builder";
-import { Canvas, Overview, Palette, Settings } from "./panels";
+import { Container, Sidebar, Workspace } from "@fibr/builder";
+import { Canvas, Overview, Palette, Settings, Header } from "./panels";
 import { BlueprintProvider } from "./providers";
 import { FibrProvider } from "@fibr/react";
 
@@ -8,7 +8,7 @@ export function FormBuilder() {
     <BlueprintProvider>
       <FibrProvider plugins={[]}>
         <Workspace>
-          <Header className="justify-center">Header</Header>
+          <Header />
           <Container>
             <Sidebar>
               <Palette />

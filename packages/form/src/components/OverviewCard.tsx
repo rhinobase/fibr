@@ -85,12 +85,14 @@ type DeleteButton = {
 };
 
 function DeleteButton({ id }: DeleteButton) {
-  const { fields } = useBlueprint();
+  const {
+    fields: { remove },
+  } = useBlueprint();
 
   const deleteNode = eventHandler((event) => {
     event.preventDefault();
     event.stopPropagation();
-    fields.delete(id);
+    remove(id);
   });
 
   return (

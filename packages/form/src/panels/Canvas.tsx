@@ -1,5 +1,5 @@
 import { Canvas as BuilderCanvas, Screen } from "@fibr/builder";
-import { FormDisplay, AddFieldCard } from "../components";
+import { AddFieldCard, FormDisplay } from "../components";
 
 export function Canvas() {
   return (

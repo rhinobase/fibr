@@ -1,5 +1,8 @@
 "use client";
-import { ThreadWithIdType, ThreadType } from "@fibr/react";
+import { arrayMove } from "@dnd-kit/sortable";
+import { ThreadType, ThreadWithIdType } from "@fibr/react";
+import _ from "lodash";
+import { nanoid } from "nanoid";
 import {
   PropsWithChildren,
   createContext,
@@ -7,9 +10,6 @@ import {
   useContext,
   useState,
 } from "react";
-import _ from "lodash";
-import { nanoid } from "nanoid";
-import { arrayMove } from "@dnd-kit/sortable";
 
 type BlueprintContextType = ReturnType<typeof useBlueprintManager>;
 
@@ -121,7 +121,7 @@ function useBlueprintManager() {
   // Find field index
   const findFieldIndex = useCallback(
     (id: string) => {
-      const keys = Object.keys(fields);
+      const keys = Array.from(fields.keys());
 
       for (let index = 0; index < keys.length; index++) {
         const key = keys[index];
@@ -147,13 +147,14 @@ function useBlueprintManager() {
 
   return {
     fields: {
+      fields,
+      selected,
       all: allFields,
       get: getField,
       add: addField,
       update: updateField,
       remove: removeField,
       move: moveField,
-      selected,
       select: selectField,
       findIndex: findFieldIndex,
       duplicate: duplicateField,

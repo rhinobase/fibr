@@ -1,25 +1,25 @@
-import { SidebarItem } from "@fibr/builder";
-import { ListBulletIcon } from "@heroicons/react/24/outline";
-import { AddFieldCard, OverviewCard } from "../components";
-import { useBlueprint } from "../providers";
 import {
-  type DragEndEvent,
   DndContext,
-  closestCenter,
   KeyboardSensor,
   PointerSensor,
+  closestCenter,
   useSensor,
   useSensors,
+  type DragEndEvent,
 } from "@dnd-kit/core";
+import {
+  restrictToVerticalAxis,
+  restrictToWindowEdges,
+} from "@dnd-kit/modifiers";
 import {
   SortableContext,
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import {
-  restrictToVerticalAxis,
-  restrictToWindowEdges,
-} from "@dnd-kit/modifiers";
+import { SidebarItem } from "@fibr/builder";
+import { ListBulletIcon } from "@heroicons/react/24/outline";
+import { AddFieldCard, OverviewCard } from "../components";
+import { useBlueprint } from "../providers";
 
 export function Overview() {
   return (
