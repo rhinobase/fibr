@@ -55,9 +55,14 @@ function useBlueprintManager() {
   );
 
   // Add field
+  const generateId = useCallback((type: string) => {
+    return nanoid();
+  }, []);
+
+  // Add field
   const addField = useCallback(
     (field: ThreadType, force = false) => {
-      const id = nanoid();
+      const id = generateId(field.type);
 
       if (fields.has(id) && !force)
         throw new Error(`Field with ID ${id} already exists!`);
@@ -69,7 +74,7 @@ function useBlueprintManager() {
 
       setSelected(id);
     },
-    [fields],
+    [fields, generateId],
   );
 
   // Update field
@@ -87,8 +92,8 @@ function useBlueprintManager() {
     [fields],
   );
 
-  // Delete field
-  const deleteField = useCallback((id: string) => {
+  // Remove field
+  const removeField = useCallback((id: string) => {
     setFields((prev) => {
       prev.delete(id);
       return new Map(prev);
@@ -110,16 +115,45 @@ function useBlueprintManager() {
     });
   }, []);
 
+  // Find field index
+  const findFieldIndex = useCallback(
+    (id: string) => {
+      const keys = Object.keys(fields);
+
+      for (let index = 0; index < keys.length; index++) {
+        const key = keys[index];
+        if (key === id) return index;
+      }
+
+      return null;
+    },
+    [fields],
+  );
+
+  // Duplicate field
+  const duplicateField = useCallback(
+    (id: string) => {
+      const field = getField(id);
+
+      if (!field) throw new Error(`Unable to find the field with Id ${id}`);
+
+      addField(field);
+    },
+    [getField, addField],
+  );
+
   return {
     fields: {
       all: allFields,
       get: getField,
       add: addField,
       update: updateField,
-      delete: deleteField,
+      remove: removeField,
       move: moveField,
       selected,
       select: selectField,
+      findIndex: findFieldIndex,
+      duplicate: duplicateField,
     },
   };
 }
