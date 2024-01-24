@@ -27,6 +27,12 @@ export function BlueprintProvider({ children }: PropsWithChildren) {
 
 function useBlueprintManager() {
   const [fields, setFields] = useState<Map<string, ThreadType>>(new Map());
+  const [selected, setSelected] = useState<string | null>(null);
+
+  // On field select
+  const selectField = useCallback((id: string | null) => {
+    setSelected(id);
+  }, []);
 
   // Get all fields
   const allFields = useCallback(
@@ -60,6 +66,8 @@ function useBlueprintManager() {
         prev.set(id, field);
         return new Map(prev);
       });
+
+      setSelected(id);
     },
     [fields],
   );
@@ -85,6 +93,11 @@ function useBlueprintManager() {
       prev.delete(id);
       return new Map(prev);
     });
+
+    setSelected((prev) => {
+      if (prev === id) return null;
+      return prev;
+    });
   }, []);
 
   // Move field
@@ -105,6 +118,8 @@ function useBlueprintManager() {
       update: updateField,
       delete: deleteField,
       move: moveField,
+      selected,
+      select: selectField,
     },
   };
 }

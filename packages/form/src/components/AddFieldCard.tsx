@@ -1,13 +1,21 @@
 import { useBuilder } from "@fibr/builder";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { eventHandler } from "@rafty/shared";
+import { useBlueprint } from "../providers";
 
 export function AddFieldCard() {
   const {
     tabs: { setActive },
   } = useBuilder();
 
-  const setPaletteActive = eventHandler(() => setActive("palette"));
+  const {
+    fields: { select },
+  } = useBlueprint();
+
+  const setPaletteActive = eventHandler(() => {
+    setActive("palette");
+    select(null);
+  });
 
   return (
     <div

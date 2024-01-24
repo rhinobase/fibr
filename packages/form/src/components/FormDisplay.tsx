@@ -1,6 +1,8 @@
-import { Thread, WeaverProvider } from "@fibr/react";
+import { Thread, WeaverProvider, useThread } from "@fibr/react";
 import { useBlueprint } from "../providers";
 import { PropsWithChildren } from "react";
+import { eventHandler } from "@rafty/shared";
+import { classNames } from "@rafty/ui";
 
 export function FormDisplay() {
   const {
@@ -19,5 +21,23 @@ export function FormDisplay() {
 }
 
 function FieldWrapper({ children }: PropsWithChildren) {
-  return <div className="h-[200px]">{children}</div>;
+  const { id } = useThread();
+  const {
+    fields: { select, selected },
+  } = useBlueprint();
+
+  const selectField = eventHandler(() => select(id));
+
+  return (
+    <div
+      className={classNames(
+        "w-full select-none rounded-md border p-5 text-center",
+        selected === id ? "border-primary-500" : "border-secondary-200",
+      )}
+      onClick={selectField}
+      onKeyDown={selectField}
+    >
+      {children}
+    </div>
+  );
 }

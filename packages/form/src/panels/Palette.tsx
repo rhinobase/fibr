@@ -4,6 +4,7 @@ import {
   ViewfinderCircleIcon,
 } from "@heroicons/react/24/outline";
 import { PaletteCard } from "../components";
+import { SearchField } from "@rafty/ui";
 
 const FIELDS: PaletteCard[] = [
   {
@@ -44,8 +45,9 @@ export function Palette() {
       name="palette"
       label="Palette"
       icon={<Squares2X2Icon className="h-5 w-5 stroke-2" />}
-      className="data-[orientation=vertical]:p-3"
+      className="space-y-3 overflow-y-auto data-[orientation=vertical]:p-3"
     >
+      <SearchField size="sm" />
       <div className="grid w-full grid-cols-3 gap-2.5">
         {FIELDS.map((field) => (
           <PaletteCard key={field.type} {...field} />
