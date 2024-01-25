@@ -61,13 +61,14 @@ function useBlueprintManager() {
     [fields],
   );
 
-  // Check if Id already exist
-  const doesIdExist = useCallback((id: string) => fields.has(id), [fields]);
-
   // Generate field Id
-  const generateId = useCallback((type: string) => {
-    return nanoid();
-  }, []);
+  const generateId = (type: string, index = 1): string => {
+    const id = `${type}${index}`;
+
+    if (fields.has(id)) return generateId(type, index + 1);
+
+    return id;
+  };
 
   // Add field
   const addField = useCallback(
