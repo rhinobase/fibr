@@ -1,5 +1,6 @@
 "use client";
 import { arrayMove } from "@dnd-kit/sortable";
+import { ENV, useBuilder } from "@fibr/builder";
 import { ThreadType, ThreadWithIdType } from "@fibr/react";
 import _ from "lodash";
 import { nanoid } from "nanoid";
@@ -8,6 +9,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useState,
 } from "react";
 
@@ -26,8 +28,13 @@ export function BlueprintProvider({ children }: PropsWithChildren) {
 }
 
 function useBlueprintManager() {
+  const { env } = useBuilder();
   const [fields, setFields] = useState<Map<string, ThreadType>>(new Map());
   const [selected, setSelected] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (env.current === ENV.PRODUCTION) setSelected(null);
+  }, [env.current]);
 
   // On field select
   const selectField = useCallback((id: string | null) => {

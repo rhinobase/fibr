@@ -1,24 +1,21 @@
-import { Container, Sidebar, Workspace } from "@fibr/builder";
+import { Container, Workspace } from "@fibr/builder";
 import { FibrProvider } from "@fibr/react";
-import { Canvas, Header, Overview, Palette, Settings } from "./panels";
+import { Canvas, Header, Settings, Sidebar } from "./panels";
 import { BlueprintProvider } from "./providers";
 
 export function FormBuilder() {
   return (
-    <BlueprintProvider>
-      <FibrProvider plugins={[]}>
-        <Workspace>
+    <FibrProvider plugins={[]}>
+      <Workspace>
+        <BlueprintProvider>
           <Header />
           <Container>
-            <Sidebar>
-              <Palette />
-              <Overview />
-            </Sidebar>
+            <Sidebar />
             <Canvas />
             <Settings />
           </Container>
-        </Workspace>
-      </FibrProvider>
-    </BlueprintProvider>
+        </BlueprintProvider>
+      </Workspace>
+    </FibrProvider>
   );
 }
