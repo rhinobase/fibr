@@ -35,7 +35,7 @@ export function MobileNavigationDialog() {
       side="left"
     >
       <DrawerOverlay />
-      <DrawerContent className="h-full w-full max-w-[70vw] p-0 py-6">
+      <DrawerContent className="size-full max-w-[70vw] p-0 py-6">
         <DrawerClose className="z-[60]" />
         <Navigation className="h-full px-6 pb-6" />
       </DrawerContent>

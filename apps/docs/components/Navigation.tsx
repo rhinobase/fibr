@@ -115,7 +115,7 @@ function VisibleSectionHighlight({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { delay: 0.2 } }}
       exit={{ opacity: 0 }}
-      className="bg-zinc-800/2.5 dark:bg-white/2.5 absolute inset-x-0 top-0 will-change-transform"
+      className="bg-zinc-800/2.5 dark:bg-white/2.5 absolute inset-x-0 will-change-transform"
       style={{ borderRadius: 8, height, top }}
     />
   );

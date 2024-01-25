@@ -17,14 +17,14 @@ export function Builder() {
           <SidebarItem
             name="palette"
             label="Palette"
-            icon={<Squares2X2Icon className="h-5 w-5 stroke-2" />}
+            icon={<Squares2X2Icon className="size-5 stroke-2" />}
           >
             Palette Tab Content
           </SidebarItem>
           <SidebarItem
             name="over"
             label="Over"
-            icon={<ListBulletIcon className="h-5 w-5 stroke-2" />}
+            icon={<ListBulletIcon className="size-5 stroke-2" />}
           >
             Over Tab Content
           </SidebarItem>

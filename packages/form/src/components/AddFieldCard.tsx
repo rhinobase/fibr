@@ -23,7 +23,7 @@ export function AddFieldCard() {
       onClick={setPaletteActive}
       onKeyDown={setPaletteActive}
     >
-      <PlusIcon className="h-4 w-4 stroke-[3px]" />
+      <PlusIcon className="size-4 stroke-[3]" />
       <p className="text-sm font-semibold leading-none">Add Field</p>
     </div>
   );

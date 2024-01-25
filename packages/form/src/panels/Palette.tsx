@@ -10,32 +10,32 @@ const FIELDS: PaletteCard[] = [
   {
     type: "string",
     label: "Text Input",
-    icon: <ViewfinderCircleIcon className="h-6 w-6 opacity-50" />,
+    icon: <ViewfinderCircleIcon className="size-6 opacity-50" />,
   },
   {
     type: "email",
     label: "Email",
-    icon: <ViewfinderCircleIcon className="h-6 w-6 opacity-50" />,
+    icon: <ViewfinderCircleIcon className="size-6 opacity-50" />,
   },
   {
     type: "url",
     label: "url",
-    icon: <ViewfinderCircleIcon className="h-6 w-6 opacity-50" />,
+    icon: <ViewfinderCircleIcon className="size-6 opacity-50" />,
   },
   {
     type: "editable-text",
     label: "editable text",
-    icon: <ViewfinderCircleIcon className="h-6 w-6 opacity-50" />,
+    icon: <ViewfinderCircleIcon className="size-6 opacity-50" />,
   },
   {
     type: "editable-textarea",
     label: "editable text area",
-    icon: <ViewfinderCircleIcon className="h-6 w-6 opacity-50" />,
+    icon: <ViewfinderCircleIcon className="size-6 opacity-50" />,
   },
   {
     type: "password",
     label: "password",
-    icon: <ViewfinderCircleIcon className="h-6 w-6 opacity-50" />,
+    icon: <ViewfinderCircleIcon className="size-6 opacity-50" />,
   },
 ];
 
@@ -44,7 +44,7 @@ export function Palette() {
     <SidebarItem
       name="palette"
       label="Palette"
-      icon={<Squares2X2Icon className="h-5 w-5 stroke-2" />}
+      icon={<Squares2X2Icon className="size-5 stroke-2" />}
       className="space-y-3 overflow-y-auto data-[orientation=vertical]:p-3"
     >
       <SearchField size="sm" />

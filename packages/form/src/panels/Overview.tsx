@@ -26,7 +26,7 @@ export function Overview() {
     <SidebarItem
       name="over"
       label="Over"
-      icon={<ListBulletIcon className="h-5 w-5 stroke-2" />}
+      icon={<ListBulletIcon className="size-5 stroke-2" />}
       className="flex-col overflow-hidden overflow-y-auto data-[state=active]:flex data-[orientation=vertical]:p-0"
     >
       <div className="sticky top-0 z-10 space-y-3 bg-white p-3">
@@ -47,7 +47,7 @@ function FieldsRender() {
 
   if (fields.length === 0)
     return (
-      <div className="text-secondary-500 flex h-full w-full select-none flex-col items-center justify-center gap-2 p-3 text-center font-medium">
+      <div className="text-secondary-500 flex size-full select-none flex-col items-center justify-center gap-2 p-3 text-center font-medium">
         <p className="text-lg">No field exists</p>
         <p className="text-sm leading-tight">
           You can go to palette to add field or just click on the button below

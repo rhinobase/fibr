@@ -240,7 +240,7 @@ function SearchResults({ autocomplete, query, collection }: SearchResults) {
   if (collection.items.length === 0) {
     return (
       <div className="p-6 text-center">
-        <NoResultsIcon className="stroke-secondary-900 dark:stroke-secondary-600 mx-auto h-5 w-5" />
+        <NoResultsIcon className="stroke-secondary-900 dark:stroke-secondary-600 mx-auto size-5" />
         <p className="text-secondary-700 dark:text-secondary-400 mt-2 text-xs">
           Nothing found for{" "}
           <strong className="text-secondary-900 break-words font-semibold dark:text-white">
@@ -307,7 +307,7 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInput>(
         />
         {autocompleteState.status === "stalled" && (
           <div className="absolute inset-y-0 right-3 flex items-center">
-            <LoadingIcon className="stroke-secondary-200 text-secondary-900 dark:stroke-secondary-800 dark:text-primary-400 h-5 w-5 animate-spin" />
+            <LoadingIcon className="stroke-secondary-200 text-secondary-900 dark:stroke-secondary-800 dark:text-primary-400 size-5 animate-spin" />
           </div>
         )}
       </div>
