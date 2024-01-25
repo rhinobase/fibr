@@ -1,14 +1,19 @@
 "use client";
 import { FibrProvider } from "@fibr/react";
 import { classNames } from "@rafty/ui";
-import { HTMLAttributes, forwardRef } from "react";
+import { HTMLAttributes } from "react";
+import { ENV, useBuilder } from "./providers";
 
 export type Settings = HTMLAttributes<HTMLDivElement> & {
   panels?: Record<string, () => JSX.Element>;
 };
 
-export const Settings = forwardRef<HTMLDivElement, Settings>(
-  ({ panels = [], className, ...props }, forwardedRef) => (
+export function Settings({ panels = {}, className, ...props }: Settings) {
+  const { env } = useBuilder();
+
+  if (env.current === ENV.PRODUCTION) return;
+
+  return (
     <FibrProvider plugins={panels}>
       <div
         {...props}
@@ -16,9 +21,7 @@ export const Settings = forwardRef<HTMLDivElement, Settings>(
           "border-secondary-200 dark:border-secondary-800 h-full w-96 border-l p-3",
           className,
         )}
-        ref={forwardedRef}
       />
     </FibrProvider>
-  ),
-);
-Settings.displayName = "Settings";
+  );
+}

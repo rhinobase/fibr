@@ -8,4 +8,4 @@ export { Settings } from "./Settings";
 export { Workspace } from "./Workspace";
 export { Builder } from "./builder";
 export { Sidebar, SidebarItem } from "./sidebar";
-export { useBuilder } from "./providers";
+export { useBuilder, ENV } from "./providers";
