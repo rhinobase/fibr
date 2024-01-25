@@ -1,4 +1,5 @@
 import { useThread } from "@fibr/react";
+import { eventHandler } from "@rafty/shared";
 import {
   Button,
   HoverCard,
@@ -18,7 +19,6 @@ import {
   MdOutlineDelete,
 } from "react-icons/md";
 import { useBlueprint } from "../../providers";
-import { eventHandler } from "@rafty/shared";
 
 export type QuickActions = PropsWithChildren;
 

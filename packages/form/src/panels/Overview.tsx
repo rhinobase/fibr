@@ -1,11 +1,11 @@
 import {
   DndContext,
+  type DragEndEvent,
   KeyboardSensor,
   PointerSensor,
   closestCenter,
   useSensor,
   useSensors,
-  type DragEndEvent,
 } from "@dnd-kit/core";
 import {
   restrictToVerticalAxis,

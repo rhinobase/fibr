@@ -1,13 +1,13 @@
+import { DraggableAttributes } from "@dnd-kit/core";
+import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { ThreadWithIdType } from "@fibr/react";
-import { MdDelete, MdDragIndicator } from "react-icons/md";
-import { Button, classNames } from "@rafty/ui";
 import { eventHandler } from "@rafty/shared";
-import { useBlueprint } from "../providers";
+import { Button, classNames } from "@rafty/ui";
 import { CSSProperties } from "react";
-import { DraggableAttributes } from "@dnd-kit/core";
-import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
+import { MdDelete, MdDragIndicator } from "react-icons/md";
+import { useBlueprint } from "../providers";
 
 export type OverviewCard = ThreadWithIdType & {
   icon: JSX.Element;

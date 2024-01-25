@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { type PropsWithChildren, createContext, useContext } from "react";
 import type { ThreadWithIdType } from "../types";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: As we nees a generic context
 const ThreadContext = createContext<ThreadWithIdType<any> | null>(null);
 
 export function ThreadProvider<T extends Record<string, unknown>>({

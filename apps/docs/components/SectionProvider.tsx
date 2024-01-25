@@ -77,7 +77,11 @@ function useVisibleSections(sectionStore: StoreApi<SectionState>) {
         sectionIndex < sections.length;
         sectionIndex++
       ) {
-        const { id, headingRef, offsetRem = 0 } = sections[sectionIndex];
+        const section = sections.at(sectionIndex);
+
+        if (section == null) continue;
+
+        const { id, headingRef, offsetRem = 0 } = section;
 
         if (!headingRef?.current) {
           continue;
@@ -90,7 +94,7 @@ function useVisibleSections(sectionStore: StoreApi<SectionState>) {
           newVisibleSections.push("_top");
         }
 
-        const nextSection = sections[sectionIndex + 1];
+        const nextSection = sections.at(sectionIndex + 1);
         const bottom =
           (nextSection?.headingRef?.current?.getBoundingClientRect().top ??
             Infinity) +

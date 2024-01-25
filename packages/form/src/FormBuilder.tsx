@@ -1,7 +1,7 @@
 import { Container, Sidebar, Workspace } from "@fibr/builder";
-import { Canvas, Overview, Palette, Settings, Header } from "./panels";
-import { BlueprintProvider } from "./providers";
 import { FibrProvider } from "@fibr/react";
+import { Canvas, Header, Overview, Palette, Settings } from "./panels";
+import { BlueprintProvider } from "./providers";
 
 export function FormBuilder() {
   return (

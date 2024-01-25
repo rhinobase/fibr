@@ -1,5 +1,5 @@
-import { useBlueprint } from "../providers";
 import { eventHandler } from "@rafty/shared";
+import { useBlueprint } from "../providers";
 
 export type PaletteCard = {
   type: string;

@@ -3,6 +3,7 @@ const terser = require("@rollup/plugin-terser");
 
 module.exports = (config) => {
   config.preserveModules = true;
+
   config.plugins.push(
     preserveDirectives.default(), // For preserving "use client" directives
     terser(), // For minification

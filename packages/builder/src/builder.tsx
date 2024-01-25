@@ -1,4 +1,4 @@
-import { Squares2X2Icon, ListBulletIcon } from "@heroicons/react/24/outline";
+import { ListBulletIcon, Squares2X2Icon } from "@heroicons/react/24/outline";
 import { Canvas } from "./Canvas";
 import { Container } from "./Container";
 import { Footer } from "./Footer";
