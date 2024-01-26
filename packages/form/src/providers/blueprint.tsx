@@ -3,7 +3,6 @@ import { arrayMove } from "@dnd-kit/sortable";
 import { ENV, useBuilder } from "@fibr/builder";
 import { ThreadType, ThreadWithIdType } from "@fibr/react";
 import _ from "lodash";
-import { nanoid } from "nanoid";
 import {
   PropsWithChildren,
   createContext,

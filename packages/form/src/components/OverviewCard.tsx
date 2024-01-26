@@ -1,5 +1,3 @@
-import { DraggableAttributes } from "@dnd-kit/core";
-import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { ThreadWithIdType } from "@fibr/react";
@@ -17,14 +15,7 @@ export function OverviewCard({ id, type }: ThreadWithIdType) {
   const {
     fields: { selected, select },
   } = useBlueprint();
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id });
+  const { setNodeRef, transform, transition } = useSortable({ id });
 
   const nodeStyle: CSSProperties = {
     transform: CSS.Transform.toString(transform),
@@ -46,11 +37,7 @@ export function OverviewCard({ id, type }: ThreadWithIdType) {
       onClick={selectField}
       onKeyDown={selectField}
     >
-      <DragHandler
-        attributes={attributes}
-        listeners={listeners}
-        isDragging={isDragging}
-      />
+      <DragHandler id={id} />
       <p className="truncate text-xs font-medium capitalize">{`${type} - ${id}`}</p>
       <div className="flex-1" />
       <DeleteButton id={id} />
@@ -59,12 +46,12 @@ export function OverviewCard({ id, type }: ThreadWithIdType) {
 }
 
 type DragHandler = {
-  isDragging: boolean;
-  attributes: DraggableAttributes;
-  listeners?: SyntheticListenerMap;
+  id: string;
 };
 
-function DragHandler({ isDragging, attributes, listeners }: DragHandler) {
+function DragHandler({ id }: DragHandler) {
+  const { attributes, listeners, isDragging } = useSortable({ id });
+
   return (
     <Button
       {...attributes}
