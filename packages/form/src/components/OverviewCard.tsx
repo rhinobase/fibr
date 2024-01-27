@@ -38,7 +38,7 @@ export function OverviewCard({ id, type }: ThreadWithIdType) {
       onKeyDown={selectField}
     >
       <DragHandler id={id} />
-      <p className="truncate text-xs font-medium capitalize">{`${type} - ${id}`}</p>
+      <p className="text-2xs truncate font-medium capitalize">{`${id} (${type})`}</p>
       <div className="flex-1" />
       <DeleteButton id={id} />
     </div>

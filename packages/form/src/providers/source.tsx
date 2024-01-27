@@ -1,12 +1,13 @@
 "use client";
 import { PropsWithChildren, createContext, useContext, useState } from "react";
 import { Block } from "../types";
+import { Category } from "../utils";
 
 type SourceContextType = ReturnType<typeof useSourceManager>;
 
 const SourceContext = createContext<SourceContextType | null>(null);
 
-export type useSourceManagerProps = { blocks: Block[] };
+export type useSourceManagerProps = { blocks: Record<Category, Block[]> };
 
 export type SourceProvider = PropsWithChildren<useSourceManagerProps>;
 
