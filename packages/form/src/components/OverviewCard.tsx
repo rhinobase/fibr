@@ -29,7 +29,7 @@ export function OverviewCard({ id, type }: ThreadWithIdType) {
       ref={setNodeRef}
       style={nodeStyle}
       className={classNames(
-        "dark:bg-secondary-900 flex w-80 select-none items-center gap-1 rounded-md border bg-white p-2 drop-shadow",
+        "dark:bg-secondary-900 flex w-80 cursor-pointer select-none items-center gap-1 rounded-md border bg-white p-2 drop-shadow transition-all ease-in-out hover:drop-shadow-md",
         selected === id
           ? "border-primary-500"
           : "border-secondary-300 dark:border-secondary-700",
@@ -57,6 +57,7 @@ function DragHandler({ id }: DragHandler) {
       {...attributes}
       {...listeners}
       variant="ghost"
+      size="icon"
       className={classNames(
         "rounded px-0.5 py-1",
         isDragging ? "cursor-grabbing" : "cursor-grab",

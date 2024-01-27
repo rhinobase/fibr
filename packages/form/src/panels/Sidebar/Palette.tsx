@@ -17,7 +17,7 @@ export function Palette() {
     >
       <SearchField size="sm" />
       {Object.entries(blocks).map(([category, components]) => (
-        <div key={category} className="space-y-3 pb-4">
+        <div key={category} className="space-y-2.5 pb-3">
           <h3 className="text-sm font-semibold">
             {CATEGORY_LABELS[Number(category) as Category]}
           </h3>
