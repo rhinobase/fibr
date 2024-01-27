@@ -7,7 +7,7 @@ import { DndWrapper } from "../../utils";
 
 const FIELD_WRAPERS: Record<Env, (props: PropsWithChildren) => JSX.Element> = {
   [Env.DEVELOPMENT]: FieldWrapper,
-  [Env.PRODUCTION]: () => <></>,
+  [Env.PRODUCTION]: (props) => <>{props.children}</>,
 };
 
 export function FormDisplay() {

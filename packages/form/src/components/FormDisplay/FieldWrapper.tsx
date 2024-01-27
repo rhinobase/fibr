@@ -39,7 +39,7 @@ export function FieldWrapper({ children }: PropsWithChildren) {
           "w-full select-none rounded-md border p-5 text-center",
           selected === id ? "border-primary-500" : "border-secondary-200",
           !isDragging && "transition-all ease-in-out",
-          "cursor-pointer hover:shadow-md ",
+          "cursor-pointer bg-white hover:shadow-md",
         )}
         onClick={selectField}
         onKeyDown={selectField}
