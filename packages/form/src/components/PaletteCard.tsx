@@ -5,7 +5,7 @@ import { Block } from "../types";
 export function PaletteCard({
   type,
   label,
-  icon,
+  icon: Icon,
 }: Pick<Block, "type" | "label" | "icon">) {
   const {
     fields: { add },
@@ -20,7 +20,7 @@ export function PaletteCard({
   return (
     <div className="space-y-1" onClick={onSelect} onKeyDown={onSelect}>
       <div className="border-secondary-300 dark:border-secondary-700 flex h-24 w-full items-center justify-center rounded border">
-        {icon}
+        <Icon className="h-6 w-6 opacity-50" />
       </div>
       <p className="text-secondary-600 dark:text-secondary-400 text-center text-xs font-medium capitalize leading-none">
         {label}

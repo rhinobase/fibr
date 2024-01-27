@@ -1,45 +1,12 @@
 import { SidebarItem } from "@fibr/builder";
-import {
-  Squares2X2Icon,
-  ViewfinderCircleIcon,
-} from "@heroicons/react/24/outline";
+import { Squares2X2Icon } from "@heroicons/react/24/outline";
 import { SearchField } from "@rafty/ui";
 import { PaletteCard } from "../../components";
-
-const FIELDS: PaletteCard[] = [
-  {
-    type: "string",
-    label: "Text Input",
-    icon: <ViewfinderCircleIcon className="h-6 w-6 opacity-50" />,
-  },
-  {
-    type: "email",
-    label: "Email",
-    icon: <ViewfinderCircleIcon className="h-6 w-6 opacity-50" />,
-  },
-  {
-    type: "url",
-    label: "url",
-    icon: <ViewfinderCircleIcon className="h-6 w-6 opacity-50" />,
-  },
-  {
-    type: "editable-text",
-    label: "editable text",
-    icon: <ViewfinderCircleIcon className="h-6 w-6 opacity-50" />,
-  },
-  {
-    type: "editable-textarea",
-    label: "editable text area",
-    icon: <ViewfinderCircleIcon className="h-6 w-6 opacity-50" />,
-  },
-  {
-    type: "password",
-    label: "password",
-    icon: <ViewfinderCircleIcon className="h-6 w-6 opacity-50" />,
-  },
-];
+import { useSource } from "../../providers";
 
 export function Palette() {
+  const { blocks } = useSource();
+
   return (
     <SidebarItem
       name="palette"
@@ -49,8 +16,8 @@ export function Palette() {
     >
       <SearchField size="sm" />
       <div className="grid w-full grid-cols-3 gap-2.5">
-        {FIELDS.map((field) => (
-          <PaletteCard key={field.type} {...field} />
+        {blocks.map((block) => (
+          <PaletteCard key={block.type} {...block} />
         ))}
       </div>
     </SidebarItem>

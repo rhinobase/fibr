@@ -1,2 +1,2 @@
 export { DndWrapper } from "./DndWrapper";
-export { Category } from "./category";
+export { Category, CATEGORY_LABELS } from "./category";

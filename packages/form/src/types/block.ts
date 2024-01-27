@@ -6,6 +6,6 @@ export type Block<T extends Record<string, unknown> = Record<string, unknown>> =
     type: string;
     category: Category;
     label: string;
-    icon: JSX.Element;
+    icon: IconType;
     presets?: T;
   };

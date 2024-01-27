@@ -76,11 +76,7 @@ function DeleteButton({ id }: DeleteButton) {
     fields: { remove },
   } = useBlueprint();
 
-  const deleteNode = eventHandler((event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    remove(id);
-  });
+  const deleteNode = eventHandler(() => remove(id));
 
   return (
     <Button
