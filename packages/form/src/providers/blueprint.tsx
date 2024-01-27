@@ -1,6 +1,6 @@
 "use client";
 import { arrayMove } from "@dnd-kit/sortable";
-import { ENV, useBuilder } from "@fibr/builder";
+import { Env, useBuilder } from "@fibr/builder";
 import { ThreadType, ThreadWithIdType } from "@fibr/react";
 import _ from "lodash";
 import {
@@ -32,7 +32,7 @@ function useBlueprintManager() {
   const [selected, setSelected] = useState<string | null>(null);
 
   useEffect(() => {
-    if (env.current === ENV.PRODUCTION) setSelected(null);
+    if (env.current === Env.PRODUCTION) setSelected(null);
   }, [env.current]);
 
   // On field select

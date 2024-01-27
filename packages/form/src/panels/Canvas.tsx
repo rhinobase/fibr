@@ -1,6 +1,6 @@
 import {
   Canvas as BuilderCanvas,
-  ENV,
+  Env,
   Screen,
   useBuilder,
 } from "@fibr/builder";
@@ -13,7 +13,7 @@ export function Canvas() {
     <BuilderCanvas>
       <Screen className="flex w-[500px] flex-col items-center justify-center gap-3 p-5">
         <FormDisplay />
-        {env.current === ENV.DEVELOPMENT && <AddFieldCard />}
+        {env.current === Env.DEVELOPMENT && <AddFieldCard />}
       </Screen>
     </BuilderCanvas>
   );

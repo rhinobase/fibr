@@ -1,14 +1,14 @@
 "use client";
 import { Tab, TabList, TabTrigger } from "@rafty/ui";
 import { PropsWithChildren } from "react";
-import { ENV, useBuilder } from "../providers";
-
+import { useBuilder } from "../providers";
+import { Env } from "../utils";
 export function Sidebar({ children }: PropsWithChildren) {
   const {
     env: { current },
   } = useBuilder();
 
-  if (current === ENV.PRODUCTION) return;
+  if (current === Env.PRODUCTION) return;
 
   return (
     <aside className="h-full w-96">

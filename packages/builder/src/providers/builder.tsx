@@ -8,11 +8,7 @@ import {
   useReducer,
   useState,
 } from "react";
-
-export enum ENV {
-  DEVELOPMENT = "development",
-  PRODUCTION = "production",
-}
+import { Env } from "../utils";
 
 const BuilderContext = createContext<ReturnType<
   typeof useBuilderManager
@@ -33,7 +29,7 @@ export type TabPayload = {
 };
 
 function useBuilderManager() {
-  const [env, setEnv] = useState<ENV>(ENV.DEVELOPMENT);
+  const [env, setEnv] = useState(Env.DEVELOPMENT);
 
   const [active, setActive] = useState<string>();
 
@@ -54,7 +50,7 @@ function useBuilderManager() {
 
   const setActiveTab = useCallback((name: string) => setActive(name), []);
 
-  const changeEnv = useCallback((env: ENV) => setEnv(env), []);
+  const changeEnv = useCallback((env: Env) => setEnv(env), []);
 
   return {
     tabs: { all: tabs, add: addTab, active, setActive: setActiveTab },

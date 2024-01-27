@@ -2,7 +2,8 @@
 import { FibrProvider } from "@fibr/react";
 import { classNames } from "@rafty/ui";
 import { HTMLAttributes } from "react";
-import { ENV, useBuilder } from "./providers";
+import { useBuilder } from "./providers";
+import { Env } from "./utils";
 
 export type Settings = HTMLAttributes<HTMLDivElement> & {
   panels?: Record<string, () => JSX.Element>;
@@ -11,7 +12,7 @@ export type Settings = HTMLAttributes<HTMLDivElement> & {
 export function Settings({ panels = {}, className, ...props }: Settings) {
   const { env } = useBuilder();
 
-  if (env.current === ENV.PRODUCTION) return;
+  if (env.current === Env.PRODUCTION) return;
 
   return (
     <FibrProvider plugins={panels}>

@@ -1,4 +1,4 @@
-import { ENV, useBuilder } from "@fibr/builder";
+import { Env, useBuilder } from "@fibr/builder";
 import { eventHandler } from "@rafty/shared";
 import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
 import { LuMonitorPlay } from "react-icons/lu";
@@ -9,7 +9,7 @@ export function PreviewButton() {
   } = useBuilder();
 
   const toggleEnv = eventHandler(() =>
-    change(current === ENV.DEVELOPMENT ? ENV.PRODUCTION : ENV.DEVELOPMENT),
+    change(current === Env.DEVELOPMENT ? Env.PRODUCTION : Env.DEVELOPMENT),
   );
 
   return (

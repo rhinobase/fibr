@@ -1,13 +1,12 @@
 import { eventHandler } from "@rafty/shared";
 import { useBlueprint } from "../providers";
+import { Block } from "../types";
 
-export type PaletteCard = {
-  type: string;
-  label: string;
-  icon: JSX.Element;
-};
-
-export function PaletteCard({ type, label, icon }: PaletteCard) {
+export function PaletteCard({
+  type,
+  label,
+  icon,
+}: Pick<Block, "type" | "label" | "icon">) {
   const {
     fields: { add },
   } = useBlueprint();
