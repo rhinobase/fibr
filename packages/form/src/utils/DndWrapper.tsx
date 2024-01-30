@@ -24,7 +24,7 @@ export type DndWrapper = Pick<SortableContextProps, "items">;
 
 export function DndWrapper(props: PropsWithChildren<DndWrapper>) {
   const {
-    fields: { move },
+    fields: { move, select },
   } = useBlueprint();
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -46,6 +46,7 @@ export function DndWrapper(props: PropsWithChildren<DndWrapper>) {
       sensors={sensors}
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
+      onDragStart={({ active }) => select(String(active.id))}
       modifiers={[restrictToVerticalAxis, restrictToWindowEdges]}
     >
       <SortableContext

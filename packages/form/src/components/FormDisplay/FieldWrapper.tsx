@@ -1,5 +1,4 @@
 import { useThread } from "@fibr/react";
-import { eventHandler } from "@rafty/shared";
 import { classNames } from "@rafty/ui";
 import { CSS } from "@dnd-kit/utilities";
 import type { CSSProperties, PropsWithChildren } from "react";
@@ -10,7 +9,7 @@ import { useSortable } from "@dnd-kit/sortable";
 export function FieldWrapper({ children }: PropsWithChildren) {
   const { id } = useThread();
   const {
-    fields: { select, selected },
+    fields: { selected },
   } = useBlueprint();
   const {
     attributes,
@@ -26,8 +25,6 @@ export function FieldWrapper({ children }: PropsWithChildren) {
     transition,
   };
 
-  const selectField = eventHandler(() => select(id));
-
   return (
     <QuickActions>
       <div
@@ -41,8 +38,6 @@ export function FieldWrapper({ children }: PropsWithChildren) {
           !isDragging && "transition-all ease-in-out",
           "cursor-pointer bg-white hover:shadow-md",
         )}
-        onClick={selectField}
-        onKeyDown={selectField}
       >
         {children}
       </div>
