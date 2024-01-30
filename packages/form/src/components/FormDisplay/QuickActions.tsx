@@ -9,7 +9,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@rafty/ui";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useState } from "react";
 import { HiPencil } from "react-icons/hi";
 import { IconType } from "react-icons/lib";
 import {
@@ -28,11 +28,14 @@ export function QuickActions({ children }: QuickActions) {
     fields: { selected },
   } = useBlueprint();
 
+  const [isHover, setHover] = useState(false);
+
   return (
     <HoverCard
       openDelay={50}
       closeDelay={100}
-      open={selected === id ? true : undefined}
+      open={isHover || selected === id}
+      onOpenChange={setHover}
     >
       <HoverCardTrigger asChild>{children}</HoverCardTrigger>
       <HoverCardContent
