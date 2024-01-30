@@ -1,9 +1,12 @@
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
+import { PanelGroup } from "react-resizable-panels";
 
-export function Container({ children }: PropsWithChildren) {
+export type Container = PropsWithChildren<{ autoSaveId?: string }>;
+
+export function Container({ children, autoSaveId = "panel_size" }: Container) {
   return (
-    <main className="divide-secondary-200 dark:divide-secondary-800 flex flex-1 divide-x overflow-hidden">
+    <PanelGroup autoSaveId={autoSaveId} direction="horizontal">
       {children}
-    </main>
+    </PanelGroup>
   );
 }

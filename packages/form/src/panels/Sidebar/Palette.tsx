@@ -21,7 +21,7 @@ export function Palette() {
           <h3 className="text-sm font-semibold">
             {CATEGORY_LABELS[Number(category) as Category]}
           </h3>
-          <div className="grid grid-cols-4 gap-2.5">
+          <div className="flex flex-wrap gap-2">
             {components.map((block) => (
               <PaletteCard key={block.type} {...block} />
             ))}

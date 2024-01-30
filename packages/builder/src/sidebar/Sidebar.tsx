@@ -3,6 +3,9 @@ import { Tab, TabList, TabTrigger } from "@rafty/ui";
 import { PropsWithChildren } from "react";
 import { useBuilder } from "../providers";
 import { Env } from "../utils";
+import { Panel } from "react-resizable-panels";
+import { ResizeHandle } from "../ResizeHandle";
+
 export function Sidebar({ children }: PropsWithChildren) {
   const {
     env: { current },
@@ -11,9 +14,12 @@ export function Sidebar({ children }: PropsWithChildren) {
   if (current === Env.PRODUCTION) return;
 
   return (
-    <aside className="h-full w-96">
-      <SidebarTray>{children}</SidebarTray>
-    </aside>
+    <>
+      <Panel id="sidebar" order={0} minSize={20} maxSize={25} defaultSize={20}>
+        <SidebarTray>{children}</SidebarTray>
+      </Panel>
+      <ResizeHandle />
+    </>
   );
 }
 

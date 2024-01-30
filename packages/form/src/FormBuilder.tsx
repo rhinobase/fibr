@@ -1,6 +1,7 @@
-import { Container, Workspace } from "@fibr/builder";
+import { Workspace } from "@fibr/builder";
 import { FibrProvider } from "@fibr/react";
-import { Canvas, Header, Settings, Sidebar } from "./panels";
+import { ContainerPanel } from "./ContainerPanel";
+import { Header } from "./panels";
 import {
   BlueprintProvider,
   SourceProvider,
@@ -14,11 +15,7 @@ export function FormBuilder(props: useSourceManagerProps) {
         <Workspace>
           <BlueprintProvider>
             <Header />
-            <Container>
-              <Sidebar />
-              <Canvas />
-              <Settings />
-            </Container>
+            <ContainerPanel />
           </BlueprintProvider>
         </Workspace>
       </FibrProvider>
