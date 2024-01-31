@@ -22,8 +22,8 @@ export function Palette() {
             {CATEGORY_LABELS[Number(category) as Category]}
           </h3>
           <div className="flex flex-wrap gap-2">
-            {components.map((block) => (
-              <PaletteCard key={block.type} {...block} />
+            {components.map((block, index) => (
+              <PaletteCard key={`${index}-${block.type}`} {...block} />
             ))}
           </div>
         </div>

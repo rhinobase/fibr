@@ -18,6 +18,7 @@
     "@mdx-js/loader": "^2.3.0",
     "@mdx-js/react": "^2.3.0",
     "@next/mdx": "^13.5.6",
+    "@rafty/fibr": "0.0.1-rc.0",
     "@rafty/shared": "^1.0.0",
     "@rafty/ui": "^1.4.4",
     "@sindresorhus/slugify": "^2.2.1",

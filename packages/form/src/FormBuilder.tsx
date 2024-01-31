@@ -7,12 +7,21 @@ import {
   SourceProvider,
   useSourceManagerProps,
 } from "./providers";
+import { ReactNode } from "react";
 
 export function FormBuilder(props: useSourceManagerProps) {
+  const userDefinedComponents: Record<string, () => ReactNode> = {};
+
+  Object.values(props.blocks).map((category) =>
+    category.map(({ type, component }) => {
+      if (component) userDefinedComponents[type] = component;
+    }),
+  );
+
   return (
     <SourceProvider blocks={props.blocks}>
-      <FibrProvider plugins={[]}>
-        <Workspace enableZooming>
+      <FibrProvider plugins={userDefinedComponents}>
+        <Workspace>
           <BlueprintProvider>
             <Header />
             <ContainerPanel />

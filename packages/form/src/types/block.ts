@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { IconType } from "react-icons/lib";
 
 export type Block<T extends Record<string, unknown> = Record<string, unknown>> =
@@ -6,4 +7,5 @@ export type Block<T extends Record<string, unknown> = Record<string, unknown>> =
     label: string;
     icon: IconType;
     presets?: T;
+    component?: () => ReactNode;
   };

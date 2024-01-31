@@ -32,6 +32,9 @@ dependencies:
   '@next/mdx':
     specifier: ^13.5.6
     version: 13.5.6(@mdx-js/loader@2.3.0)(@mdx-js/react@2.3.0)
+  '@rafty/fibr':
+    specifier: 0.0.1-rc.0
+    version: 0.0.1-rc.0(@types/react-dom@18.2.14)(@types/react@18.2.33)(date-fns@3.3.1)(react-dom@18.2.0)(react@18.2.0)
   '@rafty/shared':
     specifier: ^1.0.0
     version: 1.0.0(react@18.2.0)
@@ -1934,6 +1937,15 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
+  /@fibr/react@0.5.2(react@18.2.0):
+    resolution: {integrity: sha512-rIRi0X0y3PfMIpWuwiTNCI50l82S4+pXruafgyzU29Vdjf6fNYQG/Gj0Uceca3wJoN/AaVqEzYFiWlj6pEtByg==}
+    peerDependencies:
+      react: ^18.2.0
+    dependencies:
+      '@swc/helpers': 0.5.3
+      react: 18.2.0
+    dev: false
+
   /@floating-ui/core@1.6.0:
     resolution: {integrity: sha512-PcF++MykgmTj3CIyOQbKA/hDzOAiqI3mhuoN44WRCopIs1sgoDoU4oty4Jtqaj/y3oDU6fnVSm4QG0a3t5i0+g==}
     dependencies:
@@ -1968,6 +1980,18 @@ packages:
       react: '>= 16'
     dependencies:
       react: 18.2.0
+    dev: false
+
+  /@hookform/error-message@2.0.1(react-dom@18.2.0)(react-hook-form@7.49.3)(react@18.2.0):
+    resolution: {integrity: sha512-U410sAr92xgxT1idlu9WWOVjndxLdgPUHEB8Schr27C9eh7/xUnITWpCMF93s+lGiG++D4JnbSnrb5A21AdSNg==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+      react-hook-form: ^7.0.0
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-hook-form: 7.49.3(react@18.2.0)
     dev: false
 
   /@humanwhocodes/config-array@0.11.14:
@@ -2277,23 +2301,6 @@ packages:
       - verdaccio
     dev: true
 
-  /@nrwl/js@17.2.3(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@18.14.2)(nx@17.2.3)(typescript@5.2.2)(verdaccio@5.29.0):
-    resolution: {integrity: sha512-eH0UxhOac2HeFJLWTzPp4IuNah59vWWeE37VYrpSdBaw6U+Jixe0L6D89S8NT/AOW1aJOVglKbNc0MzVFC6QUQ==}
-    dependencies:
-      '@nx/js': 17.2.3(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@18.14.2)(nx@17.2.3)(typescript@5.2.2)(verdaccio@5.29.0)
-    transitivePeerDependencies:
-      - '@babel/traverse'
-      - '@swc-node/register'
-      - '@swc/core'
-      - '@swc/wasm'
-      - '@types/node'
-      - debug
-      - nx
-      - supports-color
-      - typescript
-      - verdaccio
-    dev: true
-
   /@nrwl/js@17.2.3(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@18.14.2)(nx@17.2.3)(typescript@5.3.3)(verdaccio@5.29.0):
     resolution: {integrity: sha512-eH0UxhOac2HeFJLWTzPp4IuNah59vWWeE37VYrpSdBaw6U+Jixe0L6D89S8NT/AOW1aJOVglKbNc0MzVFC6QUQ==}
     dependencies:
@@ -2522,7 +2529,7 @@ packages:
       '@babel/preset-env': 7.23.9(@babel/core@7.23.9)
       '@babel/preset-typescript': 7.23.3(@babel/core@7.23.9)
       '@babel/runtime': 7.23.9
-      '@nrwl/js': 17.2.3(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@18.14.2)(nx@17.2.3)(typescript@5.2.2)(verdaccio@5.29.0)
+      '@nrwl/js': 17.2.3(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@18.14.2)(nx@17.2.3)(typescript@5.3.3)(verdaccio@5.29.0)
       '@nx/devkit': 17.2.3(nx@17.2.3)
       '@nx/workspace': 17.2.3(@swc-node/register@1.6.8)(@swc/core@1.3.107)
       '@phenomnomnominal/tsquery': 5.0.1(typescript@5.2.2)
@@ -4063,6 +4070,26 @@ packages:
     resolution: {integrity: sha512-fyrgCaedtvMg9NK3en0pnOYJdtfwxUcNolezkNPUsoX57X8oQk+NkqcvzHXD2uKNij6GXmWU9NDru2IWjrO4BQ==}
     dependencies:
       '@babel/runtime': 7.23.9
+    dev: false
+
+  /@rafty/fibr@0.0.1-rc.0(@types/react-dom@18.2.14)(@types/react@18.2.33)(date-fns@3.3.1)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-NU5tvfl0gdfZsOWxrO0NzkODKWWMiZD4TsEyIBOJyKqbDZInPQRuPigHwjpPHWykpD4SMd++RuG6goaVai2HbQ==}
+    peerDependencies:
+      react: ^18.2.0
+    dependencies:
+      '@fibr/react': 0.5.2(react@18.2.0)
+      '@hookform/error-message': 2.0.1(react-dom@18.2.0)(react-hook-form@7.49.3)(react@18.2.0)
+      '@rafty/shared': 1.0.0(react@18.2.0)
+      '@rafty/ui': 1.4.4(@types/react-dom@18.2.14)(@types/react@18.2.33)(date-fns@3.3.1)(react-dom@18.2.0)(react@18.2.0)
+      '@swc/helpers': 0.5.3
+      class-variance-authority: 0.7.0
+      react: 18.2.0
+      react-hook-form: 7.49.3(react@18.2.0)
+    transitivePeerDependencies:
+      - '@types/react'
+      - '@types/react-dom'
+      - date-fns
+      - react-dom
     dev: false
 
   /@rafty/plugin@1.1.0(tailwindcss@3.4.1):
@@ -12088,6 +12115,15 @@ packages:
       highlight-words-core: 1.2.2
       memoize-one: 4.0.3
       prop-types: 15.8.1
+      react: 18.2.0
+    dev: false
+
+  /react-hook-form@7.49.3(react@18.2.0):
+    resolution: {integrity: sha512-foD6r3juidAT1cOZzpmD/gOKt7fRsDhXXZ0y28+Al1CHgX+AY1qIN9VSIIItXRq1dN68QrRwl1ORFlwjBaAqeQ==}
+    engines: {node: '>=18', pnpm: '8'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+    dependencies:
       react: 18.2.0
     dev: false
 

@@ -3,9 +3,7 @@ import { Fragment } from "react";
 import { ThreadProvider, useFibr, useWeaver } from "../providers";
 import type { ThreadWithIdType } from "../types";
 
-export function Thread<T extends Record<string, unknown>>(
-  props: ThreadWithIdType<T>,
-) {
+export function Thread(props: ThreadWithIdType) {
   const { wrapper: Wrapper = Fragment } = useWeaver();
   const { components } = useFibr();
 
