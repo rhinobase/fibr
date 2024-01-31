@@ -89,6 +89,9 @@ dependencies:
   react-resizable-panels:
     specifier: ^1.0.10
     version: 1.0.10(react-dom@18.2.0)(react@18.2.0)
+  react-zoom-pan-pinch:
+    specifier: ^3.3.0
+    version: 3.3.0(react-dom@18.2.0)(react@18.2.0)
   remark:
     specifier: ^14.0.3
     version: 14.0.3
@@ -12218,6 +12221,17 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.9
       memoize-one: 5.2.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /react-zoom-pan-pinch@3.3.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-vy1h8aenDzXye+HRqANZaSA8IPHoqOiuDPFBkswoyPUH8uMfsmbeH6gFI4r4BhEJa0xIlcA+FbvhidRWKGUrOg==}
+    engines: {node: '>=8', npm: '>=5'}
+    peerDependencies:
+      react: '*'
+      react-dom: '*'
+    dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false

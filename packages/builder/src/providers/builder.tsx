@@ -14,8 +14,11 @@ const BuilderContext = createContext<ReturnType<
   typeof useBuilderManager
 > | null>(null);
 
-export function BuilderProvider({ children }: PropsWithChildren) {
-  const value = useBuilderManager();
+export function BuilderProvider({
+  children,
+  ...props
+}: PropsWithChildren<useBuilderManagerProps>) {
+  const value = useBuilderManager(props);
 
   return (
     <BuilderContext.Provider value={value}>{children}</BuilderContext.Provider>
@@ -28,9 +31,13 @@ export type TabPayload = {
   icon: ReactNode;
 };
 
-function useBuilderManager() {
-  const [env, setEnv] = useState(Env.DEVELOPMENT);
+export type useBuilderManagerProps = {
+  enableZooming?: boolean;
+};
 
+function useBuilderManager(props: useBuilderManagerProps) {
+  const [config] = useState(props);
+  const [env, setEnv] = useState(Env.DEVELOPMENT);
   const [active, setActive] = useState<string>();
 
   const [tabs, setTabs] = useReducer(
@@ -53,6 +60,7 @@ function useBuilderManager() {
   const changeEnv = useCallback((env: Env) => setEnv(env), []);
 
   return {
+    config,
     tabs: { all: tabs, add: addTab, active, setActive: setActiveTab },
     env: {
       current: env,

@@ -12,7 +12,7 @@ export function FormBuilder(props: useSourceManagerProps) {
   return (
     <SourceProvider blocks={props.blocks}>
       <FibrProvider plugins={[]}>
-        <Workspace>
+        <Workspace enableZooming>
           <BlueprintProvider>
             <Header />
             <ContainerPanel />

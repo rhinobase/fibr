@@ -37,6 +37,7 @@
     "react-highlight-words": "^0.20.0",
     "react-icons": "^4.12.0",
     "react-resizable-panels": "^1.0.10",
+    "react-zoom-pan-pinch": "^3.3.0",
     "remark": "^14.0.3",
     "remark-gfm": "^3.0.1",
     "remark-mdx": "^2.3.0",
