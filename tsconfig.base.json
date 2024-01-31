@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@fibr/blocks": ["packages/blocks/src/index.ts"],
       "@fibr/builder": ["packages/builder/src/index.ts"],
       "@fibr/form-builder": ["packages/form/src/index.ts"],
       "@fibr/react": ["packages/react/src/index.ts"]

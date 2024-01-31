@@ -1,10 +1,10 @@
-import type { ThreadWithIdType } from "../types";
+import type { ThreadType } from "../types";
 import { Thread } from "./Thread";
 
 export type Loom = {
-  blueprint: ThreadWithIdType;
+  blueprint: ThreadType;
 };
 
 export function Loom({ blueprint }: Loom) {
-  return <Thread {...blueprint} />;
+  return <Thread id="_main" {...blueprint} />;
 }

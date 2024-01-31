@@ -7,5 +7,5 @@ export type Block<T extends Record<string, unknown> = Record<string, unknown>> =
     label: string;
     icon: IconType;
     presets?: T;
-    component?: () => ReactNode;
+    builder?: () => ReactNode;
   };

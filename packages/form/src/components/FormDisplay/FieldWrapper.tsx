@@ -33,7 +33,7 @@ export function FieldWrapper({ children }: PropsWithChildren) {
         {...attributes}
         {...listeners}
         className={classNames(
-          "w-full select-none rounded-md border p-5 text-center",
+          "w-full select-none rounded-md border p-5",
           selected === id ? "border-primary-500" : "border-secondary-200",
           !isDragging && "transition-all ease-in-out",
           "cursor-pointer bg-white hover:shadow-md",

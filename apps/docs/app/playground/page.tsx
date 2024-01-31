@@ -1,6 +1,7 @@
 "use client";
+import { plugin } from "@fibr/blocks";
 import { Block, Category, FormBuilder } from "@fibr/form-builder";
-import { plugin } from "@rafty/fibr";
+import { HiOutlineMail } from "react-icons/hi";
 import { HiEnvelope, HiViewfinderCircle } from "react-icons/hi2";
 
 const BLOCKS: Record<Category, Block[]> = {
@@ -9,25 +10,38 @@ const BLOCKS: Record<Category, Block[]> = {
       type: "heading",
       label: "Heading",
       icon: HiViewfinderCircle,
-      component: plugin.heading,
+      presets: {
+        value: "Heading Field",
+      },
+      builder: () => {
+        const Component = plugin.heading;
+        return <Component />;
+      },
     },
     {
       type: "text",
       label: "Text",
       icon: HiViewfinderCircle,
-      component: plugin.text,
+      presets: {
+        value: "Text field",
+      },
+      builder: plugin.text,
     },
     {
       type: "image",
       label: "Image",
       icon: HiViewfinderCircle,
-      component: plugin.image,
+      presets: {
+        src: "https://via.placeholder.com/200",
+        alt: "Image field",
+      },
+      builder: plugin.image,
     },
     {
       type: "divider",
       label: "Divider",
       icon: HiViewfinderCircle,
-      component: plugin.divider,
+      builder: plugin.divider,
     },
   ],
   [Category.TEXT_INPUTS]: [
@@ -35,37 +49,65 @@ const BLOCKS: Record<Category, Block[]> = {
       type: "string",
       label: "Text Input",
       icon: HiViewfinderCircle,
-      component: plugin["text-input"],
+      presets: {
+        label: "Label",
+        description: "Description",
+      },
+      builder: plugin["text-input"],
     },
     {
       type: "string",
       label: "Email",
       icon: HiEnvelope,
-      component: plugin["text-input"],
+      presets: {
+        inputType: "email",
+        label: "Label",
+        description: "Description",
+        prefixIcon: <HiOutlineMail className="opacity-60" />,
+      },
+      builder: plugin["text-input"],
     },
     {
       type: "string",
       label: "url",
       icon: HiViewfinderCircle,
-      component: plugin["text-input"],
+      presets: {
+        inputType: "url",
+        label: "Label",
+        description: "Description",
+      },
+      builder: plugin["text-input"],
     },
     {
       type: "editable-text",
       label: "editable text",
       icon: HiViewfinderCircle,
-      component: plugin["text-input"],
+      presets: {
+        label: "Label",
+        description: "Description",
+      },
+      builder: plugin["text-input"],
     },
     {
       type: "editable-textarea",
       label: "editable text area",
       icon: HiViewfinderCircle,
-      component: plugin["text-input"],
+      presets: {
+        label: "Label",
+        description: "Description",
+      },
+      builder: plugin["text-input"],
     },
     {
       type: "password",
       label: "password",
       icon: HiViewfinderCircle,
-      component: plugin["text-input"],
+      presets: {
+        inputType: "password",
+        label: "Label",
+        description: "Description",
+      },
+      builder: plugin["text-input"],
     },
   ],
   [Category.NUMBER_INPUTS]: [
@@ -73,7 +115,12 @@ const BLOCKS: Record<Category, Block[]> = {
       type: "number",
       label: "Number Input",
       icon: HiViewfinderCircle,
-      component: plugin["text-input"],
+      presets: {
+        inputType: "number",
+        label: "Label",
+        description: "Description",
+      },
+      builder: plugin["text-input"],
     },
   ],
 };

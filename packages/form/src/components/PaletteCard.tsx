@@ -6,7 +6,8 @@ export function PaletteCard({
   type,
   label,
   icon: Icon,
-}: Pick<Block, "type" | "label" | "icon">) {
+  presets,
+}: Pick<Block, "type" | "label" | "icon" | "presets">) {
   const {
     fields: { add },
   } = useBlueprint();
@@ -14,6 +15,7 @@ export function PaletteCard({
   const onSelect = eventHandler(() =>
     add({
       type,
+      ...presets,
     }),
   );
 

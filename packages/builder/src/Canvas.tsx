@@ -46,7 +46,7 @@ export function Canvas({ children }: PropsWithChildren) {
   return (
     <Panel
       {...PANEL_PROPS}
-      className="bg-secondary-100 flex h-full items-start justify-center overflow-y-auto py-10"
+      className="bg-secondary-100 flex h-full items-start justify-center !overflow-y-auto py-10"
     >
       {children}
     </Panel>
