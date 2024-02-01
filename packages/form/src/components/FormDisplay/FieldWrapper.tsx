@@ -18,7 +18,7 @@ export function FieldWrapper({ children }: PropsWithChildren) {
     transform,
     transition,
     isDragging,
-  } = useSortable({ id });
+  } = useSortable({ id, disabled: id === "_main" });
 
   const nodeStyle: CSSProperties = {
     transform: CSS.Transform.toString(transform),
