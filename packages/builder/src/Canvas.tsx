@@ -1,6 +1,11 @@
+import {
+  LockClosedIcon,
+  MinusIcon,
+  PlusIcon,
+  ViewfinderCircleIcon,
+} from "@heroicons/react/24/outline";
 import { Button } from "@rafty/ui";
 import { ElementRef, forwardRef } from "react";
-import { FaExpand, FaLock, FaMinus, FaPlus } from "react-icons/fa";
 import { Panel, PanelProps } from "react-resizable-panels";
 import {
   TransformComponent,
@@ -65,16 +70,16 @@ function Controls() {
   return (
     <div className="absolute bottom-4 left-4 border">
       <ZoomingButton onClick={() => zoomIn(0.3)}>
-        <FaPlus size={15} />
+        <PlusIcon className="size-4" />
       </ZoomingButton>
       <ZoomingButton onClick={() => zoomOut(0.3)}>
-        <FaMinus size={15} />
+        <MinusIcon className="size-4" />
       </ZoomingButton>
       <ZoomingButton onClick={() => resetTransform()}>
-        <FaExpand size={15} />
+        <ViewfinderCircleIcon className="size-4" />
       </ZoomingButton>
       <ZoomingButton>
-        <FaLock size={15} />
+        <LockClosedIcon className="size-4" />
       </ZoomingButton>
     </div>
   );

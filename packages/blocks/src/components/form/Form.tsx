@@ -15,13 +15,14 @@ export type Form<
   onSubmit: SubmitHandler<FieldValues>;
   onError?: SubmitErrorHandler<FieldValues>;
 } & UseFormProps<TFieldValues, TContext> & {
-    blocks?: Record<string, ThreadType>;
+    title: string;
+    blocks: Map<string, ThreadType>;
   };
 
 export function Form() {
   // Getting component config
   const config = useThread<Form>();
-  const { blocks = {}, onSubmit, onError, ...props } = config;
+  const { blocks, onSubmit, onError, ...props } = config;
 
   // Adding provider for forms
   const methods = useForm(props);
@@ -32,7 +33,7 @@ export function Form() {
         onSubmit={methods.handleSubmit(onSubmit, onError)}
         className="space-y-3"
       >
-        {Object.entries(blocks).map(([id, field]) => (
+        {Array.from(blocks.entries()).map(([id, field]) => (
           <Thread key={id} id={id} {...field} />
         ))}
       </form>

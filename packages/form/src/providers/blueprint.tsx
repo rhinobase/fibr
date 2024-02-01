@@ -1,5 +1,6 @@
 "use client";
 import { arrayMove } from "@dnd-kit/sortable";
+import { Form, f } from "@fibr/blocks";
 import { Env, useBuilder } from "@fibr/builder";
 import { ThreadType, ThreadWithIdType } from "@fibr/react";
 import _ from "lodash";
@@ -28,135 +29,248 @@ export function BlueprintProvider({ children }: PropsWithChildren) {
 
 function useBlueprintManager() {
   const { env } = useBuilder();
-  const [fields, setFields] = useState<Map<string, ThreadType>>(new Map());
-  const [selected, setSelected] = useState<string | null>(null);
+
+  const [forms, setForms] = useState<Map<string, ThreadType<Form>>>(
+    new Map(
+      Object.entries({
+        form1: f.form({
+          title: "Main",
+          onSubmit: console.log,
+          blocks: new Map(),
+        }),
+      }),
+    ),
+  );
+  // Selected form
+  const [activeForm, setActiveForm] = useState<string | null>("form1");
+  // Selected field
+  const [activeField, setActiveField] = useState<string | null>(null);
 
   useEffect(() => {
-    if (env.current === Env.PRODUCTION) setSelected(null);
+    if (env.current === Env.PRODUCTION) setActiveField(null);
   }, [env.current]);
 
   // On field select
   const selectField = useCallback((id: string | null) => {
-    setSelected(id);
+    setActiveField(id);
+  }, []);
+
+  // Generate field Id
+  // TODO: useUniqueId - https://github.dev/clauderic/dnd-kit/blob/694dcc2f62e5269541fc941fa6c9af46ccd682ad/packages/utilities/src/hooks/useUniqueId.ts#L5
+  const generateId = useCallback(
+    (type: string, context: Map<string, unknown>, index = 1): string => {
+      let inc = index;
+      while (true) {
+        const id = `${type}${inc}`;
+
+        inc += 1;
+
+        if (context.has(id)) continue;
+
+        return id;
+      }
+    },
+    [],
+  );
+
+  // Get field
+  const getForm = useCallback(
+    (formId: string) => {
+      const field = forms.get(formId);
+      if (field) return field;
+      return null;
+    },
+    [forms],
+  );
+
+  // Add form
+  const addForm = useCallback(
+    (title: string) => {
+      let formId: string | null = null;
+
+      setForms((prev) => {
+        formId = generateId("form", prev);
+        prev.set(
+          formId,
+          f.form({ onSubmit: console.log, title, blocks: new Map() }),
+        );
+        return new Map(prev);
+      });
+
+      setActiveForm(formId);
+    },
+    [generateId],
+  );
+
+  // Remove form
+  const removeForm = useCallback((formId: string) => {
+    setForms((prev) => {
+      prev.delete(formId);
+      return new Map(prev);
+    });
+
+    setActiveForm((prev) => {
+      if (prev === formId) return null;
+      return prev;
+    });
   }, []);
 
   // Get all fields
   const allFields = useCallback(
-    (): ThreadWithIdType[] =>
-      Array.from(fields).map(([id, field]) => ({
+    (formId: string): ThreadWithIdType[] => {
+      const form = forms.get(formId);
+
+      if (!form) return [];
+
+      return Array.from(form.blocks).map(([id, field]) => ({
         id,
         ...field,
-      })),
-    [fields],
+      }));
+    },
+    [forms],
   );
 
   // Get field
   const getField = useCallback(
-    (id: string) => {
-      const field = fields.get(id);
+    (formId: string, fieldId: string) => {
+      const field = forms.get(formId)?.blocks.get(fieldId);
       if (field) return field;
       return null;
     },
-    [fields],
+    [forms],
   );
-
-  // Generate field Id
-  // TODO: useUniqueId - https://github.dev/clauderic/dnd-kit/blob/694dcc2f62e5269541fc941fa6c9af46ccd682ad/packages/utilities/src/hooks/useUniqueId.ts#L5
-  const generateId = (type: string, index = 1): string => {
-    const id = `${type}${index}`;
-
-    if (fields.has(id)) return generateId(type, index + 1);
-
-    return id;
-  };
 
   // Add field
   const addField = useCallback(
-    (field: ThreadType, force = false) => {
-      const id = generateId(field.type);
+    function AddField<T extends Record<string, unknown>>(
+      formId: string,
+      field: ThreadType<T>,
+    ) {
+      let fieldId: string | null = null;
 
-      if (fields.has(id) && !force)
-        throw new Error(`Field with ID ${id} already exists!`);
+      setForms((prev) => {
+        const form = prev.get(formId);
 
-      setFields((prev) => {
-        prev.set(id, field);
+        if (!form)
+          throw new Error(`Form with this ID ${formId} doesn't exist!`);
+
+        // Generating a new Id
+        fieldId = generateId(field.type, form.blocks);
+
+        // Storing the field with the other form fields
+        form.blocks.set(fieldId, field);
+
+        // Updating the form fields
+        prev.set(formId, form);
+
+        // Returning the updated schema
         return new Map(prev);
       });
 
-      setSelected(id);
+      setActiveField(fieldId);
     },
-    [fields, generateId],
+    [generateId],
   );
 
   // Update field
-  const updateField = useCallback(
-    (id: string, value: Partial<ThreadType>) => {
-      if (!fields.has(id))
-        throw new Error(`Field with ID ${id} doesn't exists!`);
+  const updateField = useCallback(function UpdateField<
+    T extends Record<string, unknown>,
+  >(formId: string, fieldId: string, value: Partial<ThreadType<T>>) {
+    setForms((prev) => {
+      const form = prev.get(formId);
 
-      setFields((prev) => {
-        prev.set(id, _.merge(prev.get(id), value));
+      if (!form) throw new Error(`Form with this ID ${formId} doesn't exist!`);
 
-        return new Map(prev);
-      });
-    },
-    [fields],
-  );
+      // Storing the field with the other form fields
+      form.blocks.set(fieldId, _.merge(form.blocks.get(fieldId), value));
+
+      // Updating the form fields
+      prev.set(formId, form);
+
+      // Returning the updated schema
+      return new Map(prev);
+    });
+  }, []);
 
   // Remove field
-  const removeField = useCallback((id: string) => {
-    setFields((prev) => {
-      prev.delete(id);
+  const removeField = useCallback((formId: string, fieldId: string) => {
+    setForms((prev) => {
+      prev.get(formId)?.blocks.delete(fieldId);
+
       return new Map(prev);
     });
 
-    setSelected((prev) => {
-      if (prev === id) return null;
+    setActiveField((prev) => {
+      if (prev === fieldId) return null;
       return prev;
     });
   }, []);
 
   // Move field
-  const moveField = useCallback((from: string, to: string) => {
-    setFields((fields) => {
-      const tmp = Array.from(fields);
-      const oldIndex = tmp.findIndex((val) => val[0] === from);
-      const newIndex = tmp.findIndex((val) => val[0] === to);
-      return new Map(arrayMove(tmp, oldIndex, newIndex));
+  const moveField = useCallback((formId: string, from: string, to: string) => {
+    setForms((prev) => {
+      const form = prev.get(formId);
+
+      if (!form) throw new Error(`Form with this ID ${formId} doesn't exist!`);
+
+      const tmp = Array.from(form.blocks);
+
+      // Getting the fields index
+      const fromIndex = tmp.findIndex((val) => val[0] === from);
+      const toIndex = tmp.findIndex((val) => val[0] === to);
+
+      form.blocks = new Map(arrayMove(tmp, fromIndex, toIndex));
+
+      // Storing the updated fields arrangement
+      prev.set(formId, form);
+
+      // Returning the new schema
+      return new Map(prev);
     });
   }, []);
 
   // Find field index
   const findFieldIndex = useCallback(
-    (id: string) => {
-      const keys = Array.from(fields.keys());
+    (formId: string, fieldId: string) => {
+      const keys = Array.from(forms.get(formId)?.blocks.keys() ?? []);
 
       for (let index = 0; index < keys.length; index++) {
         const key = keys[index];
-        if (key === id) return index;
+        if (key === fieldId) return index;
       }
 
       return null;
     },
-    [fields],
+    [forms],
   );
 
   // Duplicate field
   const duplicateField = useCallback(
-    (id: string) => {
-      const field = getField(id);
+    (formId: string, fieldId: string) => {
+      const field = getField(formId, fieldId);
 
-      if (!field) throw new Error(`Unable to find the field with Id ${id}`);
+      if (!field)
+        throw new Error(
+          `Unable to find the field with Id ${fieldId} in form ${formId}`,
+        );
 
-      addField(field);
+      addField(formId, field);
     },
     [getField, addField],
   );
 
   return {
+    schema: forms,
+    forms: {
+      get: getForm,
+      add: addForm,
+      remove: removeForm,
+    },
+    active: {
+      form: activeForm,
+      field: activeField,
+    },
     fields: {
-      fields,
-      selected,
       all: allFields,
       get: getField,
       add: addField,

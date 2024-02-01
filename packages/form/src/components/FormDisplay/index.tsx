@@ -4,7 +4,6 @@ import { FieldWrapper } from "./FieldWrapper";
 import { Env, useBuilder } from "@fibr/builder";
 import type { PropsWithChildren } from "react";
 import { DndWrapper } from "../../utils";
-import { f } from "@fibr/blocks";
 
 const FIELD_WRAPERS: Record<Env, (props: PropsWithChildren) => JSX.Element> = {
   [Env.DEVELOPMENT]: FieldWrapper,
@@ -12,22 +11,24 @@ const FIELD_WRAPERS: Record<Env, (props: PropsWithChildren) => JSX.Element> = {
 };
 
 export function FormDisplay() {
-  const {
-    fields: { fields },
-  } = useBlueprint();
+  const { fields, active, forms } = useBlueprint();
+
   const {
     env: { current },
   } = useBuilder();
 
+  if (!active.form) return <>No Active Form</>;
+
+  const form = forms.get(active.form);
+
+  if (!form) throw new Error(`Unable to get the form with Id ${active.form}`);
+
+  const allFields = fields.all(active.form);
+
   return (
     <WeaverProvider wrapper={FIELD_WRAPERS[current]}>
-      <DndWrapper items={Array.from(fields.keys())}>
-        <Loom
-          blueprint={f.form({
-            onSubmit: console.log,
-            blocks: Object.fromEntries(fields),
-          })}
-        />
+      <DndWrapper items={allFields.map(({ id }) => id)}>
+        <Loom id={active.form} blueprint={form} />
       </DndWrapper>
     </WeaverProvider>
   );

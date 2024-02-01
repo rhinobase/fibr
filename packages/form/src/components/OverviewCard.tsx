@@ -13,7 +13,8 @@ export type OverviewCard = ThreadWithIdType & {
 
 export function OverviewCard({ id, type }: ThreadWithIdType) {
   const {
-    fields: { selected, select },
+    fields: { select },
+    active,
   } = useBlueprint();
   const { setNodeRef, transform, transition, isDragging } = useSortable({ id });
 
@@ -31,7 +32,7 @@ export function OverviewCard({ id, type }: ThreadWithIdType) {
       className={classNames(
         "dark:bg-secondary-900 flex cursor-pointer select-none items-center gap-1 rounded-md border bg-white p-2 drop-shadow hover:drop-shadow-md",
         !isDragging && "transition-all ease-in-out",
-        selected === id
+        active.field === id
           ? "border-primary-500"
           : "border-secondary-300 dark:border-secondary-700",
       )}
@@ -76,9 +77,14 @@ type DeleteButton = {
 function DeleteButton({ id }: DeleteButton) {
   const {
     fields: { remove },
+    active,
   } = useBlueprint();
 
-  const deleteNode = eventHandler(() => remove(id));
+  const formId = active.form;
+
+  if (!formId) throw new Error("Unable to find an active form!");
+
+  const deleteNode = eventHandler(() => remove(formId, id));
 
   return (
     <Button

@@ -25,10 +25,17 @@ export function Layout({ children, allSections }: Layout) {
           layoutScroll
           className="contents lg:pointer-events-none lg:fixed lg:inset-0 lg:z-40 lg:flex"
         >
-          <div className="lg:border-secondary-900/10 contents lg:pointer-events-auto lg:block lg:w-72 lg:overflow-y-auto lg:border-r lg:px-6 lg:pb-8 lg:pt-4 lg:dark:border-white/10 xl:w-80">
+          <div className="lg:border-secondary-900/10 contents lg:pointer-events-auto lg:block lg:w-72 lg:overflow-y-auto lg:border-r lg:px-6 lg:pb-8 lg:pt-4 xl:w-80 lg:dark:border-white/10">
             <div className="hidden lg:flex">
-              <Link href="/" aria-label="Home">
-                <Logo className="h-6" />
+              <Link
+                href="/"
+                aria-label="Home"
+                className="flex items-center gap-1"
+              >
+                <Logo className="w-7" />
+                <span className="text-2xl font-semibold italic leading-none">
+                  Fibr
+                </span>
               </Link>
             </div>
             <Header />

@@ -25,6 +25,7 @@ export type DndWrapper = Pick<SortableContextProps, "items">;
 export function DndWrapper(props: PropsWithChildren<DndWrapper>) {
   const {
     fields: { move, select },
+    active: { form: formId },
   } = useBlueprint();
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -36,8 +37,8 @@ export function DndWrapper(props: PropsWithChildren<DndWrapper>) {
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
 
-    if (over && active.id !== over.id) {
-      move(String(active.id), String(over.id));
+    if (over && active.id !== over.id && formId) {
+      move(formId, String(active.id), String(over.id));
     }
   }
 

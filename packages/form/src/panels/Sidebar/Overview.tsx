@@ -1,11 +1,11 @@
 import {
   DndContext,
-  type DragEndEvent,
   KeyboardSensor,
   PointerSensor,
   closestCenter,
   useSensor,
   useSensors,
+  type DragEndEvent,
 } from "@dnd-kit/core";
 import {
   restrictToVerticalAxis,
@@ -41,9 +41,14 @@ export function Overview() {
 function FieldsRender() {
   const {
     fields: { all, move },
+    active,
   } = useBlueprint();
 
-  const fields = all();
+  const formId = active.form;
+
+  if (!formId) throw new Error("Unable to find an active form!");
+
+  const fields = all(formId);
 
   if (fields.length === 0)
     return (
@@ -66,8 +71,8 @@ function FieldsRender() {
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
 
-    if (over && active.id !== over.id) {
-      move(String(active.id), String(over.id));
+    if (over && active.id !== over.id && formId) {
+      move(formId, String(active.id), String(over.id));
     }
   }
 
@@ -79,7 +84,10 @@ function FieldsRender() {
         onDragEnd={handleDragEnd}
         modifiers={[restrictToVerticalAxis, restrictToWindowEdges]}
       >
-        <SortableContext items={fields} strategy={verticalListSortingStrategy}>
+        <SortableContext
+          items={fields.map(({ id }) => id)}
+          strategy={verticalListSortingStrategy}
+        >
           {fields.map((field) => (
             <OverviewCard key={field.id} {...field} />
           ))}

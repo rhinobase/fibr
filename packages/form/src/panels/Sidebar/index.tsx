@@ -1,12 +1,14 @@
 import { Sidebar as BuilderSidebar } from "@fibr/builder";
-import { Palette } from "./Palette";
+import { Forms } from "./Forms";
 import { Overview } from "./Overview";
+import { Palette } from "./Palette";
 
 export function Sidebar() {
   return (
     <BuilderSidebar>
       <Palette />
       <Overview />
+      <Forms />
     </BuilderSidebar>
   );
 }

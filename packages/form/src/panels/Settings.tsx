@@ -4,19 +4,23 @@ import { TextSettingsPanel } from "../components";
 
 export function Settings() {
   const {
-    fields: { selected, get },
+    fields: { get },
+    active,
   } = useBlueprint();
 
-  if (selected === null) return;
+  const fieldId = active.field;
+  const formId = active.form;
 
-  const field = get(selected);
+  if (!formId || !fieldId) throw new Error("Unable to find an active form!");
+
+  const field = get(formId, fieldId);
 
   return (
     <BuilderSettings className="flex flex-col gap-3">
       <h4 className="font-medium">Settings</h4>
       <hr />
       <p className="text-secondary-600 text-sm font-medium">{field?.type}</p>
-      <p className="text-secondary-600 text-sm font-medium">{selected}</p>
+      <p className="text-secondary-600 text-sm font-medium">{active.field}</p>
       <TextSettingsPanel />
     </BuilderSettings>
   );

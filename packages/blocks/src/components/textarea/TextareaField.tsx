@@ -9,7 +9,7 @@ export type TextareaField = FieldWrapperProps<{
 }>;
 
 export function TextareaField() {
-  const { name, defaultValue, placeholder } = useThread<TextareaField>();
+  const { id, defaultValue, placeholder } = useThread<TextareaField>();
   const { register } = useFormContext();
 
   return (
@@ -17,7 +17,7 @@ export function TextareaField() {
       <Textarea
         placeholder={placeholder}
         defaultValue={defaultValue}
-        {...register(name)}
+        {...register(id)}
       />
     </FieldWrapper>
   );

@@ -7,18 +7,6 @@ import { HiEnvelope, HiViewfinderCircle } from "react-icons/hi2";
 const BLOCKS: Record<Category, Block[]> = {
   [Category.PRESENTATION]: [
     {
-      type: "heading",
-      label: "Heading",
-      icon: HiViewfinderCircle,
-      presets: {
-        value: "Heading Field",
-      },
-      builder: () => {
-        const Component = plugin.heading;
-        return <Component />;
-      },
-    },
-    {
       type: "text",
       label: "Text",
       icon: HiViewfinderCircle,
@@ -103,11 +91,10 @@ const BLOCKS: Record<Category, Block[]> = {
       label: "password",
       icon: HiViewfinderCircle,
       presets: {
-        inputType: "password",
         label: "Label",
         description: "Description",
       },
-      builder: plugin["text-input"],
+      builder: plugin.password,
     },
   ],
   [Category.NUMBER_INPUTS]: [

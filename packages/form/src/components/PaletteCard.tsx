@@ -10,10 +10,15 @@ export function PaletteCard({
 }: Pick<Block, "type" | "label" | "icon" | "presets">) {
   const {
     fields: { add },
+    active,
   } = useBlueprint();
 
+  const formId = active.form;
+
+  if (!formId) throw new Error("Unable to find an active form!");
+
   const onSelect = eventHandler(() =>
-    add({
+    add(formId, {
       type,
       ...presets,
     }),

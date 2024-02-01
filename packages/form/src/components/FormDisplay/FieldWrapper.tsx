@@ -7,10 +7,8 @@ import { QuickActions } from "./QuickActions";
 import { useSortable } from "@dnd-kit/sortable";
 
 export function FieldWrapper({ children }: PropsWithChildren) {
-  const { id } = useThread();
-  const {
-    fields: { selected },
-  } = useBlueprint();
+  const { id, type } = useThread();
+  const { active } = useBlueprint();
   const {
     attributes,
     listeners,
@@ -18,7 +16,14 @@ export function FieldWrapper({ children }: PropsWithChildren) {
     transform,
     transition,
     isDragging,
-  } = useSortable({ id, disabled: id === "_main" });
+  } = useSortable({ id });
+
+  if (type === "form")
+    return (
+      <div className="w-full cursor-pointer select-none rounded-md border bg-white p-5 hover:shadow-md">
+        {children}
+      </div>
+    );
 
   const nodeStyle: CSSProperties = {
     transform: CSS.Transform.toString(transform),
@@ -34,7 +39,7 @@ export function FieldWrapper({ children }: PropsWithChildren) {
         {...listeners}
         className={classNames(
           "w-full select-none rounded-md border p-5",
-          selected === id ? "border-primary-500" : "border-secondary-200",
+          active.field === id ? "border-primary-500" : "border-secondary-200",
           !isDragging && "transition-all ease-in-out",
           "cursor-pointer bg-white hover:shadow-md",
         )}

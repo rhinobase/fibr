@@ -24,9 +24,7 @@ export type QuickActions = PropsWithChildren;
 
 export function QuickActions({ children }: QuickActions) {
   const { id } = useThread();
-  const {
-    fields: { selected },
-  } = useBlueprint();
+  const { active } = useBlueprint();
 
   const [isHover, setHover] = useState(false);
 
@@ -34,7 +32,7 @@ export function QuickActions({ children }: QuickActions) {
     <HoverCard
       openDelay={50}
       closeDelay={100}
-      open={isHover || selected === id}
+      open={isHover || active.field === id}
       onOpenChange={setHover}
     >
       <HoverCardTrigger asChild>{children}</HoverCardTrigger>
@@ -70,17 +68,23 @@ enum Direction {
 function QuickActionButtons() {
   const { id } = useThread();
   const {
-    fields: { fields, all, move, remove, findIndex, duplicate, select },
+    schema,
+    fields: { all, move, remove, findIndex, duplicate, select },
+    active,
   } = useBlueprint();
 
-  const index = findIndex(id);
+  const formId = active.form;
+
+  if (!formId) throw new Error("Unable to find an active form!");
+
+  const index = findIndex(formId, id);
 
   if (index == null) return <></>;
 
   const moveComponent = (direction: Direction) => {
-    const components = all();
+    const components = all(formId);
     select(id);
-    move(id, components[index + direction].id);
+    move(formId, id, components[index + direction].id);
   };
 
   return (
@@ -92,7 +96,7 @@ function QuickActionButtons() {
           action={() => moveComponent(Direction.UP)}
         />
       )}
-      {index < fields.size - 1 && (
+      {index < (schema.get(formId)?.blocks.size ?? 0) - 1 && (
         <ActionButton
           name="Move down"
           icon={MdOutlineArrowDownward}
@@ -102,12 +106,12 @@ function QuickActionButtons() {
       <ActionButton
         name="Duplicate file"
         icon={MdOutlineAddToPhotos}
-        action={() => duplicate(id)}
+        action={() => duplicate(formId, id)}
       />
       <ActionButton
         name="Delete visual field"
         icon={MdOutlineDelete}
-        action={() => remove(id)}
+        action={() => remove(formId, id)}
       />
     </div>
   );
