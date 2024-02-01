@@ -1,6 +1,7 @@
 import { createThread, useThread } from "@fibr/react";
 import { classNames } from "@rafty/ui";
 import { TooltipWrapper, type TooltipWrapperProps } from "../TooltipWrapper";
+import Markdown from "markdown-to-jsx";
 
 export type Text = TooltipWrapperProps<{
   value: string;
@@ -10,11 +11,11 @@ export type Text = TooltipWrapperProps<{
 export function Text() {
   // Getting component config
   const { value, hidden } = useThread<Text>();
-
-  const component = (
-    <p className={classNames(hidden && "hidden", "font-medium")}>{value}</p>
+  return (
+    <TooltipWrapper>
+      <Markdown className={classNames(hidden && "hidden")}>{value}</Markdown>
+    </TooltipWrapper>
   );
-  return <TooltipWrapper>{component}</TooltipWrapper>;
 }
 
 export const text = createThread<Text>("text");
