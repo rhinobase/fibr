@@ -1,7 +1,7 @@
 import { Button } from "@rafty/ui";
-import { PropsWithChildren } from "react";
+import { ElementRef, forwardRef } from "react";
 import { FaExpand, FaLock, FaMinus, FaPlus } from "react-icons/fa";
-import { Panel } from "react-resizable-panels";
+import { Panel, PanelProps } from "react-resizable-panels";
 import {
   TransformComponent,
   TransformWrapper,
@@ -9,49 +9,55 @@ import {
 } from "react-zoom-pan-pinch";
 import { useBuilder } from "./providers";
 
-const PANEL_PROPS = {
+const PANEL_PROPS: PanelProps = {
   order: 1,
   minSize: 50,
   defaultSize: 80,
   id: "canvas",
 };
 
-export function Canvas({ children }: PropsWithChildren) {
-  const {
-    config: { enableZooming },
-  } = useBuilder();
+export type Canvas = PanelProps;
 
-  if (enableZooming)
+export const Canvas = forwardRef<ElementRef<typeof Panel>, Canvas>(
+  ({ children, ...props }, forwardedRef) => {
+    const {
+      config: { enableZooming },
+    } = useBuilder();
+
+    if (enableZooming)
+      return (
+        <TransformWrapper
+          wheel={{ activationKeys: ["Shift"] }}
+          doubleClick={{ mode: "reset" }}
+        >
+          <Panel {...props} {...PANEL_PROPS} ref={forwardedRef}>
+            <div className="relative h-full">
+              <TransformComponent
+                wrapperClass="!h-full !w-full"
+                contentClass="!h-full !w-full"
+              >
+                <div className="bg-secondary-100 flex h-full flex-1 items-start justify-center overflow-y-auto py-10">
+                  {children}
+                </div>
+              </TransformComponent>
+              <Controls />
+            </div>
+          </Panel>
+        </TransformWrapper>
+      );
     return (
-      <TransformWrapper
-        wheel={{ activationKeys: ["Shift"] }}
-        doubleClick={{ mode: "reset" }}
+      <Panel
+        ref={forwardedRef}
+        {...props}
+        {...PANEL_PROPS}
+        className="bg-secondary-100 flex h-full items-start justify-center !overflow-y-auto py-10"
       >
-        <Panel {...PANEL_PROPS}>
-          <div className="relative h-full">
-            <TransformComponent
-              wrapperClass="!h-full !w-full"
-              contentClass="!h-full !w-full"
-            >
-              <div className="bg-secondary-100 flex h-full flex-1 items-start justify-center overflow-y-auto py-10">
-                {children}
-              </div>
-            </TransformComponent>
-            <Controls />
-          </div>
-        </Panel>
-      </TransformWrapper>
+        {children}
+      </Panel>
     );
-
-  return (
-    <Panel
-      {...PANEL_PROPS}
-      className="bg-secondary-100 flex h-full items-start justify-center !overflow-y-auto py-10"
-    >
-      {children}
-    </Panel>
-  );
-}
+  },
+);
+Canvas.displayName = "Canvas";
 
 function Controls() {
   const { zoomIn, zoomOut, resetTransform } = useControls();
