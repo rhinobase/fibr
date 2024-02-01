@@ -1,5 +1,6 @@
 import { Settings as BuilderSettings } from "@fibr/builder";
 import { useBlueprint } from "../providers";
+import { TextSettingsPanel } from "../components";
 
 export function Settings() {
   const {
@@ -16,6 +17,7 @@ export function Settings() {
       <hr />
       <p className="text-secondary-600 text-sm font-medium">{field?.type}</p>
       <p className="text-secondary-600 text-sm font-medium">{selected}</p>
+      <TextSettingsPanel />
     </BuilderSettings>
   );
 }
