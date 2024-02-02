@@ -25,9 +25,7 @@ export type Canvas = PanelProps;
 
 export const Canvas = forwardRef<ElementRef<typeof Panel>, Canvas>(
   ({ children, ...props }, forwardedRef) => {
-    const {
-      config: { enableZooming },
-    } = useBuilder();
+    const enableZooming = useBuilder((state) => state.config.enableZooming);
 
     if (enableZooming)
       return (

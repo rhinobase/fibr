@@ -10,15 +10,13 @@ export type SidebarItem = Omit<TabContent, "value"> & {
 };
 
 export function SidebarItem({ name, icon, label, ...props }: SidebarItem) {
-  const {
-    tabs: { add },
-  } = useBuilder();
+  const addTabs = useBuilder((state) => state.tabs.add);
 
   const tabProps = { name, icon, label };
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: This needs to run only on init
   useEffect(() => {
-    add(tabProps);
+    addTabs(tabProps);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

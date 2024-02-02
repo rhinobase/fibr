@@ -17,9 +17,9 @@ export function FormDisplay() {
     forms,
   } = useBlueprint();
 
-  const {
-    env: { current },
-  } = useBuilder();
+  const getEnv = useBuilder((state) => state.env.current);
+
+  const current = getEnv();
 
   if (!active.form) return <>No Active Form</>;
 

@@ -1,77 +1,38 @@
 "use client";
 import {
-  PropsWithChildren,
-  ReactNode,
+  type PropsWithChildren,
   createContext,
-  useCallback,
   useContext,
-  useReducer,
-  useState,
+  useRef,
 } from "react";
-import { Env } from "../utils";
+import { useStore } from "zustand";
+import {
+  type CreateBuilderStoreProps,
+  BuilderStoreActions,
+  BuilderStoreState,
+  createBuilderStore,
+} from "../store";
 
 const BuilderContext = createContext<ReturnType<
-  typeof useBuilderManager
+  typeof createBuilderStore
 > | null>(null);
 
 export function BuilderProvider({
   children,
   ...props
-}: PropsWithChildren<useBuilderManagerProps>) {
-  const value = useBuilderManager(props);
-
+}: PropsWithChildren<CreateBuilderStoreProps>) {
+  const store = useRef(createBuilderStore(props)).current;
   return (
-    <BuilderContext.Provider value={value}>{children}</BuilderContext.Provider>
+    <BuilderContext.Provider value={store}>{children}</BuilderContext.Provider>
   );
 }
 
-export type TabPayload = {
-  name: string;
-  label: ReactNode;
-  icon: ReactNode;
-};
+export function useBuilder<T>(
+  selector: (state: BuilderStoreState & BuilderStoreActions) => T,
+): T {
+  const store = useContext(BuilderContext);
 
-export type useBuilderManagerProps = {
-  enableZooming?: boolean;
-};
+  if (!store) throw new Error("Missing BuilderContext.Provider in the tree");
 
-function useBuilderManager(props: useBuilderManagerProps) {
-  const [config] = useState(props);
-  const [env, setEnv] = useState(Env.DEVELOPMENT);
-  const [active, setActive] = useState<string>();
-
-  const [tabs, setTabs] = useReducer(
-    (prev: Map<string, Omit<TabPayload, "name">>, cur: TabPayload) => {
-      const { name, ...data } = cur;
-
-      if (prev.size === 0) setActive(name);
-
-      prev.set(name, data);
-
-      return new Map(prev);
-    },
-    new Map(),
-  );
-
-  const addTab = useCallback((data: TabPayload) => setTabs(data), []);
-
-  const setActiveTab = useCallback((name: string) => setActive(name), []);
-
-  const changeEnv = useCallback((env: Env) => setEnv(env), []);
-
-  return {
-    config,
-    tabs: { all: tabs, add: addTab, active, setActive: setActiveTab },
-    env: {
-      current: env,
-      change: changeEnv,
-    },
-  };
-}
-
-export function useBuilder() {
-  const context = useContext(BuilderContext);
-  if (!context) throw new Error("Missing BuilderContext.Provider in the tree");
-
-  return context;
+  return useStore(store, selector);
 }

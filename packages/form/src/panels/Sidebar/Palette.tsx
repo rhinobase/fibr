@@ -6,7 +6,7 @@ import { useSource } from "../../providers";
 import { CATEGORY_LABELS, Category } from "../../utils";
 
 export function Palette() {
-  const { blocks } = useSource();
+  const blocks = useSource((state) => state.blocks);
 
   return (
     <SidebarItem

@@ -1,34 +1,31 @@
 "use client";
-import { PropsWithChildren, createContext, useContext, useState } from "react";
-import { Block } from "../types";
-import { Category } from "../utils";
+import {
+  type PropsWithChildren,
+  createContext,
+  useContext,
+  useRef,
+} from "react";
+import { useStore } from "zustand";
+import { type SourceStore, createSourceStore } from "../store";
 
-type SourceContextType = ReturnType<typeof useSourceManager>;
+const SourceContext = createContext<ReturnType<
+  typeof createSourceStore
+> | null>(null);
 
-const SourceContext = createContext<SourceContextType | null>(null);
-
-export type useSourceManagerProps = { blocks: Record<Category, Block[]> };
-
-export type SourceProvider = PropsWithChildren<useSourceManagerProps>;
-
-export function SourceProvider({ children, ...props }: SourceProvider) {
-  const value = useSourceManager(props);
-
+export function SourceProvider({
+  children,
+  ...props
+}: PropsWithChildren<SourceStore>) {
+  const store = useRef(createSourceStore(props)).current;
   return (
-    <SourceContext.Provider value={value}>{children}</SourceContext.Provider>
+    <SourceContext.Provider value={store}>{children}</SourceContext.Provider>
   );
 }
 
-function useSourceManager(props: useSourceManagerProps) {
-  const [blocks, setBlocks] = useState(props.blocks);
+export function useSource<T>(selector: (state: SourceStore) => T): T {
+  const store = useContext(SourceContext);
 
-  return { blocks };
-}
+  if (!store) throw new Error("Missing SourceContext.Provider in the tree");
 
-export function useSource() {
-  const context = useContext(SourceContext);
-
-  if (!context) throw new Error("Missing SourceContext.Provider in the tree");
-
-  return context;
+  return useStore(store, selector);
 }

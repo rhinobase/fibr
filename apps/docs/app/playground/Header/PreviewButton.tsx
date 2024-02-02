@@ -4,12 +4,10 @@ import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
 import { LuMonitorPlay } from "react-icons/lu";
 
 export function PreviewButton() {
-  const {
-    env: { current, change },
-  } = useBuilder();
+  const { current, change } = useBuilder((state) => state.env);
 
   const toggleEnv = eventHandler(() =>
-    change(current === Env.DEVELOPMENT ? Env.PRODUCTION : Env.DEVELOPMENT),
+    change(current() === Env.DEVELOPMENT ? Env.PRODUCTION : Env.DEVELOPMENT),
   );
 
   return (

@@ -30,7 +30,8 @@
     "@heroicons/react": "^2.1.1",
     "@fibr/react": "^0.5.2",
     "react-zoom-pan-pinch": "^3.4.0",
-    "react-resizable-panels": "^2.0.2"
+    "react-resizable-panels": "^2.0.2",
+    "zustand": "^4.5.0"
   },
   "peerDependencies": {
     "react": "^18.2.0"

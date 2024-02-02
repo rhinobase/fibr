@@ -1,14 +1,11 @@
 import { FibrProvider } from "@fibr/react";
 import { Container } from "./panels";
-import {
-  BlueprintProvider,
-  SourceProvider,
-  useSourceManagerProps,
-} from "./providers";
+import { BlueprintProvider, SourceProvider } from "./providers";
+import { SourceStore } from "./store";
 import type { ReactNode } from "react";
 import { plugin } from "@fibr/blocks";
 
-export function FormBuilder(props: useSourceManagerProps) {
+export function FormBuilder(props: SourceStore) {
   const userDefinedComponents: Record<string, () => ReactNode> = {
     form: plugin.form,
   };

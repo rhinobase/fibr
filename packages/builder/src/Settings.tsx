@@ -9,9 +9,11 @@ import { ResizeHandle } from "./ResizeHandle";
 export type Settings = HTMLAttributes<HTMLDivElement>;
 
 export function Settings({ className, ...props }: Settings) {
-  const { env } = useBuilder();
+  const getEnv = useBuilder((state) => state.env.current);
 
-  if (env.current === Env.PRODUCTION) return;
+  const current = getEnv();
+
+  if (current === Env.PRODUCTION) return;
 
   return (
     <>

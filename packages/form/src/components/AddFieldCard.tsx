@@ -4,16 +4,14 @@ import { eventHandler } from "@rafty/shared";
 import { useBlueprint } from "../providers";
 
 export function AddFieldCard() {
-  const {
-    tabs: { setActive },
-  } = useBuilder();
+  const changeTab = useBuilder((state) => state.tabs.setActive);
 
   const {
     blocks: { select },
   } = useBlueprint();
 
   const setPaletteActive = eventHandler(() => {
-    setActive("palette");
+    changeTab("palette");
     select(null);
   });
 

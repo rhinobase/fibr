@@ -30,7 +30,9 @@ export function BlueprintProvider({ children }: PropsWithChildren) {
 export const DEFAULT_FORM_NAME = "form1";
 
 function useBlueprintManager() {
-  const { env } = useBuilder();
+  const getEnv = useBuilder((state) => state.env.current);
+
+  const current = getEnv();
 
   const [forms, setForms] = useState<Map<string, ThreadType<Form>>>(
     new Map(
@@ -53,8 +55,8 @@ function useBlueprintManager() {
   );
 
   useEffect(() => {
-    if (env.current === Env.PRODUCTION) setActiveBlock(null);
-  }, [env.current]);
+    if (current === Env.PRODUCTION) setActiveBlock(null);
+  }, [current]);
 
   // On block select
   const selectBlock = useCallback((blockId: string | null) => {

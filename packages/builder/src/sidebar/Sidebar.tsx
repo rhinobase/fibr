@@ -7,9 +7,9 @@ import { Panel } from "react-resizable-panels";
 import { ResizeHandle } from "../ResizeHandle";
 
 export function Sidebar({ children }: PropsWithChildren) {
-  const {
-    env: { current },
-  } = useBuilder();
+  const getEnv = useBuilder((state) => state.env.current);
+
+  const current = getEnv();
 
   if (current === Env.PRODUCTION) return;
 
@@ -24,19 +24,25 @@ export function Sidebar({ children }: PropsWithChildren) {
 }
 
 function SidebarTray({ children }: PropsWithChildren) {
-  const {
-    tabs: { all, active, setActive },
-  } = useBuilder();
+  const { all, active, setActive } = useBuilder(({ tabs }) => {
+    return {
+      all: tabs.all,
+      active: tabs.active,
+      setActive: tabs.setActive,
+    };
+  });
+
+  const activeTab = active();
 
   return (
     <Tab
-      value={active}
+      value={activeTab}
       onValueChange={setActive}
       orientation="vertical"
       className="h-full"
     >
       <TabList>
-        {Array.from(all.entries()).map(([name, { icon }]) => (
+        {Array.from(all().entries()).map(([name, { icon }]) => (
           <TabTrigger
             key={name}
             value={name}
