@@ -15,7 +15,7 @@ export function Settings({ className, ...props }: Settings) {
 
   return (
     <>
-      <ResizeHandle />
+      <ResizeHandle className="border-secondary-200 border-l" />
       <Panel
         id="settings"
         order={2}

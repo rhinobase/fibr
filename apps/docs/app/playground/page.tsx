@@ -1,15 +1,28 @@
 "use client";
 import { plugin } from "@fibr/blocks";
+import { Workspace } from "@fibr/builder";
 import { Block, Category, FormBuilder } from "@fibr/form-builder";
+import { useState } from "react";
 import { HiOutlineMail } from "react-icons/hi";
-import { HiEnvelope, HiViewfinderCircle } from "react-icons/hi2";
+import { HiViewfinderCircle } from "react-icons/hi2";
+import { LuTextCursorInput } from "react-icons/lu";
+import {
+  MdLink,
+  MdOutlineImage,
+  MdOutlineKey,
+  MdOutlineMailOutline,
+  MdTextFields,
+} from "react-icons/md";
+import { RxDividerHorizontal } from "react-icons/rx";
+import { Header } from "./Header";
+import { Container } from "./utils";
 
 const BLOCKS: Record<Category, Block[]> = {
   [Category.PRESENTATION]: [
     {
       type: "text",
       label: "Text",
-      icon: HiViewfinderCircle,
+      icon: MdTextFields,
       presets: {
         value: "Text field",
       },
@@ -18,7 +31,7 @@ const BLOCKS: Record<Category, Block[]> = {
     {
       type: "image",
       label: "Image",
-      icon: HiViewfinderCircle,
+      icon: MdOutlineImage,
       presets: {
         src: "https://via.placeholder.com/200",
         alt: "Image field",
@@ -28,7 +41,7 @@ const BLOCKS: Record<Category, Block[]> = {
     {
       type: "divider",
       label: "Divider",
-      icon: HiViewfinderCircle,
+      icon: RxDividerHorizontal,
       builder: plugin.divider,
     },
   ],
@@ -36,7 +49,7 @@ const BLOCKS: Record<Category, Block[]> = {
     {
       type: "string",
       label: "Text Input",
-      icon: HiViewfinderCircle,
+      icon: LuTextCursorInput,
       presets: {
         label: "Label",
         description: "Description",
@@ -46,7 +59,7 @@ const BLOCKS: Record<Category, Block[]> = {
     {
       type: "string",
       label: "Email",
-      icon: HiEnvelope,
+      icon: MdOutlineMailOutline,
       presets: {
         inputType: "email",
         label: "Label",
@@ -58,7 +71,7 @@ const BLOCKS: Record<Category, Block[]> = {
     {
       type: "string",
       label: "url",
-      icon: HiViewfinderCircle,
+      icon: MdLink,
       presets: {
         inputType: "url",
         label: "Label",
@@ -89,7 +102,7 @@ const BLOCKS: Record<Category, Block[]> = {
     {
       type: "password",
       label: "password",
-      icon: HiViewfinderCircle,
+      icon: MdOutlineKey,
       presets: {
         label: "Label",
         description: "Description",
@@ -101,7 +114,7 @@ const BLOCKS: Record<Category, Block[]> = {
     {
       type: "number",
       label: "Number Input",
-      icon: HiViewfinderCircle,
+      icon: LuTextCursorInput,
       presets: {
         inputType: "number",
         label: "Label",
@@ -113,5 +126,13 @@ const BLOCKS: Record<Category, Block[]> = {
 };
 
 export default function Playground() {
-  return <FormBuilder blocks={BLOCKS} />;
+  const [container, setContainer] = useState(Container.BUILDER);
+
+  return (
+    <Workspace>
+      <Header container={container} onContainerChange={setContainer} />
+      {container === Container.BUILDER && <FormBuilder blocks={BLOCKS} />}
+      {container === Container.FLOW && <div />}
+    </Workspace>
+  );
 }

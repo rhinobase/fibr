@@ -1,6 +1,5 @@
-import { Workspace } from "@fibr/builder";
 import { FibrProvider } from "@fibr/react";
-import { Header, Container } from "./panels";
+import { Container } from "./panels";
 import {
   BlueprintProvider,
   SourceProvider,
@@ -23,12 +22,9 @@ export function FormBuilder(props: useSourceManagerProps) {
   return (
     <SourceProvider blocks={props.blocks}>
       <FibrProvider plugins={userDefinedComponents}>
-        <Workspace>
-          <BlueprintProvider>
-            <Header />
-            <Container />
-          </BlueprintProvider>
-        </Workspace>
+        <BlueprintProvider>
+          <Container />
+        </BlueprintProvider>
       </FibrProvider>
     </SourceProvider>
   );

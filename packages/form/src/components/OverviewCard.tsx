@@ -30,7 +30,7 @@ export function OverviewCard({ id, type }: ThreadWithIdType) {
       ref={setNodeRef}
       style={nodeStyle}
       className={classNames(
-        "dark:bg-secondary-900 flex cursor-pointer select-none items-center gap-1 rounded-md border bg-white p-2 drop-shadow hover:drop-shadow-md",
+        "dark:bg-secondary-900 flex cursor-pointer select-none items-center gap-1 rounded border bg-white p-2 drop-shadow hover:drop-shadow-md",
         !isDragging && "transition-all ease-in-out",
         active.block === id
           ? "border-primary-500"

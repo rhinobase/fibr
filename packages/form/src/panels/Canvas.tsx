@@ -8,7 +8,7 @@ export function Canvas() {
   } = useBlueprint();
   return (
     <BuilderCanvas onClick={() => select(null)}>
-      <Screen className="flex w-[500px] flex-col items-center justify-center gap-3">
+      <Screen className="flex w-[500px] flex-col items-center justify-center gap-3 rounded">
         <FormDisplay />
       </Screen>
     </BuilderCanvas>

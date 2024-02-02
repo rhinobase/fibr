@@ -23,7 +23,7 @@ export function Settings() {
   return (
     <BuilderSettings className="flex flex-col gap-3">
       <h4 className="font-medium">Settings</h4>
-      <hr />
+      <hr className="my-3" />
       <p className="text-secondary-600 text-sm font-medium">{block.type}</p>
       <p className="text-secondary-600 text-sm font-medium">{active.block}</p>
       <Thread id={blockId} {...settings} />

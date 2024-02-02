@@ -2,7 +2,7 @@ import { Form } from "@fibr/blocks";
 import { ThreadType } from "@fibr/react";
 import { eventHandler } from "@rafty/shared";
 import { Button, classNames } from "@rafty/ui";
-import { MdDelete, MdAdd } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 import { useBlueprint } from "../providers";
 
 export type FormCard = {
@@ -22,7 +22,7 @@ export function FormCard({ id, form: { title } }: FormCard) {
   return (
     <div
       className={classNames(
-        "dark:bg-secondary-900 flex cursor-pointer select-none items-center gap-1 rounded-md border bg-white p-2 drop-shadow transition-all ease-in-out hover:drop-shadow-md",
+        "dark:bg-secondary-900 flex cursor-pointer select-none items-center gap-1 rounded border bg-white p-2 drop-shadow transition-all ease-in-out hover:drop-shadow-md",
         formId === id
           ? "border-primary-500"
           : "border-secondary-300 dark:border-secondary-700",

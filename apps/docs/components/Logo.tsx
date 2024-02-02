@@ -1,14 +1,15 @@
-import { SVGProps } from "react";
+import { classNames } from "@rafty/ui";
+import type { SVGProps } from "react";
 
 export type Logo = SVGProps<SVGSVGElement>;
 
-export function Logo(props: Logo) {
+export function Logo({ className, ...props }: Logo) {
   return (
     <svg
       viewBox="0 0 102 65"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      fill="#0ea5e9"
+      className={classNames("fill-primary-600", className)}
       {...props}
     >
       <title>Fibr Logo</title>

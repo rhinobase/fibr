@@ -53,7 +53,7 @@ function IdEditField() {
   const { id } = useThread();
 
   return (
-    <div className="bg-secondary-200/70 text-secondary-600 flex items-center gap-1.5 rounded-md px-2 py-1.5">
+    <div className="bg-secondary-200/70 text-secondary-600 flex w-max items-center gap-1.5 rounded-md px-2 py-1.5">
       <code className="text-sm">{id}</code>
       <HiPencil />
     </div>

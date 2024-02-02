@@ -1,11 +1,26 @@
 import { useThread } from "@fibr/react";
 import { classNames } from "@rafty/ui";
-import { CSS } from "@dnd-kit/utilities";
-import type { CSSProperties, PropsWithChildren } from "react";
+import { CSS, Transform } from "@dnd-kit/utilities";
+import {
+  forwardRef,
+  type CSSProperties,
+  type HTMLAttributes,
+  type PropsWithChildren,
+} from "react";
 import { useBlueprint } from "../../providers";
 import { QuickActions } from "./QuickActions";
 import { useSortable } from "@dnd-kit/sortable";
 import { eventHandler } from "@rafty/shared";
+import { cva } from "class-variance-authority";
+
+const wrapperClasses = cva("w-full cursor-pointer border bg-white rounded", {
+  variants: {
+    selected: {
+      true: "border-primary-500",
+      false: "border-secondary-200",
+    },
+  },
+});
 
 export function FieldWrapper({ children }: PropsWithChildren) {
   const { id, type } = useThread();
@@ -26,38 +41,57 @@ export function FieldWrapper({ children }: PropsWithChildren) {
 
   if (type === "form")
     return (
-      <div
+      <InternalComponent
+        selected={active.block === id}
+        className="p-6"
         onClick={onSelect}
-        className={classNames(
-          "w-full cursor-pointer rounded-md border bg-white p-5 hover:shadow-md",
-          active.block === id ? "border-primary-500" : "border-secondary-200",
-        )}
+        onKeyDown={onSelect}
       >
         {children}
-      </div>
+      </InternalComponent>
     );
 
+  const _transform: Transform = {
+    x: transform?.x ?? 0,
+    y: transform?.y ?? 0,
+    scaleX: 1,
+    scaleY: 1,
+  };
+
   const nodeStyle: CSSProperties = {
-    transform: CSS.Transform.toString(transform),
+    transform: CSS.Transform.toString(_transform),
     transition,
   };
 
   return (
     <QuickActions>
-      <div
+      <InternalComponent
+        selected={active.block === id}
         ref={setNodeRef}
         style={nodeStyle}
         {...attributes}
         {...listeners}
         className={classNames(
-          "w-full select-none rounded-md border p-5",
-          active.block === id ? "border-primary-500" : "border-secondary-200",
+          "select-none p-4 hover:shadow-md",
           !isDragging && "transition-all ease-in-out",
-          "cursor-pointer bg-white hover:shadow-md",
         )}
       >
         {children}
-      </div>
+      </InternalComponent>
     </QuickActions>
   );
 }
+
+type InternalComponentProps = HTMLAttributes<HTMLDivElement> & {
+  selected: boolean;
+};
+
+const InternalComponent = forwardRef<HTMLDivElement, InternalComponentProps>(
+  ({ className, selected, ...props }, forwardedRef) => (
+    <div
+      {...props}
+      className={classNames(wrapperClasses({ selected }), className)}
+      ref={forwardedRef}
+    />
+  ),
+);

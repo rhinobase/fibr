@@ -18,7 +18,7 @@ export function Sidebar({ children }: PropsWithChildren) {
       <Panel id="sidebar" order={0} minSize={20} maxSize={25} defaultSize={20}>
         <SidebarTray>{children}</SidebarTray>
       </Panel>
-      <ResizeHandle />
+      <ResizeHandle className="border-secondary-200 border-r" />
     </>
   );
 }
@@ -35,12 +35,12 @@ function SidebarTray({ children }: PropsWithChildren) {
       orientation="vertical"
       className="h-full"
     >
-      <TabList className="p-1">
+      <TabList>
         {Array.from(all.entries()).map(([name, { icon }]) => (
           <TabTrigger
             key={name}
             value={name}
-            className="ring-secondary-400 dark:ring-offset-secondary-950 rounded border-none p-1.5 ring-offset-1 ring-offset-white focus:outline-none focus:ring-2"
+            className="hover:text-secondary-700 px-2"
           >
             {icon}
           </TabTrigger>
