@@ -36,4 +36,4 @@ export function TextInput() {
   );
 }
 
-export const textInput = createThread<TextInput>("text-input");
+export const stringInput = createThread<TextInput>("string");

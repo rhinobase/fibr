@@ -1,6 +1,6 @@
 import { Settings as BuilderSettings } from "@fibr/builder";
 import { Thread } from "@fibr/react";
-import { settingsPanel } from "../components";
+import { settingsPanel } from "./settingsConfig";
 import { useBlueprint } from "../providers";
 
 export function Settings() {

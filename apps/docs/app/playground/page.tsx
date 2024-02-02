@@ -41,7 +41,7 @@ const BLOCKS: Record<Category, Block[]> = {
         label: "Label",
         description: "Description",
       },
-      builder: plugin["text-input"],
+      builder: plugin.string,
     },
     {
       type: "string",
@@ -53,7 +53,7 @@ const BLOCKS: Record<Category, Block[]> = {
         description: "Description",
         prefixIcon: <HiOutlineMail className="opacity-60" />,
       },
-      builder: plugin["text-input"],
+      builder: plugin.string,
     },
     {
       type: "string",
@@ -64,7 +64,7 @@ const BLOCKS: Record<Category, Block[]> = {
         label: "Label",
         description: "Description",
       },
-      builder: plugin["text-input"],
+      builder: plugin.string,
     },
     {
       type: "editable-text",
@@ -74,7 +74,7 @@ const BLOCKS: Record<Category, Block[]> = {
         label: "Label",
         description: "Description",
       },
-      builder: plugin["text-input"],
+      builder: plugin.string,
     },
     {
       type: "editable-textarea",
@@ -84,7 +84,7 @@ const BLOCKS: Record<Category, Block[]> = {
         label: "Label",
         description: "Description",
       },
-      builder: plugin["text-input"],
+      builder: plugin.string,
     },
     {
       type: "password",
@@ -107,7 +107,7 @@ const BLOCKS: Record<Category, Block[]> = {
         label: "Label",
         description: "Description",
       },
-      builder: plugin["text-input"],
+      builder: plugin.string,
     },
   ],
 };

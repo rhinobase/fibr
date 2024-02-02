@@ -3,7 +3,7 @@ import { Form, form } from "./form";
 import { Image, image } from "./image";
 import { PasswordInput, password } from "./password";
 import { Text, text } from "./text";
-import { TextInput, textInput } from "./text-input";
+import { TextInput, stringInput } from "./text-input";
 import { TextareaField, textarea } from "./textarea";
 
 export type { Divider } from "./divider";
@@ -20,7 +20,7 @@ export const plugin = {
   image: Image,
   password: PasswordInput,
   text: Text,
-  "text-input": TextInput,
+  string: TextInput,
   textarea: TextareaField,
 };
 
@@ -30,6 +30,6 @@ export const f = {
   image,
   password,
   text,
-  textInput,
+  string: stringInput,
   textarea,
 };
