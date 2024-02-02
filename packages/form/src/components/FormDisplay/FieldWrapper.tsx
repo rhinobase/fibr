@@ -5,10 +5,14 @@ import type { CSSProperties, PropsWithChildren } from "react";
 import { useBlueprint } from "../../providers";
 import { QuickActions } from "./QuickActions";
 import { useSortable } from "@dnd-kit/sortable";
+import { eventHandler } from "@rafty/shared";
 
 export function FieldWrapper({ children }: PropsWithChildren) {
   const { id, type } = useThread();
-  const { active } = useBlueprint();
+  const {
+    active,
+    blocks: { select },
+  } = useBlueprint();
   const {
     attributes,
     listeners,
@@ -18,9 +22,14 @@ export function FieldWrapper({ children }: PropsWithChildren) {
     isDragging,
   } = useSortable({ id });
 
+  const onSelect = eventHandler(() => select(id));
+
   if (type === "form")
     return (
-      <div className="w-full cursor-pointer select-none rounded-md border bg-white p-5 hover:shadow-md">
+      <div
+        onClick={onSelect}
+        className="w-full cursor-pointer rounded-md border bg-white p-5 hover:shadow-md"
+      >
         {children}
       </div>
     );

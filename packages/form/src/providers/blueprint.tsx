@@ -98,6 +98,7 @@ function useBlueprintManager() {
       });
 
       setActiveForm(formId);
+      setActiveBlock(formId);
     },
     [generateId],
   );
@@ -132,10 +133,13 @@ function useBlueprintManager() {
 
   // Get block
   const getBlock = useCallback(
-    (formId: string, blockId: string) => {
-      const block = forms.get(formId)?.blocks.get(blockId);
-      if (block) return block;
-      return null;
+    (formId: string, blockId: string): ThreadType | undefined => {
+      let block: ThreadType | undefined;
+
+      if (forms.has(blockId)) block = forms.get(blockId);
+      else block = forms.get(formId)?.blocks.get(blockId);
+
+      return block;
     },
     [forms],
   );
