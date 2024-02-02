@@ -27,13 +27,15 @@ export function BlueprintProvider({ children }: PropsWithChildren) {
   );
 }
 
+export const DEFAULT_FORM_NAME = "form1";
+
 function useBlueprintManager() {
   const { env } = useBuilder();
 
   const [forms, setForms] = useState<Map<string, ThreadType<Form>>>(
     new Map(
       Object.entries({
-        form1: f.form({
+        [DEFAULT_FORM_NAME]: f.form({
           title: "Main",
           onSubmit: console.log,
           blocks: new Map(),
@@ -42,9 +44,13 @@ function useBlueprintManager() {
     ),
   );
   // Selected form
-  const [activeForm, setActiveForm] = useState<string | null>("form1");
+  const [activeForm, setActiveForm] = useState<string | null>(
+    DEFAULT_FORM_NAME,
+  );
   // Selected block
-  const [activeBlock, setActiveBlock] = useState<string | null>(null);
+  const [activeBlock, setActiveBlock] = useState<string | null>(
+    DEFAULT_FORM_NAME,
+  );
 
   useEffect(() => {
     if (env.current === Env.PRODUCTION) setActiveBlock(null);

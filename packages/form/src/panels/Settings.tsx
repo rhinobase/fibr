@@ -1,5 +1,5 @@
 import { Settings as BuilderSettings } from "@fibr/builder";
-import { FibrProvider, Thread } from "@fibr/react";
+import { Thread } from "@fibr/react";
 import { settingsPanel } from "../components";
 import { useBlueprint } from "../providers";
 
@@ -18,15 +18,15 @@ export function Settings() {
 
   if (!block) throw new Error("Unable find the block!");
 
+  const settings = settingsPanel[block.type];
+
   return (
     <BuilderSettings className="flex flex-col gap-3">
-      <FibrProvider plugins={settingsPanel}>
-        <h4 className="font-medium">Settings</h4>
-        <hr />
-        <p className="text-secondary-600 text-sm font-medium">{block.type}</p>
-        <p className="text-secondary-600 text-sm font-medium">{active.block}</p>
-        <Thread id={blockId} {...block} />
-      </FibrProvider>
+      <h4 className="font-medium">Settings</h4>
+      <hr />
+      <p className="text-secondary-600 text-sm font-medium">{block.type}</p>
+      <p className="text-secondary-600 text-sm font-medium">{active.block}</p>
+      <Thread id={blockId} {...settings} />
     </BuilderSettings>
   );
 }

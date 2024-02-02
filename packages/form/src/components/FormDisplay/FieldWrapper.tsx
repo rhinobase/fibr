@@ -28,7 +28,10 @@ export function FieldWrapper({ children }: PropsWithChildren) {
     return (
       <div
         onClick={onSelect}
-        className="w-full cursor-pointer rounded-md border bg-white p-5 hover:shadow-md"
+        className={classNames(
+          "w-full cursor-pointer rounded-md border bg-white p-5 hover:shadow-md",
+          active.block === id ? "border-primary-500" : "border-secondary-200",
+        )}
       >
         {children}
       </div>

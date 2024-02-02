@@ -5,7 +5,7 @@ import { PropsWithChildren } from "react";
 export type TooltipWrapperProps<
   T extends Record<string, unknown> = Record<string, unknown>,
 > = {
-  tooltip: string;
+  tooltip?: string;
 } & T;
 
 export function TooltipWrapper({ children }: PropsWithChildren) {

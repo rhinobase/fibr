@@ -8,7 +8,6 @@ export type FieldWrapperProps<
   T extends Record<string, unknown> = Record<string, unknown>,
 > = TooltipWrapperProps<
   {
-    id: string;
     label?: string;
     description?: string;
     required?: boolean;
