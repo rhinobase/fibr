@@ -1,6 +1,7 @@
 import { Settings as BuilderSettings } from "@fibr/builder";
 import { useBlueprint } from "../providers";
-import { TextSettingsPanel } from "../components";
+import { settingsPanel } from "../components";
+import { FibrProvider, Thread } from "@fibr/react";
 
 export function Settings() {
   const {
@@ -15,13 +16,17 @@ export function Settings() {
 
   const field = get(formId, fieldId);
 
+  if (!field) throw new Error("Unable find the field!");
+
   return (
     <BuilderSettings className="flex flex-col gap-3">
-      <h4 className="font-medium">Settings</h4>
-      <hr />
-      <p className="text-secondary-600 text-sm font-medium">{field?.type}</p>
-      <p className="text-secondary-600 text-sm font-medium">{active.field}</p>
-      <TextSettingsPanel />
+      <FibrProvider plugins={settingsPanel}>
+        <h4 className="font-medium">Settings</h4>
+        <hr />
+        <p className="text-secondary-600 text-sm font-medium">{field.type}</p>
+        <p className="text-secondary-600 text-sm font-medium">{active.field}</p>
+        <Thread id={fieldId} {...field} />
+      </FibrProvider>
     </BuilderSettings>
   );
 }
