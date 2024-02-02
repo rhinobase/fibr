@@ -7,14 +7,20 @@
   "targets": {
     "build": {
       "executor": "@nx/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/packages/form",
         "tsConfig": "packages/form/tsconfig.lib.json",
         "project": "packages/form/package.json",
         "entryFile": "packages/form/src/index.ts",
-        "external": ["react", "react-dom", "react/jsx-runtime"],
-        "rollupConfig": "@nx/react/plugins/bundle-rollup",
+        "external": [
+          "react",
+          "react-dom",
+          "react/jsx-runtime"
+        ],
+        "rollupConfig": "rollup.config.js",
         "compiler": "swc",
         "assets": [
           {
