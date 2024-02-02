@@ -40,7 +40,9 @@ export function OverviewCard({ id, type }: ThreadWithIdType) {
       onKeyDown={selectBlock}
     >
       <DragHandler id={id} />
-      <p className="text-2xs truncate font-medium capitalize">{`${id} (${type})`}</p>
+      <p className="text-2xs truncate font-medium capitalize">
+        {id} ({type})
+      </p>
       <div className="flex-1" />
       <DeleteButton id={id} />
     </div>

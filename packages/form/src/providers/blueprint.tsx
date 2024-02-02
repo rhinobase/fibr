@@ -57,8 +57,8 @@ function useBlueprintManager() {
   }, [env.current]);
 
   // On block select
-  const selectBlock = useCallback((id: string | null) => {
-    setActiveBlock(id);
+  const selectBlock = useCallback((blockId: string | null) => {
+    setActiveBlock(blockId);
   }, []);
 
   // Generate block Id
@@ -88,6 +88,12 @@ function useBlueprintManager() {
     },
     [forms],
   );
+
+  // Select form
+  const selectForm = useCallback((formId: string | null) => {
+    setActiveForm(formId);
+    setActiveBlock(formId);
+  }, []);
 
   // Add form
   const addForm = useCallback(
@@ -272,6 +278,7 @@ function useBlueprintManager() {
   return {
     schema: forms,
     forms: {
+      select: selectForm,
       get: getForm,
       add: addForm,
       remove: removeForm,

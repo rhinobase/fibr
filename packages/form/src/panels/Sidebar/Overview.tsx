@@ -1,25 +1,8 @@
-import {
-  DndContext,
-  KeyboardSensor,
-  PointerSensor,
-  closestCenter,
-  useSensor,
-  useSensors,
-  type DragEndEvent,
-} from "@dnd-kit/core";
-import {
-  restrictToVerticalAxis,
-  restrictToWindowEdges,
-} from "@dnd-kit/modifiers";
-import {
-  SortableContext,
-  sortableKeyboardCoordinates,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
 import { SidebarItem } from "@fibr/builder";
 import { ListBulletIcon } from "@heroicons/react/24/outline";
-import { AddFieldCard, OverviewCard } from "../../components";
+import { OverviewCard } from "../../components";
 import { useBlueprint } from "../../providers";
+import { DndWrapper } from "../../utils";
 
 export function Overview() {
   return (
@@ -40,7 +23,7 @@ export function Overview() {
 
 function FieldsRender() {
   const {
-    blocks: { all, move },
+    blocks: { all },
     active,
   } = useBlueprint();
 
@@ -53,46 +36,20 @@ function FieldsRender() {
   if (blocks.length === 0)
     return (
       <div className="text-secondary-500 flex h-full w-full select-none flex-col items-center justify-center gap-2 p-3 text-center font-medium">
-        <p className="text-lg">No field exists</p>
+        <p className="text-lg">No field</p>
         <p className="text-sm leading-tight">
-          You can go to palette to add field or just click on the button below
+          You can go to palette to add field
         </p>
-        <AddFieldCard />
       </div>
     );
 
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    }),
-  );
-
-  function handleDragEnd(event: DragEndEvent) {
-    const { active, over } = event;
-
-    if (over && active.id !== over.id && formId) {
-      move(formId, String(active.id), String(over.id));
-    }
-  }
-
   return (
     <div className="space-y-2.5 px-3 pb-3">
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
-        modifiers={[restrictToVerticalAxis, restrictToWindowEdges]}
-      >
-        <SortableContext
-          items={blocks.map(({ id }) => id)}
-          strategy={verticalListSortingStrategy}
-        >
-          {blocks.map((block) => (
-            <OverviewCard key={block.id} {...block} />
-          ))}
-        </SortableContext>
-      </DndContext>
+      <DndWrapper items={blocks.map(({ id }) => id)}>
+        {blocks.map((block) => (
+          <OverviewCard key={block.id} {...block} />
+        ))}
+      </DndWrapper>
     </div>
   );
 }
