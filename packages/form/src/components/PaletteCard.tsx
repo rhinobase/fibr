@@ -9,7 +9,7 @@ export function PaletteCard({
   presets,
 }: Pick<Block, "type" | "label" | "icon" | "presets">) {
   const {
-    fields: { add },
+    blocks: { add },
     active,
   } = useBlueprint();
 

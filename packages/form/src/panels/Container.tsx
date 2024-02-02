@@ -11,7 +11,7 @@ export function Container() {
     <BuilderContainer>
       <Sidebar />
       <Canvas />
-      {active.field && <Settings />}
+      {active.block && <Settings />}
     </BuilderContainer>
   );
 }

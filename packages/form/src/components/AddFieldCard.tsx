@@ -9,7 +9,7 @@ export function AddFieldCard() {
   } = useBuilder();
 
   const {
-    fields: { select },
+    blocks: { select },
   } = useBlueprint();
 
   const setPaletteActive = eventHandler(() => {

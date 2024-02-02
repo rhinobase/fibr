@@ -32,7 +32,7 @@ export function QuickActions({ children }: QuickActions) {
     <HoverCard
       openDelay={50}
       closeDelay={100}
-      open={isHover || active.field === id}
+      open={isHover || active.block === id}
       onOpenChange={setHover}
     >
       <HoverCardTrigger asChild>{children}</HoverCardTrigger>
@@ -69,7 +69,7 @@ function QuickActionButtons() {
   const { id } = useThread();
   const {
     schema,
-    fields: { all, move, remove, findIndex, duplicate, select },
+    blocks: { all, move, remove, findIndex, duplicate, select },
     active,
   } = useBlueprint();
 

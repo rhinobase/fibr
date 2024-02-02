@@ -1,8 +1,7 @@
 import { DividerSettingsPanel } from "./DividerSettingsPanel";
 import { ImageSettingsPanel } from "./ImageSettingsPanel";
-import { TextSettingsPanel } from "./TextSettingsPanel";
 import { TextInputSettingsPanel } from "./TextInputSettingsPanel";
-import { EditableTextSettingsPanel } from "./EditableTextSettingsPanel";
+import { TextSettingsPanel } from "./TextSettingsPanel";
 
 export const settingsPanel = {
   divider: DividerSettingsPanel,

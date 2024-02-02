@@ -43,19 +43,19 @@ function useBlueprintManager() {
   );
   // Selected form
   const [activeForm, setActiveForm] = useState<string | null>("form1");
-  // Selected field
-  const [activeField, setActiveField] = useState<string | null>(null);
+  // Selected block
+  const [activeBlock, setActiveBlock] = useState<string | null>(null);
 
   useEffect(() => {
-    if (env.current === Env.PRODUCTION) setActiveField(null);
+    if (env.current === Env.PRODUCTION) setActiveBlock(null);
   }, [env.current]);
 
-  // On field select
-  const selectField = useCallback((id: string | null) => {
-    setActiveField(id);
+  // On block select
+  const selectBlock = useCallback((id: string | null) => {
+    setActiveBlock(id);
   }, []);
 
-  // Generate field Id
+  // Generate block Id
   // TODO: useUniqueId - https://github.dev/clauderic/dnd-kit/blob/694dcc2f62e5269541fc941fa6c9af46ccd682ad/packages/utilities/src/hooks/useUniqueId.ts#L5
   const generateId = useCallback(
     (type: string, context: Map<string, unknown>, index = 1): string => {
@@ -73,11 +73,11 @@ function useBlueprintManager() {
     [],
   );
 
-  // Get field
+  // Get form
   const getForm = useCallback(
     (formId: string) => {
-      const field = forms.get(formId);
-      if (field) return field;
+      const form = forms.get(formId);
+      if (form) return form;
       return null;
     },
     [forms],
@@ -115,38 +115,38 @@ function useBlueprintManager() {
     });
   }, []);
 
-  // Get all fields
-  const allFields = useCallback(
+  // Get all blocks
+  const allBlocks = useCallback(
     (formId: string): ThreadWithIdType[] => {
       const form = forms.get(formId);
 
       if (!form) return [];
 
-      return Array.from(form.blocks).map(([id, field]) => ({
+      return Array.from(form.blocks).map(([id, block]) => ({
         id,
-        ...field,
+        ...block,
       }));
     },
     [forms],
   );
 
-  // Get field
-  const getField = useCallback(
-    (formId: string, fieldId: string) => {
-      const field = forms.get(formId)?.blocks.get(fieldId);
-      if (field) return field;
+  // Get block
+  const getBlock = useCallback(
+    (formId: string, blockId: string) => {
+      const block = forms.get(formId)?.blocks.get(blockId);
+      if (block) return block;
       return null;
     },
     [forms],
   );
 
-  // Add field
-  const addField = useCallback(
-    function AddField<T extends Record<string, unknown>>(
+  // Add block
+  const addBlock = useCallback(
+    function AddBlock<T extends Record<string, unknown>>(
       formId: string,
-      field: ThreadType<T>,
+      block: ThreadType<T>,
     ) {
-      let fieldId: string | null = null;
+      let blockId: string | null = null;
 
       setForms((prev) => {
         const form = prev.get(formId);
@@ -155,36 +155,36 @@ function useBlueprintManager() {
           throw new Error(`Form with this ID ${formId} doesn't exist!`);
 
         // Generating a new Id
-        fieldId = generateId(field.type, form.blocks);
+        blockId = generateId(block.type, form.blocks);
 
-        // Storing the field with the other form fields
-        form.blocks.set(fieldId, field);
+        // Storing the block with the other form blocks
+        form.blocks.set(blockId, block);
 
-        // Updating the form fields
+        // Updating the form blocks
         prev.set(formId, form);
 
         // Returning the updated schema
         return new Map(prev);
       });
 
-      setActiveField(fieldId);
+      setActiveBlock(blockId);
     },
     [generateId],
   );
 
-  // Update field
-  const updateField = useCallback(function UpdateField<
+  // Update block
+  const updateBlock = useCallback(function UpdateBlock<
     T extends Record<string, unknown>,
-  >(formId: string, fieldId: string, value: Partial<ThreadType<T>>) {
+  >(formId: string, blockId: string, value: Partial<ThreadType<T>>) {
     setForms((prev) => {
       const form = prev.get(formId);
 
       if (!form) throw new Error(`Form with this ID ${formId} doesn't exist!`);
 
-      // Storing the field with the other form fields
-      form.blocks.set(fieldId, _.merge(form.blocks.get(fieldId), value));
+      // Storing the block with the other form blocks
+      form.blocks.set(blockId, _.merge(form.blocks.get(blockId), value));
 
-      // Updating the form fields
+      // Updating the form blocks
       prev.set(formId, form);
 
       // Returning the updated schema
@@ -192,22 +192,22 @@ function useBlueprintManager() {
     });
   }, []);
 
-  // Remove field
-  const removeField = useCallback((formId: string, fieldId: string) => {
+  // Remove block
+  const removeBlock = useCallback((formId: string, blockId: string) => {
     setForms((prev) => {
-      prev.get(formId)?.blocks.delete(fieldId);
+      prev.get(formId)?.blocks.delete(blockId);
 
       return new Map(prev);
     });
 
-    setActiveField((prev) => {
-      if (prev === fieldId) return null;
+    setActiveBlock((prev) => {
+      if (prev === blockId) return null;
       return prev;
     });
   }, []);
 
-  // Move field
-  const moveField = useCallback((formId: string, from: string, to: string) => {
+  // Move block
+  const moveBlock = useCallback((formId: string, from: string, to: string) => {
     setForms((prev) => {
       const form = prev.get(formId);
 
@@ -215,13 +215,13 @@ function useBlueprintManager() {
 
       const tmp = Array.from(form.blocks);
 
-      // Getting the fields index
+      // Getting the blocks index
       const fromIndex = tmp.findIndex((val) => val[0] === from);
       const toIndex = tmp.findIndex((val) => val[0] === to);
 
       form.blocks = new Map(arrayMove(tmp, fromIndex, toIndex));
 
-      // Storing the updated fields arrangement
+      // Storing the updated blocks arrangement
       prev.set(formId, form);
 
       // Returning the new schema
@@ -229,14 +229,14 @@ function useBlueprintManager() {
     });
   }, []);
 
-  // Find field index
-  const findFieldIndex = useCallback(
-    (formId: string, fieldId: string) => {
+  // Find block index
+  const findBlockIndex = useCallback(
+    (formId: string, blockId: string) => {
       const keys = Array.from(forms.get(formId)?.blocks.keys() ?? []);
 
       for (let index = 0; index < keys.length; index++) {
         const key = keys[index];
-        if (key === fieldId) return index;
+        if (key === blockId) return index;
       }
 
       return null;
@@ -244,19 +244,19 @@ function useBlueprintManager() {
     [forms],
   );
 
-  // Duplicate field
-  const duplicateField = useCallback(
-    (formId: string, fieldId: string) => {
-      const field = getField(formId, fieldId);
+  // Duplicate block
+  const duplicateBlock = useCallback(
+    (formId: string, blockId: string) => {
+      const block = getBlock(formId, blockId);
 
-      if (!field)
+      if (!block)
         throw new Error(
-          `Unable to find the field with Id ${fieldId} in form ${formId}`,
+          `Unable to find the block with Id ${blockId} in form ${formId}`,
         );
 
-      addField(formId, field);
+      addBlock(formId, block);
     },
-    [getField, addField],
+    [getBlock, addBlock],
   );
 
   return {
@@ -268,18 +268,18 @@ function useBlueprintManager() {
     },
     active: {
       form: activeForm,
-      field: activeField,
+      block: activeBlock,
     },
-    fields: {
-      all: allFields,
-      get: getField,
-      add: addField,
-      update: updateField,
-      remove: removeField,
-      move: moveField,
-      select: selectField,
-      findIndex: findFieldIndex,
-      duplicate: duplicateField,
+    blocks: {
+      all: allBlocks,
+      get: getBlock,
+      add: addBlock,
+      update: updateBlock,
+      remove: removeBlock,
+      move: moveBlock,
+      select: selectBlock,
+      findIndex: findBlockIndex,
+      duplicate: duplicateBlock,
     },
   };
 }

@@ -4,7 +4,7 @@ import { useBlueprint } from "../providers";
 
 export function Canvas() {
   const {
-    fields: { select },
+    blocks: { select },
   } = useBlueprint();
   return (
     <BuilderCanvas onClick={() => select(null)}>

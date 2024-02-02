@@ -1,31 +1,31 @@
 import { Settings as BuilderSettings } from "@fibr/builder";
-import { useBlueprint } from "../providers";
-import { settingsPanel } from "../components";
 import { FibrProvider, Thread } from "@fibr/react";
+import { settingsPanel } from "../components";
+import { useBlueprint } from "../providers";
 
 export function Settings() {
   const {
-    fields: { get },
+    blocks: { get },
     active,
   } = useBlueprint();
 
-  const fieldId = active.field;
+  const blockId = active.block;
   const formId = active.form;
 
-  if (!formId || !fieldId) throw new Error("Unable to find an active form!");
+  if (!formId || !blockId) throw new Error("Unable to find an active form!");
 
-  const field = get(formId, fieldId);
+  const block = get(formId, blockId);
 
-  if (!field) throw new Error("Unable find the field!");
+  if (!block) throw new Error("Unable find the block!");
 
   return (
     <BuilderSettings className="flex flex-col gap-3">
       <FibrProvider plugins={settingsPanel}>
         <h4 className="font-medium">Settings</h4>
         <hr />
-        <p className="text-secondary-600 text-sm font-medium">{field.type}</p>
-        <p className="text-secondary-600 text-sm font-medium">{active.field}</p>
-        <Thread id={fieldId} {...field} />
+        <p className="text-secondary-600 text-sm font-medium">{block.type}</p>
+        <p className="text-secondary-600 text-sm font-medium">{active.block}</p>
+        <Thread id={blockId} {...block} />
       </FibrProvider>
     </BuilderSettings>
   );

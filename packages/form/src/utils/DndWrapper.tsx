@@ -24,7 +24,7 @@ export type DndWrapper = Pick<SortableContextProps, "items">;
 
 export function DndWrapper(props: PropsWithChildren<DndWrapper>) {
   const {
-    fields: { move, select },
+    blocks: { move, select },
     active: { form: formId },
   } = useBlueprint();
   const sensors = useSensors(

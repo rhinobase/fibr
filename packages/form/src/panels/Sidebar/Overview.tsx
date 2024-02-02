@@ -40,7 +40,7 @@ export function Overview() {
 
 function FieldsRender() {
   const {
-    fields: { all, move },
+    blocks: { all, move },
     active,
   } = useBlueprint();
 
@@ -48,9 +48,9 @@ function FieldsRender() {
 
   if (!formId) throw new Error("Unable to find an active form!");
 
-  const fields = all(formId);
+  const blocks = all(formId);
 
-  if (fields.length === 0)
+  if (blocks.length === 0)
     return (
       <div className="text-secondary-500 flex h-full w-full select-none flex-col items-center justify-center gap-2 p-3 text-center font-medium">
         <p className="text-lg">No field exists</p>
@@ -85,11 +85,11 @@ function FieldsRender() {
         modifiers={[restrictToVerticalAxis, restrictToWindowEdges]}
       >
         <SortableContext
-          items={fields.map(({ id }) => id)}
+          items={blocks.map(({ id }) => id)}
           strategy={verticalListSortingStrategy}
         >
-          {fields.map((field) => (
-            <OverviewCard key={field.id} {...field} />
+          {blocks.map((block) => (
+            <OverviewCard key={block.id} {...block} />
           ))}
         </SortableContext>
       </DndContext>

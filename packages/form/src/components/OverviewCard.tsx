@@ -13,7 +13,7 @@ export type OverviewCard = ThreadWithIdType & {
 
 export function OverviewCard({ id, type }: ThreadWithIdType) {
   const {
-    fields: { select },
+    blocks: { select },
     active,
   } = useBlueprint();
   const { setNodeRef, transform, transition, isDragging } = useSortable({ id });
@@ -23,7 +23,7 @@ export function OverviewCard({ id, type }: ThreadWithIdType) {
     transition,
   };
 
-  const selectField = eventHandler(() => select(id));
+  const selectBlock = eventHandler(() => select(id));
 
   return (
     <div
@@ -32,12 +32,12 @@ export function OverviewCard({ id, type }: ThreadWithIdType) {
       className={classNames(
         "dark:bg-secondary-900 flex cursor-pointer select-none items-center gap-1 rounded-md border bg-white p-2 drop-shadow hover:drop-shadow-md",
         !isDragging && "transition-all ease-in-out",
-        active.field === id
+        active.block === id
           ? "border-primary-500"
           : "border-secondary-300 dark:border-secondary-700",
       )}
-      onClick={selectField}
-      onKeyDown={selectField}
+      onClick={selectBlock}
+      onKeyDown={selectBlock}
     >
       <DragHandler id={id} />
       <p className="text-2xs truncate font-medium capitalize">{`${id} (${type})`}</p>
@@ -76,7 +76,7 @@ type DeleteButton = {
 
 function DeleteButton({ id }: DeleteButton) {
   const {
-    fields: { remove },
+    blocks: { remove },
     active,
   } = useBlueprint();
 

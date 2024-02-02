@@ -39,7 +39,7 @@ export function FieldWrapper({ children }: PropsWithChildren) {
         {...listeners}
         className={classNames(
           "w-full select-none rounded-md border p-5",
-          active.field === id ? "border-primary-500" : "border-secondary-200",
+          active.block === id ? "border-primary-500" : "border-secondary-200",
           !isDragging && "transition-all ease-in-out",
           "cursor-pointer bg-white hover:shadow-md",
         )}
