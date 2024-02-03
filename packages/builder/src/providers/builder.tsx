@@ -8,8 +8,7 @@ import {
 import { useStore } from "zustand";
 import {
   type CreateBuilderStoreProps,
-  BuilderStoreActions,
-  BuilderStoreState,
+  BuilderStore,
   createBuilderStore,
 } from "../store";
 
@@ -27,9 +26,7 @@ export function BuilderProvider({
   );
 }
 
-export function useBuilder<T>(
-  selector: (state: BuilderStoreState & BuilderStoreActions) => T,
-): T {
+export function useBuilder<T>(selector: (state: BuilderStore) => T): T {
   const store = useContext(BuilderContext);
 
   if (!store) throw new Error("Missing BuilderContext.Provider in the tree");

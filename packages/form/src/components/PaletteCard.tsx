@@ -8,10 +8,10 @@ export function PaletteCard({
   icon: Icon,
   presets,
 }: Pick<Block, "type" | "label" | "icon" | "presets">) {
-  const {
-    blocks: { add },
+  const { add, active } = useBlueprint(({ blocks, active }) => ({
+    add: blocks.add,
     active,
-  } = useBlueprint();
+  }));
 
   const formId = active.form;
 

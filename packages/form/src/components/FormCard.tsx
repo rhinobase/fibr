@@ -11,19 +11,20 @@ export type FormCard = {
 };
 
 export function FormCard({ id, form: { title } }: FormCard) {
-  const {
-    schema,
-    forms: { select },
-    active,
-  } = useBlueprint();
-  const formId = active.form;
+  const { schema, select, activeForm } = useBlueprint(
+    ({ schema, forms, active }) => ({
+      schema,
+      activeForm: active.form,
+      select: forms.select,
+    }),
+  );
   const selectForm = eventHandler(() => select(id));
 
   return (
     <div
       className={classNames(
         "dark:bg-secondary-900 flex cursor-pointer select-none items-center gap-1 rounded border bg-white p-2 drop-shadow transition-all ease-in-out hover:drop-shadow-md",
-        formId === id
+        activeForm === id
           ? "border-primary-500"
           : "border-secondary-300 dark:border-secondary-700",
       )}
@@ -40,14 +41,9 @@ export function FormCard({ id, form: { title } }: FormCard) {
 }
 
 function DeleteButton({ id }: { id: string }) {
-  const {
-    forms: { remove },
-    active,
-  } = useBlueprint();
-
-  const formId = active.form;
-
-  if (!formId) throw new Error("Unable to find an active form!");
+  const { remove } = useBlueprint(({ forms }) => ({
+    remove: forms.remove,
+  }));
 
   const deleteForm = eventHandler(() => remove(id));
 

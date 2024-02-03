@@ -1,5 +1,7 @@
-import { create } from "zustand";
+import { StoreApi, UseBoundStore, create } from "zustand";
+import { immer } from "zustand/middleware/immer";
 import { Env } from "../utils";
+import { enableMapSet } from "immer";
 
 type TabPayload = {
   name: string;
@@ -11,46 +13,46 @@ export type CreateBuilderStoreProps = {
   enableZooming?: boolean;
 };
 
-export type BuilderStoreState = {
+export type BuilderStore = {
   config: CreateBuilderStoreProps;
-  _tabs: Map<string, Omit<TabPayload, "name">>;
-  _active?: string;
-  _env: Env;
-};
-
-export type BuilderStoreActions = {
   tabs: {
-    all: () => Map<string, Omit<TabPayload, "name">>;
+    all: Map<string, Omit<TabPayload, "name">>;
     add: (tab: TabPayload) => void;
-    active: () => string | undefined;
+    active?: string;
     setActive: (tabId: string) => void;
   };
   env: {
-    current: () => Env;
+    current: Env;
     change: (env: Env) => void;
   };
 };
 
-export const createBuilderStore = (props: CreateBuilderStoreProps) => {
-  return create<BuilderStoreState & BuilderStoreActions>((set, get) => ({
-    config: props,
-    _tabs: new Map(),
-    _env: Env.DEVELOPMENT,
-    tabs: {
-      all: () => get()._tabs,
-      add: (payload) =>
-        set(({ _tabs }) => {
-          const { name, ...data } = payload;
+enableMapSet();
+export const createBuilderStore = (props: CreateBuilderStoreProps) =>
+  create(
+    immer<BuilderStore>((set) => ({
+      config: props,
+      tabs: {
+        all: new Map(),
+        add: (payload) =>
+          set((state) => {
+            const { name, ...data } = payload;
 
-          _tabs.set(name, data);
+            state.tabs.all.set(name, data);
 
-          if (_tabs.size === 0) return { _tabs, _active: name };
-
-          return { _tabs };
-        }),
-      active: () => get()._active,
-      setActive: (tabId) => set({ _active: tabId }),
-    },
-    env: { current: () => get()._env, change: (env) => set({ _env: env }) },
-  }));
-};
+            if (state.tabs.all.size === 1) state.tabs.active = name;
+          }),
+        setActive: (tabId) =>
+          set((state) => {
+            state.tabs.active = tabId;
+          }),
+      },
+      env: {
+        current: Env.DEVELOPMENT,
+        change: (env) =>
+          set((state) => {
+            state.env.current = env;
+          }),
+      },
+    })),
+  ) as UseBoundStore<StoreApi<BuilderStore>>;

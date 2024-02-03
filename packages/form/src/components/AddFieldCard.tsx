@@ -5,10 +5,7 @@ import { useBlueprint } from "../providers";
 
 export function AddFieldCard() {
   const changeTab = useBuilder((state) => state.tabs.setActive);
-
-  const {
-    blocks: { select },
-  } = useBlueprint();
+  const select = useBlueprint((state) => state.blocks.select);
 
   const setPaletteActive = eventHandler(() => {
     changeTab("palette");

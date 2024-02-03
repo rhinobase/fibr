@@ -7,7 +7,7 @@ export function PreviewButton() {
   const { current, change } = useBuilder((state) => state.env);
 
   const toggleEnv = eventHandler(() =>
-    change(current() === Env.DEVELOPMENT ? Env.PRODUCTION : Env.DEVELOPMENT),
+    change(current === Env.DEVELOPMENT ? Env.PRODUCTION : Env.DEVELOPMENT),
   );
 
   return (

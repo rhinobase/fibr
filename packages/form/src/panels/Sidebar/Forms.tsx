@@ -8,9 +8,7 @@ import { useBlueprint } from "../../providers";
 
 export function Forms() {
   const [show, toggle] = useBoolean();
-  const {
-    forms: { add },
-  } = useBlueprint();
+  const add = useBlueprint(({ forms }) => forms.add);
 
   const ref = useRef<HTMLInputElement>(null);
 
@@ -63,15 +61,16 @@ export function Forms() {
 }
 
 function FormsRender() {
-  const { active, schema } = useBlueprint();
+  const { activeForm, schema } = useBlueprint(({ schema, active }) => ({
+    schema,
+    activeForm: active.form,
+  }));
 
-  const formId = active.form;
-
-  if (!formId) throw new Error("Unable to find an active form!");
+  if (!activeForm) throw new Error("Unable to find an active form!");
 
   return (
     <div className="space-y-2.5 px-3 pb-3">
-      {Array.from(schema.entries()).map(([id, form]) => (
+      {Array.from(schema).map(([id, form]) => (
         <FormCard key={id} id={id} form={form} />
       ))}
     </div>

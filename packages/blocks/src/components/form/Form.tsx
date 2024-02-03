@@ -4,25 +4,21 @@ import {
   FormProvider,
   SubmitErrorHandler,
   SubmitHandler,
-  UseFormProps,
   useForm,
 } from "react-hook-form";
 
-export type Form<
-  TFieldValues extends FieldValues = FieldValues,
-  TContext = unknown,
-> = {
+export type Form = {
   onSubmit: SubmitHandler<FieldValues>;
   onError?: SubmitErrorHandler<FieldValues>;
-} & UseFormProps<TFieldValues, TContext> & {
-    title: string;
-    blocks: Map<string, ThreadType>;
-  };
+} & {
+  title: string;
+  blocks: Map<string, ThreadType>;
+}; // & UseFormProps<FieldValues, unknown>;
 
 export function Form() {
   // Getting component config
   const config = useThread<Form>();
-  const { blocks, onSubmit, onError, ...props } = config;
+  const { blocks, onSubmit, onError, id, type, title, ...props } = config;
 
   // Adding provider for forms
   const methods = useForm(props);

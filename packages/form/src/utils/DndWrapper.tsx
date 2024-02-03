@@ -23,10 +23,11 @@ import { useBlueprint } from "../providers";
 export type DndWrapper = Pick<SortableContextProps, "items">;
 
 export function DndWrapper(props: PropsWithChildren<DndWrapper>) {
-  const {
-    blocks: { move, select },
-    active: { form: formId },
-  } = useBlueprint();
+  const { move, select, activeForm } = useBlueprint(({ blocks, active }) => ({
+    move: blocks.move,
+    select: blocks.select,
+    activeForm: active.form,
+  }));
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -37,8 +38,8 @@ export function DndWrapper(props: PropsWithChildren<DndWrapper>) {
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
 
-    if (over && active.id !== over.id && formId) {
-      move(formId, String(active.id), String(over.id));
+    if (over && active.id !== over.id && activeForm) {
+      move(activeForm, String(active.id), String(over.id));
     }
   }
 

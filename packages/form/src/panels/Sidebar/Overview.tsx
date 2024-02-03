@@ -22,16 +22,14 @@ export function Overview() {
 }
 
 function FieldsRender() {
-  const {
-    blocks: { all },
-    active,
-  } = useBlueprint();
+  const { all, activeForm } = useBlueprint(({ blocks, active }) => ({
+    all: blocks.all,
+    activeForm: active.form,
+  }));
 
-  const formId = active.form;
+  if (!activeForm) throw new Error("Unable to find an active form!");
 
-  if (!formId) throw new Error("Unable to find an active form!");
-
-  const blocks = all(formId);
+  const blocks = all(activeForm);
 
   if (blocks.length === 0)
     return (

@@ -12,10 +12,10 @@ export type OverviewCard = ThreadWithIdType & {
 };
 
 export function OverviewCard({ id, type }: ThreadWithIdType) {
-  const {
-    blocks: { select },
+  const { select, active } = useBlueprint(({ blocks, active }) => ({
+    select: blocks.select,
     active,
-  } = useBlueprint();
+  }));
   const { setNodeRef, transform, transition, isDragging } = useSortable({ id });
 
   const nodeStyle: CSSProperties = {
@@ -77,10 +77,10 @@ type DeleteButton = {
 };
 
 function DeleteButton({ id }: DeleteButton) {
-  const {
-    blocks: { remove },
+  const { remove, active } = useBlueprint(({ blocks, active }) => ({
+    remove: blocks.remove,
     active,
-  } = useBlueprint();
+  }));
 
   const formId = active.form;
 

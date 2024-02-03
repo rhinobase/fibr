@@ -16,7 +16,8 @@
     "@dnd-kit/sortable": "^8.0.0",
     "class-variance-authority": "^0.7.0",
     "lodash": "^4.17.21",
-    "zustand": "^4.5.0"
+    "zustand": "^4.5.0",
+    "immer": "^10.0.3"
   },
   "peerDependencies": {
     "react": "^18.2.0"

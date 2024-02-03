@@ -31,7 +31,8 @@
     "@fibr/react": "^0.5.2",
     "react-zoom-pan-pinch": "^3.4.0",
     "react-resizable-panels": "^2.0.2",
-    "zustand": "^4.5.0"
+    "zustand": "^4.5.0",
+    "immer": "^10.0.3"
   },
   "peerDependencies": {
     "react": "^18.2.0"

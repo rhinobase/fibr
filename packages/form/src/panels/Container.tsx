@@ -5,13 +5,13 @@ import { Settings } from "./Settings";
 import { Sidebar } from "./Sidebar";
 
 export function Container() {
-  const { active } = useBlueprint();
+  const activeBlock = useBlueprint(({ active }) => active.block);
 
   return (
     <BuilderContainer>
       <Sidebar />
       <Canvas />
-      {active.block && <Settings />}
+      {activeBlock && <Settings />}
     </BuilderContainer>
   );
 }

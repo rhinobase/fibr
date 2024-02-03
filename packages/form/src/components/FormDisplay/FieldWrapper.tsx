@@ -24,10 +24,10 @@ const wrapperClasses = cva("w-full cursor-pointer border bg-white rounded", {
 
 export function FieldWrapper({ children }: PropsWithChildren) {
   const { id, type } = useThread();
-  const {
+  const { active, select } = useBlueprint(({ blocks, active }) => ({
+    select: blocks.select,
     active,
-    blocks: { select },
-  } = useBlueprint();
+  }));
   const {
     attributes,
     listeners,

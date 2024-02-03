@@ -24,7 +24,7 @@ export type QuickActions = PropsWithChildren;
 
 export function QuickActions({ children }: QuickActions) {
   const { id } = useThread();
-  const { active } = useBlueprint();
+  const activeBlock = useBlueprint((state) => state.active.block);
 
   const [isHover, setHover] = useState(false);
 
@@ -32,7 +32,7 @@ export function QuickActions({ children }: QuickActions) {
     <HoverCard
       openDelay={50}
       closeDelay={100}
-      open={isHover || active.block === id}
+      open={isHover || activeBlock === id}
       onOpenChange={setHover}
     >
       <HoverCardTrigger asChild>{children}</HoverCardTrigger>
@@ -70,21 +70,23 @@ function QuickActionButtons() {
   const {
     schema,
     blocks: { all, move, remove, findIndex, duplicate, select },
-    active,
-  } = useBlueprint();
+    activeForm,
+  } = useBlueprint(({ schema, blocks, active }) => ({
+    schema,
+    blocks,
+    activeForm: active.form,
+  }));
 
-  const formId = active.form;
+  if (!activeForm) throw new Error("Unable to find an active form!");
 
-  if (!formId) throw new Error("Unable to find an active form!");
-
-  const index = findIndex(formId, id);
+  const index = findIndex(activeForm, id);
 
   if (index == null) return <></>;
 
   const moveComponent = (direction: Direction) => {
-    const components = all(formId);
+    const components = all(activeForm);
     select(id);
-    move(formId, id, components[index + direction].id);
+    move(activeForm, id, components[index + direction].id);
   };
 
   return (
@@ -96,7 +98,7 @@ function QuickActionButtons() {
           action={() => moveComponent(Direction.UP)}
         />
       )}
-      {index < (schema.get(formId)?.blocks.size ?? 0) - 1 && (
+      {index < (schema.get(activeForm)?.blocks.size ?? 0) - 1 && (
         <ActionButton
           name="Move down"
           icon={MdOutlineArrowDownward}
@@ -106,12 +108,12 @@ function QuickActionButtons() {
       <ActionButton
         name="Duplicate file"
         icon={MdOutlineAddToPhotos}
-        action={() => duplicate(formId, id)}
+        action={() => duplicate(activeForm, id)}
       />
       <ActionButton
         name="Delete visual field"
         icon={MdOutlineDelete}
-        action={() => remove(formId, id)}
+        action={() => remove(activeForm, id)}
       />
     </div>
   );

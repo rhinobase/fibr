@@ -4,17 +4,18 @@ import { settingsPanel } from "./settingsConfig";
 import { useBlueprint } from "../providers";
 
 export function Settings() {
-  const {
-    blocks: { get },
-    active,
-  } = useBlueprint();
+  const { get, activeBlock, activeForm } = useBlueprint(
+    ({ blocks, active }) => ({
+      get: blocks.get,
+      activeForm: active.form,
+      activeBlock: active.block,
+    }),
+  );
 
-  const blockId = active.block;
-  const formId = active.form;
+  if (!activeForm || !activeBlock)
+    throw new Error("Unable to find an active form!");
 
-  if (!formId || !blockId) throw new Error("Unable to find an active form!");
-
-  const block = get(formId, blockId);
+  const block = get(activeForm, activeBlock);
 
   if (!block) throw new Error("Unable find the block!");
 
@@ -25,8 +26,8 @@ export function Settings() {
       <h4 className="font-medium">Settings</h4>
       <hr className="my-3" />
       <p className="text-secondary-600 text-sm font-medium">{block.type}</p>
-      <p className="text-secondary-600 text-sm font-medium">{active.block}</p>
-      <Thread id={blockId} {...settings} />
+      <p className="text-secondary-600 text-sm font-medium">{activeBlock}</p>
+      <Thread id={activeBlock} {...settings} />
     </BuilderSettings>
   );
 }

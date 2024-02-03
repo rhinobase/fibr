@@ -11,28 +11,28 @@ const BLOCK_WRAPERS: Record<Env, (props: PropsWithChildren) => JSX.Element> = {
 };
 
 export function FormDisplay() {
-  const {
-    blocks: { all },
-    active,
-    forms,
-  } = useBlueprint();
+  const { all, get, activeForm } = useBlueprint(
+    ({ blocks, active, forms }) => ({
+      all: blocks.all,
+      activeForm: active.form,
+      get: forms.get,
+    }),
+  );
 
-  const getEnv = useBuilder((state) => state.env.current);
+  const current = useBuilder((state) => state.env.current);
 
-  const current = getEnv();
+  if (!activeForm) return <>No Active Form</>;
 
-  if (!active.form) return <>No Active Form</>;
+  const form = get(activeForm);
 
-  const form = forms.get(active.form);
+  if (!form) throw new Error(`Unable to get the form with Id ${activeForm}`);
 
-  if (!form) throw new Error(`Unable to get the form with Id ${active.form}`);
-
-  const allBlocks = all(active.form);
+  const allBlocks = all(activeForm);
 
   return (
     <WeaverProvider wrapper={BLOCK_WRAPERS[current]}>
       <DndWrapper items={allBlocks.map(({ id }) => id)}>
-        <Loom id={active.form} blueprint={form} />
+        <Loom id={activeForm} blueprint={form} />
       </DndWrapper>
     </WeaverProvider>
   );
