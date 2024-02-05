@@ -1,4 +1,11 @@
 {
-  "name": "fibr/canvas",
-  "version": "0.0.1"
+  "name": "@fibr/canvas",
+  "version": "0.0.1",
+  "dependencies": {
+    "@swc/helpers": "^0.5.3",
+    "reactflow": "^11.10.3"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0"
+  }
 }

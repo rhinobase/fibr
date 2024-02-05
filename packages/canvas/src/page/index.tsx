@@ -1,3 +1,3 @@
-export default function PageCanvas() {
+export function PageCanvas() {
   return <div>PageCanvas</div>;
 }

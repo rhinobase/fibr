@@ -1,5 +1,11 @@
-export default function WorkflowCanvas() {
+import { ReactFlowProvider } from "reactflow";
+import "reactflow/dist/base.css";
+import { Diagram } from "./Diagram";
+
+export function WorkflowCanvas(props: Diagram) {
   return (
-    <div>WorkflowCanvas</div>
-  )
+    <ReactFlowProvider>
+      <Diagram {...props} />
+    </ReactFlowProvider>
+  );
 }
