@@ -1,6 +1,5 @@
 import { create } from "zustand";
-import { Category } from "../utils";
-import { Block } from "../types";
+import type { Category, Block } from "@fibr/shared";
 
 export type SourceStore = {
   blocks: Record<Category, Block[]>;

@@ -19,6 +19,10 @@
     {
       "value": "blocks",
       "name": "blocks:                 anything Block specific"
+    },
+    {
+      "value": "shared",
+      "name": "shared:                 anything shared resources specific"
     }
   ],
   "scopesSearchValue": true,

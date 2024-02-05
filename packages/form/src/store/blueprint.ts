@@ -91,7 +91,14 @@ export const createBlueprintStore = () =>
             state.active.form = formId;
             state.active.block = formId;
           }),
-        remove: (formId) => set((state) => state.schema.delete(formId)),
+        remove: (formId) =>
+          set((state) => {
+            state.schema.delete(formId);
+
+            if (state.active.form === formId) state.active.form = null;
+
+            if (state.active.block === formId) state.active.block = null;
+          }),
       },
       blocks: {
         all: (formId) => {
@@ -149,6 +156,8 @@ export const createBlueprintStore = () =>
 
             form.blocks.delete(blockId);
             state.schema.set(formId, form);
+
+            if (state.active.block === blockId) state.active.block = null;
           }),
         move: (formId, from, to) =>
           set((state) => {

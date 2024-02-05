@@ -1,7 +1,8 @@
 "use client";
 import { plugin } from "@fibr/blocks";
 import { Workspace } from "@fibr/builder";
-import { Block, Category, FormBuilder } from "@fibr/form-builder";
+import { FormBuilder } from "@fibr/form-builder";
+import { type Block, Category } from "@fibr/shared";
 import { useState } from "react";
 import { HiOutlineMail } from "react-icons/hi";
 import { HiViewfinderCircle } from "react-icons/hi2";

@@ -1,5 +1,5 @@
 import { Form } from "@fibr/blocks";
-import { ThreadType } from "@fibr/react";
+import type { ThreadType } from "@fibr/react";
 import { eventHandler } from "@rafty/shared";
 import { Button, classNames } from "@rafty/ui";
 import { MdDelete } from "react-icons/md";
@@ -11,14 +11,14 @@ export type FormCard = {
 };
 
 export function FormCard({ id, form: { title } }: FormCard) {
-  const { schema, select, activeForm } = useBlueprint(
+  const { schema, selectForm, activeForm } = useBlueprint(
     ({ schema, forms, active }) => ({
       schema,
       activeForm: active.form,
-      select: forms.select,
+      selectForm: forms.select,
     }),
   );
-  const selectForm = eventHandler(() => select(id));
+  const handleFormSelect = eventHandler(() => selectForm(id));
 
   return (
     <div
@@ -28,24 +28,22 @@ export function FormCard({ id, form: { title } }: FormCard) {
           ? "border-primary-500"
           : "border-secondary-300 dark:border-secondary-700",
       )}
-      onClick={selectForm}
-      onKeyDown={selectForm}
+      onClick={handleFormSelect}
+      onKeyDown={handleFormSelect}
     >
       <p className="text-2xs truncate font-medium">
         {title} ({id})
       </p>
       <div className="flex-1" />
-      {schema.size > 1 && <DeleteButton id={id} />}
+      <DeleteButton id={id} />
     </div>
   );
 }
 
 function DeleteButton({ id }: { id: string }) {
-  const { remove } = useBlueprint(({ forms }) => ({
-    remove: forms.remove,
-  }));
+  const removeForm = useBlueprint(({ forms }) => forms.remove);
 
-  const deleteForm = eventHandler(() => remove(id));
+  const handleFormDelete = eventHandler(() => removeForm(id));
 
   return (
     <Button
@@ -53,8 +51,8 @@ function DeleteButton({ id }: { id: string }) {
       size="icon"
       variant="ghost"
       className="rounded p-0.5"
-      onClick={deleteForm}
-      onKeyDown={deleteForm}
+      onClick={handleFormDelete}
+      onKeyDown={handleFormDelete}
     >
       <MdDelete />
     </Button>

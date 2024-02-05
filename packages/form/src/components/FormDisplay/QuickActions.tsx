@@ -24,7 +24,7 @@ export type QuickActions = PropsWithChildren;
 
 export function QuickActions({ children }: QuickActions) {
   const { id } = useThread();
-  const activeBlock = useBlueprint((state) => state.active.block);
+  const activeBlock = useBlueprint(({ active }) => active.block);
 
   const [isHover, setHover] = useState(false);
 

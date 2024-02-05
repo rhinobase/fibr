@@ -28,6 +28,7 @@ export function FieldWrapper({ children }: PropsWithChildren) {
     select: blocks.select,
     active,
   }));
+
   const {
     attributes,
     listeners,
@@ -41,14 +42,14 @@ export function FieldWrapper({ children }: PropsWithChildren) {
 
   if (type === "form")
     return (
-      <InternalComponent
+      <Wrapper
         selected={active.block === id}
         className="p-6"
         onClick={onSelect}
         onKeyDown={onSelect}
       >
         {children}
-      </InternalComponent>
+      </Wrapper>
     );
 
   const _transform: Transform = {
@@ -65,7 +66,7 @@ export function FieldWrapper({ children }: PropsWithChildren) {
 
   return (
     <QuickActions>
-      <InternalComponent
+      <Wrapper
         selected={active.block === id}
         ref={setNodeRef}
         style={nodeStyle}
@@ -77,16 +78,16 @@ export function FieldWrapper({ children }: PropsWithChildren) {
         )}
       >
         {children}
-      </InternalComponent>
+      </Wrapper>
     </QuickActions>
   );
 }
 
-type InternalComponentProps = HTMLAttributes<HTMLDivElement> & {
+type WrapperProps = HTMLAttributes<HTMLDivElement> & {
   selected: boolean;
 };
 
-const InternalComponent = forwardRef<HTMLDivElement, InternalComponentProps>(
+const Wrapper = forwardRef<HTMLDivElement, WrapperProps>(
   ({ className, selected, ...props }, forwardedRef) => (
     <div
       {...props}

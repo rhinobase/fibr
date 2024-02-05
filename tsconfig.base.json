@@ -18,7 +18,8 @@
       "@fibr/blocks": ["packages/blocks/src/index.ts"],
       "@fibr/builder": ["packages/builder/src/index.ts"],
       "@fibr/form-builder": ["packages/form/src/index.ts"],
-      "@fibr/react": ["packages/react/src/index.ts"]
+      "@fibr/react": ["packages/react/src/index.ts"],
+      "@fibr/shared": ["packages/shared/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

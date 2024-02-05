@@ -3,7 +3,7 @@ import { Square3Stack3DIcon } from "@heroicons/react/24/outline";
 import { Button, InputField, useBoolean } from "@rafty/ui";
 import { useEffect, useRef } from "react";
 import { MdAdd } from "react-icons/md";
-import { FormCard } from "../../components/FormCard";
+import { FormCard } from "../../components";
 import { useBlueprint } from "../../providers";
 
 export function Forms() {
@@ -61,12 +61,7 @@ export function Forms() {
 }
 
 function FormsRender() {
-  const { activeForm, schema } = useBlueprint(({ schema, active }) => ({
-    schema,
-    activeForm: active.form,
-  }));
-
-  if (!activeForm) throw new Error("Unable to find an active form!");
+  const schema = useBlueprint(({ schema }) => schema);
 
   return (
     <div className="space-y-2.5 px-3 pb-3">

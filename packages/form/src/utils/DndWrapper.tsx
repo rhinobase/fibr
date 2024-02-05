@@ -1,12 +1,10 @@
-import type { PropsWithChildren } from "react";
 import {
-  useSensors,
-  useSensor,
-  PointerSensor,
-  KeyboardSensor,
-  DragEndEvent,
   DndContext,
+  KeyboardSensor,
+  PointerSensor,
   closestCenter,
+  useSensor,
+  useSensors,
 } from "@dnd-kit/core";
 import {
   restrictToVerticalAxis,
@@ -18,16 +16,19 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import type { PropsWithChildren } from "react";
 import { useBlueprint } from "../providers";
 
 export type DndWrapper = Pick<SortableContextProps, "items">;
 
 export function DndWrapper(props: PropsWithChildren<DndWrapper>) {
-  const { move, select, activeForm } = useBlueprint(({ blocks, active }) => ({
-    move: blocks.move,
-    select: blocks.select,
-    activeForm: active.form,
-  }));
+  const { moveBlock, selectBlock, activeForm } = useBlueprint(
+    ({ blocks, active }) => ({
+      moveBlock: blocks.move,
+      selectBlock: blocks.select,
+      activeForm: active.form,
+    }),
+  );
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -35,20 +36,15 @@ export function DndWrapper(props: PropsWithChildren<DndWrapper>) {
     }),
   );
 
-  function handleDragEnd(event: DragEndEvent) {
-    const { active, over } = event;
-
-    if (over && active.id !== over.id && activeForm) {
-      move(activeForm, String(active.id), String(over.id));
-    }
-  }
-
   return (
     <DndContext
       sensors={sensors}
       collisionDetection={closestCenter}
-      onDragEnd={handleDragEnd}
-      onDragStart={({ active }) => select(String(active.id))}
+      onDragEnd={({ active, over }) => {
+        if (over && active.id !== over.id && activeForm)
+          moveBlock(activeForm, String(active.id), String(over.id));
+      }}
+      onDragStart={({ active }) => selectBlock(String(active.id))}
       modifiers={[restrictToVerticalAxis, restrictToWindowEdges]}
     >
       <SortableContext
