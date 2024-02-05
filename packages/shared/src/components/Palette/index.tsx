@@ -1,16 +1,16 @@
 import { SidebarItem } from "@fibr/builder";
 import { SearchField } from "@rafty/ui";
-import { CATEGORY_LABELS, type Category } from "../../utils";
 import { Squares2X2Icon } from "@heroicons/react/24/outline";
 import { PaletteCard } from "./PaletteCard";
-import type { Block } from "../../types";
+import { useSource } from "../../providers";
 
 export type Palette = {
-  blocks: Record<Category, Block[]>;
   onBlockSelect: PaletteCard["onSelect"];
 };
 
-export function Palette({ blocks, onBlockSelect }: Palette) {
+export function Palette({ onBlockSelect }: Palette) {
+  const blocks = useSource((state) => state.blocks);
+
   return (
     <SidebarItem
       name="palette"
@@ -21,9 +21,7 @@ export function Palette({ blocks, onBlockSelect }: Palette) {
       <SearchField size="sm" />
       {Object.entries(blocks).map(([category, components]) => (
         <div key={category} className="space-y-2.5 pb-3">
-          <h3 className="text-sm font-semibold">
-            {CATEGORY_LABELS[Number(category) as Category]}
-          </h3>
+          <h3 className="text-sm font-semibold">{category}</h3>
           <div className="flex flex-wrap gap-2">
             {components.map((block, index) => (
               <PaletteCard

@@ -11,9 +11,8 @@ export type FormCard = {
 };
 
 export function FormCard({ id, form: { title } }: FormCard) {
-  const { schema, selectForm, activeForm } = useBlueprint(
-    ({ schema, forms, active }) => ({
-      schema,
+  const { selectForm, activeForm } = useBlueprint(
+    ({ forms, active }) => ({
       activeForm: active.form,
       selectForm: forms.select,
     }),

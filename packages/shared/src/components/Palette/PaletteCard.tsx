@@ -1,7 +1,7 @@
 import { eventHandler } from "@rafty/shared";
 import type { Block } from "../../types";
 
-export type PaletteCard = Omit<Block, "builder"> & {
+export type PaletteCard = Block & {
   onSelect?: (props: Pick<Block, "type" | "presets">) => void;
 };
 

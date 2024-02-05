@@ -6,7 +6,7 @@ import {
   useRef,
 } from "react";
 import { useStore } from "zustand";
-import { type BlueprintStore, createBlueprintStore } from "../store";
+import { type BlueprintStore, createBlueprintStore } from "./store";
 
 const BlueprintContext = createContext<ReturnType<
   typeof createBlueprintStore

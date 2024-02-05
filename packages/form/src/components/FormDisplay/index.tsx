@@ -22,7 +22,7 @@ export function FormDisplay() {
 
   const current = useBuilder((state) => state.env.current);
 
-  if (!activeForm) return <>No Active Form</>;
+  if (!activeForm) return <div className="py-5">No Active Form</div>;
 
   const form = getForm(activeForm);
 

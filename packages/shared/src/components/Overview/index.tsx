@@ -6,9 +6,12 @@ import { OverviewCard } from "./OverviewCard";
 
 export type Overview = {
   blocks: ThreadWithIdType[];
-} & Pick<OverviewCard, "selectBlock" | "removeBlock" | "currentBlock"> & {
+} & Pick<OverviewCard, "selectBlock" | "removeBlock"> & {
     moveBlock: (startBlockId: string, endblockId: string) => void;
-    formId: string | null;
+    active: {
+      form: string | null;
+      block: string | null;
+    };
   };
 
 export function Overview(props: Overview) {
@@ -29,7 +32,7 @@ export function Overview(props: Overview) {
 }
 
 function FieldsRender(props: Overview) {
-  if (!props.formId)
+  if (!props.active.form)
     return (
       <div className="text-secondary-500 flex h-full w-full select-none flex-col items-center justify-center gap-2 p-3 text-center font-medium">
         <p className="text-lg">No form</p>
@@ -38,7 +41,8 @@ function FieldsRender(props: Overview) {
         </p>
       </div>
     );
-  if (props.blocks.length === 0 || props.currentBlock == null)
+
+  if (props.blocks.length === 0)
     return (
       <div className="text-secondary-500 flex h-full w-full select-none flex-col items-center justify-center gap-2 p-3 text-center font-medium">
         <p className="text-lg">No field</p>
@@ -47,6 +51,7 @@ function FieldsRender(props: Overview) {
         </p>
       </div>
     );
+
   return (
     <div className="space-y-2.5 px-3 pb-3">
       <DndWrapper
@@ -57,13 +62,14 @@ function FieldsRender(props: Overview) {
             props.moveBlock(String(active.id), String(over.id));
         }}
       >
-        {props.blocks.map((block) => (
+        {props.blocks.map(({ id, type }) => (
           <OverviewCard
-            key={block.id}
-            {...block}
+            key={id}
+            id={id}
+            type={type}
             selectBlock={props.selectBlock}
             removeBlock={props.removeBlock}
-            currentBlock={props.currentBlock}
+            isActive={props.active.block === id}
           />
         ))}
       </DndWrapper>

@@ -6,7 +6,7 @@ import {
   useRef,
 } from "react";
 import { useStore } from "zustand";
-import { type SourceStore, createSourceStore } from "../store";
+import { type SourceStore, createSourceStore } from "./store";
 
 const SourceContext = createContext<ReturnType<
   typeof createSourceStore

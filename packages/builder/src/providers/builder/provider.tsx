@@ -10,7 +10,7 @@ import {
   type CreateBuilderStoreProps,
   BuilderStore,
   createBuilderStore,
-} from "../store";
+} from "./store";
 
 const BuilderContext = createContext<ReturnType<
   typeof createBuilderStore

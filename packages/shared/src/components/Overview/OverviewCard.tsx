@@ -1,15 +1,16 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import type { ThreadWithIdType } from "@fibr/react";
 import { eventHandler } from "@rafty/shared";
 import { Button, classNames } from "@rafty/ui";
 import { CSSProperties } from "react";
 import { MdDelete, MdDragIndicator } from "react-icons/md";
 
-export type OverviewCard = ThreadWithIdType & {
+export type OverviewCard = {
+  id: string;
+  type: string;
   selectBlock: (id: string) => void;
   removeBlock: (id: string) => void;
-  currentBlock: string | null;
+  isActive?: boolean;
 };
 
 export function OverviewCard({
@@ -17,7 +18,7 @@ export function OverviewCard({
   type,
   selectBlock,
   removeBlock,
-  currentBlock,
+  isActive = false,
 }: OverviewCard) {
   const {
     setNodeRef,
@@ -44,7 +45,7 @@ export function OverviewCard({
       className={classNames(
         "dark:bg-secondary-900 flex cursor-pointer select-none items-center gap-1 rounded border bg-white p-2 drop-shadow hover:drop-shadow-md",
         !isDragging && "transition-all ease-in-out",
-        currentBlock === id
+        isActive
           ? "border-primary-500"
           : "border-secondary-300 dark:border-secondary-700",
       )}

@@ -1,17 +1,43 @@
 "use client";
-import { plugin } from "@fibr/blocks";
+import { plugin, settings } from "@fibr/blocks";
 import { Workspace } from "@fibr/builder";
 import { FormBuilder } from "@fibr/form-builder";
-import { type Block, Category } from "@fibr/shared";
-import { useState } from "react";
+import { type Block } from "@fibr/shared";
+import { type ReactNode, useState } from "react";
 import { HiOutlineMail } from "react-icons/hi";
 import { LuTextCursorInput } from "react-icons/lu";
 import { MdLink, MdOutlineKey, MdOutlineMailOutline } from "react-icons/md";
 import { Header } from "./Header";
 import { Container } from "./utils";
 
-const BLOCKS: Record<Category, Block[]> = {
-  [Category.TEXT_INPUTS]: [
+const CONFIG: Record<
+  string,
+  { builder: () => ReactNode; settings: () => ReactNode }
+> = {
+  form: {
+    builder: plugin.form,
+    settings: settings.form,
+  },
+  string: {
+    builder: plugin.string,
+    settings: settings.string,
+  },
+  password: {
+    builder: plugin.password,
+    settings: settings.password,
+  },
+  textarea: {
+    builder: plugin.textarea,
+    settings: settings.textarea,
+  },
+  number: {
+    builder: plugin.number,
+    settings: settings.number,
+  },
+};
+
+const BLOCKS: Record<string, Block[]> = {
+  "Text Inputs": [
     {
       type: "string",
       label: "Text Input",
@@ -20,7 +46,6 @@ const BLOCKS: Record<Category, Block[]> = {
         label: "Label",
         description: "Description",
       },
-      builder: plugin.string,
     },
     {
       type: "string",
@@ -32,7 +57,6 @@ const BLOCKS: Record<Category, Block[]> = {
         description: "Description",
         prefixIcon: <HiOutlineMail className="opacity-60" />,
       },
-      builder: plugin.string,
     },
     {
       type: "string",
@@ -43,7 +67,6 @@ const BLOCKS: Record<Category, Block[]> = {
         label: "Label",
         description: "Description",
       },
-      builder: plugin.string,
     },
     {
       type: "password",
@@ -53,7 +76,6 @@ const BLOCKS: Record<Category, Block[]> = {
         label: "Label",
         description: "Description",
       },
-      builder: plugin.password,
     },
     {
       type: "textarea",
@@ -63,10 +85,9 @@ const BLOCKS: Record<Category, Block[]> = {
         label: "Label",
         description: "Description",
       },
-      builder: plugin.textarea,
     },
   ],
-  [Category.NUMBER_INPUTS]: [
+  "Number Inputs": [
     {
       type: "number",
       label: "Number Input",
@@ -76,7 +97,6 @@ const BLOCKS: Record<Category, Block[]> = {
         label: "Label",
         description: "Description",
       },
-      builder: plugin.string,
     },
   ],
 };
@@ -87,7 +107,9 @@ export default function Playground() {
   return (
     <Workspace>
       <Header container={container} onContainerChange={setContainer} />
-      {container === Container.BUILDER && <FormBuilder blocks={BLOCKS} />}
+      {container === Container.BUILDER && (
+        <FormBuilder blocks={BLOCKS} config={CONFIG} />
+      )}
       {container === Container.FLOW && <div />}
     </Workspace>
   );

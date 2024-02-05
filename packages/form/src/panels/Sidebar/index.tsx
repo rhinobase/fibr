@@ -1,10 +1,9 @@
 import { Sidebar as BuilderSidebar } from "@fibr/builder";
 import { Forms } from "./Forms";
 import { Palette, Overview } from "@fibr/shared";
-import { useBlueprint, useSource } from "../../providers";
+import { useBlueprint } from "../../providers";
 
 export function Sidebar() {
-  const blocks = useSource((state) => state.blocks);
   const {
     addBlock,
     getAllBlocks,
@@ -22,20 +21,15 @@ export function Sidebar() {
   }));
 
   const formId = active.form;
-  const blockId = active.block;
 
   const currentFormBlocks = formId ? getAllBlocks(formId) : [];
 
   return (
     <BuilderSidebar>
-      <Palette
-        blocks={blocks}
-        onBlockSelect={(props) => formId && addBlock(formId, props)}
-      />
+      <Palette onBlockSelect={(props) => formId && addBlock(formId, props)} />
       <Overview
-        formId={formId}
         blocks={currentFormBlocks}
-        currentBlock={blockId}
+        active={active}
         selectBlock={selectBlock}
         removeBlock={(id) => formId && removeBlock(formId, id)}
         moveBlock={(startBlockId, endblockId) =>
