@@ -23,6 +23,10 @@
     {
       "value": "shared",
       "name": "shared:                 anything shared resources specific"
+    },
+    {
+      "value": "canvas",
+      "name": "canvas:                 anything canvas resources specific"
     }
   ],
   "scopesSearchValue": true,

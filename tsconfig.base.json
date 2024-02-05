@@ -19,7 +19,8 @@
       "@fibr/builder": ["packages/builder/src/index.ts"],
       "@fibr/form-builder": ["packages/form/src/index.ts"],
       "@fibr/react": ["packages/react/src/index.ts"],
-      "@fibr/shared": ["packages/shared/src/index.ts"]
+      "@fibr/shared": ["packages/shared/src/index.ts"],
+      "fibr/canvas": ["packages/canvas/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
