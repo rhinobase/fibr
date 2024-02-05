@@ -4,21 +4,21 @@ import { useFormContext } from "react-hook-form";
 import { FieldWrapper, type FieldWrapperProps } from "../FieldWrapper";
 import { InputWrapper, type InputWrapperProps } from "../InputWrapper";
 
-export type TextInput = FieldWrapperProps<
+export type StringInput = FieldWrapperProps<
   InputWrapperProps<{
+    inputType?: string;
     placeholder?: string;
     defaultValue?: string;
-    inputType?: string;
   }>
 >;
 
-export function TextInput() {
+export function StringInput() {
   const {
     id,
-    inputType = "text",
     defaultValue,
     placeholder,
-  } = useThread<TextInput>();
+    inputType = "text",
+  } = useThread<StringInput>();
 
   const { register } = useFormContext();
 
@@ -36,4 +36,4 @@ export function TextInput() {
   );
 }
 
-export const stringInput = createThread<TextInput>("string");
+export const string = createThread<StringInput>("string");

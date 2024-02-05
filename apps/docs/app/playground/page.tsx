@@ -5,47 +5,12 @@ import { FormBuilder } from "@fibr/form-builder";
 import { type Block, Category } from "@fibr/shared";
 import { useState } from "react";
 import { HiOutlineMail } from "react-icons/hi";
-import { HiViewfinderCircle } from "react-icons/hi2";
 import { LuTextCursorInput } from "react-icons/lu";
-import {
-  MdLink,
-  MdOutlineImage,
-  MdOutlineKey,
-  MdOutlineMailOutline,
-  MdTextFields,
-} from "react-icons/md";
-import { RxDividerHorizontal } from "react-icons/rx";
+import { MdLink, MdOutlineKey, MdOutlineMailOutline } from "react-icons/md";
 import { Header } from "./Header";
 import { Container } from "./utils";
 
 const BLOCKS: Record<Category, Block[]> = {
-  [Category.PRESENTATION]: [
-    {
-      type: "text",
-      label: "Text",
-      icon: MdTextFields,
-      presets: {
-        value: "Text field",
-      },
-      builder: plugin.text,
-    },
-    {
-      type: "image",
-      label: "Image",
-      icon: MdOutlineImage,
-      presets: {
-        src: "https://via.placeholder.com/200",
-        alt: "Image field",
-      },
-      builder: plugin.image,
-    },
-    {
-      type: "divider",
-      label: "Divider",
-      icon: RxDividerHorizontal,
-      builder: plugin.divider,
-    },
-  ],
   [Category.TEXT_INPUTS]: [
     {
       type: "string",
@@ -81,26 +46,6 @@ const BLOCKS: Record<Category, Block[]> = {
       builder: plugin.string,
     },
     {
-      type: "editable-text",
-      label: "editable text",
-      icon: HiViewfinderCircle,
-      presets: {
-        label: "Label",
-        description: "Description",
-      },
-      builder: plugin.string,
-    },
-    {
-      type: "editable-textarea",
-      label: "editable text area",
-      icon: HiViewfinderCircle,
-      presets: {
-        label: "Label",
-        description: "Description",
-      },
-      builder: plugin.string,
-    },
-    {
       type: "password",
       label: "password",
       icon: MdOutlineKey,
@@ -109,6 +54,16 @@ const BLOCKS: Record<Category, Block[]> = {
         description: "Description",
       },
       builder: plugin.password,
+    },
+    {
+      type: "textarea",
+      label: "Textarea",
+      icon: MdOutlineKey,
+      presets: {
+        label: "Label",
+        description: "Description",
+      },
+      builder: plugin.textarea,
     },
   ],
   [Category.NUMBER_INPUTS]: [

@@ -31,7 +31,6 @@
     "framer-motion": "^10.16.16",
     "immer": "^10.0.3",
     "lodash": "^4.17.21",
-    "markdown-to-jsx": "^7.4.1",
     "mdast-util-to-string": "^3.2.0",
     "mdx-annotations": "^0.1.4",
     "next": "14.1.0",

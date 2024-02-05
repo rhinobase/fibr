@@ -15,7 +15,7 @@ export type BlueprintStore = {
   forms: {
     select: (formId: string | null) => void;
     get: (formId: string) => ThreadType<Form> | null;
-    add: (title: string) => void;
+    add: (title: string | ThreadType<Form>) => void;
     remove: (formId: string) => void;
   };
   blocks: {
@@ -38,22 +38,13 @@ export type BlueprintStore = {
   };
 };
 
-export const DEFAULT_FORM_NAME = "form1";
 export const createBlueprintStore = () =>
   create(
     immer<BlueprintStore>((set, get) => ({
-      schema: new Map(
-        Object.entries({
-          [DEFAULT_FORM_NAME]: f.form({
-            title: "Main",
-            onSubmit: console.log,
-            blocks: new Map(),
-          }),
-        }),
-      ),
+      schema: new Map(Object.entries({})),
       active: {
-        form: DEFAULT_FORM_NAME,
-        block: DEFAULT_FORM_NAME,
+        form: null,
+        block: null,
       },
       uniqueId: (type, context) => {
         let index = 1;
@@ -78,14 +69,18 @@ export const createBlueprintStore = () =>
           if (form) return form;
           return null;
         },
-        add: (title) =>
+        add: (struct) =>
           set((state) => {
             const formId = get().uniqueId("form", state.schema);
-            const block = f.form({
-              title,
-              blocks: new Map(),
-              onSubmit: console.log,
-            });
+            const block = f.form(
+              typeof struct === "string"
+                ? {
+                    title: struct,
+                    blocks: new Map(),
+                    onSubmit: console.log,
+                  }
+                : struct,
+            );
 
             state.schema.set(formId, block);
             state.active.form = formId;

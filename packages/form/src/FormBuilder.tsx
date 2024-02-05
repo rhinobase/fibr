@@ -4,6 +4,7 @@ import { BlueprintProvider, SourceProvider } from "./providers";
 import { SourceStore } from "./store";
 import type { ReactNode } from "react";
 import { plugin } from "@fibr/blocks";
+import TemplateDialog from "./templates";
 
 export function FormBuilder(props: SourceStore) {
   const userDefinedComponents: Record<string, () => ReactNode> = {
@@ -21,6 +22,7 @@ export function FormBuilder(props: SourceStore) {
       <FibrProvider plugins={userDefinedComponents}>
         <BlueprintProvider>
           <Container />
+          <TemplateDialog />
         </BlueprintProvider>
       </FibrProvider>
     </SourceProvider>
