@@ -14,11 +14,7 @@ export function SettingInput({
     <InputField
       size={size}
       {...props}
-      {...register(props.name, {
-        onBlur(event) {
-          console.log(props.name, event);
-        },
-      })}
+      {...register(props.name)}
       className={classNames("col-span-2", className)}
     />
   );

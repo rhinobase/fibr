@@ -3,7 +3,14 @@ import { FibrProvider, Thread, type ThreadWithIdType } from "@fibr/react";
 import { useSource } from "../providers";
 import { ReactNode } from "react";
 
-export function Settings(props: ThreadWithIdType) {
+export type Settings<T extends Record<string, unknown>> =
+  ThreadWithIdType<T> & {
+    _update: (values: Partial<T>) => void;
+  };
+
+export function Settings<T extends Record<string, unknown>>(
+  props: Settings<T>,
+) {
   const config = useSource((state) => state.config);
 
   const settingBuilders = Object.entries(config).reduce<

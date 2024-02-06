@@ -28,7 +28,7 @@ export type BlueprintStore = {
     update: <T extends Record<string, unknown>>(
       formId: string,
       blockId: string,
-      value: Partial<ThreadType<T>>,
+      values: Partial<ThreadType<T>>,
     ) => void;
     remove: (formId: string, blockId: string) => void;
     move: (formId: string, from: string, to: string) => void;
@@ -131,13 +131,19 @@ export const createBlueprintStore = () =>
           }),
         update: (formId, blockId, values) =>
           set((state) => {
-            const form = state.schema.get(formId);
+            let form = state.schema.get(formId);
 
             if (!form)
               throw new Error(`Form with this ID ${formId} doesn't exist!`);
 
+            // Updating the form data
+            if (formId === blockId) form = _.merge(form, values);
             // Storing the block with the other form blocks
-            form.blocks.set(blockId, _.merge(form.blocks.get(blockId), values));
+            else
+              form.blocks.set(
+                blockId,
+                _.merge(form.blocks.get(blockId), values),
+              );
 
             // Updating the form blocks
             state.schema.set(formId, form);

@@ -6,9 +6,10 @@ import { Sidebar } from "./Sidebar";
 import type { ThreadType } from "@fibr/react";
 
 export function Container() {
-  const { active, getBlock } = useBlueprint(({ active, blocks }) => ({
+  const { active, getBlock, update } = useBlueprint(({ active, blocks }) => ({
     active,
     getBlock: blocks.get,
+    update: blocks.update,
   }));
 
   const formId = active.form;
@@ -26,7 +27,13 @@ export function Container() {
     <BuilderContainer>
       <Sidebar />
       <Canvas />
-      {blockId && block && <Settings id={blockId} {...block} />}
+      {blockId && block && (
+        <Settings
+          {...block}
+          id={blockId}
+          _update={(values) => formId && update(formId, blockId, values)}
+        />
+      )}
     </BuilderContainer>
   );
 }

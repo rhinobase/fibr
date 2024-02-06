@@ -1,10 +1,24 @@
 import { useThread } from "@fibr/react";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 export function SettingsPanelWrapper({ children }: PropsWithChildren) {
-  const defaultValues = useThread();
+  const { _update, ...defaultValues } = useThread<{
+    _update: (values: unknown) => void;
+  }>();
+
   const methods = useForm({ defaultValues });
+
+  const subscription = methods.watch(_update);
+
+  useEffect(() => {
+    const id = methods.getValues("id");
+    if (id !== defaultValues.id) methods.reset(defaultValues);
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [defaultValues, methods]);
 
   return (
     <FormProvider {...methods}>
