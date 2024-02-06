@@ -1,4 +1,5 @@
 export enum Container {
-  BUILDER = "builder",
-  FLOW = "flow",
+  FORM = "form",
+  WORKFLOW = "flow",
+  PAGE = "page",
 }

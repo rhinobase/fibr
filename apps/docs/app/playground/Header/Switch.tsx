@@ -15,8 +15,9 @@ export function Switch({ value, onValueChange }: Switch) {
       onValueChange={(value) => onValueChange?.(value as Container)}
     >
       <TabList className="bg-secondary-200 gap-0.5 rounded-md border-none p-0.5">
-        <SwitchTrigger value="builder">Builder</SwitchTrigger>
-        <SwitchTrigger value="flow">Flow</SwitchTrigger>
+        <SwitchTrigger value={Container.FORM}>Form</SwitchTrigger>
+        <SwitchTrigger value={Container.WORKFLOW}>Workflow</SwitchTrigger>
+        <SwitchTrigger value={Container.PAGE}>Page</SwitchTrigger>
       </TabList>
     </Tab>
   );

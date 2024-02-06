@@ -101,16 +101,19 @@ const BLOCKS: Record<string, Block[]> = {
   ],
 };
 
+const PANELS: Record<Container, ReactNode> = {
+  [Container.FORM]: <FormBuilder blocks={BLOCKS} config={CONFIG} />,
+  [Container.WORKFLOW]: <></>,
+  [Container.PAGE]: <></>,
+};
+
 export default function Playground() {
-  const [container, setContainer] = useState(Container.BUILDER);
+  const [container, setContainer] = useState(Container.FORM);
 
   return (
     <Workspace>
       <Header container={container} onContainerChange={setContainer} />
-      {container === Container.BUILDER && (
-        <FormBuilder blocks={BLOCKS} config={CONFIG} />
-      )}
-      {container === Container.FLOW && <div />}
+      {PANELS[container]}
     </Workspace>
   );
 }
