@@ -1,6 +1,6 @@
 import { Container as BuilderContainer } from "@fibr/builder";
 import { useFormBuilder } from "@fibr/providers";
-import { Canvas } from "./Canvas";
+import { FormBuilderCanvas } from "@fibr/canvas";
 import { Settings } from "@fibr/shared";
 import { Sidebar } from "./Sidebar";
 import type { ThreadType } from "@fibr/react";
@@ -26,7 +26,7 @@ export function Container() {
   return (
     <BuilderContainer>
       <Sidebar />
-      <Canvas />
+      <FormBuilderCanvas />
       {blockId && block && (
         <Settings
           {...block}

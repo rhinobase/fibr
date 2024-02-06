@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "dependencies": {
     "@swc/helpers": "^0.5.3",
-    "reactflow": "^11.10.3"
+    "reactflow": "^11.10.3",
+    "@rafty/ui": "^1.4.5"
   },
   "peerDependencies": {
     "react": "^18.2.0"
