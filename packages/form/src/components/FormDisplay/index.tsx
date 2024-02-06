@@ -4,6 +4,7 @@ import { FieldWrapper } from "./FieldWrapper";
 import { Env, useBuilder } from "@fibr/builder";
 import type { PropsWithChildren } from "react";
 import { DndWrapper } from "@fibr/shared";
+import { Text } from "@rafty/ui";
 
 const BLOCK_WRAPPERS: Record<Env, (props: PropsWithChildren) => JSX.Element> = {
   [Env.DEVELOPMENT]: FieldWrapper,
@@ -22,7 +23,16 @@ export function FormDisplay() {
 
   const current = useBuilder((state) => state.env.current);
 
-  if (!activeForm) return <div className="py-5">No Active Form</div>;
+  if (!activeForm)
+    return (
+      <div className="w-full p-2">
+        <div className="w-full rounded-lg border-2 border-dashed p-6 text-center">
+          <Text isMuted className="select-none font-medium">
+            No Active Form
+          </Text>
+        </div>
+      </div>
+    );
 
   const form = getForm(activeForm);
 

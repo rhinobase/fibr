@@ -1,3 +1,14 @@
+import {
+  SettingsPanelWrapper,
+  CommonInputSettings,
+  FieldWrapperSettings,
+} from "./utils";
+
 export function TextareaSettingsPanel() {
-  return <div>TextareaSettingsPanel</div>;
+  return (
+    <SettingsPanelWrapper>
+      <FieldWrapperSettings />
+      <CommonInputSettings />
+    </SettingsPanelWrapper>
+  );
 }

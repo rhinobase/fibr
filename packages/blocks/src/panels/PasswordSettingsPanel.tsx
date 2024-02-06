@@ -1,3 +1,14 @@
-export function StringSettingsPanel() {
-  return <div>StringSettingsPanel</div>;
+import {
+  CommonInputSettings,
+  FieldWrapperSettings,
+  SettingsPanelWrapper,
+} from "./utils";
+
+export function PasswordSettingsPanel() {
+  return (
+    <SettingsPanelWrapper>
+      <FieldWrapperSettings />
+      <CommonInputSettings />
+    </SettingsPanelWrapper>
+  );
 }

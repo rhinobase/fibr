@@ -26,7 +26,10 @@ export function Sidebar() {
 
   return (
     <BuilderSidebar>
-      <Palette onBlockSelect={(props) => formId && addBlock(formId, props)} />
+      <Palette
+        isDisabled={formId == null}
+        onBlockSelect={(props) => formId && addBlock(formId, props)}
+      />
       <Overview
         blocks={currentFormBlocks}
         active={active}

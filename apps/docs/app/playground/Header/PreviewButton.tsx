@@ -1,7 +1,7 @@
 import { Env, useBuilder } from "@fibr/builder";
 import { eventHandler } from "@rafty/shared";
 import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
-import { LuMonitorPlay } from "react-icons/lu";
+import { VscDebugStart } from "react-icons/vsc";
 
 export function PreviewButton() {
   const { current, change } = useBuilder((state) => state.env);
@@ -14,12 +14,13 @@ export function PreviewButton() {
     <Tooltip delayDuration={500}>
       <TooltipTrigger asChild>
         <Button
-          size="icon"
+          leftIcon={<VscDebugStart size={18} />}
+          size="sm"
           variant="ghost"
           onClick={toggleEnv}
           onKeyDown={toggleEnv}
         >
-          <LuMonitorPlay size={18} className="stroke-2" />
+          Preview
         </Button>
       </TooltipTrigger>
       <TooltipContent

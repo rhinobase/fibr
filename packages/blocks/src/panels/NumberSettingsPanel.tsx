@@ -1,3 +1,14 @@
+import {
+  CommonInputSettings,
+  FieldWrapperSettings,
+  SettingsPanelWrapper,
+} from "./utils";
+
 export function NumberSettingsPanel() {
-  return <div>NumberSettingsPanel</div>;
+  return (
+    <SettingsPanelWrapper>
+      <FieldWrapperSettings />
+      <CommonInputSettings />
+    </SettingsPanelWrapper>
+  );
 }

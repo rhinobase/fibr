@@ -1,7 +1,7 @@
 import { SidebarItem } from "@fibr/builder";
 import type { ThreadWithIdType } from "@fibr/react";
 import { ListBulletIcon } from "@heroicons/react/24/outline";
-import { DndWrapper } from "../DndWrapper";
+import { DndWrapper, Empty } from "../utils";
 import { OverviewCard } from "./OverviewCard";
 
 export type Overview = {
@@ -34,22 +34,18 @@ export function Overview(props: Overview) {
 function FieldsRender(props: Overview) {
   if (!props.active.form)
     return (
-      <div className="text-secondary-500 flex h-full w-full select-none flex-col items-center justify-center gap-2 p-3 text-center font-medium">
-        <p className="text-lg">No form</p>
-        <p className="text-sm leading-tight">
-          You can go to forms tab to add form
-        </p>
-      </div>
+      <Empty
+        title="No Form"
+        description="You can go to forms tab to add form"
+      />
     );
 
   if (props.blocks.length === 0)
     return (
-      <div className="text-secondary-500 flex h-full w-full select-none flex-col items-center justify-center gap-2 p-3 text-center font-medium">
-        <p className="text-lg">No field</p>
-        <p className="text-sm leading-tight">
-          You can go to palette to add field
-        </p>
-      </div>
+      <Empty
+        title="No Field"
+        description="You can go to palette to add field"
+      />
     );
 
   return (

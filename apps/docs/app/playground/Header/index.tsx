@@ -1,7 +1,6 @@
 import { Header as BuilderHeader } from "@fibr/builder";
 import { Logo } from "../../../components/Logo";
 import { PreviewButton } from "./PreviewButton";
-import { PublishButton } from "./PublishButton";
 import { Switch } from "./Switch";
 
 export type Header = {
@@ -17,7 +16,6 @@ export function Header({ container, onContainerChange }: Header) {
       <Switch value={container} onValueChange={onContainerChange} />
       <div className="flex-1" />
       <PreviewButton />
-      <PublishButton />
     </BuilderHeader>
   );
 }

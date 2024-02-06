@@ -45,10 +45,12 @@ export const TEMPLATES = [
             inputType: "email",
             label: "Email",
             description: "Enter your email id",
+            required: true,
           }),
           password: f.password({
             label: "Password",
             description: "Enter password",
+            required: true,
           }),
         }),
       ),
@@ -64,16 +66,20 @@ export const TEMPLATES = [
         Object.entries({
           name: f.string({
             label: "Name",
+            required: true,
           }),
           email: f.string({
             inputType: "email",
             label: "Email",
+            required: true,
           }),
           password: f.password({
             label: "Create a Password",
+            required: true,
           }),
           confirm_password: f.password({
             label: "Confirm Password",
+            required: true,
           }),
         }),
       ),

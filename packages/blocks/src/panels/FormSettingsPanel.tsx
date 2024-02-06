@@ -1,3 +1,11 @@
+import { Label } from "@rafty/ui";
+import { SettingInput, SettingsPanelWrapper } from "./utils";
+
 export function FormSettingsPanel() {
-  return <div>FormSettingsPanel</div>;
+  return (
+    <SettingsPanelWrapper>
+      <Label>Title</Label>
+      <SettingInput name="title" />
+    </SettingsPanelWrapper>
+  );
 }

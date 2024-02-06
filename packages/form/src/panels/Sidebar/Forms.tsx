@@ -5,10 +5,16 @@ import { useEffect, useRef } from "react";
 import { MdAdd } from "react-icons/md";
 import { FormCard } from "../../components";
 import { useBlueprint } from "../../providers";
+import { Empty } from "packages/shared/src/components/utils";
 
 export function Forms() {
   const [show, toggle] = useBoolean();
-  const add = useBlueprint(({ forms }) => forms.add);
+  const { schema, add } = useBlueprint(({ schema, forms }) => ({
+    add: forms.add,
+    schema,
+  }));
+
+  const isEmpty = schema.size === 0;
 
   const ref = useRef<HTMLInputElement>(null);
 
@@ -32,7 +38,7 @@ export function Forms() {
       className="flex-col overflow-hidden overflow-y-auto data-[state=active]:flex data-[orientation=vertical]:p-0"
     >
       <div className="sticky top-0 z-10 bg-white p-3">
-        <div className="mb-3 flex">
+        <div className="mb-3 flex items-center">
           <h4 className="flex-1 font-medium">Forms</h4>
           <Button
             size="icon"
@@ -46,7 +52,13 @@ export function Forms() {
         <hr />
       </div>
       <FormsRender />
-      <div className="px-3">
+      <div className="h-full px-3">
+        {isEmpty && !show && (
+          <Empty
+            title="No form"
+            description="You can add a form by clicking on plus icon"
+          />
+        )}
         {show && (
           <InputField
             ref={ref}
