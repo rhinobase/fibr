@@ -1,12 +1,12 @@
 import { Container as BuilderContainer } from "@fibr/builder";
-import { useBlueprint } from "../providers";
+import { useFormBuilder } from "@fibr/providers";
 import { Canvas } from "./Canvas";
 import { Settings } from "@fibr/shared";
 import { Sidebar } from "./Sidebar";
 import type { ThreadType } from "@fibr/react";
 
 export function Container() {
-  const { active, getBlock, update } = useBlueprint(({ active, blocks }) => ({
+  const { active, getBlock, update } = useFormBuilder(({ active, blocks }) => ({
     active,
     getBlock: blocks.get,
     update: blocks.update,

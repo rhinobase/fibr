@@ -7,7 +7,7 @@ import {
   type HTMLAttributes,
   type PropsWithChildren,
 } from "react";
-import { useBlueprint } from "../../providers";
+import { useFormBuilder } from "@fibr/providers";
 import { QuickActions } from "./QuickActions";
 import { useSortable } from "@dnd-kit/sortable";
 import { eventHandler } from "@rafty/shared";
@@ -24,7 +24,7 @@ const wrapperClasses = cva("w-full cursor-pointer border bg-white rounded", {
 
 export function FieldWrapper({ children }: PropsWithChildren) {
   const { id, type } = useThread();
-  const { active, select } = useBlueprint(({ blocks, active }) => ({
+  const { active, select } = useFormBuilder(({ blocks, active }) => ({
     select: blocks.select,
     active,
   }));

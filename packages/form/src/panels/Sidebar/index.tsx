@@ -1,7 +1,7 @@
 import { Sidebar as BuilderSidebar } from "@fibr/builder";
 import { Forms } from "./Forms";
 import { Palette, Overview } from "@fibr/shared";
-import { useBlueprint } from "../../providers";
+import { useFormBuilder } from "@fibr/providers";
 
 export function Sidebar() {
   const {
@@ -11,7 +11,7 @@ export function Sidebar() {
     selectBlock,
     removeBlock,
     moveBlock,
-  } = useBlueprint(({ blocks, active }) => ({
+  } = useFormBuilder(({ blocks, active }) => ({
     active,
     addBlock: blocks.add,
     getAllBlocks: blocks.all,

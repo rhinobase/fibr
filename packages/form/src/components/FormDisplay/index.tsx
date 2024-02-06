@@ -1,5 +1,5 @@
 import { Loom, WeaverProvider } from "@fibr/react";
-import { useBlueprint } from "../../providers";
+import { useFormBuilder } from "@fibr/providers";
 import { FieldWrapper } from "./FieldWrapper";
 import { Env, useBuilder } from "@fibr/builder";
 import type { PropsWithChildren } from "react";
@@ -13,7 +13,7 @@ const BLOCK_WRAPPERS: Record<Env, (props: PropsWithChildren) => JSX.Element> = {
 
 export function FormDisplay() {
   const { getAllBlocks, getForm, activeForm, selectBlock, moveBlock } =
-    useBlueprint(({ blocks, active, forms }) => ({
+    useFormBuilder(({ blocks, active, forms }) => ({
       getAllBlocks: blocks.all,
       activeForm: active.form,
       getForm: forms.get,

@@ -1,11 +1,11 @@
 import { useBuilder } from "@fibr/builder";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { eventHandler } from "@rafty/shared";
-import { useBlueprint } from "../providers";
+import { useFormBuilder } from "@fibr/providers";
 
 export function AddFieldCard() {
   const changeTab = useBuilder((state) => state.tabs.setActive);
-  const select = useBlueprint((state) => state.blocks.select);
+  const select = useFormBuilder((state) => state.blocks.select);
 
   const setPaletteActive = eventHandler(() => {
     changeTab("palette");

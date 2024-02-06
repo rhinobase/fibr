@@ -1,10 +1,10 @@
 import { Canvas as SharedCanvas } from "@fibr/shared";
 import { Screen } from "@fibr/builder";
 import { FormDisplay } from "../components";
-import { useBlueprint } from "../providers";
+import { useFormBuilder } from "@fibr/providers";
 
 export function Canvas() {
-  const select = useBlueprint(({ blocks }) => blocks.select);
+  const select = useFormBuilder(({ blocks }) => blocks.select);
 
   return (
     <SharedCanvas onClick={() => select(null)}>

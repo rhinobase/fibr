@@ -5,7 +5,7 @@ import { immer } from "zustand/middleware/immer";
 import _ from "lodash";
 import { arrayMove } from "@dnd-kit/sortable";
 
-export type BlueprintStore = {
+export type FormBuilderStore = {
   schema: Map<string, ThreadType<Form>>;
   active: {
     form: string | null;
@@ -38,9 +38,9 @@ export type BlueprintStore = {
   };
 };
 
-export const createBlueprintStore = () =>
+export const createFormBuilderStore = () =>
   create(
-    immer<BlueprintStore>((set, get) => ({
+    immer<FormBuilderStore>((set, get) => ({
       schema: new Map(Object.entries({})),
       active: {
         form: null,
@@ -48,6 +48,7 @@ export const createBlueprintStore = () =>
       },
       uniqueId: (type, context) => {
         let index = 1;
+        // eslint-disable-next-line no-constant-condition
         while (true) {
           const id = `${type}${index}`;
 
@@ -206,4 +207,4 @@ export const createBlueprintStore = () =>
         },
       },
     })),
-  ) as UseBoundStore<StoreApi<BlueprintStore>>;
+  ) as UseBoundStore<StoreApi<FormBuilderStore>>;

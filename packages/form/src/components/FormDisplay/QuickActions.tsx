@@ -18,13 +18,13 @@ import {
   MdOutlineArrowUpward,
   MdOutlineDelete,
 } from "react-icons/md";
-import { useBlueprint } from "../../providers";
+import { useFormBuilder } from "@fibr/providers";
 
 export type QuickActions = PropsWithChildren;
 
 export function QuickActions({ children }: QuickActions) {
   const { id } = useThread();
-  const activeBlock = useBlueprint(({ active }) => active.block);
+  const activeBlock = useFormBuilder(({ active }) => active.block);
 
   const [isHover, setHover] = useState(false);
 
@@ -71,7 +71,7 @@ function QuickActionButtons() {
     schema,
     blocks: { all, move, remove, findIndex, duplicate, select },
     activeForm,
-  } = useBlueprint(({ schema, blocks, active }) => ({
+  } = useFormBuilder(({ schema, blocks, active }) => ({
     schema,
     blocks,
     activeForm: active.form,

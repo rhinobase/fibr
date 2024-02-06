@@ -18,7 +18,8 @@
     "lodash": "^4.17.21",
     "zustand": "^4.5.0",
     "immer": "^10.0.3",
-    "@fibr/shared": "^1.0.0"
+    "@fibr/shared": "^1.0.0",
+    "@fibr/providers": "^1.0.0"
   },
   "peerDependencies": {
     "react": "^18.2.0"

@@ -4,12 +4,12 @@ import { Button, InputField, useBoolean } from "@rafty/ui";
 import { useEffect, useRef } from "react";
 import { MdAdd } from "react-icons/md";
 import { FormCard } from "../../components";
-import { useBlueprint } from "../../providers";
-import { Empty } from "packages/shared/src/components/utils";
+import { useFormBuilder } from "@fibr/providers";
+import { Empty } from "@fibr/shared";
 
 export function Forms() {
   const [show, toggle] = useBoolean();
-  const { schema, add } = useBlueprint(({ schema, forms }) => ({
+  const { schema, add } = useFormBuilder(({ schema, forms }) => ({
     add: forms.add,
     schema,
   }));
@@ -73,7 +73,7 @@ export function Forms() {
 }
 
 function FormsRender() {
-  const schema = useBlueprint(({ schema }) => schema);
+  const schema = useFormBuilder(({ schema }) => schema);
 
   return (
     <div className="space-y-2.5 px-3 pb-3">

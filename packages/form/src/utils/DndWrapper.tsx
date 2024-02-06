@@ -17,12 +17,12 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import type { PropsWithChildren } from "react";
-import { useBlueprint } from "../providers";
+import { useFormBuilder } from "@fibr/providers";
 
 export type DndWrapper = Pick<SortableContextProps, "items">;
 
 export function DndWrapper(props: PropsWithChildren<DndWrapper>) {
-  const { moveBlock, selectBlock, activeForm } = useBlueprint(
+  const { moveBlock, selectBlock, activeForm } = useFormBuilder(
     ({ blocks, active }) => ({
       moveBlock: blocks.move,
       selectBlock: blocks.select,

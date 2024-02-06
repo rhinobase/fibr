@@ -27,6 +27,10 @@
     {
       "value": "canvas",
       "name": "canvas:                 anything canvas resources specific"
+    },
+    {
+      "value": "providers",
+      "name": "providers:              anything providers resources specific"
     }
   ],
   "scopesSearchValue": true,

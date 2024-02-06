@@ -3,7 +3,7 @@ import type { ThreadType } from "@fibr/react";
 import { eventHandler } from "@rafty/shared";
 import { Button, classNames } from "@rafty/ui";
 import { MdDelete } from "react-icons/md";
-import { useBlueprint } from "../providers";
+import { useFormBuilder } from "@fibr/providers";
 
 export type FormCard = {
   id: string;
@@ -11,12 +11,10 @@ export type FormCard = {
 };
 
 export function FormCard({ id, form: { title } }: FormCard) {
-  const { selectForm, activeForm } = useBlueprint(
-    ({ forms, active }) => ({
-      activeForm: active.form,
-      selectForm: forms.select,
-    }),
-  );
+  const { selectForm, activeForm } = useFormBuilder(({ forms, active }) => ({
+    activeForm: active.form,
+    selectForm: forms.select,
+  }));
   const handleFormSelect = eventHandler(() => selectForm(id));
 
   return (
@@ -40,7 +38,7 @@ export function FormCard({ id, form: { title } }: FormCard) {
 }
 
 function DeleteButton({ id }: { id: string }) {
-  const removeForm = useBlueprint(({ forms }) => forms.remove);
+  const removeForm = useFormBuilder(({ forms }) => forms.remove);
 
   const handleFormDelete = eventHandler(() => removeForm(id));
 

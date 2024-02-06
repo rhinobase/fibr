@@ -1,6 +1,6 @@
 "use client";
 import { Form } from "@fibr/blocks";
-import { useBlueprint } from "../providers";
+import { useFormBuilder } from "@fibr/providers";
 import { Dialog, DialogContent, DialogOverlay, useBoolean } from "@rafty/ui";
 import { useEffect } from "react";
 import { eventHandler } from "@rafty/shared";
@@ -9,7 +9,7 @@ import { TEMPLATES } from "./templates";
 
 export function TemplateDialog() {
   const [isOpen, toggle] = useBoolean();
-  const add = useBlueprint((state) => state.forms.add);
+  const add = useFormBuilder((state) => state.forms.add);
 
   useEffect(() => {
     toggle(true);
