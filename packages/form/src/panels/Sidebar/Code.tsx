@@ -8,8 +8,10 @@ import { Button, classNames } from "@rafty/ui";
 import { format as prettyFormat } from "pretty-format";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { Highlight, themes } from "prism-react-renderer";
+import { useId } from "react";
 
 export function CodeGenerator() {
+  const id = useId();
   const [_, copyToClipboard] = useCopyToClipboard();
   const schema = useFormBuilder((state) => state.schema);
 
@@ -44,10 +46,13 @@ export function CodeGenerator() {
             className={classNames("h-full overflow-x-auto px-3", className)}
           >
             {tokens.map((line, i) => (
-              <div key={i} {...getLineProps({ line })}>
+              <div key={`${i}-${id}`} {...getLineProps({ line })}>
                 <span className="mr-4">{i + 1}</span>
                 {line.map((token, key) => (
-                  <span key={key} {...getTokenProps({ token })} />
+                  <span
+                    key={`${key}-${i}-${id}`}
+                    {...getTokenProps({ token })}
+                  />
                 ))}
               </div>
             ))}
