@@ -1,7 +1,7 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { eventHandler } from "@rafty/shared";
-import { Button, classNames } from "@rafty/ui";
+import { Button, Text, classNames } from "@rafty/ui";
 import { CSSProperties } from "react";
 import { MdDelete, MdDragIndicator } from "react-icons/md";
 
@@ -65,8 +65,11 @@ export function OverviewCard({
       >
         <MdDragIndicator className="text-black" />
       </Button>
-      <p className="text-2xs truncate font-medium capitalize">
-        {id} ({type})
+      <p className="text-2xs flex gap-1 truncate font-medium">
+        {id}
+        <Text isMuted className="italic">
+          ({type})
+        </Text>
       </p>
       <div className="flex-1" />
       {/* Delete Button */}

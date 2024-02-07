@@ -56,9 +56,10 @@ function IdEditField() {
   const { id } = useThread();
   const [isEditable, toggle] = useBoolean(false);
   const ref = useRef<HTMLInputElement>(null);
-  const { select } = useFormBuilder(({ blocks, active }) => ({
+  const { select, formId, updateId } = useFormBuilder(({ blocks, active }) => ({
     select: blocks.select,
-    active,
+    formId: active.form,
+    updateId: blocks.updateId,
   }));
 
   useEffect(() => {
@@ -78,8 +79,9 @@ function IdEditField() {
     e.preventDefault();
     e.stopPropagation();
 
-    // Field data
-    console.log(id, ref.current?.value);
+    // Updating the value
+    if (formId && ref.current) updateId(formId, id, ref.current.value);
+
     toggle(false);
   };
 

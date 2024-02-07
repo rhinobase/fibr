@@ -1,6 +1,6 @@
 import type { ThreadType } from "@fibr/react";
 import { eventHandler } from "@rafty/shared";
-import { Button, classNames } from "@rafty/ui";
+import { Button, classNames, Text } from "@rafty/ui";
 import { MdDelete } from "react-icons/md";
 import { useFormBuilder, BasicFormType } from "@fibr/providers";
 
@@ -27,8 +27,11 @@ export function FormCard({ id, form: { title } }: FormCard) {
       onClick={handleFormSelect}
       onKeyDown={handleFormSelect}
     >
-      <p className="text-2xs truncate font-medium">
-        {title} ({id})
+      <p className="text-2xs flex gap-1 truncate font-medium">
+        {title}
+        <Text isMuted className="italic">
+          ({id})
+        </Text>
       </p>
       <div className="flex-1" />
       <DeleteButton id={id} />

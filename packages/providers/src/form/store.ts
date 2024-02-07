@@ -42,6 +42,7 @@ export type FormBuilderStore<T extends BasicFormType> = {
       blockId: string,
       values: Partial<ThreadType<T>>,
     ) => void;
+    updateId: (formId: string, blockId: string, newId: string) => void;
     remove: (formId: string, blockId: string) => void;
     move: (formId: string, from: string, to: string) => void;
     select: (blockId: string | null) => void;
@@ -164,6 +165,56 @@ export const createFormBuilderStore = <T extends BasicFormType>({
 
             // Updating the form blocks
             state.schema.set(formId, form);
+          }),
+        updateId: (formId, blockId, newId) =>
+          set((state) => {
+            const form = state.schema.get(formId);
+
+            if (!form)
+              throw new Error(`Form with this ID ${formId} doesn't exist!`);
+
+            if (formId === blockId && !state.schema.has(newId)) {
+              // Geting all the entries
+              const entries = Array.from(state.schema.entries());
+
+              // Updating the key
+              for (let index = 0; index < entries.length; index++) {
+                const [key] = entries[index];
+
+                if (key === blockId) {
+                  entries[index][0] = newId;
+                  break;
+                }
+              }
+
+              // Updaing the schema
+              state.schema = new Map(entries);
+
+              // Updating the active block
+              state.active.block = newId;
+            } else if (!form.blocks.has(newId)) {
+              // Geting all the entries
+              const entries = Array.from(form.blocks.entries());
+
+              // Updating the key
+              for (let index = 0; index < entries.length; index++) {
+                const [key] = entries[index];
+
+                if (key === blockId) {
+                  entries[index][0] = newId;
+                  break;
+                }
+              }
+
+              // Updaing the blocks
+              form.blocks = new Map(entries);
+
+              // Updating the canvas with the new values
+              state.schema.set(formId, form);
+
+              // Updating the active block
+              state.active.block = newId;
+            }
           }),
         remove: (formId, blockId) =>
           set((state) => {

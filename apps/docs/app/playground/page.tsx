@@ -6,6 +6,7 @@ import { FormBuilder } from "@fibr/form-builder";
 import type { ThreadType } from "@fibr/react";
 import { type Block } from "@fibr/shared";
 import { type ReactNode, useState } from "react";
+import { BsTextareaT } from "react-icons/bs";
 import { HiOutlineMail } from "react-icons/hi";
 import { LuTextCursorInput } from "react-icons/lu";
 import { MdLink, MdOutlineKey, MdOutlineMailOutline } from "react-icons/md";
@@ -81,7 +82,7 @@ const BLOCKS: Record<string, Block[]> = {
     {
       type: "textarea",
       label: "Textarea",
-      icon: MdOutlineKey,
+      icon: BsTextareaT,
       presets: {
         label: "Label",
         description: "Description",
