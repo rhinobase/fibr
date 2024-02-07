@@ -1,3 +1,4 @@
+import { useFormBuilder } from "@fibr/providers";
 import { useThread } from "@fibr/react";
 import { eventHandler } from "@rafty/shared";
 import {
@@ -21,7 +22,6 @@ import {
   MdOutlineArrowUpward,
   MdOutlineDelete,
 } from "react-icons/md";
-import { useFormBuilder } from "@fibr/providers";
 
 export type QuickActions = PropsWithChildren;
 

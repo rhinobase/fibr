@@ -17,7 +17,7 @@ const wrapperClasses = cva("w-full cursor-pointer border bg-white rounded", {
   variants: {
     selected: {
       true: "border-primary-500",
-      false: "border-secondary-200",
+      false: "border-transparent",
     },
   },
 });

@@ -6,8 +6,10 @@ import { useBuilder } from "../providers";
 import { Env } from "../utils";
 
 export function PreviewButton() {
-  const { current, change } = useBuilder((state) => state.env);
-  const isDevelopment = current === Env.DEVELOPMENT;
+  const { isDevelopment, change } = useBuilder((state) => ({
+    isDevelopment: state.env.current === Env.DEVELOPMENT,
+    change: state.env.change,
+  }));
 
   const toggleEnv = eventHandler(() =>
     change(isDevelopment ? Env.PRODUCTION : Env.DEVELOPMENT),

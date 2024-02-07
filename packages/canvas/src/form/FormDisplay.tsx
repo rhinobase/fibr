@@ -1,14 +1,15 @@
-import { Loom, WeaverProvider } from "@fibr/react";
-import { useFormBuilder } from "@fibr/providers";
-import { FieldWrapper } from "./FieldWrapper";
 import { Env, useBuilder } from "@fibr/builder";
-import type { PropsWithChildren } from "react";
+import { useFormBuilder } from "@fibr/providers";
+import { Loom, WeaverProvider } from "@fibr/react";
 import { DndWrapper } from "@fibr/shared";
 import { Text } from "@rafty/ui";
+import { type PropsWithChildren, type ReactNode } from "react";
+import { FieldWrapper } from "./FieldWrapper";
+import { FieldPadding } from "./FieldPadding";
 
-const BLOCK_WRAPPERS: Record<Env, (props: PropsWithChildren) => JSX.Element> = {
+const BLOCK_WRAPPERS: Record<Env, (props: PropsWithChildren) => ReactNode> = {
   [Env.DEVELOPMENT]: FieldWrapper,
-  [Env.PRODUCTION]: (props) => <>{props.children}</>,
+  [Env.PRODUCTION]: FieldPadding,
 };
 
 export function FormDisplay() {
@@ -21,7 +22,7 @@ export function FormDisplay() {
       moveBlock: blocks.move,
     }));
 
-  const current = useBuilder((state) => state.env.current);
+  const currentEnv = useBuilder((state) => state.env.current);
 
   if (!activeForm)
     return (
@@ -41,17 +42,19 @@ export function FormDisplay() {
   const allBlocks = getAllBlocks(activeForm);
 
   return (
-    <WeaverProvider wrapper={BLOCK_WRAPPERS[current]}>
-      <DndWrapper
-        items={allBlocks.map(({ id }) => id)}
-        onDragStart={({ active }) => selectBlock(String(active.id))}
-        onDragEnd={({ active, over }) => {
-          if (over && active.id !== over.id && activeForm)
-            moveBlock(activeForm, String(active.id), String(over.id));
-        }}
-      >
-        <Loom id={activeForm} blueprint={form} />
-      </DndWrapper>
-    </WeaverProvider>
+    <div className="w-full">
+      <WeaverProvider wrapper={BLOCK_WRAPPERS[currentEnv]}>
+        <DndWrapper
+          items={allBlocks.map(({ id }) => id)}
+          onDragStart={({ active }) => selectBlock(String(active.id))}
+          onDragEnd={({ active, over }) => {
+            if (over && active.id !== over.id && activeForm)
+              moveBlock(activeForm, String(active.id), String(over.id));
+          }}
+        >
+          <Loom id={activeForm} blueprint={form} />
+        </DndWrapper>
+      </WeaverProvider>
+    </div>
   );
 }

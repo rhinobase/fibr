@@ -1,19 +1,14 @@
 "use client";
 import { Tab, TabList, TabTrigger } from "@rafty/ui";
 import type { PropsWithChildren } from "react";
-import { useBuilder } from "../providers";
-import { Env } from "../utils";
 import { Panel } from "react-resizable-panels";
 import { ResizeHandle } from "../ResizeHandle";
+import { useBuilder } from "../providers";
 
 export function Sidebar({ children }: PropsWithChildren) {
-  const current = useBuilder(({ env }) => env.current);
-
-  if (current === Env.PRODUCTION) return;
-
   return (
     <>
-      <Panel id="sidebar" order={0} minSize={20} maxSize={25} defaultSize={20}>
+      <Panel id="sidebar" order={1} minSize={20} maxSize={25} defaultSize={20}>
         <SidebarTray>{children}</SidebarTray>
       </Panel>
       <ResizeHandle className="border-secondary-200 border-r" />

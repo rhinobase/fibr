@@ -15,7 +15,7 @@ import {
 import { useBuilder } from "./providers";
 
 const PANEL_PROPS: PanelProps = {
-  order: 1,
+  order: 2,
   minSize: 50,
   defaultSize: 80,
   id: "canvas",

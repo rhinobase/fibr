@@ -1,4 +1,4 @@
-import { Container as BuilderContainer } from "@fibr/builder";
+import { Container as BuilderContainer, Env, useBuilder } from "@fibr/builder";
 import { useFormBuilder } from "@fibr/providers";
 import { FormBuilderCanvas } from "@fibr/canvas";
 import { Settings } from "@fibr/shared";
@@ -6,6 +6,9 @@ import { Sidebar } from "./Sidebar";
 import type { ThreadType } from "@fibr/react";
 
 export function Container() {
+  const isDevelopment = useBuilder(
+    (state) => state.env.current === Env.DEVELOPMENT,
+  );
   const { active, getBlock, update } = useFormBuilder(({ active, blocks }) => ({
     active,
     getBlock: blocks.get,
@@ -25,9 +28,9 @@ export function Container() {
 
   return (
     <BuilderContainer>
-      <Sidebar />
+      {isDevelopment && <Sidebar />}
       <FormBuilderCanvas />
-      {blockId && block && (
+      {isDevelopment && blockId && block && (
         <Settings
           {...block}
           id={blockId}
