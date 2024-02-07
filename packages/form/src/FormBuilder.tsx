@@ -1,12 +1,12 @@
 import { Container } from "./panels";
 import {
-  type BasicFormType,
+  type CanvasType,
   FormBuilderProvider,
   type FormBuilderStoreProps,
 } from "@fibr/providers";
 import { type SourceStore, SourceProvider } from "@fibr/shared";
 
-export function FormBuilder<T extends BasicFormType>({
+export function FormBuilder<T extends CanvasType>({
   blocks,
   config,
   ...builderProps

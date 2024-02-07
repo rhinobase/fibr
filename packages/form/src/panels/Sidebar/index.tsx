@@ -1,5 +1,5 @@
 import { Sidebar as BuilderSidebar } from "@fibr/builder";
-import { Forms } from "./Forms";
+import { Canvases } from "./Canvases";
 import { Palette, Overview } from "@fibr/shared";
 import { useFormBuilder } from "@fibr/providers";
 import { CodeGenerator } from "./Code";
@@ -12,35 +12,35 @@ export function Sidebar() {
     selectBlock,
     removeBlock,
     moveBlock,
-  } = useFormBuilder(({ blocks, active }) => ({
+  } = useFormBuilder(({ block, active }) => ({
     active,
-    addBlock: blocks.add,
-    getAllBlocks: blocks.all,
-    selectBlock: blocks.select,
-    removeBlock: blocks.remove,
-    moveBlock: blocks.move,
+    addBlock: block.add,
+    getAllBlocks: block.all,
+    selectBlock: block.select,
+    removeBlock: block.remove,
+    moveBlock: block.move,
   }));
 
-  const formId = active.form;
+  const canvasId = active.canvas;
 
-  const currentFormBlocks = formId ? getAllBlocks(formId) : [];
+  const blocks = canvasId ? getAllBlocks(canvasId) : [];
 
   return (
     <BuilderSidebar>
       <Palette
-        isDisabled={formId == null}
-        onBlockSelect={(props) => formId && addBlock(formId, props)}
+        isDisabled={canvasId == null}
+        onBlockSelect={(props) => canvasId && addBlock(canvasId, props)}
       />
       <Overview
-        blocks={currentFormBlocks}
+        blocks={blocks}
         active={active}
         selectBlock={selectBlock}
-        removeBlock={(id) => formId && removeBlock(formId, id)}
+        removeBlock={(id) => canvasId && removeBlock(canvasId, id)}
         moveBlock={(startBlockId, endblockId) =>
-          formId && moveBlock(formId, startBlockId, endblockId)
+          canvasId && moveBlock(canvasId, startBlockId, endblockId)
         }
       />
-      <Forms />
+      <Canvases />
       <CodeGenerator />
     </BuilderSidebar>
   );

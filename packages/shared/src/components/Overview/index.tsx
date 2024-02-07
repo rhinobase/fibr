@@ -9,7 +9,7 @@ export type Overview = {
 } & Pick<OverviewCard, "selectBlock" | "removeBlock"> & {
     moveBlock: (startBlockId: string, endblockId: string) => void;
     active: {
-      form: string | null;
+      canvas: string | null;
       block: string | null;
     };
   };
@@ -32,11 +32,11 @@ export function Overview(props: Overview) {
 }
 
 function FieldsRender(props: Overview) {
-  if (!props.active.form)
+  if (!props.active.canvas)
     return (
       <Empty
-        title="No Form"
-        description="You can go to forms tab to add form"
+        title="No Canvas"
+        description="You can go to canvas tab to add canvas"
       />
     );
 

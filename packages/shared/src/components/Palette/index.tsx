@@ -68,8 +68,8 @@ export function Palette({ isDisabled = false, onBlockSelect }: Palette) {
     >
       {isDisabled ? (
         <Empty
-          title="No form exists"
-          description="Please add a form in order to add fields in it"
+          title="No canvas exists"
+          description="Please add a canvas in order to add fields in it"
         />
       ) : (
         <>

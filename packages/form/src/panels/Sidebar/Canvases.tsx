@@ -3,14 +3,14 @@ import { Square3Stack3DIcon } from "@heroicons/react/24/outline";
 import { Button, InputField, useBoolean } from "@rafty/ui";
 import { useEffect, useRef } from "react";
 import { MdAdd } from "react-icons/md";
-import { FormCard } from "../../components";
+import { CanvasCard } from "../../components";
 import { useFormBuilder } from "@fibr/providers";
 import { Empty } from "@fibr/shared";
 
-export function Forms() {
+export function Canvases() {
   const [show, toggle] = useBoolean();
-  const { schema, add } = useFormBuilder(({ schema, forms }) => ({
-    add: forms.add,
+  const { schema, add } = useFormBuilder(({ schema, canvas }) => ({
+    add: canvas.add,
     schema,
   }));
 
@@ -32,14 +32,14 @@ export function Forms() {
 
   return (
     <SidebarItem
-      name="forms"
-      label="Forms"
+      name="canvases"
+      label="Canvases"
       icon={<Square3Stack3DIcon className="h-5 w-5 stroke-2" />}
       className="flex-col overflow-hidden overflow-y-auto data-[state=active]:flex data-[orientation=vertical]:p-0"
     >
       <div className="sticky top-0 z-10 bg-white p-3">
         <div className="mb-3 flex items-center">
-          <h4 className="flex-1 font-medium">Forms</h4>
+          <h4 className="flex-1 font-medium">Canvases</h4>
           <Button
             size="icon"
             variant="ghost"
@@ -51,12 +51,12 @@ export function Forms() {
         </div>
         <hr />
       </div>
-      <FormsRender />
+      <CanvasesList />
       <div className="h-full px-3">
         {isEmpty && !show && (
           <Empty
-            title="No form"
-            description="You can add a form by clicking on plus icon"
+            title="No canvas"
+            description="You can add a canvas by clicking on plus icon"
           />
         )}
         {show && (
@@ -72,13 +72,13 @@ export function Forms() {
   );
 }
 
-function FormsRender() {
+function CanvasesList() {
   const schema = useFormBuilder(({ schema }) => schema);
 
   return (
     <div className="space-y-2.5 px-3 pb-3">
-      {Array.from(schema).map(([id, form]) => (
-        <FormCard key={id} id={id} form={form} />
+      {Array.from(schema).map(([id, canvas]) => (
+        <CanvasCard key={id} id={id} canvas={canvas} />
       ))}
     </div>
   );

@@ -3,7 +3,7 @@ import { FormDisplay } from "./FormDisplay";
 import { useFormBuilder } from "@fibr/providers";
 
 export function FormBuilderCanvas() {
-  const select = useFormBuilder(({ blocks }) => blocks.select);
+  const select = useFormBuilder(({ block }) => block.select);
 
   return (
     <Canvas onClick={() => select(null)}>

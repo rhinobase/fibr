@@ -22,11 +22,11 @@ import { useFormBuilder } from "@fibr/providers";
 export type DndWrapper = Pick<SortableContextProps, "items">;
 
 export function DndWrapper(props: PropsWithChildren<DndWrapper>) {
-  const { moveBlock, selectBlock, activeForm } = useFormBuilder(
-    ({ blocks, active }) => ({
-      moveBlock: blocks.move,
-      selectBlock: blocks.select,
-      activeForm: active.form,
+  const { moveBlock, selectBlock, activeCanvas } = useFormBuilder(
+    ({ block, active }) => ({
+      moveBlock: block.move,
+      selectBlock: block.select,
+      activeCanvas: active.canvas,
     }),
   );
   const sensors = useSensors(
@@ -41,8 +41,8 @@ export function DndWrapper(props: PropsWithChildren<DndWrapper>) {
       sensors={sensors}
       collisionDetection={closestCenter}
       onDragEnd={({ active, over }) => {
-        if (over && active.id !== over.id && activeForm)
-          moveBlock(activeForm, String(active.id), String(over.id));
+        if (over && active.id !== over.id && activeCanvas)
+          moveBlock(activeCanvas, String(active.id), String(over.id));
       }}
       onDragStart={({ active }) => selectBlock(String(active.id))}
       modifiers={[restrictToVerticalAxis, restrictToWindowEdges]}

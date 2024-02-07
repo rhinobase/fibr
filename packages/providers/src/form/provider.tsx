@@ -8,7 +8,7 @@ import {
 import { useStore } from "zustand";
 import {
   createFormBuilderStore,
-  type BasicFormType,
+  type CanvasType,
   type FormBuilderStore,
   type FormBuilderStoreProps,
 } from "./store";
@@ -18,7 +18,7 @@ const FormBuilderContext = createContext<ReturnType<
 > | null>(null);
 
 export type FormBuilderProvider = PropsWithChildren<
-  FormBuilderStoreProps<BasicFormType>
+  FormBuilderStoreProps<CanvasType>
 >;
 
 export function FormBuilderProvider({
@@ -33,7 +33,7 @@ export function FormBuilderProvider({
   );
 }
 
-export function useFormBuilder<T extends BasicFormType, U>(
+export function useFormBuilder<T extends CanvasType, U>(
   selector: (state: FormBuilderStore<T>) => U,
 ): U {
   const store = useContext(FormBuilderContext);

@@ -13,33 +13,34 @@ const BLOCK_WRAPPERS: Record<Env, (props: PropsWithChildren) => ReactNode> = {
 };
 
 export function FormDisplay() {
-  const { getAllBlocks, getForm, activeForm, selectBlock, moveBlock } =
-    useFormBuilder(({ blocks, active, forms }) => ({
-      getAllBlocks: blocks.all,
-      activeForm: active.form,
-      getForm: forms.get,
-      selectBlock: blocks.select,
-      moveBlock: blocks.move,
+  const { getAllBlocks, getCanvas, activeCanvas, selectBlock, moveBlock } =
+    useFormBuilder(({ block, active, canvas }) => ({
+      getAllBlocks: block.all,
+      activeCanvas: active.canvas,
+      getCanvas: canvas.get,
+      selectBlock: block.select,
+      moveBlock: block.move,
     }));
 
   const currentEnv = useBuilder((state) => state.env.current);
 
-  if (!activeForm)
+  if (!activeCanvas)
     return (
       <div className="w-full p-2">
         <div className="w-full rounded-lg border-2 border-dashed p-6 text-center">
           <Text isMuted className="select-none font-medium">
-            No Active Form
+            No Active Canvas
           </Text>
         </div>
       </div>
     );
 
-  const form = getForm(activeForm);
+  const canvas = getCanvas(activeCanvas);
 
-  if (!form) throw new Error(`Unable to get the form with Id ${activeForm}`);
+  if (!canvas)
+    throw new Error(`Unable to get the canvas with Id ${activeCanvas}`);
 
-  const allBlocks = getAllBlocks(activeForm);
+  const allBlocks = getAllBlocks(activeCanvas);
 
   return (
     <div className="w-full">
@@ -48,11 +49,11 @@ export function FormDisplay() {
           items={allBlocks.map(({ id }) => id)}
           onDragStart={({ active }) => selectBlock(String(active.id))}
           onDragEnd={({ active, over }) => {
-            if (over && active.id !== over.id && activeForm)
-              moveBlock(activeForm, String(active.id), String(over.id));
+            if (over && active.id !== over.id && activeCanvas)
+              moveBlock(activeCanvas, String(active.id), String(over.id));
           }}
         >
-          <Loom id={activeForm} blueprint={form} />
+          <Loom id={activeCanvas} blueprint={canvas} />
         </DndWrapper>
       </WeaverProvider>
     </div>

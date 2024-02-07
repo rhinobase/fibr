@@ -56,11 +56,13 @@ function IdEditField() {
   const { id } = useThread();
   const [isEditable, toggle] = useBoolean(false);
   const ref = useRef<HTMLInputElement>(null);
-  const { select, formId, updateId } = useFormBuilder(({ blocks, active }) => ({
-    select: blocks.select,
-    formId: active.form,
-    updateId: blocks.updateId,
-  }));
+  const { select, activeCanvas, updateId } = useFormBuilder(
+    ({ block, active }) => ({
+      select: block.select,
+      activeCanvas: active.canvas,
+      updateId: block.updateId,
+    }),
+  );
 
   useEffect(() => {
     if (isEditable && ref.current) ref.current.focus();
@@ -80,7 +82,8 @@ function IdEditField() {
     e.stopPropagation();
 
     // Updating the value
-    if (formId && ref.current) updateId(formId, id, ref.current.value);
+    if (activeCanvas && ref.current)
+      updateId(activeCanvas, id, ref.current.value);
 
     toggle(false);
   };
@@ -125,24 +128,24 @@ function QuickActionButtons() {
   const { id } = useThread();
   const {
     schema,
-    blocks: { all, move, remove, findIndex, duplicate, select },
-    activeForm,
-  } = useFormBuilder(({ schema, blocks, active }) => ({
+    block: { all, move, remove, findIndex, duplicate, select },
+    activeCanvas,
+  } = useFormBuilder(({ schema, block, active }) => ({
     schema,
-    blocks,
-    activeForm: active.form,
+    block,
+    activeCanvas: active.canvas,
   }));
 
-  if (!activeForm) throw new Error("Unable to find an active form!");
+  if (!activeCanvas) throw new Error("Unable to find an active canvas!");
 
-  const index = findIndex(activeForm, id);
+  const index = findIndex(activeCanvas, id);
 
   if (index == null) return <></>;
 
   const moveComponent = (direction: Direction) => {
-    const components = all(activeForm);
+    const components = all(activeCanvas);
     select(id);
-    move(activeForm, id, components[index + direction].id);
+    move(activeCanvas, id, components[index + direction].id);
   };
 
   return (
@@ -154,7 +157,7 @@ function QuickActionButtons() {
           action={() => moveComponent(Direction.UP)}
         />
       )}
-      {index < (schema.get(activeForm)?.blocks.size ?? 0) - 1 && (
+      {index < (schema.get(activeCanvas)?.blocks.size ?? 0) - 1 && (
         <ActionButton
           name="Move down"
           icon={MdOutlineArrowDownward}
@@ -164,12 +167,12 @@ function QuickActionButtons() {
       <ActionButton
         name="Duplicate file"
         icon={MdOutlineAddToPhotos}
-        action={() => duplicate(activeForm, id)}
+        action={() => duplicate(activeCanvas, id)}
       />
       <ActionButton
         name="Delete visual field"
         icon={MdOutlineDelete}
-        action={() => remove(activeForm, id)}
+        action={() => remove(activeCanvas, id)}
       />
     </div>
   );

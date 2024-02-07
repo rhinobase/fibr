@@ -12,6 +12,7 @@
     "@rafty/shared": "^1.0.0",
     "@rafty/ui": "^1.4.5",
     "@swc/helpers": "^0.5.3",
+    "fuse.js": "^7.0.0",
     "react-icons": "^5.0.1",
     "zustand": "^4.5.0"
   },

@@ -9,19 +9,19 @@ export function Container() {
   const isDevelopment = useBuilder(
     (state) => state.env.current === Env.DEVELOPMENT,
   );
-  const { active, getBlock, update } = useFormBuilder(({ active, blocks }) => ({
+  const { active, getBlock, update } = useFormBuilder(({ active, block }) => ({
     active,
-    getBlock: blocks.get,
-    update: blocks.update,
+    getBlock: block.get,
+    update: block.update,
   }));
 
-  const formId = active.form;
+  const canvasId = active.canvas;
   const blockId = active.block;
 
   let block: ThreadType | undefined;
 
-  if (formId && blockId) {
-    block = getBlock(formId, blockId);
+  if (canvasId && blockId) {
+    block = getBlock(canvasId, blockId);
 
     if (!block) throw new Error("Unable find the block!");
   }
@@ -34,7 +34,7 @@ export function Container() {
         <Settings
           {...block}
           id={blockId}
-          _update={(values) => formId && update(formId, blockId, values)}
+          _update={(values) => canvasId && update(canvasId, blockId, values)}
         />
       )}
     </BuilderContainer>

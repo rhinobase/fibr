@@ -110,7 +110,7 @@ const PANELS: Record<Container, (props: PanelProps) => ReactNode> = {
   [Container.FORM]: ({ template }) => (
     <FormBuilder
       initialSchema={new Map(Object.entries({ form: template }))}
-      defaultActiveForm="form"
+      defaultActiveCanvas="form"
       defaultActiveBlock="form"
       blocks={BLOCKS}
       config={CONFIG}

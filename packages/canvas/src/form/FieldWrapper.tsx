@@ -24,9 +24,9 @@ const wrapperClasses = cva("w-full cursor-pointer border bg-white rounded", {
 
 export function FieldWrapper({ children }: PropsWithChildren) {
   const { id, type } = useThread();
-  const { active, select } = useFormBuilder(({ blocks, active }) => ({
-    select: blocks.select,
-    active,
+  const { activeBlock, select } = useFormBuilder(({ block, active }) => ({
+    select: block.select,
+    activeBlock: active.block,
   }));
 
   const {
@@ -43,7 +43,7 @@ export function FieldWrapper({ children }: PropsWithChildren) {
   if (type === "form")
     return (
       <Wrapper
-        selected={active.block === id}
+        selected={activeBlock === id}
         className="p-6"
         onClick={onSelect}
         onKeyDown={onSelect}
@@ -67,7 +67,7 @@ export function FieldWrapper({ children }: PropsWithChildren) {
   return (
     <QuickActions>
       <Wrapper
-        selected={active.block === id}
+        selected={activeBlock === id}
         ref={setNodeRef}
         style={nodeStyle}
         {...attributes}

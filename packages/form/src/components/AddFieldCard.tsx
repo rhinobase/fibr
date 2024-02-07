@@ -5,7 +5,7 @@ import { useFormBuilder } from "@fibr/providers";
 
 export function AddFieldCard() {
   const changeTab = useBuilder((state) => state.tabs.setActive);
-  const select = useFormBuilder((state) => state.blocks.select);
+  const select = useFormBuilder((state) => state.block.select);
 
   const setPaletteActive = eventHandler(() => {
     changeTab("palette");
