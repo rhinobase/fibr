@@ -1,5 +1,12 @@
 "use client";
-import { Tab, TabList, TabTrigger } from "@rafty/ui";
+import {
+  Tab,
+  TabList,
+  TabTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@rafty/ui";
 import type { PropsWithChildren } from "react";
 import { Panel } from "react-resizable-panels";
 import { ResizeHandle } from "../ResizeHandle";
@@ -33,14 +40,18 @@ function SidebarTray({ children }: PropsWithChildren) {
       className="h-full"
     >
       <TabList>
-        {Array.from(all).map(([name, { icon }]) => (
-          <TabTrigger
-            key={name}
-            value={name}
-            className="hover:text-secondary-700 px-2"
-          >
-            {icon}
-          </TabTrigger>
+        {Array.from(all).map(([name, { icon, label }]) => (
+          <Tooltip key={name}>
+            <TooltipTrigger asChild>
+              <TabTrigger
+                value={name}
+                className="hover:text-secondary-700 px-2"
+              >
+                {icon}
+              </TabTrigger>
+            </TooltipTrigger>
+            <TooltipContent side="right">{label}</TooltipContent>
+          </Tooltip>
         ))}
       </TabList>
       {children}

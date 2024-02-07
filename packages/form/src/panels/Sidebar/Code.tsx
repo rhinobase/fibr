@@ -4,15 +4,16 @@ import {
   CodeBracketSquareIcon,
   DocumentDuplicateIcon,
 } from "@heroicons/react/24/outline";
-import { Button } from "@rafty/ui";
+import { Button, classNames } from "@rafty/ui";
 import { format as prettyFormat } from "pretty-format";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
+import { Highlight, themes } from "prism-react-renderer";
 
 export function CodeGenerator() {
   const [_, copyToClipboard] = useCopyToClipboard();
   const schema = useFormBuilder((state) => state.schema);
 
-  const content = prettyFormat(schema);
+  const code = prettyFormat(schema);
 
   return (
     <SidebarItem
@@ -28,7 +29,7 @@ export function CodeGenerator() {
             size="icon"
             variant="ghost"
             className="rounded p-0.5"
-            onClick={() => copyToClipboard(content)}
+            onClick={() => copyToClipboard(code)}
             title="Copy code"
           >
             <DocumentDuplicateIcon className="size-4 stroke-2" />
@@ -36,7 +37,23 @@ export function CodeGenerator() {
         </div>
         <hr />
       </div>
-      <pre className="h-full overflow-x-auto px-3">{content}</pre>
+      <Highlight theme={themes.github} code={code} language="js">
+        {({ className, style, tokens, getLineProps, getTokenProps }) => (
+          <pre
+            style={style}
+            className={classNames("h-full overflow-x-auto px-3", className)}
+          >
+            {tokens.map((line, i) => (
+              <div key={i} {...getLineProps({ line })}>
+                <span className="mr-4">{i + 1}</span>
+                {line.map((token, key) => (
+                  <span key={key} {...getTokenProps({ token })} />
+                ))}
+              </div>
+            ))}
+          </pre>
+        )}
+      </Highlight>
     </SidebarItem>
   );
 }
