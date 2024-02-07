@@ -1,5 +1,5 @@
 import { classNames } from "@rafty/ui";
-import { HTMLAttributes, forwardRef } from "react";
+import { type HTMLAttributes, forwardRef } from "react";
 
 export type Footer = HTMLAttributes<HTMLDivElement>;
 

@@ -1,6 +1,6 @@
 "use client";
 import { Tab, TabList, TabTrigger } from "@rafty/ui";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { useBuilder } from "../providers";
 import { Env } from "../utils";
 import { Panel } from "react-resizable-panels";

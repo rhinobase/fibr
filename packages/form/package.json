@@ -5,7 +5,7 @@
     "@swc/helpers": "^0.5.3",
     "@rafty/ui": "^1.4.2",
     "@rafty/shared": "^1.0.0",
-    "@fibr/blocks": "^0.0.1",
+    "@fibr/canvas": "^0.0.1",
     "@fibr/builder": "^0.0.1",
     "@fibr/react": "^0.0.1",
     "@heroicons/react": "^2.1.1",
@@ -15,9 +15,6 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@dnd-kit/sortable": "^8.0.0",
     "class-variance-authority": "^0.7.0",
-    "lodash": "^4.17.21",
-    "zustand": "^4.5.0",
-    "immer": "^10.0.3",
     "@fibr/shared": "^1.0.0",
     "@fibr/providers": "^1.0.0"
   },

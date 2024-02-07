@@ -8,7 +8,7 @@ import {
 } from "react-hook-form";
 
 export type Form = {
-  onSubmit: SubmitHandler<FieldValues>;
+  onSubmit?: SubmitHandler<FieldValues>;
   onError?: SubmitErrorHandler<FieldValues>;
 } & {
   title: string;
@@ -26,7 +26,7 @@ export function Form() {
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit(onSubmit, onError)}
+        onSubmit={methods.handleSubmit(onSubmit ?? console.log, onError)}
         className="space-y-3"
       >
         {Array.from(blocks.entries()).map(([id, field]) => (

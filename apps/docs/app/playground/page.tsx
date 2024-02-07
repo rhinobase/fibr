@@ -1,14 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { plugin, settings } from "@fibr/blocks";
 import { Workspace } from "@fibr/builder";
 import { FormBuilder } from "@fibr/form-builder";
+import type { ThreadType } from "@fibr/react";
 import { type Block } from "@fibr/shared";
 import { type ReactNode, useState } from "react";
 import { HiOutlineMail } from "react-icons/hi";
 import { LuTextCursorInput } from "react-icons/lu";
 import { MdLink, MdOutlineKey, MdOutlineMailOutline } from "react-icons/md";
 import { Header } from "./Header";
-import { Container } from "./utils";
+import { Container, TemplateDialog } from "./templates";
 
 const CONFIG: Record<
   string,
@@ -101,19 +103,36 @@ const BLOCKS: Record<string, Block[]> = {
   ],
 };
 
-const PANELS: Record<Container, ReactNode> = {
-  [Container.FORM]: <FormBuilder blocks={BLOCKS} config={CONFIG} />,
-  [Container.WORKFLOW]: <></>,
-  [Container.PAGE]: <></>,
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+type PanelProps = { template: ThreadType<any> };
+
+const PANELS: Record<Container, (props: PanelProps) => ReactNode> = {
+  [Container.FORM]: ({ template }) => (
+    <FormBuilder
+      schema={new Map(Object.entries({ form: template }))}
+      blocks={BLOCKS}
+      config={CONFIG}
+    />
+  ),
+  [Container.WORKFLOW]: () => <></>,
+  [Container.PAGE]: () => <></>,
 };
 
 export default function Playground() {
   const [container, setContainer] = useState(Container.FORM);
+  const [template, setTemplate] = useState<PanelProps["template"] | null>();
+
+  const Component = PANELS[container];
 
   return (
     <Workspace>
-      <Header container={container} onContainerChange={setContainer} />
-      {PANELS[container]}
+      <Header />
+      <TemplateDialog
+        container={container}
+        onContainerChange={setContainer}
+        onSelect={setTemplate}
+      />
+      {template && <Component template={template} />}
     </Workspace>
   );
 }

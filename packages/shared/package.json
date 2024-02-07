@@ -4,8 +4,8 @@
   "dependencies": {
     "@swc/helpers": "^0.5.3",
     "@rafty/shared": "^1.0.0",
-    "@heroicons/react": "^2.1.1",
     "@rafty/ui": "^1.4.5",
+    "@heroicons/react": "^2.1.1",
     "react-icons": "^5.0.1",
     "@dnd-kit/core": "^6.1.0",
     "@dnd-kit/modifiers": "^7.0.0",

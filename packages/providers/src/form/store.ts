@@ -1,12 +1,21 @@
-import { type Form, f } from "@fibr/blocks";
-import { ThreadType, ThreadWithIdType } from "@fibr/react";
+import { arrayMove } from "@dnd-kit/sortable";
+import type { ThreadType, ThreadWithIdType } from "@fibr/react";
+import type { Draft } from "immer";
+import _ from "lodash";
 import { StoreApi, UseBoundStore, create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import _ from "lodash";
-import { arrayMove } from "@dnd-kit/sortable";
 
-export type FormBuilderStore = {
-  schema: Map<string, ThreadType<Form>>;
+export type BasicFormType = {
+  title: string;
+  blocks: Map<string, ThreadType>;
+};
+
+export type FormBuilderStoreProps<T extends BasicFormType> = {
+  formKey?: string;
+} & Partial<Pick<FormBuilderStore<T>, "schema">>;
+
+export type FormBuilderStore<T extends BasicFormType> = {
+  schema: Map<string, ThreadType<T>>;
   active: {
     form: string | null;
     block: string | null;
@@ -14,8 +23,8 @@ export type FormBuilderStore = {
   uniqueId: (type: string, context: Map<string, unknown>) => string;
   forms: {
     select: (formId: string | null) => void;
-    get: (formId: string) => ThreadType<Form> | null;
-    add: (title: string | ThreadType<Form>) => void;
+    get: (formId: string) => ThreadType<T> | null;
+    add: (title: string | ThreadType<T>) => void;
     remove: (formId: string) => void;
   };
   blocks: {
@@ -38,10 +47,13 @@ export type FormBuilderStore = {
   };
 };
 
-export const createFormBuilderStore = () =>
+export const createFormBuilderStore = <T extends BasicFormType>({
+  formKey = "form",
+  schema = new Map(),
+}: FormBuilderStoreProps<T>) =>
   create(
-    immer<FormBuilderStore>((set, get) => ({
-      schema: new Map(Object.entries({})),
+    immer<FormBuilderStore<T>>((set, get) => ({
+      schema,
       active: {
         form: null,
         block: null,
@@ -72,18 +84,17 @@ export const createFormBuilderStore = () =>
         },
         add: (struct) =>
           set((state) => {
-            const formId = get().uniqueId("form", state.schema);
-            const block = f.form(
+            const formId = get().uniqueId(formKey, state.schema);
+            const block =
               typeof struct === "string"
                 ? {
+                    type: formKey,
                     title: struct,
                     blocks: new Map(),
-                    onSubmit: console.log,
                   }
-                : struct,
-            );
+                : struct;
 
-            state.schema.set(formId, block);
+            state.schema.set(formId, block as Draft<ThreadType<T>>);
             state.active.form = formId;
             state.active.block = formId;
           }),
@@ -207,4 +218,4 @@ export const createFormBuilderStore = () =>
         },
       },
     })),
-  ) as UseBoundStore<StoreApi<FormBuilderStore>>;
+  ) as UseBoundStore<StoreApi<FormBuilderStore<T>>>;

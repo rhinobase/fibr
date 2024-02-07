@@ -1,13 +1,12 @@
-import { Form } from "@fibr/blocks";
 import type { ThreadType } from "@fibr/react";
 import { eventHandler } from "@rafty/shared";
 import { Button, classNames } from "@rafty/ui";
 import { MdDelete } from "react-icons/md";
-import { useFormBuilder } from "@fibr/providers";
+import { useFormBuilder, BasicFormType } from "@fibr/providers";
 
 export type FormCard = {
   id: string;
-  form: ThreadType<Form>;
+  form: ThreadType<BasicFormType>;
 };
 
 export function FormCard({ id, form: { title } }: FormCard) {
