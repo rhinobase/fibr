@@ -5,11 +5,14 @@ import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
+  InputField,
   Tooltip,
   TooltipContent,
   TooltipTrigger,
+  classNames,
+  useBoolean,
 } from "@rafty/ui";
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useEffect, useRef, useState } from "react";
 import { HiPencil } from "react-icons/hi";
 import { IconType } from "react-icons/lib";
 import {
@@ -51,11 +54,62 @@ export function QuickActions({ children }: QuickActions) {
 
 function IdEditField() {
   const { id } = useThread();
+  const [isEditable, toggle] = useBoolean(false);
+  const ref = useRef<HTMLInputElement>(null);
+  const { select } = useFormBuilder(({ blocks, active }) => ({
+    select: blocks.select,
+    active,
+  }));
+
+  useEffect(() => {
+    if (isEditable && ref.current) ref.current.focus();
+  }, [isEditable]);
+
+  const handleClick = eventHandler(() => {
+    toggle(true);
+    select(id);
+  });
+
+  const onSubmit = (
+    e:
+      | React.FocusEvent<HTMLInputElement>
+      | React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Field data
+    console.log(id, ref.current?.value);
+    toggle(false);
+  };
 
   return (
-    <div className="bg-secondary-200/70 text-secondary-600 flex w-max items-center gap-1.5 rounded-md px-2 py-1.5">
-      <code className="text-sm">{id}</code>
-      <HiPencil />
+    <div
+      className={classNames(
+        "bg-secondary-200/70 text-secondary-600 w-max rounded-md",
+        !isEditable && "px-2 py-1.5",
+      )}
+      onClick={handleClick}
+      onKeyDown={handleClick}
+    >
+      {isEditable ? (
+        <InputField
+          size="sm"
+          ref={ref}
+          defaultValue={id}
+          className="w-[100px] bg-white font-mono"
+          onBlur={onSubmit}
+          onKeyDown={(event) => {
+            const { key } = event;
+            if (key === "Escape" || key === "Enter") onSubmit(event);
+          }}
+        />
+      ) : (
+        <div className="flex items-center gap-1.5">
+          <code className="text-sm">{id}</code>
+          <HiPencil />
+        </div>
+      )}
     </div>
   );
 }
