@@ -16,6 +16,7 @@
     "@rafty/ui": "^1.4.2",
     "@swc/helpers": "^0.5.3",
     "class-variance-authority": "^0.7.0",
+    "pretty-format": "^29.7.0",
     "react-icons": "^5.0.1"
   },
   "peerDependencies": {

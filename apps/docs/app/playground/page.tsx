@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { plugin, settings } from "@fibr/blocks";
-import { Workspace } from "@fibr/builder";
+import { Header, PreviewButton, Workspace } from "@fibr/builder";
 import { FormBuilder } from "@fibr/form-builder";
 import type { ThreadType } from "@fibr/react";
 import { type Block } from "@fibr/shared";
@@ -9,7 +9,6 @@ import { type ReactNode, useState } from "react";
 import { HiOutlineMail } from "react-icons/hi";
 import { LuTextCursorInput } from "react-icons/lu";
 import { MdLink, MdOutlineKey, MdOutlineMailOutline } from "react-icons/md";
-import { Header } from "./Header";
 import { Container, TemplateDialog } from "./templates";
 
 const CONFIG: Record<
@@ -126,7 +125,10 @@ export default function Playground() {
 
   return (
     <Workspace>
-      <Header />
+      <Header className="gap-2 px-2 py-1.5">
+        <div className="flex-1" />
+        <PreviewButton />
+      </Header>
       <TemplateDialog
         container={container}
         onContainerChange={setContainer}

@@ -2,6 +2,7 @@ import { Sidebar as BuilderSidebar } from "@fibr/builder";
 import { Forms } from "./Forms";
 import { Palette, Overview } from "@fibr/shared";
 import { useFormBuilder } from "@fibr/providers";
+import { CodeGenerator } from "./Code";
 
 export function Sidebar() {
   const {
@@ -40,6 +41,7 @@ export function Sidebar() {
         }
       />
       <Forms />
+      <CodeGenerator />
     </BuilderSidebar>
   );
 }

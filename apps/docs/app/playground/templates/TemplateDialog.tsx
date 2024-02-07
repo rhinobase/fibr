@@ -33,8 +33,10 @@ export function TemplateDialog({
     <Dialog open={isOpen}>
       <DialogOverlay />
       <DialogContent showCloseButton={false} className="space-y-5">
-        <h4 className="text-2xl font-semibold">Templates</h4>
-        <Switch value={container} onValueChange={onContainerChange} />
+        <div className="flex items-center justify-between">
+          <h4 className="text-2xl font-semibold">Templates</h4>
+          <Switch value={container} onValueChange={onContainerChange} />
+        </div>
         <div className="grid w-full grid-cols-4 gap-3">
           {TEMPLATES[container].map(({ id, name, icon: Icon, template }) => (
             <div
