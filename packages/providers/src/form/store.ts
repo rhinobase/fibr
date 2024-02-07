@@ -12,7 +12,10 @@ export type BasicFormType = {
 
 export type FormBuilderStoreProps<T extends BasicFormType> = {
   formKey?: string;
-} & Partial<Pick<FormBuilderStore<T>, "schema">>;
+  initialSchema?: FormBuilderStore<T>["schema"];
+  defaultActiveForm?: string | null;
+  defaultActiveBlock?: string | null;
+};
 
 export type FormBuilderStore<T extends BasicFormType> = {
   schema: Map<string, ThreadType<T>>;
@@ -49,14 +52,16 @@ export type FormBuilderStore<T extends BasicFormType> = {
 
 export const createFormBuilderStore = <T extends BasicFormType>({
   formKey = "form",
-  schema = new Map(),
-}: FormBuilderStoreProps<T>) =>
-  create(
+  initialSchema = new Map(),
+  defaultActiveForm = null,
+  defaultActiveBlock = null,
+}: FormBuilderStoreProps<T>) => {
+  return create(
     immer<FormBuilderStore<T>>((set, get) => ({
-      schema,
+      schema: initialSchema,
       active: {
-        form: null,
-        block: null,
+        form: defaultActiveForm,
+        block: defaultActiveBlock,
       },
       uniqueId: (type, context) => {
         let index = 1;
@@ -219,3 +224,4 @@ export const createFormBuilderStore = <T extends BasicFormType>({
       },
     })),
   ) as UseBoundStore<StoreApi<FormBuilderStore<T>>>;
+};

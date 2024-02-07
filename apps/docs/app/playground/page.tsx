@@ -108,7 +108,9 @@ type PanelProps = { template: ThreadType<any> };
 const PANELS: Record<Container, (props: PanelProps) => ReactNode> = {
   [Container.FORM]: ({ template }) => (
     <FormBuilder
-      schema={new Map(Object.entries({ form: template }))}
+      initialSchema={new Map(Object.entries({ form: template }))}
+      defaultActiveForm="form"
+      defaultActiveBlock="form"
       blocks={BLOCKS}
       config={CONFIG}
     />

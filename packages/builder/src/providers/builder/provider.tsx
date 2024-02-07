@@ -8,7 +8,7 @@ import {
 import { useStore } from "zustand";
 import {
   type CreateBuilderStoreProps,
-  BuilderStore,
+  type BuilderStore,
   createBuilderStore,
 } from "./store";
 

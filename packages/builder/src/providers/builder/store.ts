@@ -11,6 +11,8 @@ type TabPayload = {
 
 export type CreateBuilderStoreProps = {
   enableZooming?: boolean;
+  tabs?: Map<string, Omit<TabPayload, "name">>;
+  env?: Env;
 };
 
 export type BuilderStore = {
@@ -28,12 +30,18 @@ export type BuilderStore = {
 };
 
 enableMapSet();
-export const createBuilderStore = (props: CreateBuilderStoreProps) =>
+export const createBuilderStore = ({
+  enableZooming = false,
+  tabs = new Map(),
+  env = Env.DEVELOPMENT,
+}: CreateBuilderStoreProps) =>
   create(
     immer<BuilderStore>((set) => ({
-      config: props,
+      config: {
+        enableZooming,
+      },
       tabs: {
-        all: new Map(),
+        all: tabs,
         add: (payload) =>
           set((state) => {
             const { name, ...data } = payload;
@@ -48,7 +56,7 @@ export const createBuilderStore = (props: CreateBuilderStoreProps) =>
           }),
       },
       env: {
-        current: Env.DEVELOPMENT,
+        current: env,
         change: (env) =>
           set((state) => {
             state.env.current = env;

@@ -9,12 +9,11 @@ import { type SourceStore, SourceProvider } from "@fibr/shared";
 export function FormBuilder<T extends BasicFormType>({
   blocks,
   config,
-  formKey,
-  schema,
+  ...builderProps
 }: SourceStore & FormBuilderStoreProps<T>) {
   return (
     <SourceProvider blocks={blocks} config={config}>
-      <FormBuilderProvider formKey={formKey} schema={schema}>
+      <FormBuilderProvider {...builderProps}>
         <Container />
       </FormBuilderProvider>
     </SourceProvider>
