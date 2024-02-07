@@ -25,13 +25,13 @@
     "url": "https://github.com/rhinobase/fibr/issues"
   },
   "dependencies": {
-    "@swc/helpers": "^0.5.3",
-    "@rafty/ui": "^1.4.2",
     "@heroicons/react": "^2.1.1",
-    "react-zoom-pan-pinch": "^3.4.0",
+    "@rafty/ui": "^1.4.2",
+    "@swc/helpers": "^0.5.3",
+    "immer": "^10.0.3",
     "react-resizable-panels": "^2.0.2",
-    "zustand": "^4.5.0",
-    "immer": "^10.0.3"
+    "react-zoom-pan-pinch": "^3.4.0",
+    "zustand": "^4.5.0"
   },
   "peerDependencies": {
     "react": "^18.2.0"
