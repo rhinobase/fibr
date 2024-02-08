@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { type CreateBuilderStoreProps, BuilderProvider } from "./providers";
+import { BuilderProvider, type CreateBuilderStoreProps } from "./providers";
 
 export function Workspace({
   children,

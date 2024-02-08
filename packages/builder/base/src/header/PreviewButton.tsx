@@ -1,7 +1,7 @@
 import { eventHandler } from "@rafty/shared";
 import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
-import { VscDebugStart } from "react-icons/vsc";
 import { HiOutlineCodeBracketSquare } from "react-icons/hi2";
+import { VscDebugStart } from "react-icons/vsc";
 import { useBuilder } from "../providers";
 import { Env } from "../utils";
 

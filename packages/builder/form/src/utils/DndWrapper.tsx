@@ -16,8 +16,8 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import type { PropsWithChildren } from "react";
 import { useFormBuilder } from "@fibr/providers";
+import type { PropsWithChildren } from "react";
 
 export type DndWrapper = Pick<SortableContextProps, "items">;
 

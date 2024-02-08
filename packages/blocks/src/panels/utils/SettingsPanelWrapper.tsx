@@ -11,6 +11,7 @@ export function SettingsPanelWrapper({ children }: PropsWithChildren) {
 
   const subscription = methods.watch(_update);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const id = methods.getValues("id");
     if (id !== defaultValues.id) methods.reset(defaultValues);

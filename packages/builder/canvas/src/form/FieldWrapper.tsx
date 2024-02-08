@@ -1,17 +1,17 @@
-import { useThread } from "@fibr/react";
-import { classNames } from "@rafty/ui";
+import { useSortable } from "@dnd-kit/sortable";
 import { CSS, Transform } from "@dnd-kit/utilities";
+import { useFormBuilder } from "@fibr/providers";
+import { useThread } from "@fibr/react";
+import { eventHandler } from "@rafty/shared";
+import { classNames } from "@rafty/ui";
+import { cva } from "class-variance-authority";
 import {
-  forwardRef,
   type CSSProperties,
   type HTMLAttributes,
   type PropsWithChildren,
+  forwardRef,
 } from "react";
-import { useFormBuilder } from "@fibr/providers";
 import { QuickActions } from "./QuickActions";
-import { useSortable } from "@dnd-kit/sortable";
-import { eventHandler } from "@rafty/shared";
-import { cva } from "class-variance-authority";
 
 const wrapperClasses = cva("w-full cursor-pointer border bg-white rounded", {
   variants: {

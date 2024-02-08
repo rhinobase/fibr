@@ -1,4 +1,5 @@
 "use client";
+import { CanvasType } from "@fibr/providers";
 import { ThreadType } from "@fibr/react";
 import { eventHandler } from "@rafty/shared";
 import {
@@ -14,10 +15,11 @@ import { FiArrowLeft } from "react-icons/fi";
 import { CustomTemplateForm } from "./CustomTemplateForm";
 import { Switch } from "./Switch";
 import { TEMPLATES } from "./templates";
+
 export type TemplateDialog = {
   container: Switch["value"];
   onContainerChange: Switch["onValueChange"];
-  onSelect: (template: ThreadType) => void;
+  onSelect: (template: Map<string, ThreadType<CanvasType>>) => void;
 };
 
 export function TemplateDialog({
@@ -32,13 +34,15 @@ export function TemplateDialog({
     toggle(true);
   }, [toggle]);
 
-  const simpleSelect = (template: ThreadType) => {
+  const simpleSelect = (template: Map<string, ThreadType<CanvasType>>) => {
     onSelect(template);
     toggle(false);
   };
 
-  const handleSelect = (template: ThreadType) =>
-    eventHandler(() => simpleSelect(template));
+  const handleSelect = (template: ThreadType<CanvasType>) =>
+    eventHandler(() =>
+      simpleSelect(new Map(Object.entries({ canvas: template }))),
+    );
 
   const toggleTemplateMode = eventHandler(() => setCustomSchema());
 

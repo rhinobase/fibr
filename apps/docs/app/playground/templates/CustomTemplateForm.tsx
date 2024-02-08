@@ -1,3 +1,4 @@
+import { CanvasType } from "@fibr/providers";
 import { ThreadType } from "@fibr/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, FieldControl, Textarea } from "@rafty/ui";
@@ -10,7 +11,7 @@ const schema = z.object({
 });
 
 export type CustomTemplateForm = {
-  onSubmit: (template: ThreadType) => void;
+  onSubmit: (template: Map<string, ThreadType<CanvasType>>) => void;
 };
 
 export function CustomTemplateForm(props: CustomTemplateForm) {
@@ -26,7 +27,11 @@ export function CustomTemplateForm(props: CustomTemplateForm) {
       className="space-y-3"
     >
       <FieldControl name="template">
-        <Textarea className="h-[178px]" {...register("template")} />
+        <Textarea
+          className="h-[186px]"
+          placeholder="Paste your schema here..."
+          {...register("template")}
+        />
       </FieldControl>
       <Button type="submit" className="ml-auto" colorScheme="primary">
         Get Started

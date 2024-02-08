@@ -1,11 +1,11 @@
 import { SidebarItem } from "@fibr/builder";
+import { useFormBuilder } from "@fibr/providers";
+import { Empty } from "@fibr/shared";
 import { Square3Stack3DIcon } from "@heroicons/react/24/outline";
 import { Button, InputField, useBoolean } from "@rafty/ui";
 import { useEffect, useRef } from "react";
 import { MdAdd } from "react-icons/md";
 import { CanvasCard } from "../../components";
-import { useFormBuilder } from "@fibr/providers";
-import { Empty } from "@fibr/shared";
 
 export function Canvases() {
   const [show, toggle] = useBoolean();

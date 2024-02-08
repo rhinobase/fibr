@@ -1,12 +1,12 @@
 import { SidebarItem } from "@fibr/builder";
-import { SearchField } from "@rafty/ui";
 import { Squares2X2Icon } from "@heroicons/react/24/outline";
-import { PaletteCard } from "./PaletteCard";
-import { useSource } from "../../providers";
-import { Empty } from "../utils";
-import { useMemo, useState } from "react";
+import { SearchField } from "@rafty/ui";
 import Fuse, { type RangeTuple } from "fuse.js";
+import { useMemo, useState } from "react";
+import { useSource } from "../../providers";
 import { Block } from "../../types";
+import { Empty } from "../utils";
+import { PaletteCard } from "./PaletteCard";
 
 export type Palette = {
   isDisabled?: boolean;

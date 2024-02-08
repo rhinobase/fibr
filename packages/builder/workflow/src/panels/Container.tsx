@@ -1,9 +1,9 @@
 import { Container as BuilderContainer, Env, useBuilder } from "@fibr/builder";
-import { useFormBuilder } from "@fibr/providers";
 import { WorkflowCanvas } from "@fibr/canvas";
+import { useFormBuilder } from "@fibr/providers";
+import type { ThreadType } from "@fibr/react";
 import { Settings } from "@fibr/shared";
 import { Sidebar } from "./Sidebar";
-import type { ThreadType } from "@fibr/react";
 
 export function Container() {
   const isDevelopment = useBuilder(

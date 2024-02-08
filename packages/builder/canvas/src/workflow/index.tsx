@@ -1,7 +1,7 @@
+import { Canvas } from "@fibr/shared";
 import { ReactFlowProvider } from "reactflow";
 import "reactflow/dist/base.css";
 import { Diagram } from "./Diagram";
-import { Canvas } from "@fibr/shared";
 
 export function WorkflowCanvas(props: Diagram) {
   return (

@@ -1,6 +1,6 @@
 import { eventHandler } from "@rafty/shared";
-import type { Block } from "../../types";
 import type { RangeTuple } from "fuse.js";
+import type { Block } from "../../types";
 import { highlightMatches } from "./HightlightMatches";
 
 export type PaletteCard = Block & {

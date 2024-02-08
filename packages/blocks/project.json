@@ -7,25 +7,17 @@
   "targets": {
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": [
-        "{options.outputFile}"
-      ]
+      "outputs": ["{options.outputFile}"]
     },
     "build": {
       "executor": "@nx/rollup:rollup",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/blocks",
         "tsConfig": "packages/blocks/tsconfig.lib.json",
         "project": "packages/blocks/package.json",
         "entryFile": "packages/blocks/src/index.ts",
-        "external": [
-          "react",
-          "react-dom",
-          "react/jsx-runtime"
-        ],
+        "external": ["react", "react-dom", "react/jsx-runtime"],
         "rollupConfig": "rollup.config.js",
         "compiler": "swc",
         "assets": [

@@ -1,10 +1,10 @@
 import { createThread, useThread } from "@fibr/react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { eventHandler } from "@rafty/shared";
 import { Button, InputField, Suffix, useBoolean } from "@rafty/ui";
 import { useFormContext } from "react-hook-form";
 import { FieldWrapper, type FieldWrapperProps } from "../FieldWrapper";
 import { InputWrapper, type InputWrapperProps } from "../InputWrapper";
-import { eventHandler } from "@rafty/shared";
 
 export type PasswordInput = Omit<
   FieldWrapperProps<

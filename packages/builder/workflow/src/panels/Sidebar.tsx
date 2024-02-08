@@ -1,6 +1,6 @@
 import { Sidebar as BuilderSidebar } from "@fibr/builder";
-import { Palette } from "@fibr/shared";
 import { useFormBuilder } from "@fibr/providers";
+import { Palette } from "@fibr/shared";
 
 export function Sidebar() {
   const { addBlock, active } = useFormBuilder(({ block, active }) => ({

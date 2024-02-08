@@ -1,7 +1,7 @@
 import {
-  SettingsPanelWrapper,
   CommonInputSettings,
   FieldWrapperSettings,
+  SettingsPanelWrapper,
 } from "./utils";
 
 export function TextareaSettingsPanel() {

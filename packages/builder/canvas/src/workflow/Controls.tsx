@@ -1,12 +1,14 @@
+import { Button } from "@rafty/ui";
 import {
+  type FC,
+  type PropsWithChildren,
   memo,
   useEffect,
   useState,
-  type FC,
-  type PropsWithChildren,
 } from "react";
 import { HiMinus, HiPlus } from "react-icons/hi";
 import { HiLockClosed, HiLockOpen } from "react-icons/hi2";
+import { PiCornersOut } from "react-icons/pi";
 import {
   ControlProps,
   Panel,
@@ -16,8 +18,6 @@ import {
   useStoreApi,
 } from "reactflow";
 import { shallow } from "zustand/shallow";
-import { PiCornersOut } from "react-icons/pi";
-import { Button } from "@rafty/ui";
 import HelpMenu from "./HelpMenu";
 
 const selector = (s: ReactFlowState) => ({

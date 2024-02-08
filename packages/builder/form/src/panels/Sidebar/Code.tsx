@@ -5,17 +5,17 @@ import {
   DocumentDuplicateIcon,
 } from "@heroicons/react/24/outline";
 import { Button, classNames } from "@rafty/ui";
-import superjson from "superjson";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { Highlight, themes } from "prism-react-renderer";
 import { useId } from "react";
+import superjson from "superjson";
 
 export function CodeGenerator() {
   const id = useId();
   const [_, copyToClipboard] = useCopyToClipboard();
   const schema = useFormBuilder((state) => state.schema);
 
-  const code = JSON.stringify(JSON.parse(superjson.stringify(schema)), null, 2);
+  const code = superjson.stringify(schema);
 
   return (
     <SidebarItem
@@ -35,7 +35,11 @@ export function CodeGenerator() {
         </Button>
       }
     >
-      <Highlight theme={themes.github} code={code} language="js">
+      <Highlight
+        theme={themes.github}
+        code={JSON.stringify(JSON.parse(code), null, 2)}
+        language="js"
+      >
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <pre
             style={style}

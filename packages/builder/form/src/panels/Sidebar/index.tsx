@@ -1,7 +1,7 @@
 import { Sidebar as BuilderSidebar } from "@fibr/builder";
-import { Canvases } from "./Canvases";
-import { Palette, Overview } from "@fibr/shared";
 import { useFormBuilder } from "@fibr/providers";
+import { Overview, Palette } from "@fibr/shared";
+import { Canvases } from "./Canvases";
 import { CodeGenerator } from "./Code";
 
 export function Sidebar() {

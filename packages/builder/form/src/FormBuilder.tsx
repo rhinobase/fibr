@@ -1,10 +1,10 @@
-import { Container } from "./panels";
 import {
   type CanvasType,
   FormBuilderProvider,
   type FormBuilderStoreProps,
 } from "@fibr/providers";
-import { type SourceStore, SourceProvider } from "@fibr/shared";
+import { SourceProvider, type SourceStore } from "@fibr/shared";
+import { Container } from "./panels";
 
 export function FormBuilder<T extends CanvasType>({
   blocks,

@@ -4,8 +4,8 @@ import { Loom, WeaverProvider } from "@fibr/react";
 import { DndWrapper } from "@fibr/shared";
 import { Text } from "@rafty/ui";
 import { type PropsWithChildren, type ReactNode } from "react";
-import { FieldWrapper } from "./FieldWrapper";
 import { FieldPadding } from "./FieldPadding";
+import { FieldWrapper } from "./FieldWrapper";
 
 const BLOCK_WRAPPERS: Record<Env, (props: PropsWithChildren) => ReactNode> = {
   [Env.DEVELOPMENT]: FieldWrapper,

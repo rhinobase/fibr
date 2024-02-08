@@ -1,7 +1,7 @@
 import { Settings as BuilderSettings } from "@fibr/builder";
 import { FibrProvider, Thread, type ThreadWithIdType } from "@fibr/react";
-import { useSource } from "../providers";
 import { ReactNode } from "react";
+import { useSource } from "../providers";
 
 export type Settings<T extends Record<string, unknown>> =
   ThreadWithIdType<T> & {

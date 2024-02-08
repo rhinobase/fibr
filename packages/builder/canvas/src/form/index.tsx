@@ -1,6 +1,6 @@
+import { useFormBuilder } from "@fibr/providers";
 import { Canvas } from "@fibr/shared";
 import { FormDisplay } from "./FormDisplay";
-import { useFormBuilder } from "@fibr/providers";
 
 export function FormBuilderCanvas() {
   const select = useFormBuilder(({ block }) => block.select);

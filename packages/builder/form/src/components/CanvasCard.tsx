@@ -1,8 +1,8 @@
+import { CanvasType, useFormBuilder } from "@fibr/providers";
 import type { ThreadType } from "@fibr/react";
 import { eventHandler } from "@rafty/shared";
-import { Button, classNames, Text } from "@rafty/ui";
+import { Button, Text, classNames } from "@rafty/ui";
 import { MdDelete } from "react-icons/md";
-import { useFormBuilder, CanvasType } from "@fibr/providers";
 
 export type CanvasCard = {
   id: string;

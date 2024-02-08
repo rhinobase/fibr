@@ -1,5 +1,6 @@
 "use client";
 import { f } from "@fibr/blocks";
+import { CanvasType } from "@fibr/providers";
 import type { ThreadType } from "@fibr/react";
 import type { IconType } from "react-icons";
 import { FiArrowRight } from "react-icons/fi";
@@ -8,7 +9,12 @@ import { Container } from "./utils";
 
 export const TEMPLATES: Record<
   Container,
-  { id: string; name: string; icon: IconType; template: ThreadType }[]
+  {
+    id: string;
+    name: string;
+    icon: IconType;
+    template: ThreadType<CanvasType>;
+  }[]
 > = {
   [Container.FORM]: [
     {

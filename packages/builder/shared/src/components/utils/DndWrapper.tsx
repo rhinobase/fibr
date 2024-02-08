@@ -1,11 +1,11 @@
 import {
   DndContext,
+  type DndContextProps,
   KeyboardSensor,
   PointerSensor,
   closestCenter,
   useSensor,
   useSensors,
-  type DndContextProps,
 } from "@dnd-kit/core";
 import {
   restrictToVerticalAxis,
@@ -13,9 +13,9 @@ import {
 } from "@dnd-kit/modifiers";
 import {
   SortableContext,
+  type SortableContextProps,
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
-  type SortableContextProps,
 } from "@dnd-kit/sortable";
 
 export type DndWrapper = Pick<SortableContextProps, "items" | "children"> &
