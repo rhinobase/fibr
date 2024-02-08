@@ -112,6 +112,7 @@ const PANELS: Record<Container, (props: PanelProps) => ReactNode> = {
       initialSchema={new Map(Object.entries({ form: template }))}
       defaultActiveCanvas="form"
       defaultActiveBlock="form"
+      canvasKey="form"
       blocks={BLOCKS}
       config={CONFIG}
     />

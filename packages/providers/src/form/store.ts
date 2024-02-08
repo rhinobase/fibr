@@ -52,7 +52,7 @@ export type FormBuilderStore<T extends CanvasType> = {
 };
 
 export const createFormBuilderStore = <T extends CanvasType>({
-  canvasKey = "form",
+  canvasKey = "canvas",
   initialSchema = new Map(),
   defaultActiveCanvas = null,
   defaultActiveBlock = null,
