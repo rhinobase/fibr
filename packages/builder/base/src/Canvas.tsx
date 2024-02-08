@@ -5,8 +5,8 @@ import {
   ViewfinderCircleIcon,
 } from "@heroicons/react/24/outline";
 import { Button, classNames } from "@rafty/ui";
-import { ElementRef, forwardRef } from "react";
-import { Panel, PanelProps } from "react-resizable-panels";
+import { forwardRef, type ElementRef, type HTMLAttributes } from "react";
+import { Panel, type PanelProps } from "react-resizable-panels";
 import {
   TransformComponent,
   TransformWrapper,
@@ -21,9 +21,9 @@ const PANEL_PROPS: PanelProps = {
   id: "canvas",
 };
 
-export type Canvas = PanelProps;
+export type Canvas = HTMLAttributes<HTMLDivElement>;
 
-export const Canvas = forwardRef<ElementRef<typeof Panel>, Canvas>(
+export const Canvas = forwardRef<ElementRef<"div">, Canvas>(
   ({ children, className, ...props }, forwardedRef) => {
     const enableZooming = useBuilder((state) => state.config.enableZooming);
 
@@ -33,17 +33,19 @@ export const Canvas = forwardRef<ElementRef<typeof Panel>, Canvas>(
           wheel={{ activationKeys: ["Shift"] }}
           doubleClick={{ mode: "reset" }}
         >
-          <Panel {...props} {...PANEL_PROPS} ref={forwardedRef}>
+          <Panel {...PANEL_PROPS}>
             <div className="relative h-full">
               <TransformComponent
                 wrapperClass="!h-full !w-full"
                 contentClass="!h-full !w-full"
               >
                 <div
+                  {...props}
                   className={classNames(
                     "bg-secondary-100 flex h-full flex-1 items-start justify-center overflow-y-auto py-10",
                     className,
                   )}
+                  ref={forwardedRef}
                 >
                   {children}
                 </div>
@@ -54,16 +56,17 @@ export const Canvas = forwardRef<ElementRef<typeof Panel>, Canvas>(
         </TransformWrapper>
       );
     return (
-      <Panel
-        ref={forwardedRef}
-        {...props}
-        {...PANEL_PROPS}
-        className={classNames(
-          "bg-secondary-100 flex h-full items-start justify-center !overflow-y-auto py-10",
-          className,
-        )}
-      >
-        {children}
+      <Panel {...PANEL_PROPS}>
+        <div
+          {...props}
+          className={classNames(
+            "bg-secondary-100 flex h-full items-start justify-center !overflow-y-auto",
+            className,
+          )}
+          ref={forwardedRef}
+        >
+          {children}
+        </div>
       </Panel>
     );
   },

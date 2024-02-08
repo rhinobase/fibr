@@ -7,13 +7,19 @@ import { useSource } from "../../providers";
 import { Block } from "../../types";
 import { Empty } from "../utils";
 import { PaletteCard } from "./PaletteCard";
+import { PaletteCardOverlay } from "./PaletteCardOverlay";
 
 export type Palette = {
   isDisabled?: boolean;
+  enableDragging?: boolean;
   onBlockSelect: PaletteCard["onSelect"];
 };
 
-export function Palette({ isDisabled = false, onBlockSelect }: Palette) {
+export function Palette({
+  isDisabled = false,
+  enableDragging = false,
+  onBlockSelect,
+}: Palette) {
   const blocks = useSource((state) => state.blocks);
   const [search, setSearch] = useState<string>();
 
@@ -99,6 +105,7 @@ export function Palette({ isDisabled = false, onBlockSelect }: Palette) {
                         <PaletteCard
                           key={`${index}-${block.type}`}
                           {...block}
+                          enableDragging={enableDragging}
                           onSelect={onBlockSelect}
                         />
                       ))}
@@ -109,6 +116,7 @@ export function Palette({ isDisabled = false, onBlockSelect }: Palette) {
           )}
         </>
       )}
+      {enableDragging && <PaletteCardOverlay />}
     </SidebarItem>
   );
 }

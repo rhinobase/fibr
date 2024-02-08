@@ -13,6 +13,7 @@ export function Sidebar() {
   return (
     <BuilderSidebar>
       <Palette
+        enableDragging
         isDisabled={canvasId == null}
         onBlockSelect={(props) => canvasId && addBlock(canvasId, props)}
       />

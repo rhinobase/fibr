@@ -4,6 +4,7 @@ import { useFormBuilder } from "@fibr/providers";
 import type { ThreadType } from "@fibr/react";
 import { Settings } from "@fibr/shared";
 import { Sidebar } from "./Sidebar";
+import { DndContext } from "@dnd-kit/core";
 
 export function Container() {
   const isDevelopment = useBuilder(
@@ -27,26 +28,38 @@ export function Container() {
   }
 
   return (
-    <BuilderContainer>
-      {isDevelopment && <Sidebar />}
-      <WorkflowCanvas
-        initialEdges={[]}
-        initialNodes={[
-          {
-            id: "node1",
-            data: "Node1",
-            type: "project",
-            position: { x: 100, y: 100 },
-          },
-        ]}
-      />
-      {isDevelopment && blockId && block && (
-        <Settings
-          {...block}
-          id={blockId}
-          _update={(values) => canvasId && update(canvasId, blockId, values)}
+    <DndContext
+      onDragEnd={({ collisions, active, delta, over }) => {
+        if (
+          collisions &&
+          collisions.length > 0 &&
+          collisions.find(({ id }) => id === "canvas")
+        ) {
+          console.log(active, delta, over);
+        }
+      }}
+    >
+      <BuilderContainer>
+        {isDevelopment && <Sidebar />}
+        <WorkflowCanvas
+          initialEdges={[]}
+          initialNodes={[
+            {
+              id: "node1",
+              data: "Node1",
+              type: "project",
+              position: { x: 100, y: 100 },
+            },
+          ]}
         />
-      )}
-    </BuilderContainer>
+        {isDevelopment && blockId && block && (
+          <Settings
+            {...block}
+            id={blockId}
+            _update={(values) => canvasId && update(canvasId, blockId, values)}
+          />
+        )}
+      </BuilderContainer>
+    </DndContext>
   );
 }
