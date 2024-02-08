@@ -11,7 +11,7 @@ export const Header = forwardRef<HTMLDivElement, Header>(
       className={classNames("flex w-full items-center px-2 py-1.5", className)}
       ref={forwardedRef}
     >
-      <Logo className="w-6" />
+      <Logo className="w-7" />
       {children}
     </header>
   ),

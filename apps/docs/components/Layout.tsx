@@ -1,11 +1,11 @@
 "use client";
+import { Logo } from "@fibr/builder";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { PropsWithChildren, Suspense } from "react";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
-import { Logo } from "./Logo";
 import { MobileNavigationDialog } from "./MobileNavigation";
 import { Navigation } from "./Navigation";
 import { SearchDialog } from "./Search";

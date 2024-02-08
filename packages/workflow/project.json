@@ -1,0 +1,41 @@
+{
+  "name": "workflow",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/workflow/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ]
+    },
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/packages/workflow",
+        "tsConfig": "packages/workflow/tsconfig.lib.json",
+        "project": "packages/workflow/package.json",
+        "entryFile": "packages/workflow/src/index.ts",
+        "external": [
+          "react",
+          "react-dom",
+          "react/jsx-runtime"
+        ],
+        "rollupConfig": "rollup.config.js",
+        "compiler": "swc",
+        "assets": [
+          {
+            "glob": "packages/workflow/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    }
+  }
+}

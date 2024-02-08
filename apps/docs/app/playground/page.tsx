@@ -5,6 +5,7 @@ import { Header, PreviewButton, Workspace } from "@fibr/builder";
 import { FormBuilder } from "@fibr/form-builder";
 import type { ThreadType } from "@fibr/react";
 import { type Block } from "@fibr/shared";
+import { WorkflowBuilder } from "@fibr/workflow";
 import { type ReactNode, useState } from "react";
 import { BsTextareaT } from "react-icons/bs";
 import { HiOutlineMail } from "react-icons/hi";
@@ -117,7 +118,7 @@ const PANELS: Record<Container, (props: PanelProps) => ReactNode> = {
       config={CONFIG}
     />
   ),
-  [Container.WORKFLOW]: () => <></>,
+  [Container.WORKFLOW]: () => <WorkflowBuilder />,
   [Container.PAGE]: () => <></>,
 };
 
