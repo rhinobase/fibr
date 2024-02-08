@@ -22,23 +22,19 @@ export function CodeGenerator() {
       name="code"
       label="Code"
       icon={<CodeBracketSquareIcon className="size-5 stroke-2" />}
-      className="flex-col overflow-hidden overflow-y-auto data-[state=active]:flex data-[orientation=vertical]:p-0"
+      className="h-full"
+      action={
+        <Button
+          size="icon"
+          variant="ghost"
+          className="rounded p-0.5"
+          onClick={() => copyToClipboard(code)}
+          title="Copy code"
+        >
+          <DocumentDuplicateIcon className="size-4 stroke-2" />
+        </Button>
+      }
     >
-      <div className="sticky top-0 z-10 bg-white p-3">
-        <div className="mb-3 flex items-center">
-          <h4 className="flex-1 font-medium">Code</h4>
-          <Button
-            size="icon"
-            variant="ghost"
-            className="rounded p-0.5"
-            onClick={() => copyToClipboard(code)}
-            title="Copy code"
-          >
-            <DocumentDuplicateIcon className="size-4 stroke-2" />
-          </Button>
-        </div>
-        <hr />
-      </div>
       <Highlight theme={themes.github} code={code} language="js">
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <pre

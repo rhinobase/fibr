@@ -6,7 +6,7 @@ import { ResizeHandle } from "./ResizeHandle";
 
 export type Settings = HTMLAttributes<HTMLDivElement>;
 
-export function Settings({ className, ...props }: Settings) {
+export function Settings({ className, children, ...props }: Settings) {
   return (
     <>
       <ResizeHandle className="border-secondary-200 border-l" />
@@ -18,7 +18,11 @@ export function Settings({ className, ...props }: Settings) {
         defaultSize={20}
         className={classNames("h-full p-3", className)}
       >
-        <div {...props} />
+        <div {...props}>
+          <h4 className="font-medium">Settings</h4>
+          <hr className="my-3" />
+          {children}
+        </div>
       </Panel>
     </>
   );

@@ -23,8 +23,6 @@ export function Settings<T extends Record<string, unknown>>(
   return (
     <FibrProvider plugins={settingBuilders}>
       <BuilderSettings className="flex flex-col gap-3">
-        <h4 className="font-medium">Settings</h4>
-        <hr className="my-3" />
         <Thread {...props} />
       </BuilderSettings>
     </FibrProvider>

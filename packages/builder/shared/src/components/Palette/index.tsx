@@ -29,6 +29,7 @@ export function Palette({ isDisabled = false, onBlockSelect }: Palette) {
   }, [blocks]);
 
   let blockResults = blocks;
+  let isEmpty = false;
 
   if (search) {
     const init = Object.keys(blocks).reduce<Record<string, Block[]>>(
@@ -38,25 +39,28 @@ export function Palette({ isDisabled = false, onBlockSelect }: Palette) {
       },
       {},
     );
-    blockResults = fuse
-      .search(search)
-      .reduce<
-        Record<string, (Block & { matches?: RangeTuple[] })[]>
-      >((prev, cur) => {
-        const { item, matches } = cur;
 
-        prev[item.category].push({
-          icon: item.icon,
-          label: item.label,
-          type: item.type,
-          private: item.private,
-          presets: item.presets,
-          matches: matches
-            ?.filter((match) => match.key === "label")
-            .flatMap((match) => match.indices),
-        });
-        return prev;
-      }, init);
+    const results = fuse.search(search);
+
+    if (results.length === 0) isEmpty = true;
+
+    blockResults = results.reduce<
+      Record<string, (Block & { matches?: RangeTuple[] })[]>
+    >((prev, cur) => {
+      const { item, matches } = cur;
+
+      prev[item.category].push({
+        icon: item.icon,
+        label: item.label,
+        type: item.type,
+        private: item.private,
+        presets: item.presets,
+        matches: matches
+          ?.filter((match) => match.key === "label")
+          .flatMap((match) => match.indices),
+      });
+      return prev;
+    }, init);
   }
 
   return (
@@ -64,32 +68,44 @@ export function Palette({ isDisabled = false, onBlockSelect }: Palette) {
       name="palette"
       label="Palette"
       icon={<Squares2X2Icon className="h-5 w-5 stroke-2" />}
-      className="space-y-3 overflow-y-auto data-[orientation=vertical]:p-3"
     >
       {isDisabled ? (
-        <Empty
-          title="No canvas exists"
-          description="Please add a canvas in order to add fields in it"
-        />
+        <div className="flex flex-1 flex-col justify-center">
+          <Empty
+            title="No canvas exists"
+            description="Please add a canvas in order to add fields in it"
+          />
+        </div>
       ) : (
         <>
-          <SearchField onSearch={setSearch} size="sm" />
-          {Object.entries(blockResults).map(
-            ([category, components]) =>
-              components.length > 0 && (
-                <div key={category} className="space-y-2.5 pb-3">
-                  <h3 className="text-sm font-semibold">{category}</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {components.map((block, index) => (
-                      <PaletteCard
-                        key={`${index}-${block.type}`}
-                        {...block}
-                        onSelect={onBlockSelect}
-                      />
-                    ))}
+          <div className="sticky top-0 z-10 bg-white">
+            <SearchField search={search} onSearch={setSearch} size="sm" />
+          </div>
+          {isEmpty ? (
+            <div className="flex flex-1 flex-col justify-center">
+              <Empty
+                title="Component Not Found"
+                description="Please check your spelling and try again, or explore our other available components."
+              />
+            </div>
+          ) : (
+            Object.entries(blockResults).map(
+              ([category, components]) =>
+                components.length > 0 && (
+                  <div key={category} className="space-y-2.5 pb-3">
+                    <h3 className="text-sm font-semibold">{category}</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {components.map((block, index) => (
+                        <PaletteCard
+                          key={`${index}-${block.type}`}
+                          {...block}
+                          onSelect={onBlockSelect}
+                        />
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ),
+                ),
+            )
           )}
         </>
       )}

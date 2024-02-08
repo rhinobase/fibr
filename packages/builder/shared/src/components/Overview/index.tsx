@@ -20,12 +20,7 @@ export function Overview(props: Overview) {
       name="overview"
       label="Overview"
       icon={<ListBulletIcon className="h-5 w-5 stroke-2" />}
-      className="flex-col overflow-hidden overflow-y-auto data-[state=active]:flex data-[orientation=vertical]:p-0"
     >
-      <div className="sticky top-0 z-10 space-y-3 bg-white p-3">
-        <h4 className="font-medium">Overview</h4>
-        <hr />
-      </div>
       <FieldsRender {...props} />
     </SidebarItem>
   );
@@ -34,41 +29,43 @@ export function Overview(props: Overview) {
 function FieldsRender(props: Overview) {
   if (!props.active.canvas)
     return (
-      <Empty
-        title="No Canvas"
-        description="You can go to canvas tab to add canvas"
-      />
+      <div className="flex flex-1 flex-col justify-center">
+        <Empty
+          title="No Canvas"
+          description="You can go to canvas tab to add canvas"
+        />
+      </div>
     );
 
   if (props.blocks.length === 0)
     return (
-      <Empty
-        title="No Field"
-        description="You can go to palette to add field"
-      />
+      <div className="flex flex-1 flex-col justify-center">
+        <Empty
+          title="No Field"
+          description="You can go to palette to add field"
+        />
+      </div>
     );
 
   return (
-    <div className="space-y-2.5 px-3 pb-3">
-      <DndWrapper
-        items={props.blocks.map(({ id }) => id)}
-        onDragStart={({ active }) => props.selectBlock(String(active.id))}
-        onDragEnd={({ active, over }) => {
-          if (over && active.id !== over.id)
-            props.moveBlock(String(active.id), String(over.id));
-        }}
-      >
-        {props.blocks.map(({ id, type }) => (
-          <OverviewCard
-            key={id}
-            id={id}
-            type={type}
-            selectBlock={props.selectBlock}
-            removeBlock={props.removeBlock}
-            isActive={props.active.block === id}
-          />
-        ))}
-      </DndWrapper>
-    </div>
+    <DndWrapper
+      items={props.blocks.map(({ id }) => id)}
+      onDragStart={({ active }) => props.selectBlock(String(active.id))}
+      onDragEnd={({ active, over }) => {
+        if (over && active.id !== over.id)
+          props.moveBlock(String(active.id), String(over.id));
+      }}
+    >
+      {props.blocks.map(({ id, type }) => (
+        <OverviewCard
+          key={id}
+          id={id}
+          type={type}
+          selectBlock={props.selectBlock}
+          removeBlock={props.removeBlock}
+          isActive={props.active.block === id}
+        />
+      ))}
+    </DndWrapper>
   );
 }
