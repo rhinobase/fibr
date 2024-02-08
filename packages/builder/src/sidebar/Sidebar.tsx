@@ -42,9 +42,11 @@ function SidebarTray({ children }: PropsWithChildren) {
       <TabList>
         {Array.from(all).map(([name, { icon, label }]) => (
           <Tooltip key={name}>
-            <TabTrigger value={name} className="hover:text-secondary-700">
-              <TooltipTrigger>{icon}</TooltipTrigger>
-            </TabTrigger>
+            <TooltipTrigger>
+              <TabTrigger value={name} className="hover:text-secondary-700">
+                {icon}
+              </TabTrigger>
+            </TooltipTrigger>
             <TooltipContent side="right">{label}</TooltipContent>
           </Tooltip>
         ))}
