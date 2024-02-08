@@ -118,7 +118,16 @@ const PANELS: Record<Container, (props: PanelProps) => ReactNode> = {
       config={CONFIG}
     />
   ),
-  [Container.WORKFLOW]: () => <WorkflowBuilder />,
+  [Container.WORKFLOW]: ({ template }) => (
+    <WorkflowBuilder
+      initialSchema={new Map(Object.entries({ form: template }))}
+      defaultActiveCanvas="form"
+      defaultActiveBlock="form"
+      canvasKey="form"
+      blocks={BLOCKS}
+      config={CONFIG}
+    />
+  ),
   [Container.PAGE]: () => <></>,
 };
 

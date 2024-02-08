@@ -4,7 +4,7 @@ import {
   PlusIcon,
   ViewfinderCircleIcon,
 } from "@heroicons/react/24/outline";
-import { Button } from "@rafty/ui";
+import { Button, classNames } from "@rafty/ui";
 import { ElementRef, forwardRef } from "react";
 import { Panel, PanelProps } from "react-resizable-panels";
 import {
@@ -24,7 +24,7 @@ const PANEL_PROPS: PanelProps = {
 export type Canvas = PanelProps;
 
 export const Canvas = forwardRef<ElementRef<typeof Panel>, Canvas>(
-  ({ children, ...props }, forwardedRef) => {
+  ({ children, className, ...props }, forwardedRef) => {
     const enableZooming = useBuilder((state) => state.config.enableZooming);
 
     if (enableZooming)
@@ -39,7 +39,12 @@ export const Canvas = forwardRef<ElementRef<typeof Panel>, Canvas>(
                 wrapperClass="!h-full !w-full"
                 contentClass="!h-full !w-full"
               >
-                <div className="bg-secondary-100 flex h-full flex-1 items-start justify-center overflow-y-auto py-10">
+                <div
+                  className={classNames(
+                    "bg-secondary-100 flex h-full flex-1 items-start justify-center overflow-y-auto py-10",
+                    className,
+                  )}
+                >
                   {children}
                 </div>
               </TransformComponent>
@@ -53,7 +58,10 @@ export const Canvas = forwardRef<ElementRef<typeof Panel>, Canvas>(
         ref={forwardedRef}
         {...props}
         {...PANEL_PROPS}
-        className="bg-secondary-100 flex h-full items-start justify-center !overflow-y-auto py-10"
+        className={classNames(
+          "bg-secondary-100 flex h-full items-start justify-center !overflow-y-auto py-10",
+          className,
+        )}
       >
         {children}
       </Panel>
