@@ -1,5 +1,5 @@
 {
-  "name": "@fibr/form-builder",
+  "name": "@fibr/form",
   "version": "0.0.1",
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",
@@ -17,7 +17,7 @@
     "@swc/helpers": "^0.5.3",
     "@uidotdev/usehooks": "^2.4.1",
     "class-variance-authority": "^0.7.0",
-    "pretty-format": "^29.7.0",
+    "superjson": "^2.2.1",
     "prism-react-renderer": "^2.3.1",
     "react-icons": "^5.0.1"
   },

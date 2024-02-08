@@ -2,7 +2,7 @@
 "use client";
 import { plugin, settings } from "@fibr/blocks";
 import { Header, PreviewButton, Workspace } from "@fibr/builder";
-import { FormBuilder } from "@fibr/form-builder";
+import { FormBuilder } from "@fibr/form";
 import type { ThreadType } from "@fibr/react";
 import { type Block } from "@fibr/shared";
 import { WorkflowBuilder } from "@fibr/workflow";
