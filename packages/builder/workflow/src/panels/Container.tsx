@@ -28,17 +28,7 @@ export function Container() {
     <WorkflowDndWrapper>
       <BuilderContainer>
         <Sidebar />
-        <WorkflowCanvas
-          initialEdges={[]}
-          initialNodes={[
-            {
-              id: "node1",
-              data: "Node1",
-              type: "start",
-              position: { x: 100, y: 100 },
-            },
-          ]}
-        />
+        <WorkflowCanvas />
         {blockId && block && (
           <Settings
             {...block}

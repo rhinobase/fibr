@@ -1,19 +1,24 @@
 "use client";
+import { useFormBuilder } from "@fibr/providers";
+import { ThreadWithIdType } from "@fibr/react";
 import { useSource } from "@fibr/shared";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useMemo } from "react";
 import {
   Background,
+  Connection,
   Controls,
   DefaultEdgeOptions,
   Edge,
   FitViewOptions,
   Node,
   NodeChange,
-  type NodeTypes,
   OnNodesChange,
   ReactFlow,
   SelectionMode,
+  addEdge,
   applyNodeChanges,
+  useEdgesState,
+  type NodeTypes,
 } from "reactflow";
 import "reactflow/dist/style.css";
 
@@ -25,27 +30,24 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
   animated: true,
 };
 
-export type Diagram = {
-  initialNodes: Node[];
-  initialEdges: Edge[];
-};
-
-export function Diagram(props: Diagram) {
-  const [nodes, setNodes] = useState(props.initialNodes);
+export function Diagram() {
   const config = useSource((state) => state.config);
 
-  const builders = Object.entries(config).reduce<NodeTypes>(
-    (prev, [name, { builder }]) => {
-      prev[name] = builder;
-      return prev;
-    },
-    {},
-  );
+  const {
+    nodes,
+    edges: canvasEdges,
+    set,
+  } = useFormBuilder(({ block: { all, set } }) => ({
+    nodes: all("nodes") as Node[],
+    edges: all("edges") as Edge[],
+    set,
+  }));
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: need to run this callback when setNodes changes
   const onNodesChange: OnNodesChange = useCallback(
     (changes) =>
-      setNodes((nds) => {
+      set((tds) => {
+        const nds = tds as Node[];
+
         const parsedChanges = changes.reduce<NodeChange[]>((prev, cur) => {
           const validChange =
             cur.type !== "remove" ||
@@ -56,23 +58,41 @@ export function Diagram(props: Diagram) {
 
           return prev;
         }, []);
-        return applyNodeChanges(parsedChanges, nds);
+        return applyNodeChanges(parsedChanges, nds) as ThreadWithIdType[];
       }),
-    [setNodes],
+    [set],
   );
 
-  useEffect(() => {
-    setNodes(props.initialNodes);
-  }, [props.initialNodes]);
+  // const [nodes, , onNodesChange] = useNodesState(canvasNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(canvasEdges);
+
+  const onConnect = useCallback(
+    (params: Connection) => setEdges((eds) => addEdge(params, eds)),
+    [],
+  );
+
+  // useEffect(() => {
+  //   console.log(canvasNodes, nodes);
+  // }, [canvasNodes]);
+
+  const builders = useMemo(
+    () =>
+      Object.entries(config).reduce<NodeTypes>((prev, [name, { builder }]) => {
+        prev[name] = builder;
+        return prev;
+      }, {}),
+    [config],
+  );
 
   return (
     <div className="flex-1">
       <ReactFlow
         nodes={nodes}
-        edges={props.initialEdges}
+        edges={edges}
         nodesConnectable
         onNodesChange={onNodesChange}
-        fitView
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
         fitViewOptions={fitViewOptions}
         defaultEdgeOptions={defaultEdgeOptions}
         nodeTypes={builders}

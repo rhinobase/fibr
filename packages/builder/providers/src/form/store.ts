@@ -42,6 +42,7 @@ export type FormBuilderStore<T extends CanvasType> = {
       blockId: string,
       values: Partial<ThreadType<T>>,
     ) => void;
+    set: (func: (values: ThreadWithIdType[]) => ThreadWithIdType[]) => void;
     updateId: (canvasId: string, blockId: string, newId: string) => void;
     remove: (canvasId: string, blockId: string) => void;
     move: (canvasId: string, from: string, to: string) => void;
@@ -215,6 +216,24 @@ export const createFormBuilderStore = <T extends CanvasType>({
               // Updating the active block
               state.active.block = newId;
             }
+          }),
+        set: (func) =>
+          set((state) => {
+            const {
+              active: { canvas },
+              block: { all },
+            } = state;
+            if (!canvas) throw new Error("No active canvas present!");
+
+            const blocks = func(all(canvas));
+
+            state.schema.get(canvas)!.blocks = blocks.reduce((prev, cur) => {
+              const { id, ...data } = cur;
+
+              prev.set(id, data);
+
+              return prev;
+            }, new Map());
           }),
         remove: (canvasId, blockId) =>
           set((state) => {

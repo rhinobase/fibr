@@ -34,15 +34,11 @@ export function TemplateDialog({
     toggle(true);
   }, [toggle]);
 
-  const simpleSelect = (template: Map<string, ThreadType<CanvasType>>) => {
-    onSelect(template);
-    toggle(false);
-  };
-
-  const handleSelect = (template: ThreadType<CanvasType>) =>
-    eventHandler(() =>
-      simpleSelect(new Map(Object.entries({ canvas: template }))),
-    );
+  const handleSelect = (template: Map<string, ThreadType<CanvasType>>) =>
+    eventHandler(() => {
+      onSelect(template);
+      toggle(false);
+    });
 
   const toggleTemplateMode = eventHandler(() => setCustomSchema());
 
@@ -63,7 +59,7 @@ export function TemplateDialog({
             </Button>
             <Switch value={container} onValueChange={onContainerChange} />
           </div>
-          <CustomTemplateForm onSubmit={simpleSelect} />
+          <CustomTemplateForm onSubmit={handleSelect} />
         </DialogContent>
       ) : (
         <DialogContent showCloseButton={false} className="space-y-5">

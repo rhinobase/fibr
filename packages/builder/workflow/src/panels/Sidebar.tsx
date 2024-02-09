@@ -1,6 +1,6 @@
 import { Sidebar as BuilderSidebar } from "@fibr/builder";
 import { useFormBuilder } from "@fibr/providers";
-import { Palette } from "@fibr/shared";
+import { CodeGenerator, Palette } from "@fibr/shared";
 
 export function Sidebar() {
   const { addBlock, active } = useFormBuilder(({ block, active }) => ({
@@ -17,6 +17,7 @@ export function Sidebar() {
         isDisabled={canvasId == null}
         onBlockSelect={(props) => canvasId && addBlock(canvasId, props)}
       />
+      <CodeGenerator />
     </BuilderSidebar>
   );
 }

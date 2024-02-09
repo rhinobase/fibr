@@ -13,7 +13,7 @@ export const TEMPLATES: Record<
     id: string;
     name: string;
     icon: IconType;
-    template: ThreadType<CanvasType>;
+    template: Map<string, ThreadType<CanvasType>>;
   }[]
 > = {
   [Container.FORM]: [
@@ -21,91 +21,107 @@ export const TEMPLATES: Record<
       id: "contact-us",
       name: "Contact Us",
       icon: GoProjectTemplate,
-      template: f.form({
-        title: "Contact Us",
-        blocks: new Map(
-          Object.entries({
-            name: f.string({
-              label: "Name",
-              description: "Enter your full name",
-            }),
-            email: f.string({
-              inputType: "email",
-              label: "Email",
-              description: "Enter email id so we can respond to your query",
-            }),
-            phone: f.number({
-              label: "Phone Number",
-              description: "Enter your 10 digit mobile number",
-            }),
-            message: f.textarea({
-              label: "Message",
-              description: "Enter your message here",
-            }),
+      template: new Map(
+        Object.entries({
+          canvas: f.form({
+            title: "Contact Us",
+            blocks: new Map(
+              Object.entries({
+                name: f.string({
+                  label: "Name",
+                  description: "Enter your full name",
+                }),
+                email: f.string({
+                  inputType: "email",
+                  label: "Email",
+                  description: "Enter email id so we can respond to your query",
+                }),
+                phone: f.number({
+                  label: "Phone Number",
+                  description: "Enter your 10 digit mobile number",
+                }),
+                message: f.textarea({
+                  label: "Message",
+                  description: "Enter your message here",
+                }),
+              }),
+            ),
           }),
-        ),
-      }),
+        }),
+      ),
     },
     {
       id: "sign-in",
       name: "Sign In",
       icon: GoProjectTemplate,
-      template: f.form({
-        title: "Sign In",
-        blocks: new Map(
-          Object.entries({
-            email: f.string({
-              inputType: "email",
-              label: "Email",
-              description: "Enter your email id",
-              required: true,
-            }),
-            password: f.password({
-              label: "Password",
-              description: "Enter password",
-              required: true,
-            }),
+      template: new Map(
+        Object.entries({
+          canvas: f.form({
+            title: "Sign In",
+            blocks: new Map(
+              Object.entries({
+                email: f.string({
+                  inputType: "email",
+                  label: "Email",
+                  description: "Enter your email id",
+                  required: true,
+                }),
+                password: f.password({
+                  label: "Password",
+                  description: "Enter password",
+                  required: true,
+                }),
+              }),
+            ),
           }),
-        ),
-      }),
+        }),
+      ),
     },
     {
       id: "sign-up",
       name: "Sign Up",
       icon: GoProjectTemplate,
-      template: f.form({
-        title: "Sign Up",
-        blocks: new Map(
-          Object.entries({
-            name: f.string({
-              label: "Name",
-              required: true,
-            }),
-            email: f.string({
-              inputType: "email",
-              label: "Email",
-              required: true,
-            }),
-            password: f.password({
-              label: "Create a Password",
-              required: true,
-            }),
-            confirm_password: f.password({
-              label: "Confirm Password",
-              required: true,
-            }),
+      template: new Map(
+        Object.entries({
+          canvas: f.form({
+            title: "Sign Up",
+            blocks: new Map(
+              Object.entries({
+                name: f.string({
+                  label: "Name",
+                  required: true,
+                }),
+                email: f.string({
+                  inputType: "email",
+                  label: "Email",
+                  required: true,
+                }),
+                password: f.password({
+                  label: "Create a Password",
+                  required: true,
+                }),
+                confirm_password: f.password({
+                  label: "Confirm Password",
+                  required: true,
+                }),
+              }),
+            ),
           }),
-        ),
-      }),
+        }),
+      ),
     },
     {
       id: "custom",
       name: "Custom Form",
       icon: FiArrowRight,
-      template: f.form({
-        title: "Custom",
-        blocks: new Map(Object.entries({})),
-      }),
+      template: new Map(
+        Object.entries({
+          canvas: f.form({
+            title: "Custom",
+            blocks: new Map(Object.entries({})),
+          }),
+        }),
+      ),
     },
   ],
   [Container.WORKFLOW]: [
@@ -113,10 +129,20 @@ export const TEMPLATES: Record<
       id: "custom",
       name: "Custom Flow",
       icon: FiArrowRight,
-      template: f.form({
-        title: "Custom",
-        blocks: new Map(Object.entries({})),
-      }),
+      template: new Map(
+        Object.entries({
+          nodes: {
+            type: "nodes",
+            title: "Nodes",
+            blocks: new Map(Object.entries({})),
+          },
+          edges: {
+            type: "edges",
+            title: "Edges",
+            blocks: new Map(Object.entries({})),
+          },
+        }),
+      ),
     },
   ],
   [Container.PAGE]: [
@@ -124,10 +150,14 @@ export const TEMPLATES: Record<
       id: "custom",
       name: "Custom Page",
       icon: FiArrowRight,
-      template: f.form({
-        title: "Custom",
-        blocks: new Map(Object.entries({})),
-      }),
+      template: new Map(
+        Object.entries({
+          canvas: f.form({
+            title: "Custom",
+            blocks: new Map(Object.entries({})),
+          }),
+        }),
+      ),
     },
   ],
 };

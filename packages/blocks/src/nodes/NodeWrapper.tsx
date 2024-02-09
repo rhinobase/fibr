@@ -11,14 +11,17 @@ export function NodeWrapper({ id, children, handles }: NodeWrapper) {
   return (
     <div className="rounded bg-white p-2 text-sm leading-none">
       {children}
-      {handles.map((handle) => (
-        <Handle
-          key={`${id}_${handle.type}_${handle.position}`}
-          id={`${id}_${handle.type}_${handle.position}`}
-          type={handle.type}
-          position={handle.position}
-        />
-      ))}
+      {handles.map((handle, index) => {
+        const uniqueId = `${index}-${id}-${handle.type}-${handle.position}`;
+        return (
+          <Handle
+            key={uniqueId}
+            id={uniqueId}
+            type={handle.type}
+            position={handle.position}
+          />
+        );
+      })}
     </div>
   );
 }

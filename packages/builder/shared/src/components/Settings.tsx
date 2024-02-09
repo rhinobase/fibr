@@ -1,6 +1,6 @@
 import { Settings as BuilderSettings } from "@fibr/builder";
 import { FibrProvider, Thread, type ThreadWithIdType } from "@fibr/react";
-import { ReactNode } from "react";
+import { ReactNode, useMemo } from "react";
 import { useSource } from "../providers";
 
 export type Settings<T extends Record<string, unknown>> =
@@ -13,12 +13,17 @@ export function Settings<T extends Record<string, unknown>>(
 ) {
   const config = useSource((state) => state.config);
 
-  const settingBuilders = Object.entries(config).reduce<
-    Record<string, () => ReactNode>
-  >((prev, [name, { settings }]) => {
-    prev[name] = settings;
-    return prev;
-  }, {});
+  const settingBuilders = useMemo(
+    () =>
+      Object.entries(config).reduce<Record<string, () => ReactNode>>(
+        (prev, [name, { settings }]) => {
+          prev[name] = settings;
+          return prev;
+        },
+        {},
+      ),
+    [config],
+  );
 
   return (
     <FibrProvider plugins={settingBuilders}>

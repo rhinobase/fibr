@@ -1,18 +1,23 @@
 import { Canvas as BuilderCanvas } from "@fibr/builder";
 import { FibrProvider } from "@fibr/react";
-import { forwardRef, type ElementRef, type ReactNode } from "react";
+import { forwardRef, type ElementRef, type ReactNode, useMemo } from "react";
 import { useSource } from "../providers";
 
 export const Canvas = forwardRef<ElementRef<"div">, BuilderCanvas>(
   (props, forwardedRef) => {
     const config = useSource((state) => state.config);
 
-    const builders = Object.entries(config).reduce<
-      Record<string, () => ReactNode>
-    >((prev, [name, { builder }]) => {
-      prev[name] = builder;
-      return prev;
-    }, {});
+    const builders = useMemo(
+      () =>
+        Object.entries(config).reduce<Record<string, () => ReactNode>>(
+          (prev, [name, { builder }]) => {
+            prev[name] = builder;
+            return prev;
+          },
+          {},
+        ),
+      [config],
+    );
 
     return (
       <FibrProvider plugins={builders}>
