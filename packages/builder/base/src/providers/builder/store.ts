@@ -4,10 +4,12 @@ import { immer } from "zustand/middleware/immer";
 import { Env } from "../../utils";
 import _ from "lodash";
 
-type TabPayload = {
+export type TabPayload = {
   name: string;
   label: React.ReactNode;
   icon: React.ReactNode;
+  isResizeable?: boolean;
+  defaultSize?: number;
 };
 
 export type CreateBuilderStoreProps = {
@@ -25,6 +27,7 @@ export type BuilderStore = {
   tabs: {
     all: Map<string, Omit<TabPayload, "name">>;
     add: (tab: TabPayload) => void;
+    get: (tab: string) => Omit<TabPayload, "name"> | undefined;
     active?: string;
     setActive: (tabId: string) => void;
   };
@@ -43,7 +46,7 @@ export const createBuilderStore = ({
   env = Env.DEVELOPMENT,
 }: CreateBuilderStoreProps) =>
   create(
-    immer<BuilderStore>((set) => ({
+    immer<BuilderStore>((set, get) => ({
       config: {
         enableZooming,
       },
@@ -57,6 +60,7 @@ export const createBuilderStore = ({
 
             if (state.tabs.all.size === 1) state.tabs.active = name;
           }),
+        get: (tabId) => get().tabs.all.get(tabId),
         setActive: (tabId) =>
           set((state) => {
             state.tabs.active = tabId;

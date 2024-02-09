@@ -13,7 +13,7 @@ export function ResizeHandle({ className, ...props }: PanelResizeHandleProps) {
         className,
       )}
     >
-      <div className="absolute left-0 h-full w-full transition-all ease-in-out group-hover/handler:bg-blue-500 group-data-[resize-handle-active]/handler:bg-blue-500" />
+      <div className="absolute left-0 h-full w-full transition-all ease-in-out group-hover/handler:bg-blue-500 group-data-[panel-resize-handle-enabled=false]/handler:hidden group-data-[resize-handle-active]/handler:bg-blue-500" />
     </PanelResizeHandle>
   );
 }

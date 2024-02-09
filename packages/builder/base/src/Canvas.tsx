@@ -18,6 +18,7 @@ const PANEL_PROPS: PanelProps = {
   order: 2,
   defaultSize: 80,
   id: "canvas",
+  style: { pointerEvents: "auto" },
 };
 
 export type Canvas = HTMLAttributes<HTMLDivElement>;

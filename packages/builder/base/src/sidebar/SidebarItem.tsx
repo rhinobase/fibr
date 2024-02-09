@@ -1,19 +1,19 @@
 "use client";
 import { TabContent, classNames } from "@rafty/ui";
 import { Fragment, PropsWithChildren, type ReactNode, useEffect } from "react";
-import { useBuilder } from "../providers";
+import { TabPayload, useBuilder } from "../providers";
 
-export type SidebarItem = Omit<TabContent, "value"> & {
-  name: string;
-  label: ReactNode;
-  icon: ReactNode;
-  action?: ReactNode;
-};
+export type SidebarItem = Omit<TabContent, "value"> &
+  TabPayload & {
+    action?: ReactNode;
+  };
 
 export function SidebarItem({
   name,
   icon,
   label,
+  isResizeable = true,
+  defaultSize,
   children,
   className,
   action,
@@ -23,7 +23,7 @@ export function SidebarItem({
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: This needs to run only on init
   useEffect(() => {
-    add({ name, icon, label });
+    add({ name, icon, label, isResizeable, defaultSize });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

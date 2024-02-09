@@ -13,12 +13,20 @@ import { ResizeHandle } from "../ResizeHandle";
 import { useBuilder } from "../providers";
 import { Env } from "../utils";
 
-const MIN_SIZE = 2.7;
-const DEFAULT_SIZE = 20;
+const MIN_SIZE = 2.4;
+const DEFAULT_SIZE = 24;
 
 export function Sidebar({ children }: PropsWithChildren) {
-  const isProduction = useBuilder(
-    (state) => state.env.current === Env.PRODUCTION,
+  const { isProduction, isDisabled, defaultSize } = useBuilder(
+    ({ env: { current }, layout: { showSidebar }, tabs: { get, active } }) => {
+      const currentTab = active != null ? get(active) : undefined;
+
+      return {
+        isProduction: current === Env.PRODUCTION,
+        isDisabled: !showSidebar || currentTab?.isResizeable === false,
+        defaultSize: currentTab?.defaultSize ?? DEFAULT_SIZE,
+      };
+    },
   );
   const setLayout = useBuilder((state) => state.setLayout);
   const ref = useRef<ImperativePanelHandle>(null);
@@ -32,13 +40,14 @@ export function Sidebar({ children }: PropsWithChildren) {
         ref={ref}
         order={1}
         minSize={15}
-        defaultSize={DEFAULT_SIZE}
+        defaultSize={defaultSize}
         collapsible
         collapsedSize={MIN_SIZE}
         onResize={(size) => {
           if (size === MIN_SIZE) setLayout({ showSidebar: false });
           else setLayout({ showSidebar: true });
         }}
+        style={{ pointerEvents: "auto" }}
       >
         <SidebarTray
           expandPanel={() => {
@@ -47,13 +56,16 @@ export function Sidebar({ children }: PropsWithChildren) {
             if (!panel) return;
 
             panel.expand();
-            panel.resize(DEFAULT_SIZE);
+            panel.resize(defaultSize);
           }}
         >
           {children}
         </SidebarTray>
       </Panel>
-      <ResizeHandle className="border-secondary-200 border-r" />
+      <ResizeHandle
+        disabled={isDisabled}
+        className="border-secondary-200 border-r"
+      />
     </>
   );
 }
@@ -86,7 +98,7 @@ function SidebarTray({ children, expandPanel }: SidebarTray) {
       <TabList>
         {Array.from(all).map(([name, { icon, label }]) => (
           <Tooltip key={name}>
-            <TabTrigger value={name} className="hover:text-secondary-700">
+            <TabTrigger value={name} className="hover:text-secondary-700 p-3">
               <TooltipTrigger>{icon}</TooltipTrigger>
             </TabTrigger>
             <TooltipContent side="right">{label}</TooltipContent>
