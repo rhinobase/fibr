@@ -15,6 +15,7 @@ export function TextareaField() {
   return (
     <FieldWrapper>
       <Textarea
+        id={id}
         placeholder={placeholder}
         defaultValue={defaultValue}
         {...register(id)}

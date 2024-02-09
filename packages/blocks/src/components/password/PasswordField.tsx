@@ -31,6 +31,7 @@ export function PasswordInput() {
     <FieldWrapper>
       <InputWrapper>
         <InputField
+          id={id}
           type={showPassword ? "text" : "password"}
           defaultValue={defaultValue}
           placeholder={placeholder}

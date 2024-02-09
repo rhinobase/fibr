@@ -65,12 +65,12 @@ export function OverviewCard({
       >
         <MdDragIndicator className="text-black" />
       </Button>
-      <p className="text-2xs flex gap-1 truncate font-medium">
+      <span className="text-2xs flex gap-1 truncate font-medium">
         {id}
         <Text isMuted className="italic">
           ({type})
         </Text>
-      </p>
+      </span>
       <div className="flex-1" />
       {/* Delete Button */}
       <Button

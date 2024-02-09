@@ -20,6 +20,7 @@ export function NumberInput() {
     <FieldWrapper>
       <InputWrapper>
         <InputField
+          id={id}
           type="number"
           placeholder={placeholder}
           defaultValue={defaultValue}

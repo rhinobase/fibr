@@ -3,10 +3,18 @@ import { classNames } from "@rafty/ui";
 import { HTMLAttributes } from "react";
 import { Panel } from "react-resizable-panels";
 import { ResizeHandle } from "./ResizeHandle";
+import { useBuilder } from "./providers";
+import { Env } from "./utils";
 
 export type Settings = HTMLAttributes<HTMLDivElement>;
 
 export function Settings({ className, children, ...props }: Settings) {
+  const isProduction = useBuilder(
+    (state) => state.env.current === Env.PRODUCTION,
+  );
+
+  if (isProduction) return;
+
   return (
     <>
       <ResizeHandle className="border-secondary-200 border-l" />
@@ -14,7 +22,6 @@ export function Settings({ className, children, ...props }: Settings) {
         id="settings"
         order={3}
         minSize={20}
-        maxSize={25}
         defaultSize={20}
         className={classNames("h-full p-3", className)}
       >

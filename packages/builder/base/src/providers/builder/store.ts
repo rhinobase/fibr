@@ -2,6 +2,7 @@ import { enableMapSet } from "immer";
 import { StoreApi, UseBoundStore, create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { Env } from "../../utils";
+import _ from "lodash";
 
 type TabPayload = {
   name: string;
@@ -15,6 +16,10 @@ export type CreateBuilderStoreProps = {
   env?: Env;
 };
 
+export type Layout = {
+  showSidebar: boolean;
+};
+
 export type BuilderStore = {
   config: CreateBuilderStoreProps;
   tabs: {
@@ -23,6 +28,8 @@ export type BuilderStore = {
     active?: string;
     setActive: (tabId: string) => void;
   };
+  layout: Layout;
+  setLayout: (values: Partial<Layout>) => void;
   env: {
     current: Env;
     change: (env: Env) => void;
@@ -62,5 +69,12 @@ export const createBuilderStore = ({
             state.env.current = env;
           }),
       },
+      layout: {
+        showSidebar: false,
+      },
+      setLayout: (values) =>
+        set((state) => {
+          state.layout = _.merge(state.layout, values);
+        }),
     })),
   ) as UseBoundStore<StoreApi<BuilderStore>>;

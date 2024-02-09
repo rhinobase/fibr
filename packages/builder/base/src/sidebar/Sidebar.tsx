@@ -7,42 +7,79 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@rafty/ui";
-import type { PropsWithChildren } from "react";
-import { Panel } from "react-resizable-panels";
+import { useRef, type PropsWithChildren } from "react";
+import { ImperativePanelHandle, Panel } from "react-resizable-panels";
 import { ResizeHandle } from "../ResizeHandle";
 import { useBuilder } from "../providers";
+import { Env } from "../utils";
+
+const MIN_SIZE = 2.7;
+const DEFAULT_SIZE = 20;
 
 export function Sidebar({ children }: PropsWithChildren) {
+  const isProduction = useBuilder(
+    (state) => state.env.current === Env.PRODUCTION,
+  );
+  const setLayout = useBuilder((state) => state.setLayout);
+  const ref = useRef<ImperativePanelHandle>(null);
+
+  if (isProduction) return;
+
   return (
     <>
       <Panel
         id="sidebar"
+        ref={ref}
         order={1}
         minSize={15}
-        defaultSize={20}
+        defaultSize={DEFAULT_SIZE}
         collapsible
-        collapsedSize={2.7}
+        collapsedSize={MIN_SIZE}
+        onResize={(size) => {
+          if (size === MIN_SIZE) setLayout({ showSidebar: false });
+          else setLayout({ showSidebar: true });
+        }}
       >
-        <SidebarTray>{children}</SidebarTray>
+        <SidebarTray
+          expandPanel={() => {
+            const panel = ref.current;
+
+            if (!panel) return;
+
+            panel.expand();
+            panel.resize(DEFAULT_SIZE);
+          }}
+        >
+          {children}
+        </SidebarTray>
       </Panel>
       <ResizeHandle className="border-secondary-200 border-r" />
     </>
   );
 }
 
-function SidebarTray({ children }: PropsWithChildren) {
-  const { all, active, setActive } = useBuilder(
-    ({ tabs: { all, active, setActive } }) => ({
+type SidebarTray = PropsWithChildren<{
+  isExpanded?: boolean;
+  expandPanel?: () => void;
+}>;
+
+function SidebarTray({ children, expandPanel }: SidebarTray) {
+  const { all, active, setActive, isExpanded } = useBuilder(
+    ({ tabs: { all, active, setActive }, layout }) => ({
       all,
       active,
       setActive,
+      isExpanded: layout.showSidebar,
     }),
   );
 
   return (
     <Tab
-      value={active}
-      onValueChange={setActive}
+      value={isExpanded ? active : "None"}
+      onValueChange={(value) => {
+        setActive(value);
+        if (!isExpanded) expandPanel?.();
+      }}
       orientation="vertical"
       className="h-full"
     >

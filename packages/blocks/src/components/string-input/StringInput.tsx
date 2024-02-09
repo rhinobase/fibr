@@ -29,6 +29,7 @@ export function StringInput() {
           type={inputType}
           placeholder={placeholder}
           defaultValue={defaultValue}
+          id={id}
           {...register(id)}
         />
       </InputWrapper>

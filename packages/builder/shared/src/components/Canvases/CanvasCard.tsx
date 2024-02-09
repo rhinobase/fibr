@@ -27,12 +27,12 @@ export function CanvasCard({ id, canvas: { title } }: CanvasCard) {
       onClick={handleSelect}
       onKeyDown={handleSelect}
     >
-      <p className="text-2xs flex gap-1 truncate font-medium">
+      <span className="text-2xs flex gap-1 truncate font-medium">
         {title}
         <Text isMuted className="italic">
           ({id})
         </Text>
-      </p>
+      </span>
       <div className="flex-1" />
       <DeleteButton id={id} />
     </div>

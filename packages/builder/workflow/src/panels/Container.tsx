@@ -1,4 +1,4 @@
-import { Container as BuilderContainer, Env, useBuilder } from "@fibr/builder";
+import { Container as BuilderContainer } from "@fibr/builder";
 import { WorkflowCanvas } from "@fibr/canvas";
 import { useFormBuilder } from "@fibr/providers";
 import type { ThreadType } from "@fibr/react";
@@ -7,9 +7,6 @@ import { Sidebar } from "./Sidebar";
 import { WorkflowDndWrapper } from "./WorkflowDndWrapper";
 
 export function Container() {
-  const isDevelopment = useBuilder(
-    (state) => state.env.current === Env.DEVELOPMENT,
-  );
   const { active, getBlock, update } = useFormBuilder(({ active, block }) => ({
     active,
     getBlock: block.get,
@@ -30,7 +27,7 @@ export function Container() {
   return (
     <WorkflowDndWrapper>
       <BuilderContainer>
-        {isDevelopment && <Sidebar />}
+        <Sidebar />
         <WorkflowCanvas
           initialEdges={[]}
           initialNodes={[
@@ -42,7 +39,7 @@ export function Container() {
             },
           ]}
         />
-        {isDevelopment && blockId && block && (
+        {blockId && block && (
           <Settings
             {...block}
             id={blockId}
