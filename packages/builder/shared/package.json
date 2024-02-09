@@ -7,6 +7,7 @@
     "@dnd-kit/sortable": "^8.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@fibr/builder": "^1.0.0",
+    "@fibr/providers": "^1.0.0",
     "@fibr/react": "^1.0.0",
     "@heroicons/react": "^2.1.1",
     "@rafty/shared": "^1.0.0",
@@ -14,6 +15,10 @@
     "@swc/helpers": "^0.5.3",
     "fuse.js": "^7.0.0",
     "react-icons": "^5.0.1",
+    "@uidotdev/usehooks": "^2.4.1",
+    "class-variance-authority": "^0.7.0",
+    "superjson": "^2.2.1",
+    "prism-react-renderer": "^2.3.1",
     "zustand": "^4.5.0"
   },
   "peerDependencies": {

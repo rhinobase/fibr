@@ -7,18 +7,25 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@rafty/ui";
-import { useRef, type PropsWithChildren, RefObject } from "react";
+import {
+  useRef,
+  type PropsWithChildren,
+  RefObject,
+  useEffect,
+  useState,
+} from "react";
 import { ImperativePanelHandle, Panel } from "react-resizable-panels";
 import { ResizeHandle } from "../ResizeHandle";
 import { useBuilder } from "../providers";
 import { Env } from "../utils";
 
-const MIN_SIZE = 2.4;
 const DEFAULT_SIZE = 24;
-
 export function Sidebar({ children }: PropsWithChildren) {
+  const ref = useRef<ImperativePanelHandle>(null);
   const tabListRef = useRef<HTMLDivElement>(null);
+  const [minWidth] = useState(2.4);
 
+  const setLayout = useBuilder((state) => state.setLayout);
   const { isProduction, isDisabled, defaultSize } = useBuilder(
     ({ env: { current }, layout: { showSidebar }, tabs: { get, active } }) => {
       const currentTab = active != null ? get(active) : undefined;
@@ -30,22 +37,15 @@ export function Sidebar({ children }: PropsWithChildren) {
       };
     },
   );
-  const setLayout = useBuilder((state) => state.setLayout);
-  const ref = useRef<ImperativePanelHandle>(null);
+
+  useEffect(() => {
+    const windowSize = window.screen.width;
+    const panelGroupWidth = windowSize - 320;
+    const ListWidth = tabListRef.current?.offsetWidth ?? 0;
+    console.log((ListWidth * 100) / panelGroupWidth);
+  }, []);
 
   if (isProduction) return;
-
-  //TODO: add event listner for this
-
-  // const windowSize = window.screen.width;
-
-  // const panelGroupWidth = windowSize - 320;
-
-  // const ListWidth = tabListRef.current?.offsetWidth ?? 0;
-
-  // const minWidth = (ListWidth * 100) / panelGroupWidth;
-
-  // console.log(minWidth);
 
   return (
     <>
@@ -56,9 +56,9 @@ export function Sidebar({ children }: PropsWithChildren) {
         minSize={15}
         defaultSize={defaultSize}
         collapsible
-        collapsedSize={MIN_SIZE}
+        collapsedSize={minWidth}
         onResize={(size) => {
-          if (size === MIN_SIZE) setLayout({ showSidebar: false });
+          if (size === minWidth) setLayout({ showSidebar: false });
           else setLayout({ showSidebar: true });
         }}
         style={{ pointerEvents: "auto" }}
