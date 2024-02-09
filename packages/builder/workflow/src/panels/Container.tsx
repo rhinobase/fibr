@@ -37,7 +37,7 @@ export function Container() {
             {
               id: "node1",
               data: "Node1",
-              type: "project",
+              type: "start",
               position: { x: 100, y: 100 },
             },
           ]}

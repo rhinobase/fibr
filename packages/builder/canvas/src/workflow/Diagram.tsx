@@ -1,19 +1,21 @@
 "use client";
+import { useSource } from "@fibr/shared";
 import { useCallback, useEffect, useState } from "react";
 import {
   Background,
+  Controls,
   DefaultEdgeOptions,
   Edge,
   FitViewOptions,
   Node,
   NodeChange,
+  type NodeTypes,
   OnNodesChange,
   ReactFlow,
   SelectionMode,
   applyNodeChanges,
-  Controls,
 } from "reactflow";
-import { NODE_TYPES } from "./nodes";
+import "reactflow/dist/style.css";
 
 const fitViewOptions: FitViewOptions = {
   padding: 0.5,
@@ -30,6 +32,15 @@ export type Diagram = {
 
 export function Diagram(props: Diagram) {
   const [nodes, setNodes] = useState(props.initialNodes);
+  const config = useSource((state) => state.config);
+
+  const builders = Object.entries(config).reduce<NodeTypes>(
+    (prev, [name, { builder }]) => {
+      prev[name] = builder;
+      return prev;
+    },
+    {},
+  );
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: need to run this callback when setNodes changes
   const onNodesChange: OnNodesChange = useCallback(
@@ -59,12 +70,12 @@ export function Diagram(props: Diagram) {
       <ReactFlow
         nodes={nodes}
         edges={props.initialEdges}
-        nodesConnectable={false}
+        nodesConnectable
         onNodesChange={onNodesChange}
         fitView
         fitViewOptions={fitViewOptions}
         defaultEdgeOptions={defaultEdgeOptions}
-        nodeTypes={NODE_TYPES}
+        nodeTypes={builders}
         proOptions={{ hideAttribution: true }}
         panOnScroll
         selectionOnDrag
