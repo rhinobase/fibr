@@ -11,8 +11,8 @@ import {
   ReactFlow,
   SelectionMode,
   applyNodeChanges,
+  Controls,
 } from "reactflow";
-import Controls from "./Controls";
 import { NODE_TYPES } from "./nodes";
 
 const fitViewOptions: FitViewOptions = {
@@ -61,8 +61,8 @@ export function Diagram(props: Diagram) {
         edges={props.initialEdges}
         nodesConnectable={false}
         onNodesChange={onNodesChange}
-        fitView
-        fitViewOptions={fitViewOptions}
+        // fitView
+        // fitViewOptions={fitViewOptions}
         defaultEdgeOptions={defaultEdgeOptions}
         nodeTypes={NODE_TYPES}
         proOptions={{ hideAttribution: true }}

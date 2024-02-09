@@ -18,7 +18,6 @@ import {
   useStoreApi,
 } from "reactflow";
 import { shallow } from "zustand/shallow";
-import HelpMenu from "./HelpMenu";
 
 const selector = (s: ReactFlowState) => ({
   isInteractive: s.nodesDraggable || s.nodesConnectable || s.elementsSelectable,
@@ -135,7 +134,6 @@ const Controls: FC<PropsWithChildren<ControlProps>> = ({
           <PiCornersOut className="stroke-3 !text-secondary-950 dark:!text-white" />
         </Button>
       )}
-      <HelpMenu />
       {children}
     </Panel>
   );
