@@ -1,13 +1,19 @@
 import { CanvasType } from "@fibr/providers";
 import { ThreadType } from "@fibr/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, FieldControl, Textarea } from "@rafty/ui";
+import { Button, ErrorMessage, FieldControl, Textarea } from "@rafty/ui";
 import { useForm } from "react-hook-form";
 import superjson from "superjson";
 import z from "zod";
 
 const schema = z.object({
-  template: z.string(),
+  template: z.string().refine((value) => {
+    try {
+      return JSON.parse(value);
+    } catch (e) {
+      return false;
+    }
+  }, "Invalid JSON"),
 });
 
 export type CustomTemplateForm = {
@@ -15,7 +21,11 @@ export type CustomTemplateForm = {
 };
 
 export function CustomTemplateForm(props: CustomTemplateForm) {
-  const { handleSubmit, register } = useForm<z.infer<typeof schema>>({
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
 
@@ -32,6 +42,7 @@ export function CustomTemplateForm(props: CustomTemplateForm) {
           placeholder="Paste your schema here..."
           {...register("template")}
         />
+        <ErrorMessage>{errors.template?.message as string}</ErrorMessage>
       </FieldControl>
       <Button type="submit" className="ml-auto" colorScheme="primary">
         Get Started

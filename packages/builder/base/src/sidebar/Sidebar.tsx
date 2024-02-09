@@ -15,7 +15,14 @@ import { useBuilder } from "../providers";
 export function Sidebar({ children }: PropsWithChildren) {
   return (
     <>
-      <Panel id="sidebar" order={1} minSize={20} maxSize={25} defaultSize={20}>
+      <Panel
+        id="sidebar"
+        order={1}
+        minSize={15}
+        defaultSize={20}
+        collapsible
+        collapsedSize={2.7}
+      >
         <SidebarTray>{children}</SidebarTray>
       </Panel>
       <ResizeHandle className="border-secondary-200 border-r" />
@@ -42,11 +49,9 @@ function SidebarTray({ children }: PropsWithChildren) {
       <TabList>
         {Array.from(all).map(([name, { icon, label }]) => (
           <Tooltip key={name}>
-            <TooltipTrigger>
-              <TabTrigger value={name} className="hover:text-secondary-700">
-                {icon}
-              </TabTrigger>
-            </TooltipTrigger>
+            <TabTrigger value={name} className="hover:text-secondary-700">
+              <TooltipTrigger>{icon}</TooltipTrigger>
+            </TabTrigger>
             <TooltipContent side="right">{label}</TooltipContent>
           </Tooltip>
         ))}
