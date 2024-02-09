@@ -4,11 +4,9 @@ import { useFormBuilder } from "@fibr/providers";
 import type { ThreadType } from "@fibr/react";
 import { Settings } from "@fibr/shared";
 import { Sidebar } from "./Sidebar";
-import { DndContext } from "@dnd-kit/core";
-import { useReactFlow } from "reactflow";
+import { WorkflowDndWrapper } from "./WorkflowDndWrapper";
 
 export function Container() {
-  const { screenToFlowPosition } = useReactFlow();
   const isDevelopment = useBuilder(
     (state) => state.env.current === Env.DEVELOPMENT,
   );
@@ -30,13 +28,7 @@ export function Container() {
   }
 
   return (
-    <DndContext
-      onDragEnd={({ collisions, active, delta, over }) => {
-        if (collisions?.find(({ id }) => id === "canvas")) {
-          console.log(active, delta, over, screenToFlowPosition(delta));
-        }
-      }}
-    >
+    <WorkflowDndWrapper>
       <BuilderContainer>
         {isDevelopment && <Sidebar />}
         <WorkflowCanvas
@@ -58,6 +50,6 @@ export function Container() {
           />
         )}
       </BuilderContainer>
-    </DndContext>
+    </WorkflowDndWrapper>
   );
 }

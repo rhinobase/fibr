@@ -128,7 +128,6 @@ const PANELS: Record<Container, (props: PanelProps) => ReactNode> = {
       <WorkflowBuilder
         initialSchema={template}
         defaultActiveCanvas={key}
-        defaultActiveBlock={key}
         blocks={BLOCKS}
         config={CONFIG}
       />
