@@ -24,7 +24,7 @@ export function CustomTemplateForm(props: CustomTemplateForm) {
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
@@ -44,7 +44,12 @@ export function CustomTemplateForm(props: CustomTemplateForm) {
         />
         <ErrorMessage>{errors.template?.message as string}</ErrorMessage>
       </FieldControl>
-      <Button type="submit" className="ml-auto" colorScheme="primary">
+      <Button
+        isLoading={isSubmitting}
+        type="submit"
+        className="ml-auto"
+        colorScheme="primary"
+      >
         Get Started
       </Button>
     </form>
