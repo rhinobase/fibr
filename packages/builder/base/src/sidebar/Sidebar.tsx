@@ -13,6 +13,7 @@ import { ResizeHandle } from "../ResizeHandle";
 import { useBuilder } from "../providers";
 import { Env } from "../utils";
 
+const MIN_SIZE = 2.4;
 const DEFAULT_SIZE = 24;
 
 export function Sidebar({ children }: PropsWithChildren) {
@@ -34,16 +35,17 @@ export function Sidebar({ children }: PropsWithChildren) {
 
   if (isProduction) return;
 
-  // Calculating minWidth in percentage
-  const windowSize = window.screen.width;
+  //TODO: add event listner for this
 
-  const panelGroupWidth = windowSize - 320;
+  // const windowSize = window.screen.width;
 
-  const ListWidth = tabListRef.current?.offsetWidth ?? 0;
+  // const panelGroupWidth = windowSize - 320;
 
-  const minWidth = (ListWidth * 100) / panelGroupWidth;
+  // const ListWidth = tabListRef.current?.offsetWidth ?? 0;
 
-  console.log(minWidth);
+  // const minWidth = (ListWidth * 100) / panelGroupWidth;
+
+  // console.log(minWidth);
 
   return (
     <>
@@ -54,9 +56,9 @@ export function Sidebar({ children }: PropsWithChildren) {
         minSize={15}
         defaultSize={defaultSize}
         collapsible
-        collapsedSize={minWidth}
+        collapsedSize={MIN_SIZE}
         onResize={(size) => {
-          if (size === minWidth) setLayout({ showSidebar: false });
+          if (size === MIN_SIZE) setLayout({ showSidebar: false });
           else setLayout({ showSidebar: true });
         }}
         style={{ pointerEvents: "auto" }}
