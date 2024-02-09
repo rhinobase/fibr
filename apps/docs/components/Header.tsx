@@ -70,13 +70,11 @@ export const Header = forwardRef<HTMLDivElement, Header>(function Header(
       <Search />
       <div className="flex items-center gap-5 lg:hidden">
         <MobileNavigation />
-        <Link href="/" aria-label="Home">
-          <Link href="/" aria-label="Home" className="flex items-center gap-1">
-            <Logo className="w-7" />
-            <span className="text-2xl font-semibold italic leading-none">
-              Fibr
-            </span>
-          </Link>
+        <Link href="/" aria-label="Home" className="flex items-center gap-1">
+          <Logo className="w-7" />
+          <span className="text-2xl font-semibold italic leading-none">
+            Fibr
+          </span>
         </Link>
       </div>
       <div className="flex items-center gap-5">
