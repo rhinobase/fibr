@@ -11,7 +11,7 @@ export function ConditionNode() {
         { type: "source", position: Position.Right },
       ]}
     >
-      End Node
+      Condition Node
     </NodeWrapper>
   );
 }
