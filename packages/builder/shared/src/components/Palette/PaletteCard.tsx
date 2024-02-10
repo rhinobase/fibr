@@ -42,7 +42,12 @@ export function PaletteCard({
       onKeyDown={handleSelect}
       {...dragableProps}
     >
-      <div className="border-secondary-300 dark:border-secondary-700 hover:border-secondary-500/80 flex h-[69px] cursor-pointer items-center justify-center rounded border bg-white transition-all ease-in-out">
+      <div
+        className={classNames(
+          enableDragging ? "cursor-grab" : "cursor-pointer",
+          "border-secondary-300 dark:border-secondary-700 hover:border-secondary-500/80 flex h-[69px] items-center justify-center rounded border bg-white transition-all ease-in-out",
+        )}
+      >
         <Icon className="h-6 w-6 opacity-50" />
       </div>
       {!isOverlay && (

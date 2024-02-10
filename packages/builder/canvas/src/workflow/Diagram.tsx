@@ -11,14 +11,14 @@ import {
   Edge,
   FitViewOptions,
   Node,
-  NodeChange,
   OnNodesChange,
   ReactFlow,
   SelectionMode,
   addEdge,
   applyNodeChanges,
-  useEdgesState,
   type NodeTypes,
+  OnEdgesChange,
+  applyEdgeChanges,
 } from "reactflow";
 import "reactflow/dist/style.css";
 
@@ -33,11 +33,7 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
 export function Diagram() {
   const config = useSource((state) => state.config);
 
-  const {
-    nodes,
-    edges: canvasEdges,
-    set,
-  } = useFormBuilder(({ block: { all, set } }) => ({
+  const { nodes, edges, set } = useFormBuilder(({ block: { all, set } }) => ({
     nodes: all("nodes") as Node[],
     edges: all("edges") as Edge[],
     set,
@@ -45,35 +41,31 @@ export function Diagram() {
 
   const onNodesChange: OnNodesChange = useCallback(
     (changes) =>
-      set((tds) => {
-        const nds = tds as Node[];
-
-        const parsedChanges = changes.reduce<NodeChange[]>((prev, cur) => {
-          const validChange =
-            cur.type !== "remove" ||
-            (cur.type === "remove" &&
-              nds.find((n) => n.id === cur.id)?.data?.deletable);
-
-          if (validChange) prev.push(cur);
-
-          return prev;
-        }, []);
-        return applyNodeChanges(parsedChanges, nds) as ThreadWithIdType[];
-      }),
+      set(
+        "nodes",
+        (nds) => applyNodeChanges(changes, nds as Node[]) as ThreadWithIdType[],
+      ),
     [set],
   );
 
-  // const [nodes, , onNodesChange] = useNodesState(canvasNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(canvasEdges);
-
-  const onConnect = useCallback(
-    (params: Connection) => setEdges((eds) => addEdge(params, eds)),
-    [],
+  const onEdgesChange: OnEdgesChange = useCallback(
+    (changes) =>
+      set(
+        "edges",
+        (edgs) =>
+          applyEdgeChanges(changes, edgs as Edge[]) as ThreadWithIdType[],
+      ),
+    [set],
   );
 
-  // useEffect(() => {
-  //   console.log(canvasNodes, nodes);
-  // }, [canvasNodes]);
+  const onConnect = useCallback(
+    (params: Connection) =>
+      set(
+        "edges",
+        (eds) => addEdge(params, eds as Edge[]) as ThreadWithIdType[],
+      ),
+    [set],
+  );
 
   const builders = useMemo(
     () =>
