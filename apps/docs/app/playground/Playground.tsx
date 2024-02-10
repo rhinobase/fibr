@@ -2,6 +2,7 @@
 "use client";
 import { Header, PreviewButton, Workspace } from "@fibr/builder";
 import { FormBuilder } from "@fibr/form";
+import { PageBuilder } from "@fibr/page";
 import { CanvasType } from "@fibr/providers";
 import type { ThreadType } from "@fibr/react";
 import { WorkflowBuilder } from "@fibr/workflow";
@@ -37,7 +38,7 @@ const PANELS: Record<Container, (props: PanelProps) => ReactNode> = {
       />
     );
   },
-  [Container.PAGE]: () => <></>,
+  [Container.PAGE]: () => <PageBuilder />,
 };
 
 export default function Playground() {

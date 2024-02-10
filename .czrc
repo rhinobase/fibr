@@ -35,6 +35,10 @@
     {
       "value": "workflow",
       "name": "workflow:               anything workflow resources specific"
+    },
+    {
+      "value": "page",
+      "name": "page:                 anything page Builder specific"
     }
   ],
   "scopesSearchValue": true,
