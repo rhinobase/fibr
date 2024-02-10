@@ -38,7 +38,19 @@ const PANELS: Record<Container, (props: PanelProps) => ReactNode> = {
       />
     );
   },
-  [Container.PAGE]: () => <PageBuilder />,
+  [Container.PAGE]: ({ template }) => {
+    const key = template.keys().next().value;
+
+    return (
+      <PageBuilder
+        initialSchema={template}
+        defaultActiveCanvas={key}
+        defaultActiveBlock={key}
+        blocks={BLOCKS}
+        config={CONFIG}
+      />
+    );
+  },
 };
 
 export default function Playground() {

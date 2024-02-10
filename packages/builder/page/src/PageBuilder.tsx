@@ -1,5 +1,21 @@
-export function PageBuilder() {
+import {
+  type CanvasType,
+  FormBuilderProvider,
+  type FormBuilderStoreProps,
+} from "@fibr/providers";
+import { SourceProvider, type SourceStore } from "@fibr/shared";
+import { Container } from "./Container";
+
+export function PageBuilder<T extends CanvasType>({
+  blocks,
+  config,
+  ...builderProps
+}: SourceStore & FormBuilderStoreProps<T>) {
   return (
-    <div>PageBuilder</div>
-  )
+    <SourceProvider blocks={blocks} config={config}>
+      <FormBuilderProvider {...builderProps}>
+        <Container />
+      </FormBuilderProvider>
+    </SourceProvider>
+  );
 }

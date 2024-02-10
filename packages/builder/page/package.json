@@ -1,6 +1,14 @@
 {
   "name": "@fibr/page",
   "version": "0.0.1",
+  "dependencies": {
+    "@fibr/builder": "^0.0.1",
+    "@fibr/canvas": "^0.0.1",
+    "@fibr/providers": "^1.0.0",
+    "@fibr/react": "^0.0.1",
+    "@fibr/shared": "^1.0.0",
+    "@swc/helpers": "^0.5.3"
+  },
   "peerDependencies": {
     "react": "^18.2.0"
   }
