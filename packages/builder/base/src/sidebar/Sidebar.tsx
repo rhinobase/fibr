@@ -18,32 +18,35 @@ import { ImperativePanelHandle, Panel } from "react-resizable-panels";
 import { ResizeHandle } from "../ResizeHandle";
 import { useBuilder } from "../providers";
 import { Env } from "../utils";
+import { useFormBuilder } from "@fibr/providers";
 
 const DEFAULT_SIZE = 24;
 export function Sidebar({ children }: PropsWithChildren) {
   const ref = useRef<ImperativePanelHandle>(null);
   const tabListRef = useRef<HTMLDivElement>(null);
-  const [minWidth] = useState(2.4);
+  const [minWidth, setMinWidth] = useState(2.4);
 
-  const setLayout = useBuilder((state) => state.setLayout);
-  const { isProduction, isDisabled, defaultSize } = useBuilder(
-    ({ env: { current }, layout: { showSidebar }, tabs: { get, active } }) => {
+  const { isProduction, isDisabled, defaultSize, setLayout } = useBuilder(
+    ({ env: { current }, layout: { showSidebar }, setLayout, tabs: { get, active } }) => {
       const currentTab = active != null ? get(active) : undefined;
 
       return {
         isProduction: current === Env.PRODUCTION,
         isDisabled: !showSidebar || currentTab?.isResizeable === false,
         defaultSize: currentTab?.defaultSize ?? DEFAULT_SIZE,
+        setLayout
       };
     },
   );
+  const isSelected = useFormBuilder((state) => state.active.block != null)
 
-  useEffect(() => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: We want to update the sie based upon the opening and closing of settings panel
+useEffect(() => {
     const windowSize = window.screen.width;
     const panelGroupWidth = windowSize - 320;
     const ListWidth = tabListRef.current?.offsetWidth ?? 0;
-    console.log((ListWidth * 100) / panelGroupWidth);
-  }, []);
+    setMinWidth((ListWidth * 100) / panelGroupWidth);
+  }, [isSelected]);
 
   if (isProduction) return;
 
