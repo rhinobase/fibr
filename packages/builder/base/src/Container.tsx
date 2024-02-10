@@ -11,9 +11,5 @@ export function Container({ children, autoSaveId = "panel_size" }: Container) {
     env: state.env,
   }));
 
-  return (
-    <PanelGroup autoSaveId={autoSaveId} direction="horizontal">
-      {children}
-    </PanelGroup>
-  );
+  return <PanelGroup direction="horizontal">{children}</PanelGroup>;
 }

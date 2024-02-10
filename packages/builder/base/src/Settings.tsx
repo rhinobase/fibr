@@ -1,6 +1,6 @@
 "use client";
 import { classNames } from "@rafty/ui";
-import { HTMLAttributes } from "react";
+import { type HTMLAttributes } from "react";
 import { useBuilder } from "./providers";
 import { Env } from "./utils";
 

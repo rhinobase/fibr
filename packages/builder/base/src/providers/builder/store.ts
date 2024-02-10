@@ -28,8 +28,8 @@ export type BuilderStore = {
     all: Map<string, Omit<TabPayload, "name">>;
     add: (tab: TabPayload) => void;
     get: (tab: string) => Omit<TabPayload, "name"> | undefined;
-    active?: string;
-    setActive: (tabId: string) => void;
+    active: string | null;
+    setActive: (tabId: string | null) => void;
   };
   layout: Layout;
   setLayout: (values: Partial<Layout>) => void;
@@ -52,6 +52,7 @@ export const createBuilderStore = ({
       },
       tabs: {
         all: tabs,
+        active: null,
         add: (payload) =>
           set((state) => {
             const { name, ...data } = payload;
