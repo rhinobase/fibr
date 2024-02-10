@@ -25,6 +25,7 @@
     "url": "https://github.com/rhinobase/fibr/issues"
   },
   "dependencies": {
+    "@fibr/providers": "^1.0.0",
     "@heroicons/react": "^2.1.1",
     "@rafty/ui": "^1.4.2",
     "@rafty/shared": "^1.0.0",
