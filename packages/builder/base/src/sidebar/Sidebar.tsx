@@ -26,43 +26,61 @@ export function Sidebar({ children }: PropsWithChildren) {
   const tabListRef = useRef<HTMLDivElement>(null);
   const [minWidth, setMinWidth] = useState(2.4);
 
-  const { isProduction, isDisabled, defaultSize, setLayout } = useBuilder(
-    ({
-      env: { current },
-      layout: { showSidebar },
-      setLayout,
-      tabs: { get, active },
-    }) => {
-      const currentTab = active != null ? get(active) : undefined;
-
-      return {
-        isProduction: current === Env.PRODUCTION,
-        isDisabled: !showSidebar || currentTab?.isResizeable === false,
-        defaultSize: currentTab?.defaultSize ?? DEFAULT_SIZE,
+  const { isProduction, isDisabled, defaultSize, setLayout, isExpanded } =
+    useBuilder(
+      ({
+        env: { current },
+        layout: { showSidebar },
         setLayout,
-      };
-    },
-  );
+        tabs: { get, active },
+      }) => {
+        const currentTab = active != null ? get(active) : undefined;
+
+        return {
+          isProduction: current === Env.PRODUCTION,
+          isDisabled: !showSidebar || currentTab?.isResizeable === false,
+          defaultSize: currentTab?.defaultSize ?? DEFAULT_SIZE,
+          setLayout,
+          isExpanded: showSidebar,
+        };
+      },
+    );
   const isSelected = useFormBuilder((state) => state.active.block != null);
 
   useEffect(() => {
     if (tabListRef.current == null) return;
 
     // Window Width
-    const windowSize = window.screen.width;
+    const windowWidth = window.screen.width;
 
     // Tab tray width
-    // TODO: Get width from reference component
-    const tabTrayWidth = 47; // tabListRef.current.offsetWidth;
+    const tabTrayWidth = tabListRef.current.offsetWidth;
 
     // Screen width - Settings Panel width
-    const panelGroupWidth = windowSize - (isSelected ? 320 : 0);
+    const panelGroupWidth = windowWidth - (isSelected ? 320 : 0);
 
     // Calculated min width in %
     const calcMinWidth = +((tabTrayWidth * 100) / panelGroupWidth).toFixed(2);
 
     if (calcMinWidth > 0) setMinWidth(calcMinWidth);
-  }, [isSelected]);
+
+    // Correcthing the panel size
+    if (isExpanded) {
+      const panel = ref.current;
+      if (panel) {
+        const currentPanelSize = panel.getSize();
+
+        /**
+         * (PreviousPanelGroupWidth - CurrentSidebarSize) / CurrentPanelGroupWidth
+         */
+
+        panel.resize(
+          ((windowWidth - (!isSelected ? 320 : 0)) * currentPanelSize) /
+            panelGroupWidth,
+        );
+      }
+    }
+  }, [isSelected, isExpanded]);
 
   if (isProduction) return;
 
@@ -109,7 +127,6 @@ export function Sidebar({ children }: PropsWithChildren) {
 }
 
 type SidebarTray = PropsWithChildren<{
-  isExpanded?: boolean;
   expandPanel?: () => void;
   collapsePanel?: () => void;
   listRef: RefObject<HTMLDivElement>;
