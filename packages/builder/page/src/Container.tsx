@@ -4,6 +4,7 @@ import { useFormBuilder } from "@fibr/providers";
 import type { ThreadType } from "@fibr/react";
 import { Settings } from "@fibr/shared";
 import { Sidebar } from "./Sidebar";
+import { WorkflowDndWrapper } from "@fibr/workflow";
 
 export function Container() {
   const { active, getBlock, update } = useFormBuilder(({ active, block }) => ({
@@ -24,16 +25,18 @@ export function Container() {
   }
 
   return (
-    <BuilderContainer>
-      <Sidebar />
-      <PageCanvas />
-      {blockId && block && (
-        <Settings
-          {...block}
-          id={blockId}
-          _update={(values) => canvasId && update(canvasId, blockId, values)}
-        />
-      )}
-    </BuilderContainer>
+    <WorkflowDndWrapper>
+      <BuilderContainer>
+        <Sidebar />
+        <PageCanvas />
+        {blockId && block && (
+          <Settings
+            {...block}
+            id={blockId}
+            _update={(values) => canvasId && update(canvasId, blockId, values)}
+          />
+        )}
+      </BuilderContainer>
+    </WorkflowDndWrapper>
   );
 }

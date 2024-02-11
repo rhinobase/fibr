@@ -5,6 +5,7 @@ import {
 } from "@fibr/providers";
 import { SourceProvider, type SourceStore } from "@fibr/shared";
 import { Container } from "./Container";
+import { ReactFlowProvider } from "reactflow";
 
 export function PageBuilder<T extends CanvasType>({
   blocks,
@@ -14,7 +15,9 @@ export function PageBuilder<T extends CanvasType>({
   return (
     <SourceProvider blocks={blocks} config={config}>
       <FormBuilderProvider {...builderProps}>
-        <Container />
+        <ReactFlowProvider>
+          <Container />
+        </ReactFlowProvider>
       </FormBuilderProvider>
     </SourceProvider>
   );

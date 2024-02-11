@@ -29,10 +29,10 @@ export function WorkflowDndWrapper(props: PropsWithChildren) {
           const position = screenToFlowPosition({ x: left, y: top });
           const data = active.data.current;
           if (activeCanvas && data)
-            add<Node>(activeCanvas, {
+            add<Omit<Node, "id">>(activeCanvas, {
               type: data.type,
               position,
-              ...data.presets,
+              data: data.presets,
             });
         }
       }}

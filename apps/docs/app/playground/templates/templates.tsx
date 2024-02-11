@@ -148,14 +148,20 @@ export const TEMPLATES: Record<
   [Container.PAGE]: [
     {
       id: "custom",
-      name: "Custom Page",
+      name: "Custom Flow",
       icon: FiArrowRight,
       template: new Map(
         Object.entries({
-          canvas: f.form({
-            title: "Custom",
+          nodes: {
+            type: "nodes",
+            title: "Nodes",
             blocks: new Map(Object.entries({})),
-          }),
+          },
+          edges: {
+            type: "edges",
+            title: "Edges",
+            blocks: new Map(Object.entries({})),
+          },
         }),
       ),
     },

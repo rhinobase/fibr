@@ -1,6 +1,6 @@
 import { Sidebar as BuilderSidebar } from "@fibr/builder";
 import { useFormBuilder } from "@fibr/providers";
-import { Overview, Palette, Canvases, CodeGenerator } from "@fibr/shared";
+import { CodeGenerator, Overview, Palette } from "@fibr/shared";
 
 export function Sidebar() {
   const {
@@ -19,26 +19,27 @@ export function Sidebar() {
     moveBlock: block.move,
   }));
 
-  const canvasId = active.canvas;
+  const canvasId = "nodes";
 
   const blocks = canvasId ? getAllBlocks(canvasId) : [];
 
   return (
     <BuilderSidebar>
       <Palette
+        enableDragging
         isDisabled={canvasId == null}
         onBlockSelect={(props) => canvasId && addBlock(canvasId, props)}
       />
       <Overview
         blocks={blocks}
-        active={active}
+        active={{ ...active, canvas: canvasId }}
         selectBlock={selectBlock}
         removeBlock={(id) => canvasId && removeBlock(canvasId, id)}
         moveBlock={(startBlockId, endblockId) =>
           canvasId && moveBlock(canvasId, startBlockId, endblockId)
         }
       />
-      <Canvases />
+      {/* <Canvases /> */}
       <CodeGenerator />
     </BuilderSidebar>
   );
