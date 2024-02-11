@@ -4,6 +4,8 @@ import { Diagram } from "./Diagram";
 import { useDroppable } from "@dnd-kit/core";
 import { FormProvider, useForm } from "react-hook-form";
 import { Controls } from "reactflow";
+import { WeaverProvider } from "@fibr/react";
+import { NodeWrapper } from "./NodeWrapper";
 
 export function PageCanvas() {
   const methods = useForm();
@@ -20,7 +22,9 @@ export function PageCanvas() {
         onClick={() => select(null)}
       >
         <div className="flex h-full w-[1080px] flex-col gap-3 rounded bg-white">
-          <Diagram />
+          <WeaverProvider wrapper={NodeWrapper}>
+            <Diagram />
+          </WeaverProvider>
         </div>
         <Controls />
       </Canvas>

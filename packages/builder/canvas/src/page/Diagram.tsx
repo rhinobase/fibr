@@ -1,6 +1,6 @@
 "use client";
 import { useFormBuilder } from "@fibr/providers";
-import { type ThreadWithIdType } from "@fibr/react";
+import { Thread, type ThreadWithIdType } from "@fibr/react";
 import { useSource } from "@fibr/shared";
 import { useCallback, useMemo } from "react";
 import {
@@ -21,7 +21,6 @@ import {
   BackgroundVariant,
 } from "reactflow";
 import "reactflow/dist/style.css";
-import { CustomNode } from "./Node";
 
 const fitViewOptions: FitViewOptions = {
   padding: 0.5,
@@ -70,8 +69,8 @@ export function Diagram() {
 
   const builders = useMemo(
     () =>
-      Object.entries(config).reduce<NodeTypes>((prev, [name]) => {
-        prev[name] = CustomNode;
+      Object.keys(config).reduce<NodeTypes>((prev, name) => {
+        prev[name] = (props) => <Thread {...props} {...props.data} />;
         return prev;
       }, {}),
     [config],

@@ -9,7 +9,7 @@ export type NodeWrapper = PropsWithChildren<
 
 export function NodeWrapper({ id, children, handles }: NodeWrapper) {
   return (
-    <div className="rounded bg-white p-2 text-sm leading-none">
+    <div className="p-2 text-sm leading-none">
       {children}
       {handles.map((handle, index) => {
         const uniqueId = `${index}-${id}-${handle.type}-${handle.position}`;

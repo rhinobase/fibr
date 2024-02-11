@@ -1,10 +1,11 @@
 import { useFormBuilder } from "@fibr/providers";
-import { Thread, type ThreadWithIdType } from "@fibr/react";
+import { useThread } from "@fibr/react";
 import { eventHandler } from "@rafty/shared";
-import { NodeResizer, type NodeProps } from "reactflow";
+import { type PropsWithChildren } from "react";
+import { NodeResizer } from "reactflow";
 
-export function CustomNode(props: ThreadWithIdType<NodeProps>) {
-  const { id } = props;
+export function NodeWrapper(props: PropsWithChildren) {
+  const { id } = useThread();
   const { activeBlock, select } = useFormBuilder(({ block, active }) => ({
     select: block.select,
     activeBlock: active.block,
@@ -15,7 +16,7 @@ export function CustomNode(props: ThreadWithIdType<NodeProps>) {
   return (
     <div className="bg-white" onClick={onSelect} onKeyDown={onSelect}>
       <NodeResizer isVisible={activeBlock === id} />
-      <Thread {...props} {...props.data} />
+      {props.children}
     </div>
   );
 }

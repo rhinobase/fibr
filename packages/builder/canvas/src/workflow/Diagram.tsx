@@ -1,6 +1,6 @@
 "use client";
 import { useFormBuilder } from "@fibr/providers";
-import { ThreadWithIdType } from "@fibr/react";
+import { Thread, ThreadWithIdType } from "@fibr/react";
 import { useSource } from "@fibr/shared";
 import { useCallback, useMemo } from "react";
 import {
@@ -69,8 +69,8 @@ export function Diagram() {
 
   const builders = useMemo(
     () =>
-      Object.entries(config).reduce<NodeTypes>((prev, [name, { builder }]) => {
-        prev[name] = builder;
+      Object.keys(config).reduce<NodeTypes>((prev, name) => {
+        prev[name] = Thread;
         return prev;
       }, {}),
     [config],
