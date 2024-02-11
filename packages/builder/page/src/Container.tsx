@@ -24,6 +24,12 @@ export function Container() {
     if (!block) throw new Error("Unable find the block!");
   }
 
+  const blockData = {
+    type: "",
+    ...block,
+    ...(typeof block?.data === "object" ? block.data : {}),
+  };
+
   return (
     <WorkflowDndWrapper>
       <BuilderContainer>
@@ -31,8 +37,7 @@ export function Container() {
         <PageCanvas />
         {blockId && block && (
           <Settings
-            {...block}
-            {...block.data}
+            {...blockData}
             id={blockId}
             _update={(values) =>
               canvasId && update(canvasId, blockId, { data: values })

@@ -7,7 +7,8 @@
     "@fibr/providers": "^1.0.0",
     "@fibr/react": "^0.0.1",
     "@fibr/shared": "^1.0.0",
-    "@swc/helpers": "^0.5.3"
+    "@swc/helpers": "^0.5.3",
+    "reactflow": "^11.10.3"
   },
   "peerDependencies": {
     "react": "^18.2.0"

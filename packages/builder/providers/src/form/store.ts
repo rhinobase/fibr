@@ -240,6 +240,9 @@ export const createFormBuilderStore = <T extends CanvasType>({
               return prev;
             }, new Map());
 
+            if (state.active.block && !canvas.blocks.has(state.active.block))
+              state.active.block = null;
+
             state.schema.set(canvasId, canvas);
           }),
         remove: (canvasId, blockId) =>
