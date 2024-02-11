@@ -32,8 +32,11 @@ export function Container() {
         {blockId && block && (
           <Settings
             {...block}
+            {...block.data}
             id={blockId}
-            _update={(values) => canvasId && update(canvasId, blockId, values)}
+            _update={(values) =>
+              canvasId && update(canvasId, blockId, { data: values })
+            }
           />
         )}
       </BuilderContainer>

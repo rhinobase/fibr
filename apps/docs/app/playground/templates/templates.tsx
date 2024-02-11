@@ -148,7 +148,7 @@ export const TEMPLATES: Record<
   [Container.PAGE]: [
     {
       id: "custom",
-      name: "Custom Flow",
+      name: "Custom Page",
       icon: FiArrowRight,
       template: new Map(
         Object.entries({
