@@ -1,4 +1,4 @@
-import { useFormBuilder } from "@fibr/providers";
+import { useCanvas } from "@fibr/providers";
 import { useThread } from "@fibr/react";
 import { eventHandler } from "@rafty/shared";
 import {
@@ -27,7 +27,7 @@ export type QuickActions = PropsWithChildren;
 
 export function QuickActions({ children }: QuickActions) {
   const { id } = useThread();
-  const activeBlock = useFormBuilder(({ active }) => active.block);
+  const activeBlock = useCanvas(({ active }) => active.block);
 
   const [isHover, setHover] = useState(false);
 
@@ -56,13 +56,11 @@ function IdEditField() {
   const { id } = useThread();
   const [isEditable, toggle] = useBoolean(false);
   const ref = useRef<HTMLInputElement>(null);
-  const { select, activeCanvas, updateId } = useFormBuilder(
-    ({ block, active }) => ({
-      select: block.select,
-      activeCanvas: active.canvas,
-      updateId: block.updateId,
-    }),
-  );
+  const { select, activeCanvas, updateId } = useCanvas(({ block, active }) => ({
+    select: block.select,
+    activeCanvas: active.canvas,
+    updateId: block.updateId,
+  }));
 
   useEffect(() => {
     if (isEditable && ref.current) ref.current.focus();
@@ -130,7 +128,7 @@ function QuickActionButtons() {
     schema,
     block: { all, move, remove, findIndex, duplicate, select },
     activeCanvas,
-  } = useFormBuilder(({ schema, block, active }) => ({
+  } = useCanvas(({ schema, block, active }) => ({
     schema,
     block,
     activeCanvas: active.canvas,

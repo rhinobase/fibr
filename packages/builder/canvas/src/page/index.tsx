@@ -1,4 +1,4 @@
-import { useFormBuilder } from "@fibr/providers";
+import { useCanvas } from "@fibr/providers";
 import { Canvas } from "@fibr/shared";
 import { Diagram } from "./Diagram";
 import { useDroppable } from "@dnd-kit/core";
@@ -9,7 +9,7 @@ import { NodeWrapper } from "./NodeWrapper";
 
 export function PageCanvas() {
   const methods = useForm();
-  const select = useFormBuilder(({ block }) => block.select);
+  const select = useCanvas(({ block }) => block.select);
   const { setNodeRef } = useDroppable({
     id: "canvas",
   });

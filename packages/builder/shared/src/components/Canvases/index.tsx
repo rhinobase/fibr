@@ -1,5 +1,5 @@
 import { SidebarItem } from "@fibr/builder";
-import { useFormBuilder } from "@fibr/providers";
+import { useCanvas } from "@fibr/providers";
 import { Square3Stack3DIcon } from "@heroicons/react/24/outline";
 import { Button, InputField, useBoolean } from "@rafty/ui";
 import { useEffect, useRef } from "react";
@@ -9,7 +9,7 @@ import { CanvasCard } from "./CanvasCard";
 
 export function Canvases() {
   const [show, toggle] = useBoolean();
-  const { schema, add } = useFormBuilder(({ schema, canvas }) => ({
+  const { schema, add } = useCanvas(({ schema, canvas }) => ({
     add: canvas.add,
     schema,
   }));
@@ -70,7 +70,7 @@ export function Canvases() {
 }
 
 function CanvasesList() {
-  const schema = useFormBuilder(({ schema }) => schema);
+  const schema = useCanvas(({ schema }) => schema);
 
   return Array.from(schema).map(([id, canvas]) => (
     <CanvasCard key={id} id={id} canvas={canvas} />

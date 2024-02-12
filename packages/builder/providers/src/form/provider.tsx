@@ -33,7 +33,7 @@ export function FormBuilderProvider({
   );
 }
 
-export function useFormBuilder<T extends CanvasType, U>(
+export function useCanvas<T extends CanvasType, U>(
   selector: (state: FormBuilderStore<T>) => U,
 ): U {
   const store = useContext(FormBuilderContext);

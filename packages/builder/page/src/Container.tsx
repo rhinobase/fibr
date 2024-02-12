@@ -1,13 +1,13 @@
 import { Container as BuilderContainer } from "@fibr/builder";
 import { PageCanvas } from "@fibr/canvas";
-import { useFormBuilder } from "@fibr/providers";
+import { useCanvas } from "@fibr/providers";
 import type { ThreadType } from "@fibr/react";
 import { Settings } from "@fibr/shared";
 import { Sidebar } from "./Sidebar";
 import { WorkflowDndWrapper } from "@fibr/workflow";
 
 export function Container() {
-  const { active, getBlock, update } = useFormBuilder(({ active, block }) => ({
+  const { active, getBlock, update } = useCanvas(({ active, block }) => ({
     active,
     getBlock: block.get,
     update: block.update,

@@ -1,9 +1,9 @@
 import { Sidebar as BuilderSidebar } from "@fibr/builder";
-import { useFormBuilder } from "@fibr/providers";
+import { useCanvas } from "@fibr/providers";
 import { CodeGenerator, Palette } from "@fibr/shared";
 
 export function Sidebar() {
-  const { addBlock, active } = useFormBuilder(({ block, active }) => ({
+  const { addBlock, active } = useCanvas(({ block, active }) => ({
     active,
     addBlock: block.add,
   }));

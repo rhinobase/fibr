@@ -1,5 +1,5 @@
 import { Env, useBuilder } from "@fibr/builder";
-import { useFormBuilder } from "@fibr/providers";
+import { useCanvas } from "@fibr/providers";
 import { Loom, WeaverProvider } from "@fibr/react";
 import { DndWrapper } from "@fibr/shared";
 import { Text } from "@rafty/ui";
@@ -14,7 +14,7 @@ const BLOCK_WRAPPERS: Record<Env, (props: PropsWithChildren) => ReactNode> = {
 
 export function FormDisplay() {
   const { getAllBlocks, getCanvas, activeCanvas, selectBlock, moveBlock } =
-    useFormBuilder(({ block, active, canvas }) => ({
+    useCanvas(({ block, active, canvas }) => ({
       getAllBlocks: block.all,
       activeCanvas: active.canvas,
       getCanvas: canvas.get,

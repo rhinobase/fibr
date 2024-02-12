@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS, Transform } from "@dnd-kit/utilities";
-import { useFormBuilder } from "@fibr/providers";
+import { useCanvas } from "@fibr/providers";
 import { useThread } from "@fibr/react";
 import { eventHandler } from "@rafty/shared";
 import { classNames } from "@rafty/ui";
@@ -24,7 +24,7 @@ const wrapperClasses = cva("w-full cursor-pointer border bg-white rounded", {
 
 export function FieldWrapper({ children }: PropsWithChildren) {
   const { id, type } = useThread();
-  const { activeBlock, select } = useFormBuilder(({ block, active }) => ({
+  const { activeBlock, select } = useCanvas(({ block, active }) => ({
     select: block.select,
     activeBlock: active.block,
   }));

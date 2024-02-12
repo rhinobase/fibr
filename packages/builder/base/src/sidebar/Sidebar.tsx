@@ -18,7 +18,7 @@ import { ImperativePanelHandle, Panel } from "react-resizable-panels";
 import { ResizeHandle } from "./ResizeHandle";
 import { useBuilder } from "../providers";
 import { Env } from "../utils";
-import { useFormBuilder } from "@fibr/providers";
+import { useCanvas } from "@fibr/providers";
 
 const DEFAULT_SIZE = 20;
 export function Sidebar({ children }: PropsWithChildren) {
@@ -45,7 +45,7 @@ export function Sidebar({ children }: PropsWithChildren) {
         };
       },
     );
-  const isSelected = useFormBuilder((state) => state.active.block != null);
+  const isSelected = useCanvas((state) => state.active.block != null);
 
   useEffect(() => {
     if (tabListRef.current == null) return;

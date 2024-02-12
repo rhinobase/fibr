@@ -22,7 +22,7 @@ export function SourceProvider({
   );
 }
 
-export function useSource<T>(selector: (state: SourceStore) => T): T {
+export function useBlocks<T>(selector: (state: SourceStore) => T): T {
   const store = useContext(SourceContext);
 
   if (!store) throw new Error("Missing SourceContext.Provider in the tree");

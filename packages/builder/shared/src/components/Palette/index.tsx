@@ -3,7 +3,7 @@ import { Squares2X2Icon } from "@heroicons/react/24/outline";
 import { SearchField } from "@rafty/ui";
 import Fuse, { type RangeTuple } from "fuse.js";
 import { useMemo, useState } from "react";
-import { useSource } from "../../providers";
+import { useBlocks } from "../../providers";
 import { Block } from "../../types";
 import { Empty } from "../utils";
 import { PaletteCard } from "./PaletteCard";
@@ -20,7 +20,7 @@ export function Palette({
   enableDragging = false,
   onBlockSelect,
 }: Palette) {
-  const blocks = useSource((state) => state.blocks);
+  const blocks = useBlocks((state) => state.blocks);
   const [search, setSearch] = useState<string>();
 
   const fuse = useMemo(() => {

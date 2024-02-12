@@ -1,5 +1,5 @@
 import { Sidebar as BuilderSidebar } from "@fibr/builder";
-import { useFormBuilder } from "@fibr/providers";
+import { useCanvas } from "@fibr/providers";
 import { Overview, Palette, Canvases, CodeGenerator } from "@fibr/shared";
 
 export function Sidebar() {
@@ -10,7 +10,7 @@ export function Sidebar() {
     selectBlock,
     removeBlock,
     moveBlock,
-  } = useFormBuilder(({ block, active }) => ({
+  } = useCanvas(({ block, active }) => ({
     active,
     addBlock: block.add,
     getAllBlocks: block.all,

@@ -1,7 +1,7 @@
 "use client";
-import { useFormBuilder } from "@fibr/providers";
+import { useCanvas } from "@fibr/providers";
 import { Thread, type ThreadWithIdType } from "@fibr/react";
-import { useSource } from "@fibr/shared";
+import { useBlocks } from "@fibr/shared";
 import { useCallback, useMemo } from "react";
 import {
   Background,
@@ -31,9 +31,9 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
 };
 
 export function Diagram() {
-  const config = useSource((state) => state.config);
+  const config = useBlocks((state) => state.config);
 
-  const { nodes, edges, set } = useFormBuilder(({ block: { all, set } }) => ({
+  const { nodes, edges, set } = useCanvas(({ block: { all, set } }) => ({
     nodes: all("nodes") as Node[],
     edges: all("edges") as Edge[],
     set,

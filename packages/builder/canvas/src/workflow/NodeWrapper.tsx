@@ -1,11 +1,11 @@
-import { useFormBuilder } from "@fibr/providers";
+import { useCanvas } from "@fibr/providers";
 import { useThread } from "@fibr/react";
 import { eventHandler } from "@rafty/shared";
 import { type PropsWithChildren } from "react";
 
 export function NodeWrapper(props: PropsWithChildren) {
   const { id } = useThread();
-  const select = useFormBuilder(({ block }) => block.select);
+  const select = useCanvas(({ block }) => block.select);
 
   const onSelect = eventHandler(() => select(id));
 

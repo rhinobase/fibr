@@ -1,4 +1,4 @@
-import { CanvasType, useFormBuilder } from "@fibr/providers";
+import { CanvasType, useCanvas } from "@fibr/providers";
 import type { ThreadType } from "@fibr/react";
 import { eventHandler } from "@rafty/shared";
 import { Button, Text, classNames } from "@rafty/ui";
@@ -10,7 +10,7 @@ export type CanvasCard = {
 };
 
 export function CanvasCard({ id, canvas: { title } }: CanvasCard) {
-  const { select, activeCanvas } = useFormBuilder(({ canvas, active }) => ({
+  const { select, activeCanvas } = useCanvas(({ canvas, active }) => ({
     activeCanvas: active.canvas,
     select: canvas.select,
   }));
@@ -40,7 +40,7 @@ export function CanvasCard({ id, canvas: { title } }: CanvasCard) {
 }
 
 function DeleteButton({ id }: { id: string }) {
-  const remove = useFormBuilder(({ canvas }) => canvas.remove);
+  const remove = useCanvas(({ canvas }) => canvas.remove);
 
   const handleRemove = eventHandler(() => remove(id));
 

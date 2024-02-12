@@ -1,5 +1,5 @@
 import { SidebarItem } from "@fibr/builder";
-import { useFormBuilder } from "@fibr/providers";
+import { useCanvas } from "@fibr/providers";
 import {
   CodeBracketSquareIcon,
   DocumentDuplicateIcon,
@@ -13,7 +13,7 @@ import superjson from "superjson";
 export function CodeGenerator() {
   const id = useId();
   const [, copyToClipboard] = useCopyToClipboard();
-  const schema = useFormBuilder((state) => state.schema);
+  const schema = useCanvas((state) => state.schema);
 
   const code = superjson.stringify(schema);
 

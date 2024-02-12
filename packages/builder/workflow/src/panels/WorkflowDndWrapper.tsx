@@ -6,14 +6,14 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
-import { useFormBuilder } from "@fibr/providers";
+import { useCanvas } from "@fibr/providers";
 import { type PropsWithChildren } from "react";
 import { Node, useReactFlow } from "reactflow";
 
 export function WorkflowDndWrapper(props: PropsWithChildren) {
   const sensors = useSensors(useSensor(PointerSensor));
   const { screenToFlowPosition } = useReactFlow();
-  const { add, activeCanvas } = useFormBuilder((state) => ({
+  const { add, activeCanvas } = useCanvas((state) => ({
     add: state.block.add,
     activeCanvas: state.active.canvas,
   }));
