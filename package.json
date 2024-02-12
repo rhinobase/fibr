@@ -20,7 +20,7 @@
     "@mdx-js/loader": "^3.0.0",
     "@mdx-js/react": "^3.0.0",
     "@next/mdx": "^14.1.0",
-    "@rafty/shared": "^1.0.0",
+    "@rafty/shared": "^1.0.1",
     "@rafty/ui": "^1.4.5",
     "@sindresorhus/slugify": "^2.2.1",
     "@swc/helpers": "~0.5.3",
