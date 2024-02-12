@@ -95,7 +95,7 @@ export function Diagram() {
         minZoom={1}
         selectionMode={SelectionMode.Partial}
       >
-        <Background variant={BackgroundVariant.Lines} />
+        <Background variant={BackgroundVariant.Lines} gap={18} />
       </ReactFlow>
     </div>
   );

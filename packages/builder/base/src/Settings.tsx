@@ -16,7 +16,7 @@ export function Settings({ className, children, ...props }: Settings) {
   return (
     <div {...props} className={classNames("h-full w-80 p-3", className)}>
       <h4 className="font-medium">Settings</h4>
-      <hr className="my-3" />
+      <hr />
       {children}
     </div>
   );

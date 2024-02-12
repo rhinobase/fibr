@@ -1,5 +1,5 @@
-import { CanvasType } from "@fibr/providers";
-import { ThreadType } from "@fibr/react";
+import type { CanvasType } from "@fibr/providers";
+import type { ThreadType } from "@fibr/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, ErrorMessage, FieldControl, Textarea } from "@rafty/ui";
 import { BaseSyntheticEvent } from "react";
@@ -47,14 +47,11 @@ export function CustomTemplateForm(props: CustomTemplateForm) {
         />
         <ErrorMessage>{errors.template?.message as string}</ErrorMessage>
       </FieldControl>
-      <Button
-        isLoading={isSubmitting}
-        type="submit"
-        className="ml-auto"
-        colorScheme="primary"
-      >
-        Get Started
-      </Button>
+      <div className="flex flex-row-reverse">
+        <Button isLoading={isSubmitting} type="submit" colorScheme="primary">
+          Get Started
+        </Button>
+      </div>
     </form>
   );
 }

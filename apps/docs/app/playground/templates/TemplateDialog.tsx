@@ -46,7 +46,7 @@ export function TemplateDialog({
     <Dialog open={isOpen}>
       <DialogOverlay />
       {customSchema ? (
-        <DialogContent showCloseButton={false} className="space-y-3">
+        <DialogContent showCloseButton={false} className="space-y-4">
           <div className="flex items-center justify-between">
             <Button
               size="icon"
@@ -80,19 +80,19 @@ export function TemplateDialog({
               </div>
             ))}
           </div>
-          <div className="flex items-center">
-            <hr className="bg-secondary-300 w-full border" />
-            <Text isMuted className="px-2 text-lg font-bold leading-none">
-              OR
+          <div className="relative flex w-full items-center">
+            <hr className="w-full" />
+            <Text className="text-secondary-500 absolute left-1/2 -translate-x-1/2 bg-white px-2 font-semibold leading-none tracking-tight">
+              Or
             </Text>
-            <hr className="bg-secondary-300 w-full border" />
+            <hr />
           </div>
           <div
             onClick={toggleTemplateMode}
             onKeyDown={toggleTemplateMode}
             className="border-secondary-400 hover:bg-secondary-100 flex h-[86px] w-full cursor-pointer items-center justify-center rounded-lg border border-dashed transition-all ease-in-out hover:border-solid"
           >
-            Add Schema
+            <Text isMuted>Add Schema</Text>
           </div>
         </DialogContent>
       )}

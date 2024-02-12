@@ -1,6 +1,11 @@
 "use client";
 import { TabContent, classNames } from "@rafty/ui";
-import { Fragment, PropsWithChildren, type ReactNode, useEffect } from "react";
+import {
+  Fragment,
+  type PropsWithChildren,
+  type ReactNode,
+  useEffect,
+} from "react";
 import { TabPayload, useBuilder } from "../providers";
 
 export type SidebarItem = Omit<TabContent, "value"> &
