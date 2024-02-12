@@ -67,7 +67,7 @@ export const CONFIG: Record<
   string,
   { builder: () => ReactNode; settings: () => ReactNode }
 > = {
-  form: {
+  canvas: {
     builder: plugin.form,
     settings: settings.form,
   },

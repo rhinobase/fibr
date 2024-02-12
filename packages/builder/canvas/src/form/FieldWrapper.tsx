@@ -40,7 +40,7 @@ export function FieldWrapper({ children }: PropsWithChildren) {
 
   const onSelect = eventHandler(() => select(id));
 
-  if (type === "form")
+  if (type === "canvas")
     return (
       <Wrapper
         selected={activeBlock === id}

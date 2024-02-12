@@ -37,4 +37,4 @@ export function Form() {
   );
 }
 
-export const form = createThread<Form>("form");
+export const form = createThread<Form>("canvas");
