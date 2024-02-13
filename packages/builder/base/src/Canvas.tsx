@@ -6,20 +6,12 @@ import {
 } from "@heroicons/react/24/outline";
 import { Button, classNames } from "@rafty/ui";
 import { forwardRef, type ElementRef, type HTMLAttributes } from "react";
-import { Panel, type PanelProps } from "react-resizable-panels";
 import {
   TransformComponent,
   TransformWrapper,
   useControls,
 } from "react-zoom-pan-pinch";
 import { useBuilder } from "./providers";
-
-const PANEL_PROPS: PanelProps = {
-  order: 2,
-  defaultSize: 80,
-  id: "canvas",
-  style: { pointerEvents: "auto" },
-};
 
 export type Canvas = HTMLAttributes<HTMLDivElement>;
 
@@ -33,41 +25,37 @@ export const Canvas = forwardRef<ElementRef<"div">, Canvas>(
           wheel={{ activationKeys: ["Shift"] }}
           doubleClick={{ mode: "reset" }}
         >
-          <Panel {...PANEL_PROPS}>
-            <div className="relative h-full">
-              <TransformComponent
-                wrapperClass="!h-full !w-full"
-                contentClass="!h-full !w-full"
+          <div className="relative h-full">
+            <TransformComponent
+              wrapperClass="!h-full !w-full"
+              contentClass="!h-full !w-full"
+            >
+              <div
+                {...props}
+                className={classNames(
+                  "bg-secondary-100 flex h-full flex-1 items-start justify-center overflow-y-auto py-10",
+                  className,
+                )}
+                ref={forwardedRef}
               >
-                <div
-                  {...props}
-                  className={classNames(
-                    "bg-secondary-100 flex h-full flex-1 items-start justify-center overflow-y-auto py-10",
-                    className,
-                  )}
-                  ref={forwardedRef}
-                >
-                  {children}
-                </div>
-              </TransformComponent>
-              <Controls />
-            </div>
-          </Panel>
+                {children}
+              </div>
+            </TransformComponent>
+            <Controls />
+          </div>
         </TransformWrapper>
       );
     return (
-      <Panel {...PANEL_PROPS}>
-        <div
-          {...props}
-          className={classNames(
-            "bg-secondary-100 flex h-full items-start justify-center !overflow-y-auto",
-            className,
-          )}
-          ref={forwardedRef}
-        >
-          {children}
-        </div>
-      </Panel>
+      <div
+        {...props}
+        className={classNames(
+          "bg-secondary-100 flex h-full items-start justify-center !overflow-y-auto",
+          className,
+        )}
+        ref={forwardedRef}
+      >
+        {children}
+      </div>
     );
   },
 );

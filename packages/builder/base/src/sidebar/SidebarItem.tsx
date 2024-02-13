@@ -43,7 +43,7 @@ export function SidebarItem({
       {...props}
       value={name}
       className={classNames(
-        "flex-col overflow-hidden data-[state=active]:flex data-[orientation=vertical]:p-0",
+        "border-secondary-200 flex-col overflow-hidden border-r data-[state=active]:flex data-[orientation=vertical]:p-0",
         className,
       )}
     >

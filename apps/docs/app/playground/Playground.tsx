@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Footer, Header, PreviewButton, Workspace } from "@fibr/builder";
 import { FormBuilder } from "@fibr/form";
@@ -6,19 +5,10 @@ import { PageBuilder } from "@fibr/page";
 import { CanvasType } from "@fibr/providers";
 import type { ThreadType } from "@fibr/react";
 import { WorkflowBuilder } from "@fibr/workflow";
-import {
-  Menu,
-  MenuContent,
-  MenuGroup,
-  MenuItem,
-  MenuSeparator,
-  MenuTrigger,
-  Text,
-} from "@rafty/ui";
+import { Text } from "@rafty/ui";
 import Link from "next/link";
 import { type ReactNode, useState } from "react";
-import { FaBook, FaXTwitter } from "react-icons/fa6";
-import { HiOutlineQuestionMarkCircle } from "react-icons/hi2";
+import { FaGithub, FaXTwitter } from "react-icons/fa6";
 import { BLOCKS, CONFIG, WORKFLOW_BLOCKS, WORKFLOW_CONFIG } from "./config";
 import { Container, TemplateDialog } from "./templates";
 
@@ -83,52 +73,47 @@ export default function Playground() {
         onSelect={setTemplate}
       />
       {template && <Component template={template} />}
-      <Footer>
+      <Footer className="[&>p]:text-2xs [&>p]:select-none">
+        <Text isMuted className="bg-secondary-300 px-1">
+          Fibr version 0.0.1
+        </Text>
         <div className="flex-1" />
-        <Text isMuted className="text-2xs">
+        <Text isMuted>
           © {new Date().getFullYear()} rhinobase, Inc. All rights reserved.
         </Text>
         <div className="flex-1" />
-        <FooterMenu />
+        <Socials />
       </Footer>
     </Workspace>
   );
 }
 
-function FooterMenu() {
+const SOCIALS = {
+  twitter: {
+    link: "https://twitter.com/rhinobaseio",
+    icon: FaXTwitter,
+  },
+  github: {
+    link: "https://github.com/rhinobase/fibr",
+    icon: FaGithub,
+  },
+};
+
+function Socials() {
   return (
-    <Menu size="sm">
-      <MenuTrigger size="icon" variant="ghost" className="rounded-none">
-        <HiOutlineQuestionMarkCircle />
-      </MenuTrigger>
-      <MenuContent
-        align="end"
-        alignOffset={10}
-        sideOffset={10}
-        className="min-w-max space-y-0 overflow-hidden p-0"
-        isArrow={false}
-      >
-        <MenuGroup className="p-1">
-          <Link href="/">
-            <MenuItem>
-              <FaBook /> View Documentation
-            </MenuItem>
-          </Link>
-          <Link
-            href="https://twitter.com/rhinobaseio"
-            target="_blank"
-            rel="noopener"
-          >
-            <MenuItem>
-              <FaXTwitter /> @rhinobaseio
-            </MenuItem>
-          </Link>
-        </MenuGroup>
-        <MenuSeparator />
-        <div className="bg-secondary-50 text-secondary-500 select-none px-2.5 text-center text-[11px]">
-          Fibr version 0.0.1
-        </div>
-      </MenuContent>
-    </Menu>
+    <div className="flex items-center gap-1.5 px-2">
+      {Object.entries(SOCIALS).map(([name, { link, icon: Icon }]) => (
+        <Link
+          key={name}
+          href={link}
+          title={name}
+          className="text-secondary-500 transition-all ease-in-out hover:text-black"
+          target="_blank"
+          rel="noopener"
+        >
+          <Icon size={15} />
+        </Link>
+      ))}
+    </div>
   );
 }

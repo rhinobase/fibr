@@ -85,7 +85,12 @@ export function Palette({
       ) : (
         <>
           <div className="sticky top-0 z-10 bg-white">
-            <SearchField search={search} onSearch={setSearch} size="sm" />
+            <SearchField
+              search={search}
+              onSearch={setSearch}
+              size="sm"
+              autoComplete="off"
+            />
           </div>
           {isEmpty ? (
             <div className="flex flex-1 flex-col justify-center">
@@ -100,7 +105,7 @@ export function Palette({
                 components.length > 0 && (
                   <div key={category} className="space-y-2.5 pb-3">
                     <h3 className="text-sm font-semibold">{category}</h3>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2.5">
                       {components.map((block, index) => (
                         <PaletteCard
                           key={`${index}-${block.type}`}

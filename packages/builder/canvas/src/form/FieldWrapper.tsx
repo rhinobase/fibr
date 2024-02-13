@@ -13,15 +13,6 @@ import {
 } from "react";
 import { QuickActions } from "./QuickActions";
 
-const wrapperClasses = cva("w-full cursor-pointer border bg-white rounded", {
-  variants: {
-    selected: {
-      true: "border-primary-500",
-      false: "border-transparent",
-    },
-  },
-});
-
 export function FieldWrapper({ children }: PropsWithChildren) {
   const { id, type } = useThread();
   const { activeBlock, select } = useCanvas(({ block, active }) => ({
@@ -73,7 +64,7 @@ export function FieldWrapper({ children }: PropsWithChildren) {
         {...attributes}
         {...listeners}
         className={classNames(
-          "select-none p-4 hover:shadow-md",
+          "select-none p-4 hover:shadow-[0_1px_5px_1px_rgba(0,0,0,0.1)]",
           !isDragging && "transition-all ease-in-out",
         )}
       >
@@ -82,6 +73,15 @@ export function FieldWrapper({ children }: PropsWithChildren) {
     </QuickActions>
   );
 }
+
+const wrapperClasses = cva("w-full cursor-pointer border bg-white rounded", {
+  variants: {
+    selected: {
+      true: "border-primary-500",
+      false: "border-transparent",
+    },
+  },
+});
 
 type WrapperProps = HTMLAttributes<HTMLDivElement> & {
   selected: boolean;
