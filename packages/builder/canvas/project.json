@@ -1,0 +1,33 @@
+{
+  "name": "canvas",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/builder/canvas/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/builder/canvas",
+        "tsConfig": "packages/builder/canvas/tsconfig.lib.json",
+        "project": "packages/builder/canvas/package.json",
+        "entryFile": "packages/builder/canvas/src/index.ts",
+        "external": ["react", "react-dom", "react/jsx-runtime"],
+        "rollupConfig": "rollup.config.js",
+        "compiler": "swc",
+        "assets": [
+          {
+            "glob": "packages/builder/canvas/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    }
+  }
+}

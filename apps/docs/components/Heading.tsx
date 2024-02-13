@@ -18,7 +18,7 @@ function Eyebrow({ tag, label }: Eyebrow) {
     <div className="flex items-center gap-x-3">
       {tag && <Tag>{tag}</Tag>}
       {tag && label && (
-        <span className="bg-secondary-300 dark:bg-secondary-600 h-0.5 w-0.5 rounded-full" />
+        <span className="bg-secondary-300 dark:bg-secondary-600 size-0.5 rounded-full" />
       )}
       {label && (
         <span className="text-secondary-400 font-mono text-xs">{label}</span>
@@ -40,7 +40,7 @@ function Anchor({ id, inView, children }: Anchor) {
     >
       {inView && (
         <div className="absolute ml-[calc(-1*var(--width))] mt-1 hidden w-[var(--width)] opacity-0 transition [--width:calc(2.625rem+0.5px+50%-min(50%,calc(theme(maxWidth.lg)+theme(spacing.8))))] group-hover:opacity-100 group-focus:opacity-100 md:block lg:z-50 2xl:[--width:theme(spacing.10)]">
-          <div className="group/anchor bg-secondary-50 ring-secondary-300 hover:ring-secondary-500 dark:bg-secondary-800 dark:ring-secondary-700 dark:hover:bg-secondary-700 dark:hover:ring-secondary-600 flex h-5 w-5 items-center rounded-lg p-1 ring-1 ring-inset transition">
+          <div className="group/anchor bg-secondary-50 ring-secondary-300 hover:ring-secondary-500 dark:bg-secondary-800 dark:ring-secondary-700 dark:hover:bg-secondary-700 dark:hover:ring-secondary-600 flex size-5 items-center rounded-lg p-1 ring-1 ring-inset transition">
             <LinkIcon width={16} height={16} className="stroke-2" />
           </div>
         </div>

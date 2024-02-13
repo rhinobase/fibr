@@ -1,0 +1,15 @@
+{
+  "name": "@fibr/providers",
+  "version": "0.0.1",
+  "dependencies": {
+    "@dnd-kit/sortable": "^8.0.0",
+    "@fibr/react": "^0.0.1",
+    "@swc/helpers": "^0.5.3",
+    "immer": "^10.0.3",
+    "lodash": "^4.17.21",
+    "zustand": "^4.5.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0"
+  }
+}

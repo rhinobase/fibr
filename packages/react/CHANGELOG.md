@@ -2,6 +2,21 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.5.3-rc.0](https://github.com/rhinobase/fibr/compare/react-0.5.2...react-0.5.3-rc.0) (2024-01-31)
+
+
+### Features
+
+* **form:** installed @rafty/fibr and implemented its fields ([6531808](https://github.com/rhinobase/fibr/commit/6531808edc834c44883e70fe47a742cb892c7469))
+* **form:** working on form builder ([b7180a3](https://github.com/rhinobase/fibr/commit/b7180a3be058b92b0f08b82d3ebfb0889c505125))
+* **form:** working on form builder and creating its functionalities ([64f94b3](https://github.com/rhinobase/fibr/commit/64f94b3ad7fcf5198a500bda46629ceb92b8b6fb))
+
+
+### Bug Fixes
+
+* **form:** resolved linting error ([eedcfe0](https://github.com/rhinobase/fibr/commit/eedcfe0dcfffc9d846f86dcb14c7e6deb27afb26))
+* **react:** resolved build errors ([0942f30](https://github.com/rhinobase/fibr/commit/0942f30a9741b5ae1e77337b8fbed34d7feb38b1))
+
 ## [0.5.2](https://github.com/rhinobase/fiber/compare/react-0.5.1...react-0.5.2) (2024-01-23)
 
 ## [0.5.1](https://github.com/rhinobase/fibr/compare/react-0.5.0...react-0.5.1) (2024-01-18)

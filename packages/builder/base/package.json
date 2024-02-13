@@ -1,0 +1,45 @@
+{
+  "name": "@fibr/builder",
+  "version": "0.0.1",
+  "description": "Fibr interface builder",
+  "license": "MIT",
+  "keywords": [
+    "form",
+    "builder",
+    "automatic",
+    "react",
+    "blueprint",
+    "schema",
+    "json"
+  ],
+  "homepage": "https://fibr.rhinobase.io/",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhinobase/fibr.git",
+    "directory": "packages/react"
+  },
+  "bugs": {
+    "url": "https://github.com/rhinobase/fibr/issues"
+  },
+  "dependencies": {
+    "@fibr/providers": "^1.0.0",
+    "@heroicons/react": "^2.1.1",
+    "@rafty/ui": "^1.4.2",
+    "@rafty/shared": "^1.0.0",
+    "@swc/helpers": "^0.5.3",
+    "immer": "^10.0.3",
+    "lodash": "^4.17.21",
+    "react-icons": "^5.0.1",
+    "react-hot-toast": "^2.4.1",
+    "react-resizable-panels": "^2.0.2",
+    "react-zoom-pan-pinch": "^3.4.0",
+    "zustand": "^4.5.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0"
+  },
+  "sideEffects": false
+}

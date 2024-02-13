@@ -11,6 +11,34 @@
     {
       "value": "builder",
       "name": "builder:              anything Builder specific"
+    },
+    {
+      "value": "form",
+      "name": "form:                 anything Form Builder specific"
+    },
+    {
+      "value": "blocks",
+      "name": "blocks:               anything Block specific"
+    },
+    {
+      "value": "shared",
+      "name": "shared:               anything shared resources specific"
+    },
+    {
+      "value": "canvas",
+      "name": "canvas:               anything canvas resources specific"
+    },
+    {
+      "value": "providers",
+      "name": "providers:            anything providers resources specific"
+    },
+    {
+      "value": "workflow",
+      "name": "workflow:             anything workflow resources specific"
+    },
+    {
+      "value": "page",
+      "name": "page:                 anything page Builder specific"
     }
   ],
   "scopesSearchValue": true,

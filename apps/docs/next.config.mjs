@@ -27,6 +27,7 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ["@rafty/ui"],
   },
+  reactStrictMode: false,
 };
 
 const plugins = [withSearch, withMDX, withNx];

@@ -1,8 +1,8 @@
+import { Logo } from "@fibr/builder";
 import { classNames } from "@rafty/ui";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { HTMLAttributes, PropsWithChildren, forwardRef } from "react";
-import { Logo } from "./Logo";
 import {
   MobileNavigation,
   useIsInsideMobileNavigation,
@@ -70,8 +70,11 @@ export const Header = forwardRef<HTMLDivElement, Header>(function Header(
       <Search />
       <div className="flex items-center gap-5 lg:hidden">
         <MobileNavigation />
-        <Link href="/" aria-label="Home">
-          <Logo className="h-6" />
+        <Link href="/" aria-label="Home" className="flex items-center gap-1">
+          <Logo className="w-7" />
+          <span className="text-2xl font-semibold italic leading-none">
+            Fibr
+          </span>
         </Link>
       </div>
       <div className="flex items-center gap-5">

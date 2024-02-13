@@ -24,7 +24,7 @@ export function FibrProvider({
   // Merging all the components
   const components = Array.isArray(plugins)
     ? Object.assign({ default: ComponentNotFound }, ...plugins)
-    : plugins;
+    : { default: ComponentNotFound, ...plugins };
 
   return (
     <FibrContext.Provider value={{ components }}>

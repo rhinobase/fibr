@@ -112,7 +112,7 @@ function CodePanelHeader({ tag, label }: CodePanelHeader) {
         </div>
       )}
       {tag && label && (
-        <span className="bg-secondary-500 h-0.5 w-0.5 rounded-full" />
+        <span className="bg-secondary-500 size-0.5 rounded-full" />
       )}
       {label && (
         <span className="text-secondary-400 font-mono text-xs">{label}</span>

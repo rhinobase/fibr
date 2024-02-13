@@ -7,7 +7,7 @@ import {
   DrawerContent,
   DrawerOverlay,
 } from "@rafty/ui";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { createContext, useContext, useEffect, useRef } from "react";
 import { Navigation } from "./Navigation";
 import { useDrawerDialog } from "./store";
@@ -17,15 +17,13 @@ const IsInsideMobileNavigationContext = createContext(false);
 export function MobileNavigationDialog() {
   const { isOpen, setOpen } = useDrawerDialog();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const initialPathname = useRef(pathname).current;
-  const initialSearchParams = useRef(searchParams).current;
 
   useEffect(() => {
-    if (pathname !== initialPathname || searchParams !== initialSearchParams) {
+    if (pathname !== initialPathname) {
       setOpen(false);
     }
-  }, [pathname, searchParams, setOpen, initialPathname, initialSearchParams]);
+  }, [pathname, setOpen, initialPathname]);
 
   return (
     <Drawer
@@ -35,7 +33,7 @@ export function MobileNavigationDialog() {
       side="left"
     >
       <DrawerOverlay />
-      <DrawerContent className="h-full w-full max-w-[70vw] p-0 py-6">
+      <DrawerContent className="size-full max-w-[70vw] p-0 py-6">
         <DrawerClose className="z-[60]" />
         <Navigation className="h-full px-6 pb-6" />
       </DrawerContent>

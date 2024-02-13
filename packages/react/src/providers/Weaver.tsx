@@ -1,8 +1,13 @@
 "use client";
-import { type PropsWithChildren, createContext, useContext } from "react";
+import {
+  type PropsWithChildren,
+  type ReactNode,
+  createContext,
+  useContext,
+} from "react";
 
 type WeaverContextType = {
-  readonly wrapper?: (props: PropsWithChildren) => JSX.Element;
+  readonly wrapper?: (props: PropsWithChildren) => ReactNode;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

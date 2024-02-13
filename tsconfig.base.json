@@ -15,8 +15,15 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@fibr/builder": ["packages/builder/src/index.ts"],
-      "@fibr/react": ["packages/react/src/index.ts"]
+      "@fibr/blocks": ["packages/blocks/src/index.ts"],
+      "@fibr/builder": ["packages/builder/base/src/index.ts"],
+      "@fibr/canvas": ["packages/builder/canvas/src/index.ts"],
+      "@fibr/form": ["packages/builder/form/src/index.ts"],
+      "@fibr/page": ["packages/builder/page/src/index.ts"],
+      "@fibr/providers": ["packages/builder/providers/src/index.ts"],
+      "@fibr/react": ["packages/react/src/index.ts"],
+      "@fibr/shared": ["packages/builder/shared/src/index.ts"],
+      "@fibr/workflow": ["packages/builder/workflow/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

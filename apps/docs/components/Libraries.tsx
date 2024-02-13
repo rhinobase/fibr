@@ -52,7 +52,7 @@ export function Libraries() {
       <Heading level={2} id="official-libraries">
         Official libraries
       </Heading>
-      <div className="not-prose border-secondary-900/5 mt-4 grid grid-cols-1 gap-x-6 gap-y-10 border-t pt-10 dark:border-white/5 sm:grid-cols-2 xl:max-w-none xl:grid-cols-3">
+      <div className="not-prose border-secondary-900/5 mt-4 grid grid-cols-1 gap-x-6 gap-y-10 border-t pt-10 sm:grid-cols-2 xl:max-w-none xl:grid-cols-3 dark:border-white/5">
         {LIBRARIES.map(({ name, description, logo, href }) => (
           <div key={name} className="flex flex-row-reverse gap-6">
             <div className="flex-auto">
@@ -70,7 +70,7 @@ export function Libraries() {
                 <ArrowRightIcon width={16} height={16} className="stroke-2" />
               </Link>
             </div>
-            <Image src={logo} alt={name} className="h-12 w-12" unoptimized />
+            <Image src={logo} alt={name} className="size-12" unoptimized />
           </div>
         ))}
       </div>

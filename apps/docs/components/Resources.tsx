@@ -118,8 +118,8 @@ function Resource({ name, description, href, icon, pattern }: Resource) {
 
 function ResourceIcon({ icon: Icon }: { icon: Resource["icon"] }) {
   return (
-    <div className="dark:bg-white/7.5 dark:ring-white/15 bg-secondary-900/5 ring-secondary-900/25 group-hover:ring-secondary-900/25 dark:group-hover:bg-primary-300/10 dark:group-hover:ring-primary-400 flex h-7 w-7 items-center justify-center rounded-full ring-1 backdrop-blur-[2px] transition duration-300 group-hover:bg-white/50">
-      <Icon className="fill-secondary-700/10 stroke-secondary-700 group-hover:stroke-secondary-900 dark:stroke-secondary-400 dark:group-hover:stroke-primary-400 dark:group-hover:fill-primary-300/10 h-5 w-5 transition-colors duration-300 dark:fill-white/10" />
+    <div className="dark:bg-white/7.5 bg-secondary-900/5 ring-secondary-900/25 group-hover:ring-secondary-900/25 dark:group-hover:bg-primary-300/10 dark:group-hover:ring-primary-400 flex size-7 items-center justify-center rounded-full ring-1 backdrop-blur-[2px] transition duration-300 group-hover:bg-white/50 dark:ring-white/15">
+      <Icon className="fill-secondary-700/10 stroke-secondary-700 group-hover:stroke-secondary-900 dark:stroke-secondary-400 dark:group-hover:stroke-primary-400 dark:group-hover:fill-primary-300/10 size-5 transition-colors duration-300 dark:fill-white/10" />
     </div>
   );
 }
@@ -147,7 +147,7 @@ function ResourcePattern({
         />
       </div>
       <motion.div
-        className="dark:group-hover:opacity-15 from-primary-100 to-primary-300 dark:from-primary-500 dark:to-primary-300 absolute inset-0 rounded-2xl bg-gradient-to-r opacity-0 transition duration-300 group-hover:opacity-50"
+        className="from-primary-100 to-primary-300 dark:from-primary-500 dark:to-primary-300 absolute inset-0 rounded-2xl bg-gradient-to-r opacity-0 transition duration-300 group-hover:opacity-50 dark:group-hover:opacity-15"
         style={style}
       />
       <motion.div
@@ -172,7 +172,7 @@ export function Resources() {
       <Heading level={2} id="resources">
         Resources
       </Heading>
-      <div className="not-prose border-secondary-900/5 mt-4 grid grid-cols-1 gap-8 border-t pt-10 dark:border-white/5 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="not-prose border-secondary-900/5 mt-4 grid grid-cols-1 gap-8 border-t pt-10 sm:grid-cols-2 xl:grid-cols-4 dark:border-white/5">
         {RESOURCES.map((resource) => (
           <Resource key={resource.name} {...resource} />
         ))}

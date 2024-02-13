@@ -1,0 +1,33 @@
+{
+  "name": "providers",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/builder/providers/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/builder/providers",
+        "tsConfig": "packages/builder/providers/tsconfig.lib.json",
+        "project": "packages/builder/providers/package.json",
+        "entryFile": "packages/builder/providers/src/index.ts",
+        "external": ["react", "react-dom", "react/jsx-runtime"],
+        "rollupConfig": "rollup.config.js",
+        "compiler": "swc",
+        "assets": [
+          {
+            "glob": "packages/builder/providers/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    }
+  }
+}
