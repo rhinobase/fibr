@@ -1,9 +1,10 @@
 import {
   type CanvasType,
-  FormBuilderProvider,
-  type FormBuilderStoreProps,
+  CanvasProvider,
+  type CanvasStoreProps,
+  ShortcutsProvider,
 } from "@fibr/providers";
-import { SourceProvider, type SourceStore } from "@fibr/shared";
+import { BlocksProvider, type BlocksStore } from "@fibr/shared";
 import { Container } from "./Container";
 import { ReactFlowProvider } from "reactflow";
 
@@ -11,14 +12,16 @@ export function PageBuilder<T extends CanvasType>({
   blocks,
   config,
   ...builderProps
-}: SourceStore & FormBuilderStoreProps<T>) {
+}: BlocksStore & CanvasStoreProps<T>) {
   return (
-    <SourceProvider blocks={blocks} config={config}>
-      <FormBuilderProvider {...builderProps}>
+    <BlocksProvider blocks={blocks} config={config}>
+      <CanvasProvider {...builderProps}>
         <ReactFlowProvider>
-          <Container />
+          <ShortcutsProvider>
+            <Container />
+          </ShortcutsProvider>
         </ReactFlowProvider>
-      </FormBuilderProvider>
-    </SourceProvider>
+      </CanvasProvider>
+    </BlocksProvider>
   );
 }

@@ -5,20 +5,20 @@ import { useBlocks } from "@fibr/shared";
 import { useCallback, useMemo } from "react";
 import {
   Background,
+  BackgroundVariant,
   Connection,
   DefaultEdgeOptions,
   Edge,
   FitViewOptions,
   Node,
+  OnEdgesChange,
   OnNodesChange,
   ReactFlow,
   SelectionMode,
   addEdge,
+  applyEdgeChanges,
   applyNodeChanges,
   type NodeTypes,
-  OnEdgesChange,
-  applyEdgeChanges,
-  BackgroundVariant,
 } from "reactflow";
 import "reactflow/dist/style.css";
 
