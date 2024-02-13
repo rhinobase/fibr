@@ -1,24 +1,17 @@
 "use client";
+import { useCanvas } from "@fibr/providers";
+import { Tab, TabList, TabTrigger } from "@rafty/ui";
 import {
-  Tab,
-  TabList,
-  TabTrigger,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@rafty/ui";
-import {
-  useRef,
-  type PropsWithChildren,
   RefObject,
   useEffect,
+  useRef,
   useState,
+  type PropsWithChildren,
 } from "react";
 import { ImperativePanelHandle, Panel } from "react-resizable-panels";
-import { ResizeHandle } from "./ResizeHandle";
 import { useBuilder } from "../providers";
 import { Env } from "../utils";
-import { useCanvas } from "@fibr/providers";
+import { ResizeHandle } from "./ResizeHandle";
 
 const DEFAULT_SIZE = 20;
 export function Sidebar({ children }: PropsWithChildren) {
@@ -155,27 +148,26 @@ function SidebarTray({
     >
       <TabList ref={listRef}>
         {Array.from(all).map(([name, { icon, label }]) => (
-          <Tooltip key={name}>
-            <TabTrigger
-              value={name}
-              onClick={(event) => {
-                event.preventDefault();
-                event.stopPropagation();
+          <TabTrigger
+            key={name}
+            value={name}
+            title={label?.toString()}
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
 
-                if (active === name && isExpanded) {
-                  setActive(null);
-                  collapsePanel?.();
-                } else {
-                  setActive(name);
-                  if (!isExpanded) expandPanel?.();
-                }
-              }}
-              className="hover:text-secondary-700 p-3"
-            >
-              <TooltipTrigger>{icon}</TooltipTrigger>
-            </TabTrigger>
-            <TooltipContent side="right">{label}</TooltipContent>
-          </Tooltip>
+              if (active === name && isExpanded) {
+                setActive(null);
+                collapsePanel?.();
+              } else {
+                setActive(name);
+                if (!isExpanded) expandPanel?.();
+              }
+            }}
+            className="hover:text-secondary-700 p-2"
+          >
+            {icon}
+          </TabTrigger>
         ))}
       </TabList>
       {children}

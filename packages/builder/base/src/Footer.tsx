@@ -7,7 +7,7 @@ export const Footer = forwardRef<HTMLDivElement, Footer>(
   ({ className, ...props }, forwardedRef) => (
     <footer
       {...props}
-      className={classNames("flex w-full items-center p-1", className)}
+      className={classNames("flex w-full items-center", className)}
       ref={forwardedRef}
     />
   ),
