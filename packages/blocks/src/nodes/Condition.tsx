@@ -1,17 +1,27 @@
-import { NodeWrapper } from "./NodeWrapper";
-import { Position } from "reactflow";
+import { Handle, Position } from "reactflow";
+
+const ID = "condition";
 
 export function ConditionNode() {
   return (
-    <NodeWrapper
-      id="end"
-      handles={[
-        { type: "target", position: Position.Left },
-        { type: "source", position: Position.Right },
-        { type: "source", position: Position.Right },
-      ]}
-    >
+    <div className="relative p-2">
+      <Handle type="target" position={Position.Left} />
       Condition Node
-    </NodeWrapper>
+      <div className="absolute -right-0.5 top-0 flex h-full w-1 flex-col justify-around">
+        {Array.from({ length: 2 }).map((_, index) => (
+          <Handle
+            id={`${index}-${ID}-source-right`}
+            type="source"
+            position={Position.Right}
+            style={{
+              position: "relative",
+              right: "auto",
+              top: "auto",
+              transform: "none",
+            }}
+          />
+        ))}
+      </div>
+    </div>
   );
 }

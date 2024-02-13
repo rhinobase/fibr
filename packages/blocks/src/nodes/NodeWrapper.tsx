@@ -1,4 +1,4 @@
-import { type PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { Handle, type HandleProps, type NodeProps } from "reactflow";
 
 export type NodeWrapper = PropsWithChildren<
@@ -9,7 +9,7 @@ export type NodeWrapper = PropsWithChildren<
 
 export function NodeWrapper({ id, children, handles }: NodeWrapper) {
   return (
-    <div className="p-2 text-sm leading-none">
+    <div className="p-2">
       {children}
       {handles.map((handle, index) => {
         const uniqueId = `${index}-${id}-${handle.type}-${handle.position}`;
