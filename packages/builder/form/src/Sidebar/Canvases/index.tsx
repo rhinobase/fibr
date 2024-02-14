@@ -4,8 +4,8 @@ import { Square3Stack3DIcon } from "@heroicons/react/24/outline";
 import { Button, InputField, useBoolean } from "@rafty/ui";
 import { useEffect, useRef } from "react";
 import { MdAdd } from "react-icons/md";
-import { Empty } from "../utils";
 import { CanvasCard } from "./CanvasCard";
+import { Empty } from "@fibr/shared";
 
 export function Canvases() {
   const [show, toggle] = useBoolean();

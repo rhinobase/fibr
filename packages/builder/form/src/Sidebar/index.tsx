@@ -1,7 +1,8 @@
 import { Sidebar as BuilderSidebar } from "@fibr/builder";
 import { useCanvas } from "@fibr/providers";
-import { Overview, Palette, Canvases, CodeGenerator } from "@fibr/shared";
 import superjson from "superjson";
+import { Overview, Palette, CodeGenerator } from "@fibr/shared";
+import { Canvases } from "./Canvases";
 
 export function Sidebar() {
   const {
