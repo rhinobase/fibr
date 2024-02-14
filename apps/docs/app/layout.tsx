@@ -4,8 +4,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s - Protocol API Reference",
-    default: "Protocol API Reference",
+    template: "%s - Fibr docs",
+    default: "Fibr docs",
   },
 };
 

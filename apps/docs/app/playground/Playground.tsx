@@ -84,7 +84,7 @@ export default function Playground() {
         <div className="flex-1" />
       )}
       <Footer className="[&>p]:text-2xs [&>p]:select-none">
-        <Text isMuted className="bg-secondary-300 px-1">
+        <Text isMuted className="px-1">
           version 1.0.0
         </Text>
         <div className="flex-1" />
