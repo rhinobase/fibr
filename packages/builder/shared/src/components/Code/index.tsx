@@ -30,7 +30,10 @@ export function CodeGenerator({ resolver }: CodeGenerator) {
   // Schema code
   const schema = useCanvas(({ schema }) => schema);
   const [ast, code] = useMemo(
-    () => [superjson.stringify(schema), resolver?.(schema) ?? "// No Resolver"],
+    () => [
+      JSON.stringify(JSON.parse(superjson.stringify(schema)), null, 2),
+      resolver?.(schema) ?? "// No Resolver",
+    ],
     [resolver, schema],
   );
 
@@ -86,10 +89,10 @@ export function CodeGenerator({ resolver }: CodeGenerator) {
           value="schematics"
           className="flex-1 overflow-hidden overflow-y-auto"
         >
-          <CodeHighlighter content={JSON.stringify(JSON.parse(ast), null, 2)} />
+          <CodeHighlighter language="js" content={ast} />
         </TabContent>
         <TabContent value="resolver">
-          <CodeHighlighter content={code} />
+          <CodeHighlighter language="tsx" content={code} />
         </TabContent>
       </Tab>
     </SidebarItem>

@@ -2,13 +2,13 @@ import { classNames } from "@rafty/ui";
 import { Highlight, themes } from "prism-react-renderer";
 import { useId } from "react";
 
-export type CodeHighlighter = { content: string };
+export type CodeHighlighter = { content: string; language: string };
 
-export function CodeHighlighter({ content }: CodeHighlighter) {
+export function CodeHighlighter({ content, language }: CodeHighlighter) {
   const id = useId();
 
   return (
-    <Highlight theme={themes.github} code={content} language="js">
+    <Highlight theme={themes.github} code={content} language={language}>
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <pre
           style={style}
