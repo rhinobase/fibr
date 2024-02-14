@@ -5,7 +5,7 @@ import {
   ShortcutsProvider,
 } from "@fibr/providers";
 import { BlocksProvider, type BlocksStore } from "@fibr/shared";
-import { Container } from "./panels/Container";
+import { Container } from "./Container";
 import { ReactFlowProvider } from "reactflow";
 
 export function WorkflowBuilder<T extends CanvasType>({

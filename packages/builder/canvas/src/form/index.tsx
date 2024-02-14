@@ -7,7 +7,7 @@ export function FormBuilderCanvas() {
 
   return (
     <Canvas className="py-10" onClick={() => select(null)}>
-      <div className="flex w-[500px] flex-col items-center justify-center gap-3 rounded">
+      <div className="w-[500px] rounded bg-white">
         <FormDisplay />
       </div>
     </Canvas>

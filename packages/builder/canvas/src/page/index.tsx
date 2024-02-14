@@ -18,10 +18,10 @@ export function PageCanvas() {
     <FormProvider {...methods}>
       <Canvas
         ref={setNodeRef}
-        className="relative py-10"
+        className="relative"
         onClick={() => select(null)}
       >
-        <div className="flex h-full w-[1080px] flex-col gap-3 rounded bg-white">
+        <div className="flex h-full w-full flex-col bg-white">
           <WeaverProvider wrapper={NodeWrapper}>
             <Diagram />
           </WeaverProvider>

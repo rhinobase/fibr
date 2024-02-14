@@ -3,12 +3,7 @@ import { NumberInput, number } from "./number-input";
 import { PasswordInput, password } from "./password";
 import { StringInput, string } from "./string-input";
 import { TextareaField, textarea } from "./textarea";
-
-export type { Form } from "./form";
-export type { NumberInput } from "./number-input";
-export type { PasswordInput } from "./password";
-export type { StringInput } from "./string-input";
-export type { TextareaField } from "./textarea";
+import { Page, page } from "./page";
 
 export const plugin = {
   form: Form,
@@ -16,6 +11,7 @@ export const plugin = {
   password: PasswordInput,
   string: StringInput,
   textarea: TextareaField,
+  page: Page,
 };
 
 export const f = {
@@ -24,4 +20,5 @@ export const f = {
   password,
   string,
   textarea,
+  page,
 };

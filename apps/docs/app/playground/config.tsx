@@ -87,6 +87,10 @@ export const CONFIG: Record<
     builder: plugin.number,
     settings: settings.number,
   },
+  page: {
+    builder: plugin.page,
+    settings: settings.form,
+  },
 };
 
 export const BLOCKS: Record<string, Block[]> = {

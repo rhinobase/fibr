@@ -26,12 +26,10 @@ export function FormDisplay() {
 
   if (!activeCanvas)
     return (
-      <div className="w-full p-2">
-        <div className="w-full rounded-lg border-2 border-dashed p-6 text-center">
-          <Text isMuted className="select-none font-medium">
-            No Active Canvas
-          </Text>
-        </div>
+      <div className="m-2 rounded-lg border-2 border-dashed p-6 text-center">
+        <Text isMuted className="select-none font-medium">
+          No Active Canvas
+        </Text>
       </div>
     );
 
@@ -43,19 +41,17 @@ export function FormDisplay() {
   const allBlocks = getAllBlocks(activeCanvas);
 
   return (
-    <div className="w-full">
-      <WeaverProvider wrapper={BLOCK_WRAPPERS[currentEnv]}>
-        <DndWrapper
-          items={allBlocks.map(({ id }) => id)}
-          onDragStart={({ active }) => selectBlock(String(active.id))}
-          onDragEnd={({ active, over }) => {
-            if (over && active.id !== over.id && activeCanvas)
-              moveBlock(activeCanvas, String(active.id), String(over.id));
-          }}
-        >
-          <Loom id={activeCanvas} blueprint={canvas} />
-        </DndWrapper>
-      </WeaverProvider>
-    </div>
+    <WeaverProvider wrapper={BLOCK_WRAPPERS[currentEnv]}>
+      <DndWrapper
+        items={allBlocks.map(({ id }) => id)}
+        onDragStart={({ active }) => selectBlock(String(active.id))}
+        onDragEnd={({ active, over }) => {
+          if (over && active.id !== over.id && activeCanvas)
+            moveBlock(activeCanvas, String(active.id), String(over.id));
+        }}
+      >
+        <Loom id={activeCanvas} blueprint={canvas} />
+      </DndWrapper>
+    </WeaverProvider>
   );
 }

@@ -4,8 +4,10 @@ import { eventHandler } from "@rafty/shared";
 import { type PropsWithChildren } from "react";
 import { NodeResizer } from "reactflow";
 
+const PANELS = ["page"];
+
 export function NodeWrapper(props: PropsWithChildren) {
-  const { id } = useThread();
+  const { id, type } = useThread();
   const { activeBlock, select } = useCanvas(({ block, active }) => ({
     select: block.select,
     activeBlock: active.block,
@@ -14,8 +16,12 @@ export function NodeWrapper(props: PropsWithChildren) {
   const onSelect = eventHandler(() => select(id));
 
   return (
-    <div className="bg-white" onClick={onSelect} onKeyDown={onSelect}>
-      <NodeResizer isVisible={activeBlock === id} />
+    <div
+      className="h-full w-full bg-white"
+      onClick={onSelect}
+      onKeyDown={onSelect}
+    >
+      {!PANELS.includes(type) && <NodeResizer isVisible={activeBlock === id} />}
       {props.children}
     </div>
   );

@@ -84,6 +84,7 @@ export function Diagram() {
         nodesConnectable
         snapToGrid
         snapGrid={[20, 20]}
+        fitView
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
@@ -91,9 +92,10 @@ export function Diagram() {
         defaultEdgeOptions={defaultEdgeOptions}
         nodeTypes={builders}
         proOptions={{ hideAttribution: true }}
-        selectionOnDrag
-        minZoom={1}
         selectionMode={SelectionMode.Partial}
+        selectionOnDrag
+        panOnScroll
+        panOnDrag={[1, 2]}
       >
         <Background variant={BackgroundVariant.Lines} gap={18} />
       </ReactFlow>

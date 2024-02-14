@@ -89,10 +89,10 @@ export function Diagram() {
         defaultEdgeOptions={defaultEdgeOptions}
         nodeTypes={builders}
         proOptions={{ hideAttribution: true }}
-        panOnScroll
-        selectionOnDrag
-        panOnDrag={[1, 2]}
         selectionMode={SelectionMode.Partial}
+        selectionOnDrag
+        panOnScroll
+        panOnDrag={[1, 2]}
       >
         <Background />
         <Controls />

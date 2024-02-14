@@ -72,10 +72,14 @@ export default function Playground() {
         onContainerChange={setContainer}
         onSelect={setTemplate}
       />
-      {template && <Component template={template} />}
+      {template ? (
+        <Component template={template} />
+      ) : (
+        <div className="flex-1" />
+      )}
       <Footer className="[&>p]:text-2xs [&>p]:select-none">
         <Text isMuted className="bg-secondary-300 px-1">
-          Fibr version 0.0.1
+          version 1.0.0
         </Text>
         <div className="flex-1" />
         <Text isMuted>
@@ -101,7 +105,7 @@ const SOCIALS = {
 
 function Socials() {
   return (
-    <div className="flex items-center gap-1.5 px-2">
+    <div className="flex items-center gap-2 px-2">
       {Object.entries(SOCIALS).map(([name, { link, icon: Icon }]) => (
         <Link
           key={name}

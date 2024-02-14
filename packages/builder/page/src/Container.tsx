@@ -4,7 +4,7 @@ import { useCanvas } from "@fibr/providers";
 import type { ThreadType } from "@fibr/react";
 import { Settings } from "@fibr/shared";
 import { Sidebar } from "./Sidebar";
-import { WorkflowDndWrapper } from "@fibr/workflow";
+import { WorkflowDndWrapper } from "./WorkflowDndWrapper";
 
 export function Container() {
   const { active, getBlock, update } = useCanvas(({ active, block }) => ({

@@ -155,7 +155,16 @@ export const TEMPLATES: Record<
           nodes: {
             type: "nodes",
             title: "Nodes",
-            blocks: new Map(Object.entries({})),
+            blocks: new Map(
+              Object.entries({
+                page: {
+                  type: "page",
+                  position: { x: 920, y: 440 },
+                  width: 1920,
+                  height: 1080,
+                },
+              }),
+            ),
           },
           edges: {
             type: "edges",
