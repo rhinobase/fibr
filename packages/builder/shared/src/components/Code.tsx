@@ -1,5 +1,4 @@
 import { SidebarItem } from "@fibr/builder";
-import { useCanvas } from "@fibr/providers";
 import {
   CodeBracketSquareIcon,
   DocumentDuplicateIcon,
@@ -10,19 +9,14 @@ import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { Highlight, themes } from "prism-react-renderer";
 import { useEffect, useId } from "react";
 
-import superjson from "superjson";
-
 export type CodeGenerator = {
   code?: string;
 };
 
-export function CodeGenerator(porps: CodeGenerator) {
+export function CodeGenerator({ code = "" }: CodeGenerator) {
   const id = useId();
   const [, copyToClipboard] = useCopyToClipboard();
   const [copied, toggle] = useBoolean();
-  const schema = useCanvas((state) => state.schema);
-
-  const code = superjson.stringify(schema);
 
   useEffect(() => {
     if (!copied) return;
