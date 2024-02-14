@@ -1,20 +1,21 @@
 import { useSortable } from "@dnd-kit/sortable";
-import { CSS, Transform } from "@dnd-kit/utilities";
+import { CSS } from "@dnd-kit/utilities";
 import { useCanvas } from "@fibr/providers";
 import { useThread } from "@fibr/react";
 import { eventHandler } from "@rafty/shared";
 import { classNames } from "@rafty/ui";
 import { cva } from "class-variance-authority";
 import {
+  forwardRef,
   type CSSProperties,
   type HTMLAttributes,
   type PropsWithChildren,
-  forwardRef,
+  Fragment,
 } from "react";
 import { QuickActions } from "./QuickActions";
 
 export function FieldWrapper({ children }: PropsWithChildren) {
-  const { id, type } = useThread();
+  const { id, isOverlay, ...field } = useThread();
   const { activeBlock, select } = useCanvas(({ block, active }) => ({
     select: block.select,
     activeBlock: active.block,
@@ -27,11 +28,11 @@ export function FieldWrapper({ children }: PropsWithChildren) {
     transform,
     transition,
     isDragging,
-  } = useSortable({ id });
+  } = useSortable({ id, data: field });
 
   const onSelect = eventHandler(() => select(id));
 
-  if (type === "canvas")
+  if (field.type === "canvas")
     return (
       <Wrapper
         selected={activeBlock === id}
@@ -43,20 +44,21 @@ export function FieldWrapper({ children }: PropsWithChildren) {
       </Wrapper>
     );
 
-  const _transform: Transform = {
-    x: transform?.x ?? 0,
-    y: transform?.y ?? 0,
-    scaleX: 1,
-    scaleY: 1,
+  const nodeStyle: CSSProperties = {
+    transform: CSS.Transform.toString({
+      x: transform?.x ?? 0,
+      y: transform?.y ?? 0,
+      scaleX: 1,
+      scaleY: 1,
+    }),
+    transition,
+    opacity: isDragging ? 0.4 : 1,
   };
 
-  const nodeStyle: CSSProperties = {
-    transform: CSS.Transform.toString(_transform),
-    transition,
-  };
+  const Component = isDragging || isOverlay ? Fragment : QuickActions;
 
   return (
-    <QuickActions>
+    <Component>
       <Wrapper
         selected={activeBlock === id}
         ref={setNodeRef}
@@ -64,13 +66,15 @@ export function FieldWrapper({ children }: PropsWithChildren) {
         {...attributes}
         {...listeners}
         className={classNames(
-          "select-none p-4 hover:shadow-[0_1px_5px_1px_rgba(0,0,0,0.1)]",
-          !isDragging && "transition-all ease-in-out",
+          "select-none p-4",
+          !isDragging && "transition-shadow",
+          isDragging && "z-50",
+          activeBlock !== id && "hover:shadow-[0_1px_5px_1px_rgba(0,0,0,0.1)]",
         )}
       >
         {children}
       </Wrapper>
-    </QuickActions>
+    </Component>
   );
 }
 

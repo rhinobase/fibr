@@ -6,6 +6,7 @@ import { Text } from "@rafty/ui";
 import { type PropsWithChildren, type ReactNode } from "react";
 import { FieldPadding } from "./FieldPadding";
 import { FieldWrapper } from "./FieldWrapper";
+import { FieldOverlay } from "./FieldOverlay";
 
 const BLOCK_WRAPPERS: Record<Env, (props: PropsWithChildren) => ReactNode> = {
   [Env.DEVELOPMENT]: FieldWrapper,
@@ -51,6 +52,7 @@ export function FormDisplay() {
         }}
       >
         <Loom id={activeCanvas} blueprint={canvas} />
+        <FieldOverlay />
       </DndWrapper>
     </WeaverProvider>
   );

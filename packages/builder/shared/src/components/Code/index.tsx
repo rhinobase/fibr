@@ -15,7 +15,7 @@ import {
   useBoolean,
 } from "@rafty/ui";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import superjson from "superjson";
 import { CodeHighlighter } from "./Highlight";
 
@@ -26,7 +26,7 @@ export type CodeGenerator = {
 export function CodeGenerator({ resolver }: CodeGenerator) {
   const [, copyToClipboard] = useCopyToClipboard();
   const [copied, toggle] = useBoolean();
-
+  const [tabValue, setTabValue] = useState("schematics");
   // Schema code
   const schema = useCanvas(({ schema }) => schema);
   const [ast, code] = useMemo(
@@ -50,7 +50,8 @@ export function CodeGenerator({ resolver }: CodeGenerator) {
   }, [copied, toggle]);
 
   const handleCopy = () => {
-    copyToClipboard(ast);
+    if (tabValue === "schematics") copyToClipboard(ast);
+    else copyToClipboard(code);
     toggle(true);
   };
 
@@ -60,30 +61,29 @@ export function CodeGenerator({ resolver }: CodeGenerator) {
       label="Code"
       icon={<CodeBracketSquareIcon className="size-5 stroke-2" />}
       className="h-full"
-      action={
-        <Button
-          size="icon"
-          variant="ghost"
-          className="rounded p-0.5"
-          onClick={handleCopy}
-          title="Copy code"
-        >
-          {copied ? (
-            <CheckIcon className="size-4 stroke-2 text-green-500" />
-          ) : (
-            <DocumentDuplicateIcon className="size-4 stroke-2" />
-          )}
-        </Button>
-      }
     >
       <Tab
-        defaultValue="schematics"
         className="flex h-full w-full flex-col"
         size="sm"
+        value={tabValue}
+        onValueChange={setTabValue}
       >
-        <TabList>
+        <TabList className="items-center">
           <TabTrigger value="schematics">Schematics</TabTrigger>
           <TabTrigger value="resolver">Resolver</TabTrigger>
+          <Button
+            size="icon"
+            variant="ghost"
+            className="ml-auto rounded p-0.5"
+            onClick={handleCopy}
+            title="Copy code"
+          >
+            {copied ? (
+              <CheckIcon className="size-4 stroke-2 text-green-500" />
+            ) : (
+              <DocumentDuplicateIcon className="size-4 stroke-2" />
+            )}
+          </Button>
         </TabList>
         <TabContent
           value="schematics"

@@ -44,7 +44,7 @@ export function OverviewCard({
       style={nodeStyle}
       className={classNames(
         "dark:bg-secondary-900 flex cursor-pointer select-none items-center gap-1 rounded border bg-white p-2 drop-shadow hover:drop-shadow-md",
-        !isDragging && "transition-all ease-in-out",
+        !isDragging && "transition-shadow",
         isActive
           ? "border-primary-500"
           : "border-secondary-300 dark:border-secondary-700",
