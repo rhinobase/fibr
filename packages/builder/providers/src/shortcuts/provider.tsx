@@ -66,6 +66,7 @@ function useShortcutsManager() {
     [add, active],
   );
 
+  // Cut listener
   useEffect(() => {
     const onCut = (event: ClipboardEvent) =>
       onCopy(event, ({ canvas, block }) => remove(canvas, block));
@@ -77,6 +78,7 @@ function useShortcutsManager() {
     };
   }, [onCopy, remove]);
 
+  // Copy listener
   useEffect(() => {
     window.addEventListener("copy", onCopy);
 
@@ -85,6 +87,7 @@ function useShortcutsManager() {
     };
   }, [onCopy]);
 
+  // Paste listener
   useEffect(() => {
     window.addEventListener("paste", onPaste);
 
@@ -92,6 +95,21 @@ function useShortcutsManager() {
       window.removeEventListener("paste", onPaste);
     };
   }, [onPaste]);
+
+  useEffect(() => {
+    const onKeydown = (event: KeyboardEvent) => {
+      if (!event.ctrlKey) return;
+
+      if (event.key === "z") console.log("Undo");
+      else if (event.key === "y") console.log("Redo");
+    };
+
+    window.addEventListener("keydown", onKeydown);
+
+    return () => {
+      window.removeEventListener("keydown", onKeydown);
+    };
+  }, []);
 
   return {};
 }
