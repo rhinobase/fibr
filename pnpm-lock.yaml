@@ -38,6 +38,9 @@ dependencies:
   '@next/mdx':
     specifier: ^14.1.0
     version: 14.1.0(@mdx-js/loader@3.0.0)(@mdx-js/react@3.0.0)
+  '@rafty/icons':
+    specifier: ^0.1.0
+    version: 0.1.0(react@18.2.0)
   '@rafty/shared':
     specifier: ^1.0.1
     version: 1.0.1(react@18.2.0)
@@ -4322,6 +4325,15 @@ packages:
     resolution: {integrity: sha512-fyrgCaedtvMg9NK3en0pnOYJdtfwxUcNolezkNPUsoX57X8oQk+NkqcvzHXD2uKNij6GXmWU9NDru2IWjrO4BQ==}
     dependencies:
       '@babel/runtime': 7.23.9
+    dev: false
+
+  /@rafty/icons@0.1.0(react@18.2.0):
+    resolution: {integrity: sha512-tH1hu7LU7xGvPff5OnxhKqJwI1YXZocBADpki0Ld4NafNcS0YXx3Zzsi5wqig2ERsyZ6CJGB+HwPVQeGCQpMUQ==}
+    peerDependencies:
+      react: ^18.2.0
+    dependencies:
+      react: 18.2.0
+      react-icons: 5.0.1(react@18.2.0)
     dev: false
 
   /@rafty/plugin@1.1.0(tailwindcss@3.4.1):

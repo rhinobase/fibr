@@ -4,7 +4,6 @@ import { plugin, pluginNode, settings } from "@fibr/blocks";
 import { type Block } from "@fibr/shared";
 import { type ReactNode } from "react";
 import { BsTextareaT } from "react-icons/bs";
-import { HiOutlineMail } from "react-icons/hi";
 import {
   LuGitCommit,
   LuGitFork,
@@ -112,7 +111,7 @@ export const BLOCKS: Record<string, Block[]> = {
         inputType: "email",
         label: "Label",
         description: "Description",
-        prefixIcon: <HiOutlineMail className="opacity-60" />,
+        prefixIcon: "envelope",
       },
     },
     {
