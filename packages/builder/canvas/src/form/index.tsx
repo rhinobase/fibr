@@ -6,7 +6,7 @@ export function FormBuilderCanvas() {
   const select = useCanvas(({ block }) => block.select);
 
   return (
-    <Canvas className="py-10" onClick={() => select(null)}>
+    <Canvas className="min-h-min py-10" onClick={() => select(null)}>
       <div className="w-[500px] rounded bg-white">
         <FormDisplay />
       </div>
