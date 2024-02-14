@@ -1,4 +1,4 @@
-import { Thread, ThreadType, createThread, useThread } from "@fibr/react";
+import { Thread, ThreadType, useThread } from "@fibr/react";
 import {
   FieldValues,
   FormProvider,
@@ -36,5 +36,3 @@ export function Form() {
     </FormProvider>
   );
 }
-
-export const form = createThread<Form>("canvas");

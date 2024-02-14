@@ -1,4 +1,4 @@
-import { createThread, useThread } from "@fibr/react";
+import { useThread } from "@fibr/react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { eventHandler } from "@rafty/shared";
 import { Button, InputField, Suffix, useBoolean } from "@rafty/ui";
@@ -54,5 +54,3 @@ export function PasswordInput() {
     </FieldWrapper>
   );
 }
-
-export const password = createThread<PasswordInput>("password");

@@ -1,4 +1,4 @@
-import { createThread, useThread } from "@fibr/react";
+import { useThread } from "@fibr/react";
 import { Textarea } from "@rafty/ui";
 import { useFormContext } from "react-hook-form";
 import { FieldWrapper, type FieldWrapperProps } from "../FieldWrapper";
@@ -23,5 +23,3 @@ export function TextareaField() {
     </FieldWrapper>
   );
 }
-
-export const textarea = createThread<TextareaField>("textarea");

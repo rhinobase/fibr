@@ -1,5 +1,4 @@
 "use client";
-import { f } from "@fibr/blocks";
 import { CanvasType } from "@fibr/providers";
 import type { ThreadType } from "@fibr/react";
 import type { IconType } from "react-icons";
@@ -23,30 +22,35 @@ export const TEMPLATES: Record<
       icon: GoProjectTemplate,
       template: new Map(
         Object.entries({
-          canvas: f.form({
+          canvas: {
+            type: "canvas",
             title: "Contact Us",
             blocks: new Map(
               Object.entries({
-                name: f.string({
+                name: {
+                  type: "string",
                   label: "Name",
                   description: "Enter your full name",
-                }),
-                email: f.string({
+                },
+                email: {
+                  type: "string",
                   inputType: "email",
                   label: "Email",
                   description: "Enter email id so we can respond to your query",
-                }),
-                phone: f.number({
+                },
+                phone: {
+                  type: "number",
                   label: "Phone Number",
                   description: "Enter your 10 digit mobile number",
-                }),
-                message: f.textarea({
+                },
+                message: {
+                  type: "textarea",
                   label: "Message",
                   description: "Enter your message here",
-                }),
+                },
               }),
             ),
-          }),
+          },
         }),
       ),
     },
@@ -56,24 +60,27 @@ export const TEMPLATES: Record<
       icon: GoProjectTemplate,
       template: new Map(
         Object.entries({
-          canvas: f.form({
+          canvas: {
+            type: "canvas",
             title: "Sign In",
             blocks: new Map(
               Object.entries({
-                email: f.string({
+                email: {
+                  type: "string",
                   inputType: "email",
                   label: "Email",
                   description: "Enter your email id",
                   required: true,
-                }),
-                password: f.password({
+                },
+                password: {
+                  type: "password",
                   label: "Password",
                   description: "Enter password",
                   required: true,
-                }),
+                },
               }),
             ),
-          }),
+          },
         }),
       ),
     },
@@ -83,30 +90,35 @@ export const TEMPLATES: Record<
       icon: GoProjectTemplate,
       template: new Map(
         Object.entries({
-          canvas: f.form({
+          canvas: {
+            type: "canvas",
             title: "Sign Up",
             blocks: new Map(
               Object.entries({
-                name: f.string({
+                name: {
+                  type: "string",
                   label: "Name",
                   required: true,
-                }),
-                email: f.string({
+                },
+                email: {
+                  type: "string",
                   inputType: "email",
                   label: "Email",
                   required: true,
-                }),
-                password: f.password({
+                },
+                password: {
+                  type: "password",
                   label: "Create a Password",
                   required: true,
-                }),
-                confirm_password: f.password({
+                },
+                confirm_password: {
+                  type: "password",
                   label: "Confirm Password",
                   required: true,
-                }),
+                },
               }),
             ),
-          }),
+          },
         }),
       ),
     },
@@ -116,10 +128,11 @@ export const TEMPLATES: Record<
       icon: FiArrowRight,
       template: new Map(
         Object.entries({
-          canvas: f.form({
+          canvas: {
+            type: "canvas",
             title: "Custom",
             blocks: new Map(Object.entries({})),
-          }),
+          },
         }),
       ),
     },

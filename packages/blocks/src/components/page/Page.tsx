@@ -1,5 +1,3 @@
-import { createThread } from "@fibr/react";
-
 export type Page = { id: string };
 
 export function Page() {
@@ -9,5 +7,3 @@ export function Page() {
     </div>
   );
 }
-
-export const page = createThread<Page>("page");

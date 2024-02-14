@@ -1,1 +1,1 @@
-export { NumberInput, number } from "./NumberInput";
+export { NumberInput } from "./NumberInput";

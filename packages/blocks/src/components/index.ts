@@ -1,9 +1,9 @@
-import { Form, form } from "./form";
-import { NumberInput, number } from "./number-input";
-import { PasswordInput, password } from "./password";
-import { StringInput, string } from "./string-input";
-import { TextareaField, textarea } from "./textarea";
-import { Page, page } from "./page";
+import { Form } from "./form";
+import { NumberInput } from "./number-input";
+import { Page } from "./page";
+import { PasswordInput } from "./password";
+import { StringInput } from "./string-input";
+import { TextareaField } from "./textarea";
 
 export const plugin = {
   form: Form,
@@ -12,13 +12,4 @@ export const plugin = {
   string: StringInput,
   textarea: TextareaField,
   page: Page,
-};
-
-export const f = {
-  form,
-  number,
-  password,
-  string,
-  textarea,
-  page,
 };
