@@ -3,7 +3,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { ErrorMessage as RaftyErrorMessage } from "@rafty/ui";
 import { useFormContext } from "react-hook-form";
 
-type FieldErrorMessage = { name: string };
+export type FieldErrorMessage = { name: string };
 
 export function FieldErrorMessage({ name }: FieldErrorMessage) {
   const {

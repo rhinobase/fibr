@@ -16,12 +16,21 @@ export type FieldWrapperProps<
   } & T
 >;
 
+export type FieldWrapper = PropsWithChildren<
+  FieldWrapperProps<{ className?: FieldControl["className"] }>
+>;
+
 export function FieldWrapper({
+  label,
+  description,
+  disabled,
+  hidden,
+  required,
+  tooltip,
   className,
   children,
-}: PropsWithChildren<{ className?: string }>) {
-  const { id, label, description, required, disabled, hidden } =
-    useThread<FieldWrapperProps>();
+}: FieldWrapper) {
+  const { id } = useThread<FieldWrapperProps>();
 
   const LabelAndDescriptionWrapper =
     label && description
@@ -29,7 +38,7 @@ export function FieldWrapper({
       : Fragment;
 
   return (
-    <TooltipWrapper>
+    <TooltipWrapper tooltip={tooltip}>
       <FieldControl
         name={id}
         className={classNames(hidden && "hidden", "gap-2", className)}

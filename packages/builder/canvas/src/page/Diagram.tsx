@@ -70,7 +70,7 @@ export function Diagram() {
   const builders = useMemo(
     () =>
       Object.keys(config).reduce<NodeTypes>((prev, name) => {
-        prev[name] = (props) => <Thread {...props} {...props.data} />;
+        prev[name] = Thread;
         return prev;
       }, {}),
     [config],

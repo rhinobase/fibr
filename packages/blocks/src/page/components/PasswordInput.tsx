@@ -3,33 +3,69 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { eventHandler } from "@rafty/shared";
 import { Button, InputField, Suffix, useBoolean } from "@rafty/ui";
 import { useFormContext } from "react-hook-form";
-import { FieldWrapper, type FieldWrapperProps } from "../../utils/FieldWrapper";
-import { InputWrapper, type InputWrapperProps } from "../../utils/InputWrapper";
+import {
+  FieldWrapper,
+  InputWrapper,
+  type FieldWrapperProps,
+  type InputWrapperProps,
+} from "../../utils";
 
-export type PasswordInput = Omit<
-  FieldWrapperProps<
-    InputWrapperProps<{
-      placeholder?: string;
-      defaultValue?: string;
-    }>
-  >,
-  "suffixIcon" | "suffixText"
->;
+export type PasswordInput = {
+  data: Omit<
+    FieldWrapperProps<
+      InputWrapperProps<{
+        placeholder?: string;
+        defaultValue?: string;
+      }>
+    >,
+    "suffixIcon" | "suffixText"
+  >;
+};
 
 export function PasswordInput() {
   const [showPassword, toggle] = useBoolean(false);
 
   const Icon = showPassword ? EyeSlashIcon : EyeIcon;
 
-  const { id, defaultValue, placeholder } = useThread<PasswordInput>();
+  const {
+    id,
+    data: {
+      defaultValue,
+      placeholder,
+      description,
+      disabled,
+      hidden,
+      label,
+      required,
+      tooltip,
+      prefixIcon,
+      prefixText,
+      size,
+    },
+  } = useThread<PasswordInput>();
 
   const { register } = useFormContext();
+
+  const fieldWrapperProps = {
+    description,
+    disabled,
+    hidden,
+    label,
+    required,
+    tooltip,
+  };
+
+  const inputWrapperProps = {
+    prefixIcon,
+    prefixText,
+    size,
+  };
 
   const handler = eventHandler(() => toggle());
 
   return (
-    <FieldWrapper>
-      <InputWrapper>
+    <FieldWrapper {...fieldWrapperProps}>
+      <InputWrapper {...inputWrapperProps}>
         <InputField
           id={id}
           type={showPassword ? "text" : "password"}

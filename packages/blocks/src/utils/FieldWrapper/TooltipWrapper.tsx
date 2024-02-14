@@ -1,4 +1,3 @@
-import { useThread } from "@fibr/react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
 import { PropsWithChildren } from "react";
 
@@ -8,9 +7,9 @@ export type TooltipWrapperProps<
   tooltip?: string;
 } & T;
 
-export function TooltipWrapper({ children }: PropsWithChildren) {
-  const { tooltip } = useThread<TooltipWrapperProps>();
+export type TooltipWrapper = PropsWithChildren<TooltipWrapperProps>;
 
+export function TooltipWrapper({ children, tooltip }: TooltipWrapper) {
   if (tooltip)
     return (
       <Tooltip>

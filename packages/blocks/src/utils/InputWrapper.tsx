@@ -1,4 +1,3 @@
-import { useThread } from "@fibr/react";
 import { InputGroup, LeftAddon, Prefix, RightAddon, Suffix } from "@rafty/ui";
 import { cva } from "class-variance-authority";
 import { type PropsWithChildren } from "react";
@@ -27,15 +26,16 @@ export type InputWrapperProps<
   suffixIcon?: string;
 } & T;
 
-export function InputWrapper({ children }: PropsWithChildren) {
-  const {
-    size = "md",
-    prefixIcon,
-    suffixIcon,
-    prefixText,
-    suffixText,
-  } = useThread<InputWrapperProps>();
+export type InputWrapper = PropsWithChildren<InputWrapperProps>;
 
+export function InputWrapper({
+  children,
+  prefixIcon,
+  prefixText,
+  suffixIcon,
+  size = "md",
+  suffixText,
+}: InputWrapper) {
   return (
     <InputGroup size={size} className="w-full">
       {prefixText && (
