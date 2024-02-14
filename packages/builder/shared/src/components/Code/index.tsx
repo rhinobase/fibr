@@ -61,6 +61,21 @@ export function CodeGenerator({ resolver }: CodeGenerator) {
       label="Code"
       icon={<CodeBracketSquareIcon className="size-5 stroke-2" />}
       className="h-full"
+      action={
+        <Button
+          size="icon"
+          variant="ghost"
+          className="ml-auto rounded p-0.5"
+          onClick={handleCopy}
+          title="Copy code"
+        >
+          {copied ? (
+            <CheckIcon className="size-4 stroke-2 text-green-500" />
+          ) : (
+            <DocumentDuplicateIcon className="size-4 stroke-2" />
+          )}
+        </Button>
+      }
     >
       <Tab
         className="flex h-full w-full flex-col"
@@ -68,22 +83,9 @@ export function CodeGenerator({ resolver }: CodeGenerator) {
         value={tabValue}
         onValueChange={setTabValue}
       >
-        <TabList className="items-center">
+        <TabList>
           <TabTrigger value="schematics">Schematics</TabTrigger>
           <TabTrigger value="resolver">Resolver</TabTrigger>
-          <Button
-            size="icon"
-            variant="ghost"
-            className="ml-auto rounded p-0.5"
-            onClick={handleCopy}
-            title="Copy code"
-          >
-            {copied ? (
-              <CheckIcon className="size-4 stroke-2 text-green-500" />
-            ) : (
-              <DocumentDuplicateIcon className="size-4 stroke-2" />
-            )}
-          </Button>
         </TabList>
         <TabContent
           value="schematics"
