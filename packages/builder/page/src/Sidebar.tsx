@@ -1,19 +1,16 @@
 import { Sidebar as BuilderSidebar } from "@fibr/builder";
 import { useCanvas } from "@fibr/providers";
 import { CodeGenerator, Overview, Palette } from "@fibr/shared";
-import superjson from "superjson";
 
 export function Sidebar() {
   const {
-    schema,
     addBlock,
     getAllBlocks,
     active,
     selectBlock,
     removeBlock,
     moveBlock,
-  } = useCanvas(({ block, active, schema }) => ({
-    schema,
+  } = useCanvas(({ block, active }) => ({
     active,
     addBlock: block.add,
     getAllBlocks: block.all,
@@ -25,8 +22,6 @@ export function Sidebar() {
   const canvasId = "nodes";
 
   const blocks = canvasId ? getAllBlocks(canvasId) : [];
-
-  const code = superjson.stringify(schema);
 
   return (
     <BuilderSidebar>
@@ -45,7 +40,7 @@ export function Sidebar() {
         }
       />
       {/* <Canvases /> */}
-      <CodeGenerator code={code} />
+      <CodeGenerator />
     </BuilderSidebar>
   );
 }
