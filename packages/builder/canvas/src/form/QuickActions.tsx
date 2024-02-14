@@ -138,7 +138,7 @@ function QuickActionButtons() {
 
   const index = findIndex(activeCanvas, id);
 
-  if (index == null) return <></>;
+  if (index == null) return;
 
   const moveComponent = (direction: Direction) => {
     const components = all(activeCanvas);

@@ -9,7 +9,7 @@ export function reactHookFormResolver(
 
   if (!form) return "";
 
-  const capitalizedTitle = formatTitle(form.title);
+  const capitalizedTitle = formatTitle(form.title as string);
   const blocks = Array.from(form.blocks.entries());
 
   const defaultValues = blocks
@@ -24,16 +24,16 @@ export function reactHookFormResolver(
 // Check it out at https://fibr.rhinobase.io
 
 import z from "zod";
-import { useForm } from "react-hook-forms";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FieldControl, Label, InputField, ErrorMessage } from "@rafty/ui";
+import { FieldControl, Label, InputField, Textarea, ErrorMessage, Tooltip, TooltipTrigger, TooltipContent } from "@rafty/ui";
 
 export const schema = z.object({
   ${blocks.map(([name, field]) => generateZodSchema(name, field)).join(`\n${" ".repeat(2)}`)}
 });
 
 // Generated ${capitalizedTitle} form
-expost function ${capitalizedTitle}Form() {
+export function ${capitalizedTitle}Form() {
   const {
     handleSubmit,
     register,
@@ -69,6 +69,7 @@ const generateZodSchema = (name: string, field: ThreadType) => {
 
 const generateFieldComponent = (name: string, field: ThreadType) => {
   const {
+    type,
     label,
     required,
     hidden,
@@ -83,13 +84,28 @@ const generateFieldComponent = (name: string, field: ThreadType) => {
   if (required) props.push("isRequired");
   if (disabled) props.push("isDisabled");
   if (hidden) props.push("hidden");
-  if (placeholder) props.push(`placeholder=${placeholder}`);
-  if (tooltip) props.push(`title=${tooltip}`);
+  if (tooltip) props.push(`tooltip="${tooltip}"`);
 
-  return `<FieldControl name="${name}"${props.length > 0 ? ` ${props.join(" ")}` : ""}>
+  return generateTooltip(
+    `<FieldControl name="${name}"${props.length > 0 ? ` ${props.join(" ")}` : ""}>
         <Label>${label}</Label>
-        ${description ? `<Text isMuted>${description}</Text>` : ""}
-        <InputField {...register("${name}")} />
+        ${description ? `<Text className="text-xs font-medium leading-[10px]" isMuted>${description}</Text>` : "\r"}
+        <${type === "textarea" ? "Textarea" : "InputField"} {...register("${name}")}${placeholder ? ` placeholder="${placeholder}"` : ""} />
         <ErrorMessage>{errors.${name}?.message as string}</ErrorMessage>
-      </FieldControl>`;
+      </FieldControl>`,
+    tooltip,
+  );
 };
+
+function generateTooltip(content: string, tooltip: unknown) {
+  if (!tooltip) return content;
+
+  return `<Tooltip>
+    <TooltipTrigger>
+      ${content}
+    </TooltipTrigger>
+    <TooltipContent>
+      ${tooltip}
+    </TooltipContent>
+  </Tooltip>`;
+}
