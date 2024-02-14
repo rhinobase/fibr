@@ -3,19 +3,43 @@ import { useCanvas } from "@fibr/providers";
 import {
   CodeBracketSquareIcon,
   DocumentDuplicateIcon,
+  CheckIcon,
 } from "@heroicons/react/24/outline";
-import { Button, classNames } from "@rafty/ui";
+import { Button, classNames, useBoolean } from "@rafty/ui";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { Highlight, themes } from "prism-react-renderer";
-import { useId } from "react";
+import { useEffect, useId } from "react";
+
 import superjson from "superjson";
 
-export function CodeGenerator() {
+export type CodeGenerator = {
+  code?: string;
+};
+
+export function CodeGenerator(porps: CodeGenerator) {
   const id = useId();
   const [, copyToClipboard] = useCopyToClipboard();
+  const [copied, toggle] = useBoolean();
   const schema = useCanvas((state) => state.schema);
 
   const code = superjson.stringify(schema);
+
+  useEffect(() => {
+    if (!copied) return;
+
+    // Use setTimeout to update the message after 1500 milliseconds (1.5 seconds)
+    const timeoutId = setTimeout(() => {
+      toggle(false);
+    }, 1500);
+
+    // Cleanup function to clear the timeout if the component unmounts
+    return () => clearTimeout(timeoutId);
+  }, [copied, toggle]);
+
+  const handleCopy = () => {
+    copyToClipboard(code);
+    toggle(true);
+  };
 
   return (
     <SidebarItem
@@ -28,10 +52,14 @@ export function CodeGenerator() {
           size="icon"
           variant="ghost"
           className="rounded p-0.5"
-          onClick={() => copyToClipboard(code)}
+          onClick={handleCopy}
           title="Copy code"
         >
-          <DocumentDuplicateIcon className="size-4 stroke-2" />
+          {copied ? (
+            <CheckIcon className="size-4 stroke-2 text-green-500" />
+          ) : (
+            <DocumentDuplicateIcon className="size-4 stroke-2" />
+          )}
         </Button>
       }
     >

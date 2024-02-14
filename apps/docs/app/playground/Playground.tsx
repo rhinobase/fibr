@@ -2,7 +2,7 @@
 import { Footer, Header, PreviewButton, Workspace } from "@fibr/builder";
 import { FormBuilder } from "@fibr/form";
 import { PageBuilder } from "@fibr/page";
-import { CanvasType } from "@fibr/providers";
+import type { CanvasType } from "@fibr/providers";
 import type { ThreadType } from "@fibr/react";
 import { WorkflowBuilder } from "@fibr/workflow";
 import { Text } from "@rafty/ui";

@@ -5,10 +5,11 @@ import _ from "lodash";
 import { StoreApi, UseBoundStore, create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-export type CanvasType = {
-  title: string;
+export type CanvasType<
+  T extends Record<string, unknown> = Record<string, unknown>,
+> = {
   blocks: Map<string, ThreadType>;
-};
+} & T;
 
 export type CanvasStoreProps<T extends CanvasType> = {
   canvasKey?: string;

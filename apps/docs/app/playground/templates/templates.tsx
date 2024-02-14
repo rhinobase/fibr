@@ -146,12 +146,10 @@ export const TEMPLATES: Record<
         Object.entries({
           nodes: {
             type: "nodes",
-            title: "Nodes",
             blocks: new Map(Object.entries({})),
           },
           edges: {
             type: "edges",
-            title: "Edges",
             blocks: new Map(Object.entries({})),
           },
         }),
@@ -167,7 +165,6 @@ export const TEMPLATES: Record<
         Object.entries({
           nodes: {
             type: "nodes",
-            title: "Nodes",
             blocks: new Map(
               Object.entries({
                 page: {
@@ -181,7 +178,6 @@ export const TEMPLATES: Record<
           },
           edges: {
             type: "edges",
-            title: "Edges",
             blocks: new Map(Object.entries({})),
           },
         }),
