@@ -1,4 +1,11 @@
 "use client";
+import {
+  formBlocks,
+  formConfig,
+  pageConfig,
+  workflowBlocks,
+  workflowConfig,
+} from "@fibr/blocks";
 import { Footer, Header, PreviewButton, Workspace } from "@fibr/builder";
 import { FormBuilder } from "@fibr/form";
 import { PageBuilder } from "@fibr/page";
@@ -9,7 +16,6 @@ import { Text } from "@rafty/ui";
 import Link from "next/link";
 import { type ReactNode, useState } from "react";
 import { FaGithub, FaXTwitter } from "react-icons/fa6";
-import { BLOCKS, CONFIG, WORKFLOW_BLOCKS, WORKFLOW_CONFIG } from "./config";
 import { Container, TemplateDialog } from "./templates";
 
 type PanelProps = { template: Map<string, ThreadType<CanvasType>> };
@@ -23,8 +29,8 @@ const PANELS: Record<Container, (props: PanelProps) => ReactNode> = {
         initialSchema={template}
         defaultActiveCanvas={key}
         defaultActiveBlock={key}
-        blocks={BLOCKS}
-        config={CONFIG}
+        blocks={formBlocks}
+        config={formConfig}
       />
     );
   },
@@ -35,8 +41,8 @@ const PANELS: Record<Container, (props: PanelProps) => ReactNode> = {
       <WorkflowBuilder
         initialSchema={template}
         defaultActiveCanvas={key}
-        blocks={WORKFLOW_BLOCKS}
-        config={WORKFLOW_CONFIG}
+        blocks={workflowBlocks}
+        config={workflowConfig}
       />
     );
   },
@@ -48,8 +54,8 @@ const PANELS: Record<Container, (props: PanelProps) => ReactNode> = {
         initialSchema={template}
         defaultActiveCanvas={key}
         defaultActiveBlock={key}
-        blocks={BLOCKS}
-        config={CONFIG}
+        blocks={formBlocks} // As both have same options
+        config={pageConfig}
       />
     );
   },

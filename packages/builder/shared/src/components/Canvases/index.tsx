@@ -73,6 +73,6 @@ function CanvasesList() {
   const schema = useCanvas(({ schema }) => schema);
 
   return Array.from(schema).map(([id, canvas]) => (
-    <CanvasCard key={id} id={id} canvas={canvas} />
+    <CanvasCard key={id} id={id} canvas={canvas as CanvasCard["canvas"]} />
   ));
 }

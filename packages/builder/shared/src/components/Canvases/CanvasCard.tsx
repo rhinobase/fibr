@@ -1,4 +1,4 @@
-import { CanvasType, useCanvas } from "@fibr/providers";
+import { type CanvasType, useCanvas } from "@fibr/providers";
 import type { ThreadType } from "@fibr/react";
 import { eventHandler } from "@rafty/shared";
 import { Button, Text, classNames } from "@rafty/ui";
@@ -6,7 +6,7 @@ import { MdDelete } from "react-icons/md";
 
 export type CanvasCard = {
   id: string;
-  canvas: ThreadType<CanvasType>;
+  canvas: ThreadType<CanvasType<{ title: string }>>;
 };
 
 export function CanvasCard({ id, canvas: { title } }: CanvasCard) {

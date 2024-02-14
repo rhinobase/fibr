@@ -1,0 +1,110 @@
+import type { Block } from "@fibr/shared";
+import type { ReactNode } from "react";
+import { BsTextareaT } from "react-icons/bs";
+import { LuTextCursorInput } from "react-icons/lu";
+import { MdLink, MdOutlineKey, MdOutlineMailOutline } from "react-icons/md";
+import {
+  Canvas,
+  NumberInput,
+  PasswordInput,
+  StringInput,
+  Textarea,
+} from "./components";
+import {
+  CanvasSettings,
+  NumberInputSettings,
+  PasswordInputSettings,
+  StringInputSettings,
+  TextareaSettings,
+} from "./settings";
+
+export const formConfig: Record<
+  string,
+  { builder: () => ReactNode; settings: () => ReactNode }
+> = {
+  canvas: {
+    builder: Canvas,
+    settings: CanvasSettings,
+  },
+  string: {
+    builder: StringInput,
+    settings: StringInputSettings,
+  },
+  password: {
+    builder: PasswordInput,
+    settings: PasswordInputSettings,
+  },
+  textarea: {
+    builder: Textarea,
+    settings: TextareaSettings,
+  },
+  number: {
+    builder: NumberInput,
+    settings: NumberInputSettings,
+  },
+};
+
+export const formBlocks: Record<string, Block[]> = {
+  "Text Inputs": [
+    {
+      type: "string",
+      label: "Text Input",
+      icon: LuTextCursorInput,
+      presets: {
+        label: "Label",
+        description: "Description",
+      },
+    },
+    {
+      type: "string",
+      label: "Email",
+      icon: MdOutlineMailOutline,
+      presets: {
+        inputType: "email",
+        label: "Label",
+        description: "Description",
+        prefixIcon: "envelope",
+      },
+    },
+    {
+      type: "string",
+      label: "url",
+      icon: MdLink,
+      presets: {
+        inputType: "url",
+        label: "Label",
+        description: "Description",
+      },
+    },
+    {
+      type: "password",
+      label: "password",
+      icon: MdOutlineKey,
+      presets: {
+        label: "Label",
+        description: "Description",
+      },
+    },
+    {
+      type: "textarea",
+      label: "Textarea",
+      icon: BsTextareaT,
+      presets: {
+        label: "Label",
+        description: "Description",
+      },
+    },
+  ],
+  "Number Inputs": [
+    {
+      type: "number",
+      label: "Number Input",
+      icon: LuTextCursorInput,
+      presets: {
+        inputType: "number",
+        label: "Label",
+        description: "Description",
+      },
+    },
+  ],
+};
