@@ -4,7 +4,7 @@ import { useCanvas } from "@fibr/providers";
 import { type PropsWithChildren } from "react";
 import { Node, useReactFlow } from "reactflow";
 
-export function WorkflowDndWrapper(props: PropsWithChildren) {
+export function PageDndWrapper(props: PropsWithChildren) {
   const { screenToFlowPosition } = useReactFlow();
   const { add, activeCanvas } = useCanvas((state) => ({
     add: state.block.add,

@@ -4,7 +4,7 @@ import { useCanvas } from "@fibr/providers";
 import type { ThreadType } from "@fibr/react";
 import { Settings } from "@fibr/shared";
 import { Sidebar } from "./Sidebar";
-import { WorkflowDndWrapper } from "./WorkflowDndWrapper";
+import { PageDndWrapper } from "./PageDndWrapper";
 
 export function Container() {
   const { active, getBlock, update } = useCanvas(({ active, block }) => ({
@@ -31,7 +31,7 @@ export function Container() {
   };
 
   return (
-    <WorkflowDndWrapper>
+    <PageDndWrapper>
       <BuilderContainer>
         <Sidebar />
         <PageCanvas />
@@ -45,6 +45,6 @@ export function Container() {
           />
         )}
       </BuilderContainer>
-    </WorkflowDndWrapper>
+    </PageDndWrapper>
   );
 }
