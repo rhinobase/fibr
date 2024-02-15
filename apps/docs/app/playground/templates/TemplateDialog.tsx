@@ -71,6 +71,8 @@ export function TemplateDialog({
             {TEMPLATES[container].map(({ id, name, icon: Icon, template }) => (
               <div
                 key={id}
+                role="button"
+                tabIndex={0}
                 onClick={handleSelect(template)}
                 onKeyDown={handleSelect(template)}
                 className="flex size-full cursor-pointer flex-col items-center justify-center gap-1.5 rounded border p-3 transition-all ease-in-out hover:shadow"
@@ -88,6 +90,8 @@ export function TemplateDialog({
             <hr />
           </div>
           <div
+            role="button"
+            tabIndex={0}
             onClick={toggleTemplateMode}
             onKeyDown={toggleTemplateMode}
             className="border-secondary-400 hover:bg-secondary-100 flex h-[86px] w-full cursor-pointer items-center justify-center rounded-lg border border-dashed transition-all ease-in-out hover:border-solid"

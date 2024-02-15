@@ -31,7 +31,7 @@ export function PaletteCard({
         ...attributes,
         ...listeners,
       }
-    : {};
+    : { role: "button", tabIndex: 0 };
 
   const handleSelect = eventHandler(() => onSelect?.({ type, ...presets }));
 
@@ -51,7 +51,7 @@ export function PaletteCard({
         <Icon className="h-6 w-6 opacity-50" />
       </div>
       {!isOverlay && (
-        <p className="text-secondary-500 dark:text-secondary-400 text-2xs text-center capitalize leading-none">
+        <p className="text-secondary-500 dark:text-secondary-400 text-2xs text-center capitalize ">
           {matches ? highlightMatches(label, matches) : label}
         </p>
       )}
