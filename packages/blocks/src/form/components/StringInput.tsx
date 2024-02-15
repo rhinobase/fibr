@@ -1,6 +1,7 @@
 import { useThread } from "@fibr/react";
-import { InputField } from "@rafty/ui";
-import { useFormContext } from "react-hook-form";
+import { InputField, mergeRefs } from "@rafty/ui";
+import { useRef } from "react";
+import { Controller, useFormContext } from "react-hook-form";
 import {
   FieldWrapper,
   InputWrapper,
@@ -17,6 +18,7 @@ export type StringInput = FieldWrapperProps<
 >;
 
 export function StringInput() {
+  const ref = useRef<HTMLInputElement>(null);
   const {
     id,
     defaultValue,
@@ -35,7 +37,7 @@ export function StringInput() {
     suffixText,
   } = useThread<StringInput>();
 
-  const { register } = useFormContext();
+  const { control } = useFormContext();
 
   const fieldWrapperProps = {
     description,
@@ -57,12 +59,22 @@ export function StringInput() {
   return (
     <FieldWrapper {...fieldWrapperProps}>
       <InputWrapper {...inputWrapperProps}>
-        <InputField
-          type={inputType}
-          placeholder={placeholder}
-          defaultValue={defaultValue}
-          id={id}
-          {...register(id)}
+        <Controller
+          name={id}
+          control={control}
+          render={({ field: { ref: formRef, ...props } }) => (
+            <InputField
+              {...props}
+              id={id}
+              type={inputType}
+              placeholder={placeholder}
+              ref={mergeRefs(formRef, ref)}
+              onPointerDown={(event) => {
+                event.stopPropagation();
+              }}
+              defaultValue={defaultValue}
+            />
+          )}
         />
       </InputWrapper>
     </FieldWrapper>

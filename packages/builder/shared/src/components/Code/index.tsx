@@ -23,10 +23,16 @@ export type CodeGenerator = {
   resolver?: (schema: Map<string, ThreadType<CanvasType>>) => string;
 };
 
+enum CodeTab {
+  AST = "ast",
+  RESOLVER = "resolver",
+}
+
 export function CodeGenerator({ resolver }: CodeGenerator) {
   const [, copyToClipboard] = useCopyToClipboard();
   const [copied, toggle] = useBoolean();
-  const [tabValue, setTabValue] = useState("schematics");
+  const [tabValue, setTabValue] = useState(CodeTab.AST);
+
   // Schema code
   const schema = useCanvas(({ schema }) => schema);
   const [ast, code] = useMemo(
@@ -36,6 +42,17 @@ export function CodeGenerator({ resolver }: CodeGenerator) {
     ],
     [resolver, schema],
   );
+
+  const codeContent: Record<CodeTab, { language: string; content: string }> = {
+    [CodeTab.AST]: {
+      language: "js",
+      content: ast,
+    },
+    [CodeTab.RESOLVER]: {
+      language: "tsx",
+      content: code,
+    },
+  };
 
   useEffect(() => {
     if (!copied) return;
@@ -50,8 +67,7 @@ export function CodeGenerator({ resolver }: CodeGenerator) {
   }, [copied, toggle]);
 
   const handleCopy = () => {
-    if (tabValue === "schematics") copyToClipboard(ast);
-    else copyToClipboard(code);
+    copyToClipboard(codeContent[tabValue].content);
     toggle(true);
   };
 
@@ -81,21 +97,24 @@ export function CodeGenerator({ resolver }: CodeGenerator) {
         className="flex h-full w-full flex-col"
         size="sm"
         value={tabValue}
-        onValueChange={setTabValue}
+        onValueChange={(value) => setTabValue(value as CodeTab)}
       >
         <TabList>
-          <TabTrigger value="schematics">Schematics</TabTrigger>
-          <TabTrigger value="resolver">Resolver</TabTrigger>
+          {Object.entries(CodeTab).map(([key, value]) => (
+            <TabTrigger key={key} value={value} className="capitalize">
+              {value}
+            </TabTrigger>
+          ))}
         </TabList>
-        <TabContent
-          value="schematics"
-          className="flex-1 overflow-hidden overflow-y-auto"
-        >
-          <CodeHighlighter language="js" content={ast} />
-        </TabContent>
-        <TabContent value="resolver">
-          <CodeHighlighter language="tsx" content={code} />
-        </TabContent>
+        {Object.entries(codeContent).map(([key, data]) => (
+          <TabContent
+            key={key}
+            value={key}
+            className="flex-1 overflow-hidden overflow-y-auto"
+          >
+            <CodeHighlighter {...data} />
+          </TabContent>
+        ))}
       </Tab>
     </SidebarItem>
   );
