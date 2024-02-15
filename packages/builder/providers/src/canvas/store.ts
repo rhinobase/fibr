@@ -80,8 +80,8 @@ export const createCanvasStore = <T extends CanvasType>({
         canvas: defaultActiveCanvas,
         block: defaultActiveBlock,
       },
-      _unique: {},
-      uniqueId: (state, type, key = "default") => {
+      _unique: revalidateCache(initialSchema, canvasKey),
+      uniqueId: (state, type, key = canvasKey) => {
         // Generating new id
         let id = 1;
 
@@ -257,6 +257,9 @@ export const createCanvasStore = <T extends CanvasType>({
 
               // Updating the active block
               state.active.block = newId;
+
+              // Revalidating the cache
+              state._unique = revalidateCache(state.schema, canvasKey);
             }
             emitter(EditorEvent.BLOCK_ID_UPDATION, { canvasId });
           }),
@@ -350,3 +353,26 @@ export const createCanvasStore = <T extends CanvasType>({
     })),
   ) as UseBoundStore<StoreApi<CanvasStore<T>>>;
 };
+
+function revalidateCache(
+  schema: Map<string, ThreadType<{ blocks?: Map<string, ThreadType> }>>,
+  key: string,
+) {
+  const data = Array.from(schema.values()).reduce<
+    Record<string, Record<string, number>>
+  >((prev, { type, blocks }) => {
+    if (key in prev) {
+      if (type in prev[key]) prev[key][type] += 1;
+      else prev[key][type] = 1;
+    } else prev[key] = { [type]: 1 };
+
+    let sub = {};
+    if (blocks && blocks.size > 0) sub = revalidateCache(blocks, type);
+
+    return { ...prev, ...sub };
+  }, {});
+
+  console.log(data);
+
+  return data;
+}
