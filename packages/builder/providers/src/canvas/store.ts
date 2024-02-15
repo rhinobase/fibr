@@ -188,7 +188,7 @@ export const createCanvasStore = <T extends CanvasType>({
 
             emitter(EditorEvent.BLOCK_ADDITION, { canvasId });
           }),
-        update: (canvasId, blockId, values) =>
+        update: (canvasId, blockId, { id, ...values }) =>
           set((state) => {
             let canvas = state.schema.get(canvasId);
 
@@ -369,6 +369,8 @@ function revalidateCache(
     let sub = {};
     if (blocks && blocks.size > 0) sub = revalidateCache(blocks, type);
 
+    // TODO: resolve this
+    // biome-ignore lint/performance/noAccumulatingSpread: <explanation>
     return { ...prev, ...sub };
   }, {});
 
