@@ -21,7 +21,7 @@ export function Palette({
   onBlockSelect,
 }: Palette) {
   const blocks = useBlocks((state) => state.blocks);
-  const [search, setSearch] = useState<string>();
+  const [search, setSearch] = useState("");
 
   const fuse = useMemo(() => {
     const data = Object.entries(blocks).flatMap(([category, blocks]) =>

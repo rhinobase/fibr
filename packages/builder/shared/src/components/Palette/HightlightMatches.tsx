@@ -32,5 +32,5 @@ export const highlightMatches = (
       .replace(" ", "\u00A0"),
   );
 
-  return <>{children}</>;
+  return children;
 };

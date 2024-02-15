@@ -37,6 +37,7 @@ export const TEMPLATES: Record<
                   inputType: "email",
                   label: "Email",
                   description: "Enter email id so we can respond to your query",
+                  prefixIcon: "envelope",
                 },
                 phone: {
                   type: "number",
@@ -71,6 +72,7 @@ export const TEMPLATES: Record<
                   label: "Email",
                   description: "Enter your email id",
                   required: true,
+                  prefixIcon: "envelope",
                 },
                 password: {
                   type: "password",
@@ -105,6 +107,7 @@ export const TEMPLATES: Record<
                   inputType: "email",
                   label: "Email",
                   required: true,
+                  prefixIcon: "envelope",
                 },
                 password: {
                   type: "password",
