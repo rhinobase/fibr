@@ -67,6 +67,7 @@ export function PasswordInput() {
           type={showPassword ? "text" : "password"}
           defaultValue={defaultValue}
           placeholder={placeholder}
+          autoComplete="off"
           {...register(id)}
           onPointerDownCapture={(event) => {
             event.stopPropagation();

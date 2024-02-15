@@ -28,6 +28,7 @@ export function Canvas() {
       <form
         onSubmit={methods.handleSubmit(onSubmit ?? console.log, onError)}
         className="space-y-3"
+        autoComplete="off"
       >
         {Array.from(blocks.entries()).map(([id, field]) => (
           <Thread key={id} id={id} {...field} />

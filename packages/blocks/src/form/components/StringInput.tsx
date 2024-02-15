@@ -62,6 +62,7 @@ export function StringInput() {
           type={inputType}
           placeholder={placeholder}
           defaultValue={defaultValue}
+          autoComplete="off"
           {...register(id)}
           onPointerDownCapture={(event) => {
             event.stopPropagation();
