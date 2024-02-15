@@ -2,6 +2,8 @@
   "name": "@fibr/page",
   "version": "0.0.1",
   "dependencies": {
+    "@dnd-kit/core": "^6.1.0",
+    "@dnd-kit/modifiers": "^7.0.0",
     "@fibr/builder": "^0.0.1",
     "@fibr/canvas": "^0.0.1",
     "@fibr/providers": "^1.0.0",
