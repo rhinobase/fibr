@@ -25,7 +25,7 @@ const nextConfig = {
   },
   pageExtensions: ["js", "jsx", "ts", "tsx", "mdx"],
   experimental: {
-    optimizePackageImports: ["@rafty/ui"],
+    // optimizePackageImports: ["@rafty/ui"],
   },
   reactStrictMode: false,
 };

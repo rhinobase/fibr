@@ -125,12 +125,12 @@ enum Direction {
 function QuickActionButtons() {
   const { id } = useThread();
   const {
-    schema,
+    get,
     block: { all, move, remove, findIndex, duplicate, select },
     activeCanvas,
-  } = useCanvas(({ schema, block, active }) => ({
-    schema,
+  } = useCanvas(({ canvas, block, active }) => ({
     block,
+    get: canvas.get,
     activeCanvas: active.canvas,
   }));
 
@@ -155,7 +155,7 @@ function QuickActionButtons() {
           action={() => moveComponent(Direction.UP)}
         />
       )}
-      {index < (schema.get(activeCanvas)?.blocks.size ?? 0) - 1 && (
+      {index < (get(activeCanvas)?.blocks.size ?? 0) - 1 && (
         <ActionButton
           name="Move down"
           icon={MdOutlineArrowDownward}

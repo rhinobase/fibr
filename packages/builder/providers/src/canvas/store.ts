@@ -5,6 +5,7 @@ import { type Draft } from "immer";
 import _ from "lodash";
 import { StoreApi, UseBoundStore, create } from "zustand";
 import { immer } from "zustand/middleware/immer";
+import { EditorEvent } from "../events";
 
 export type CanvasType<
   T extends Record<string, unknown> = Record<string, unknown>,
@@ -17,6 +18,7 @@ export type CanvasStoreProps<T extends CanvasType> = {
   initialSchema?: CanvasStore<T>["schema"];
   defaultActiveCanvas?: string | null;
   defaultActiveBlock?: string | null;
+  emitter?: (type: EditorEvent, context: Record<string, unknown>) => void;
 };
 
 export type CanvasStore<T extends CanvasType> = {
@@ -65,6 +67,7 @@ export type CanvasStore<T extends CanvasType> = {
 };
 
 export const createCanvasStore = <T extends CanvasType>({
+  emitter = () => undefined,
   canvasKey = "canvas",
   initialSchema = new Map(),
   defaultActiveCanvas = null,
@@ -94,14 +97,20 @@ export const createCanvasStore = <T extends CanvasType>({
         // @ts-ignore
         state._unique[key] = context;
 
+        const generatedId = `${type}${id}`;
+
+        emitter(EditorEvent.BLOCK_ID_GENERATION, { id: generatedId });
+
         // Returning the new value
-        return { id: `${type}${id}`, state };
+        return { id: generatedId, state };
       },
       canvas: {
         select: (canvasId) =>
           set((state) => {
             state.active.canvas = canvasId;
             state.active.block = canvasId;
+
+            emitter(EditorEvent.CANVAS_SELECTION, { canvasId });
           }),
         get: (canvasId) => {
           const canvas = get().schema.get(canvasId);
@@ -126,6 +135,7 @@ export const createCanvasStore = <T extends CanvasType>({
             state.schema.set(canvasId, block as Draft<ThreadType<T>>);
             state.active.canvas = canvasId;
             state.active.block = canvasId;
+            emitter(EditorEvent.CANVAS_ADDITION, { canvasId });
           }),
         remove: (canvasId) =>
           set((state) => {
@@ -134,6 +144,8 @@ export const createCanvasStore = <T extends CanvasType>({
             if (state.active.canvas === canvasId) state.active.canvas = null;
 
             if (state.active.block === canvasId) state.active.block = null;
+
+            emitter(EditorEvent.CANVAS_DELETION, { canvasId });
           }),
       },
       block: {
@@ -173,6 +185,8 @@ export const createCanvasStore = <T extends CanvasType>({
 
             state.schema.set(canvasId, canvas);
             state.active.block = blockId;
+
+            emitter(EditorEvent.BLOCK_ADDITION, { canvasId });
           }),
         update: (canvasId, blockId, values) =>
           set((state) => {
@@ -192,6 +206,8 @@ export const createCanvasStore = <T extends CanvasType>({
 
             // Updating the canvas blocks
             state.schema.set(canvasId, canvas);
+
+            emitter(EditorEvent.BLOCK_UPDATION, { canvasId });
           }),
         updateId: (canvasId, blockId, newId) =>
           set((state) => {
@@ -242,6 +258,7 @@ export const createCanvasStore = <T extends CanvasType>({
               // Updating the active block
               state.active.block = newId;
             }
+            emitter(EditorEvent.BLOCK_ID_UPDATION, { canvasId });
           }),
         set: (canvasId, func) =>
           set((state) => {
@@ -267,6 +284,7 @@ export const createCanvasStore = <T extends CanvasType>({
               state.active.block = null;
 
             state.schema.set(canvasId, canvas);
+            emitter(EditorEvent.CANVAS_RESET, { canvasId });
           }),
         remove: (canvasId, blockId) =>
           set((state) => {
@@ -279,6 +297,7 @@ export const createCanvasStore = <T extends CanvasType>({
             state.schema.set(canvasId, canvas);
 
             if (state.active.block === blockId) state.active.block = null;
+            emitter(EditorEvent.BLOCK_DELETION, { canvasId });
           }),
         move: (canvasId, from, to) =>
           set((state) => {
@@ -297,10 +316,12 @@ export const createCanvasStore = <T extends CanvasType>({
 
             // Storing the updated blocks arrangement
             state.schema.set(canvasId, canvas);
+            emitter(EditorEvent.BLOCK_REPOSITION, { canvasId });
           }),
         select: (blockId) =>
           set((state) => {
             state.active.block = blockId;
+            emitter(EditorEvent.BLOCK_SELECTION, { blockId });
           }),
         findIndex: (canvasId, blockId) => {
           const keys = Array.from(
@@ -323,6 +344,7 @@ export const createCanvasStore = <T extends CanvasType>({
             );
 
           get().block.add(canvasId, block);
+          emitter(EditorEvent.BLOCK_DUPLICATION, { canvasId });
         },
       },
     })),

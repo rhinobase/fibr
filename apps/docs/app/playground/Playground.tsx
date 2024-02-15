@@ -9,7 +9,7 @@ import {
 import { Footer, Header, PreviewButton, Workspace } from "@fibr/builder";
 import { FormBuilder } from "@fibr/form";
 import { PageBuilder } from "@fibr/page";
-import type { CanvasType } from "@fibr/providers";
+import { type CanvasType, EditorEvent } from "@fibr/providers";
 import type { ThreadType } from "@fibr/react";
 import { WorkflowBuilder } from "@fibr/workflow";
 import { Text } from "@rafty/ui";
@@ -68,7 +68,11 @@ export default function Playground() {
   const Component = PANELS[container];
 
   return (
-    <Workspace>
+    <Workspace
+      initialEvents={{
+        [EditorEvent.ALL]: [({ type }) => console.log(type)],
+      }}
+    >
       <Header>
         <div className="flex-1" />
         <PreviewButton />

@@ -12,6 +12,7 @@ import {
   type CanvasStoreProps,
   createCanvasStore,
 } from "./store";
+import { useEventBus } from "../events";
 
 const CanvasContext = createContext<ReturnType<
   typeof createCanvasStore
@@ -20,7 +21,8 @@ const CanvasContext = createContext<ReturnType<
 export type CanvasProvider = PropsWithChildren<CanvasStoreProps<CanvasType>>;
 
 export function CanvasProvider({ children, ...props }: CanvasProvider) {
-  const store = useRef(createCanvasStore(props)).current;
+  const emitter = useEventBus((state) => state.broadcast);
+  const store = useRef(createCanvasStore({ ...props, emitter })).current;
   return (
     <CanvasContext.Provider value={store}>{children}</CanvasContext.Provider>
   );
