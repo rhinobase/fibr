@@ -2,8 +2,7 @@ import { eventHandler } from "@rafty/shared";
 import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
 import { HiOutlineCodeBracketSquare } from "react-icons/hi2";
 import { VscDebugStart } from "react-icons/vsc";
-import { useBuilder } from "../providers";
-import { Env } from "../utils";
+import { useBuilder, Env } from "@fibr/providers";
 
 export function PreviewButton() {
   const { isDevelopment, change } = useBuilder((state) => ({

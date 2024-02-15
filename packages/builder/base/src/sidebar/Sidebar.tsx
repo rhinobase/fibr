@@ -5,8 +5,7 @@ import {
   Panel,
   PanelGroup,
 } from "react-resizable-panels";
-import { useBuilder } from "../providers";
-import { Env } from "../utils";
+import { useBuilder, Env } from "@fibr/providers";
 import { ResizeHandle } from "./ResizeHandle";
 import { SidebarTray } from "./SidebarTray";
 

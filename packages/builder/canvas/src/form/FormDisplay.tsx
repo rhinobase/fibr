@@ -1,4 +1,4 @@
-import { Env, useBuilder } from "@fibr/builder";
+import { Env, useBuilder } from "@fibr/providers";
 import { useCanvas } from "@fibr/providers";
 import { Loom, WeaverProvider } from "@fibr/react";
 import { DndWrapper } from "@fibr/shared";

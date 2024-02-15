@@ -6,7 +6,7 @@ import {
   type ReactNode,
   useEffect,
 } from "react";
-import { TabPayload, useBuilder } from "../providers";
+import { TabPayload, useBuilder } from "@fibr/providers";
 
 export type SidebarItem = Omit<TabContent, "value"> &
   TabPayload & {

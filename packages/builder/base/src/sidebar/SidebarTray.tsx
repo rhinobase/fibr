@@ -1,7 +1,7 @@
 "use client";
 import { Tab, TabList, TabTrigger, classNames } from "@rafty/ui";
 import { type PropsWithChildren } from "react";
-import { useBuilder } from "../providers";
+import { useBuilder } from "@fibr/providers";
 
 export type SidebarTray = PropsWithChildren<{
   expandPanel?: () => void;

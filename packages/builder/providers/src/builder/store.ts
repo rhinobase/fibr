@@ -1,7 +1,7 @@
 import { enableMapSet } from "immer";
 import { StoreApi, UseBoundStore, create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { Env } from "../../utils";
+import { Env } from "../utils";
 import _ from "lodash";
 
 export type TabPayload = {

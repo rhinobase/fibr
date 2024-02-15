@@ -1,8 +1,7 @@
 "use client";
 import { classNames } from "@rafty/ui";
 import { type HTMLAttributes } from "react";
-import { useBuilder } from "./providers";
-import { Env } from "./utils";
+import { useBuilder, Env } from "@fibr/providers";
 
 export type Settings = HTMLAttributes<HTMLDivElement>;
 

@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { BuilderProvider, type CreateBuilderStoreProps } from "./providers";
+import { BuilderProvider, type CreateBuilderStoreProps } from "@fibr/providers";
 import { Toaster } from "react-hot-toast";
 import {
   EventManagerProvider,
