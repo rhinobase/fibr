@@ -13,7 +13,6 @@ export type TabPayload = {
 };
 
 export type CreateBuilderStoreProps = {
-  enableZooming?: boolean;
   tabs?: Map<string, Omit<TabPayload, "name">>;
   env?: Env;
 };
@@ -23,7 +22,6 @@ export type Layout = {
 };
 
 export type BuilderStore = {
-  config: CreateBuilderStoreProps;
   tabs: {
     all: Map<string, Omit<TabPayload, "name">>;
     add: (tab: TabPayload) => void;
@@ -41,15 +39,11 @@ export type BuilderStore = {
 
 enableMapSet();
 export const createBuilderStore = ({
-  enableZooming = false,
   tabs = new Map(),
   env = Env.DEVELOPMENT,
 }: CreateBuilderStoreProps) =>
   create(
     immer<BuilderStore>((set, get) => ({
-      config: {
-        enableZooming,
-      },
       tabs: {
         all: tabs,
         active: null,
