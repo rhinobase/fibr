@@ -374,7 +374,5 @@ function revalidateCache(
     return { ...prev, ...sub };
   }, {});
 
-  console.log(data);
-
   return data;
 }

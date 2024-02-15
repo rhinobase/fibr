@@ -2,6 +2,7 @@ import {
   type CanvasType,
   CanvasProvider,
   type CanvasStoreProps,
+  ShortcutsProvider,
 } from "@fibr/providers";
 import { BlocksProvider, type BlocksStore } from "@fibr/shared";
 import { Container } from "./Container";
@@ -14,7 +15,9 @@ export function FormBuilder<T extends CanvasType>({
   return (
     <BlocksProvider blocks={blocks} config={config}>
       <CanvasProvider {...builderProps}>
-        <Container />
+        <ShortcutsProvider>
+          <Container />
+        </ShortcutsProvider>
       </CanvasProvider>
     </BlocksProvider>
   );

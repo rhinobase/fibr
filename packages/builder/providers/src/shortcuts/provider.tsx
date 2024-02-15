@@ -4,9 +4,11 @@ import {
   createContext,
   useContext,
   useEffect,
-  useCallback,
 } from "react";
 import { useCanvas } from "../canvas";
+import { useHotkeys } from "react-hotkeys-hook";
+import { useBuilder } from "../builder";
+import { useCopyToClipboard } from "@uidotdev/usehooks";
 
 const ShortcutsContext = createContext<ReturnType<
   typeof useShortcutsManager
@@ -25,6 +27,11 @@ export function ShortcutsProvider({ children }: ShortcutsProvider) {
 }
 
 function useShortcutsManager() {
+  const [, copyToClipboard] = useCopyToClipboard();
+  const { layout, setLayout } = useBuilder(({ layout, setLayout }) => ({
+    layout,
+    setLayout,
+  }));
   const { get, add, active, remove } = useCanvas(
     ({ active, block: { get, add, remove } }) => ({
       get,
@@ -34,82 +41,64 @@ function useShortcutsManager() {
     }),
   );
 
-  const onCopy = useCallback(
-    (
-      event: ClipboardEvent,
-      callback?: (block: { canvas: string; block: string }) => void,
-    ) => {
-      if (event.clipboardData && active.canvas && active.block) {
+  useHotkeys(
+    "mod+b",
+    () =>
+      setLayout({
+        showSidebar: !layout.showSidebar,
+      }),
+    { description: "Toggle sidebar", preventDefault: true },
+    [layout.showSidebar],
+  );
+
+  useHotkeys(
+    "mod+c",
+    (event) => {
+      if (active.canvas && active.block) {
         const block = get(active.canvas, active.block);
         if (block) {
           event.preventDefault();
-          event.clipboardData.setData("text/plain", JSON.stringify(block));
-          callback?.({
-            canvas: active.canvas ?? "",
-            block: active.block ?? "",
-          });
+          copyToClipboard(JSON.stringify(block));
         }
       }
     },
-    [get, active],
+    { description: "Copy" },
+    [active],
   );
 
-  const onPaste = useCallback(
-    (event: ClipboardEvent) => {
+  useHotkeys(
+    "mod+x",
+    (event) => {
+      if (active.canvas && active.block) {
+        const block = get(active.canvas, active.block);
+        if (block) {
+          event.preventDefault();
+          copyToClipboard(JSON.stringify(block));
+          remove(active.canvas, active.block);
+        }
+      }
+    },
+    { description: "Cut" },
+    [active],
+  );
+
+  // Paste listener
+  useEffect(() => {
+    const onPaste = (event: ClipboardEvent) => {
       if (event.clipboardData) {
         const data = JSON.parse(
           event.clipboardData.getData("text/plain") ?? "",
         );
         if (data) add(active.canvas ?? "nodes", data);
       }
-    },
-    [add, active],
-  );
-
-  // Cut listener
-  useEffect(() => {
-    const onCut = (event: ClipboardEvent) =>
-      onCopy(event, ({ canvas, block }) => remove(canvas, block));
-
-    window.addEventListener("cut", onCut);
-
-    return () => {
-      window.removeEventListener("cut", onCut);
     };
-  }, [onCopy, remove]);
 
-  // Copy listener
-  useEffect(() => {
-    window.addEventListener("copy", onCopy);
-
-    return () => {
-      window.removeEventListener("copy", onCopy);
-    };
-  }, [onCopy]);
-
-  // Paste listener
-  useEffect(() => {
     window.addEventListener("paste", onPaste);
 
     return () => {
       window.removeEventListener("paste", onPaste);
     };
-  }, [onPaste]);
-
-  useEffect(() => {
-    const onKeydown = (event: KeyboardEvent) => {
-      if (!event.ctrlKey) return;
-
-      if (event.key === "z") console.log("Undo");
-      else if (event.key === "y") console.log("Redo");
-    };
-
-    window.addEventListener("keydown", onKeydown);
-
-    return () => {
-      window.removeEventListener("keydown", onKeydown);
-    };
-  }, []);
+  }, [add, active]);
 
   return {};
 }
