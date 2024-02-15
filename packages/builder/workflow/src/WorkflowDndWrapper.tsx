@@ -1,17 +1,10 @@
-import {
-  DndContext,
-  PointerSensor,
-  pointerWithin,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core";
+import { DndContext, pointerWithin } from "@dnd-kit/core";
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 import { useCanvas } from "@fibr/providers";
-import { type PropsWithChildren } from "react";
-import { Node, useReactFlow } from "reactflow";
+import type { PropsWithChildren } from "react";
+import { type Node, useReactFlow } from "reactflow";
 
 export function WorkflowDndWrapper(props: PropsWithChildren) {
-  const sensors = useSensors(useSensor(PointerSensor));
   const { screenToFlowPosition } = useReactFlow();
   const { add, activeCanvas } = useCanvas((state) => ({
     add: state.block.add,
@@ -20,7 +13,6 @@ export function WorkflowDndWrapper(props: PropsWithChildren) {
 
   return (
     <DndContext
-      sensors={sensors}
       modifiers={[restrictToWindowEdges]}
       collisionDetection={pointerWithin}
       onDragEnd={({ active, over }) => {
