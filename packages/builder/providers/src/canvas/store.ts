@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { arrayMove } from "@dnd-kit/sortable";
 import type { ThreadType, ThreadWithIdType } from "@fibr/react";
-import type { Draft } from "immer";
+import { type Draft } from "immer";
 import _ from "lodash";
 import { StoreApi, UseBoundStore, create } from "zustand";
 import { immer } from "zustand/middleware/immer";
@@ -24,7 +25,14 @@ export type CanvasStore<T extends CanvasType> = {
     canvas: string | null;
     block: string | null;
   };
-  uniqueId: (type: string, context: Map<string, unknown>) => string;
+  // Generating unique keys for components
+  _unique: Record<string, Record<string, number>>;
+  uniqueId: <U>(
+    state: U,
+    type: string,
+    key?: string,
+  ) => { id: string; state: U };
+  // ---
   canvas: {
     select: (canvasId: string | null) => void;
     get: (canvasId: string) => ThreadType<T> | null;
@@ -69,18 +77,25 @@ export const createCanvasStore = <T extends CanvasType>({
         canvas: defaultActiveCanvas,
         block: defaultActiveBlock,
       },
-      uniqueId: (type, context) => {
-        let index = 1;
-        // eslint-disable-next-line no-constant-condition
-        while (true) {
-          const id = `${type}${index}`;
+      _unique: {},
+      uniqueId: (state, type, key = "default") => {
+        // Generating new id
+        let id = 1;
 
-          index += 1;
+        // Getting cache or init a new one
+        // @ts-ignore
+        const context = state._unique[key] ?? {};
 
-          if (context.has(id)) continue;
+        // Starting from 1
+        id = (context[type] ?? 0) + 1;
 
-          return id;
-        }
+        // Updating the cache
+        context[type] = id;
+        // @ts-ignore
+        state._unique[key] = context;
+
+        // Returning the new value
+        return { id: `${type}${id}`, state };
       },
       canvas: {
         select: (canvasId) =>
@@ -94,8 +109,11 @@ export const createCanvasStore = <T extends CanvasType>({
           return null;
         },
         add: (struct) =>
-          set((state) => {
-            const canvasId = get().uniqueId(canvasKey, state.schema);
+          set((oldState) => {
+            const { id: canvasId, state } = oldState.uniqueId(
+              oldState,
+              canvasKey,
+            );
             const block =
               typeof struct === "string"
                 ? {
@@ -139,13 +157,17 @@ export const createCanvasStore = <T extends CanvasType>({
           return block;
         },
         add: (canvasId, block) =>
-          set((state) => {
-            const canvas = state.schema.get(canvasId);
+          set((oldState) => {
+            const canvas = oldState.schema.get(canvasId);
 
             if (!canvas)
               throw new Error(`Canvas with this ID ${canvasId} doesn't exist!`);
 
-            const blockId = state.uniqueId(block.type, canvas.blocks);
+            const { id: blockId, state } = oldState.uniqueId(
+              oldState,
+              block.type,
+              canvasId,
+            );
 
             canvas.blocks.set(blockId, block);
 
