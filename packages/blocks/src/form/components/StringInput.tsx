@@ -1,7 +1,6 @@
 import { useThread } from "@fibr/react";
-import { InputField, mergeRefs } from "@rafty/ui";
-import { useRef } from "react";
-import { Controller, useFormContext } from "react-hook-form";
+import { InputField } from "@rafty/ui";
+import { useFormContext } from "react-hook-form";
 import {
   FieldWrapper,
   InputWrapper,
@@ -18,7 +17,6 @@ export type StringInput = FieldWrapperProps<
 >;
 
 export function StringInput() {
-  const ref = useRef<HTMLInputElement>(null);
   const {
     id,
     defaultValue,
@@ -37,7 +35,7 @@ export function StringInput() {
     suffixText,
   } = useThread<StringInput>();
 
-  const { control } = useFormContext();
+  const { register } = useFormContext();
 
   const fieldWrapperProps = {
     description,
@@ -59,22 +57,21 @@ export function StringInput() {
   return (
     <FieldWrapper {...fieldWrapperProps}>
       <InputWrapper {...inputWrapperProps}>
-        <Controller
-          name={id}
-          control={control}
-          render={({ field: { ref: formRef, ...props } }) => (
-            <InputField
-              {...props}
-              id={id}
-              type={inputType}
-              placeholder={placeholder}
-              ref={mergeRefs(formRef, ref)}
-              onPointerDown={(event) => {
-                event.stopPropagation();
-              }}
-              defaultValue={defaultValue}
-            />
-          )}
+        <InputField
+          id={id}
+          type={inputType}
+          placeholder={placeholder}
+          defaultValue={defaultValue}
+          {...register(id)}
+          onPointerDownCapture={(event) => {
+            event.stopPropagation();
+          }}
+          onKeyDownCapture={(event) => {
+            event.stopPropagation();
+          }}
+          onClickCapture={(event) => {
+            event.stopPropagation();
+          }}
         />
       </InputWrapper>
     </FieldWrapper>

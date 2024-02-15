@@ -68,6 +68,15 @@ export function PasswordInput() {
           defaultValue={defaultValue}
           placeholder={placeholder}
           {...register(id)}
+          onPointerDownCapture={(event) => {
+            event.stopPropagation();
+          }}
+          onKeyDownCapture={(event) => {
+            event.stopPropagation();
+          }}
+          onClickCapture={(event) => {
+            event.stopPropagation();
+          }}
         />
         <Suffix className="pointer-events-auto">
           <Button

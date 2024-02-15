@@ -39,6 +39,15 @@ export function Textarea() {
         placeholder={placeholder}
         defaultValue={defaultValue}
         {...register(id)}
+        onPointerDownCapture={(event) => {
+          event.stopPropagation();
+        }}
+        onKeyDownCapture={(event) => {
+          event.stopPropagation();
+        }}
+        onClickCapture={(event) => {
+          event.stopPropagation();
+        }}
       />
     </FieldWrapper>
   );

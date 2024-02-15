@@ -30,7 +30,10 @@ export function FieldWrapper({ children }: PropsWithChildren) {
     isDragging,
   } = useSortable({ id, data: field });
 
-  const onSelect = eventHandler(() => select(id));
+  const onSelect = eventHandler((event) => {
+    event.stopPropagation();
+    select(id);
+  });
 
   if (field.type === "canvas")
     return (
