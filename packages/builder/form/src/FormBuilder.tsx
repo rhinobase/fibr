@@ -1,24 +1,11 @@
-import {
-  type CanvasType,
-  CanvasProvider,
-  type CanvasStoreProps,
-  ShortcutsProvider,
-} from "@fibr/providers";
-import { BlocksProvider, type BlocksStore } from "@fibr/shared";
+import { type CanvasType } from "@fibr/providers";
+import { SharedWrapper } from "@fibr/shared";
 import { Container } from "./Container";
 
-export function FormBuilder<T extends CanvasType>({
-  blocks,
-  config,
-  ...builderProps
-}: BlocksStore & CanvasStoreProps<T>) {
+export function FormBuilder<T extends CanvasType>(props: SharedWrapper<T>) {
   return (
-    <BlocksProvider blocks={blocks} config={config}>
-      <CanvasProvider {...builderProps}>
-        <ShortcutsProvider>
-          <Container />
-        </ShortcutsProvider>
-      </CanvasProvider>
-    </BlocksProvider>
+    <SharedWrapper {...props}>
+      <Container />
+    </SharedWrapper>
   );
 }

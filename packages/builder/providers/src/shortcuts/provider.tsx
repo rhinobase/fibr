@@ -65,9 +65,17 @@ function useShortcutsManager() {
     description: "Toggle preview mode",
   });
 
-  useHotkeys("shift+?", () => console.log("Shortcut dialog"), {
-    description: "Shortcut dialog",
-  });
+  useHotkeys(
+    "shift+?",
+    () =>
+      setLayout({
+        shortcutsDialog: !layout.shortcutsDialog,
+      }),
+    {
+      description: "Shortcut dialog",
+    },
+    [layout.shortcutsDialog],
+  );
 
   useHotkeys("mod+s", () => console.log("Save"), {
     description: "Save",
@@ -96,10 +104,10 @@ function useShortcutsManager() {
     "mod+b",
     () =>
       setLayout({
-        showSidebar: !layout.showSidebar,
+        sidebar: !layout.sidebar,
       }),
     { description: "Toggle sidebar", preventDefault: true },
-    [layout.showSidebar],
+    [layout.sidebar],
   );
 
   useHotkeys(

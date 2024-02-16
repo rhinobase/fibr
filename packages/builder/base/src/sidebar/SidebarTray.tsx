@@ -18,7 +18,7 @@ export function SidebarTray({
       all,
       active,
       setActive,
-      isExpanded: layout.showSidebar,
+      isExpanded: layout.sidebar,
     }),
   );
 

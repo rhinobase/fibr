@@ -17,10 +17,10 @@ export function Sidebar({ children }: PropsWithChildren) {
   const { setNodeRef } = useDroppable({ id: "sidebar" });
   const ref = useRef<ImperativePanelHandle>(null);
 
-  const { isProduction, isDisabled, defaultSize, setLayout } = useBuilder(
+  const { isProduction, isDisabled, defaultSize, toggle } = useBuilder(
     ({
       env: { current },
-      layout: { showSidebar },
+      layout: { sidebar },
       setLayout,
       tabs: { get, active },
     }) => {
@@ -28,9 +28,9 @@ export function Sidebar({ children }: PropsWithChildren) {
 
       return {
         isProduction: current === Env.PRODUCTION,
-        isDisabled: !showSidebar || currentTab?.isResizeable === false,
+        isDisabled: !sidebar || currentTab?.isResizeable === false,
         defaultSize: currentTab?.defaultSize ?? DEFAULT_SIZE,
-        setLayout,
+        toggle: (value: boolean) => setLayout({ sidebar: value }),
       };
     },
   );
@@ -50,8 +50,8 @@ export function Sidebar({ children }: PropsWithChildren) {
           collapsible
           collapsedSize={MIN_WIDTH}
           onResize={(size) => {
-            if (size <= MIN_WIDTH) setLayout({ showSidebar: false });
-            else setLayout({ showSidebar: true });
+            if (size <= MIN_WIDTH) toggle(false);
+            else toggle(true);
           }}
           style={{ pointerEvents: "auto" }}
         >
