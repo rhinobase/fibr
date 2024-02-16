@@ -1,27 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { create } from "zustand";
-
-export enum EditorEvent {
-  ALL = "all",
-  BLOCK_ID_GENERATION = "block_id_generation",
-  BLOCK_ID_UPDATION = "block_id_updation",
-  CANVAS_SELECTION = "canvas_selection",
-  CANVAS_ADDITION = "canvas_addition",
-  CANVAS_DELETION = "canvas_deletion",
-  CANVAS_RESET = "canvas_reset",
-  BLOCK_ADDITION = "block_addition",
-  BLOCK_UPDATION = "block_updation",
-  BLOCK_DELETION = "block_deletion",
-  BLOCK_REPOSITION = "block_reposition",
-  BLOCK_SELECTION = "block_selection",
-  BLOCK_DUPLICATION = "block_duplication",
-}
-
-// TODO: Add type based functions
-// biome-ignore lint/suspicious/noExplicitAny: This needs to be dynamic
-export type EditorEventListener<T extends Record<string, unknown> = any> = (
-  context: T,
-) => Promise<void> | void;
+import { EditorEventListenerProps, EditorEventListener } from "../types";
+import { EditorEvent } from "../utils";
 
 export type EditorEventBusProps = {
   initialEvents?: Partial<Record<EditorEvent, EditorEventListener[]>>;
@@ -29,18 +8,18 @@ export type EditorEventBusProps = {
 
 export type EditorEventBus = {
   events: Partial<Record<EditorEvent, EditorEventListener[]>>;
-  add: <T extends Record<string, unknown>>(
-    type: EditorEvent,
-    func: EditorEventListener<T>,
+  add: <T extends EditorEvent>(
+    type: T,
+    func: EditorEventListener<EditorEventListenerProps[T]>,
   ) => void;
-  remove: <T extends Record<string, unknown>>(
-    type: EditorEvent,
-    func: EditorEventListener<T>,
+  remove: <T extends EditorEvent>(
+    type: T,
+    func: EditorEventListener<EditorEventListenerProps[T]>,
   ) => void;
   clear: (type: EditorEvent) => void;
-  broadcast: <T extends Record<string, unknown>>(
-    type: EditorEvent,
-    context?: T,
+  broadcast: <T extends EditorEvent>(
+    type: T,
+    context?: EditorEventListenerProps[T],
   ) => void;
 };
 
@@ -51,8 +30,10 @@ export const createEditorEventBus = ({
     events: initialEvents,
     add: (type, func) =>
       set(({ events }) => {
-        if (type in events) events[type]?.push(func);
-        else events[type] = [func];
+        const eventHandler = [func] as EditorEventListener[];
+
+        if (type in events) events[type]?.push(...eventHandler);
+        else events[type] = eventHandler;
         return { events: { ...events } };
       }),
     remove: (type, func) =>
@@ -68,13 +49,15 @@ export const createEditorEventBus = ({
     clear: (type) =>
       set(({ events }) => ({ events: { ...events, [type]: [] } })),
     broadcast: (type, context) => {
-      const events = get().events[type] ?? [];
+      const events = get().events[type] ?? ([] as EditorEventListener[]);
 
       if (type !== EditorEvent.ALL)
         events.push(...(get().events[EditorEvent.ALL] ?? []));
 
+      const payload = { type, ...(context ?? {}) };
+
       for (const event of events) {
-        event({ type, ...context });
+        event(payload);
       }
     },
   }));

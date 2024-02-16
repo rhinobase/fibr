@@ -23,7 +23,8 @@ import {
 } from "react";
 import { useHotkeysContext } from "react-hotkeys-hook";
 import { Hotkey } from "react-hotkeys-hook/dist/types";
-import { Empty, highlightMatches } from "./utils";
+import { highlightMatches } from "./HightlightMatches";
+import { Empty } from "./Empty";
 
 const capitalize = (s?: string) => (s && s[0].toUpperCase() + s.slice(1)) || "";
 

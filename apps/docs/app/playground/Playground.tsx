@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import {
   formBlocks,
@@ -70,7 +71,10 @@ export default function Playground() {
   return (
     <Workspace
       initialEvents={{
-        [EditorEvent.ALL]: [({ type, ...props }) => console.log(type, props)],
+        [EditorEvent.ALL]: [
+          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+          ({ type, ...props }: any) => console.log(type, props),
+        ],
       }}
     >
       <Header>

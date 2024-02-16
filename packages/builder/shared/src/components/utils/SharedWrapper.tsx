@@ -7,7 +7,7 @@ import {
 import { PropsWithChildren } from "react";
 import { HotkeysProvider } from "react-hotkeys-hook";
 import { BlocksProvider, BlocksStore } from "../../providers";
-import { ShortcutsDialog } from "../ShortcutsDialog";
+import { ShortcutsDialog } from "./ShortcutsDialog";
 
 export type SharedWrapper<T extends CanvasType> = PropsWithChildren<
   BlocksStore & CanvasStoreProps<T>
