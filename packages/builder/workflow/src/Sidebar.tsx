@@ -1,6 +1,6 @@
 import { FloatingSidebar } from "@fibr/builder";
 import { useCanvas } from "@fibr/providers";
-import { CodeGenerator, Palette } from "@fibr/shared";
+import { CodeGenerator, InspectorPanel, Palette } from "@fibr/shared";
 
 export function Sidebar() {
   const { addBlock, active } = useCanvas(({ block, active }) => ({
@@ -18,6 +18,7 @@ export function Sidebar() {
         onBlockSelect={(props) => canvasId && addBlock(canvasId, props)}
       />
       <CodeGenerator />
+      <InspectorPanel />
     </FloatingSidebar>
   );
 }

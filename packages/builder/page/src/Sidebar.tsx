@@ -1,6 +1,6 @@
 import { Sidebar as BuilderSidebar } from "@fibr/builder";
 import { useCanvas } from "@fibr/providers";
-import { CodeGenerator, Overview, Palette } from "@fibr/shared";
+import { CodeGenerator, InspectorPanel, Overview, Palette } from "@fibr/shared";
 
 export function Sidebar() {
   const {
@@ -39,8 +39,8 @@ export function Sidebar() {
           canvasId && moveBlock(canvasId, startBlockId, endblockId)
         }
       />
-      {/* <Canvases /> */}
       <CodeGenerator />
+      <InspectorPanel />
     </BuilderSidebar>
   );
 }
