@@ -41,6 +41,57 @@ function useShortcutsManager() {
     }),
   );
 
+  useHotkeys("mod+k", () => console.log("Command palette"), {
+    description: "Command palette",
+    preventDefault: true,
+  });
+
+  useHotkeys("mod+shift+a", () => console.log("Toggle palette"), {
+    description: "Toggle palette",
+    preventDefault: true,
+  });
+
+  useHotkeys("mod+shift+d", () => console.log("Toggle overview"), {
+    description: "Toggle overview",
+    preventDefault: true,
+  });
+
+  useHotkeys("mod+u", () => console.log("Toggle inspector"), {
+    description: "Toggle inspector",
+    preventDefault: true,
+  });
+
+  useHotkeys("mod+alt+enter", () => console.log("Toggle preview mode"), {
+    description: "Toggle preview mode",
+  });
+
+  useHotkeys("shift+?", () => console.log("Shortcut dialog"), {
+    description: "Shortcut dialog",
+  });
+
+  useHotkeys("mod+s", () => console.log("Save"), {
+    description: "Save",
+    preventDefault: true,
+  });
+
+  useHotkeys("mod+z", () => console.log("Undo"), {
+    description: "Undo",
+  });
+
+  useHotkeys("mod+y", () => console.log("Redo"), {
+    description: "Redo",
+  });
+
+  useHotkeys("mod+a", () => console.log("Select all"), {
+    description: "Select all",
+    preventDefault: true,
+  });
+
+  useHotkeys("mod+d", () => console.log("Duplicate"), {
+    description: "Duplicate",
+    preventDefault: true,
+  });
+
   useHotkeys(
     "mod+b",
     () =>
