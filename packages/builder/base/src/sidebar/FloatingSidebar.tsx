@@ -1,3 +1,4 @@
+"use client";
 import { type PropsWithChildren, useRef } from "react";
 import { Tab, TabList, TabTrigger, classNames } from "@rafty/ui";
 import { Env, useBuilder } from "@fibr/providers";
