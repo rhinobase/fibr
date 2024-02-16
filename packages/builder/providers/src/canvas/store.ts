@@ -5,6 +5,7 @@ import { type Draft } from "immer";
 import _ from "lodash";
 import { StoreApi, UseBoundStore, create } from "zustand";
 import { immer } from "zustand/middleware/immer";
+import { enableMapSet } from "immer";
 import { EditorEvent } from "../events";
 
 export type CanvasType<
@@ -66,6 +67,7 @@ export type CanvasStore<T extends CanvasType> = {
   };
 };
 
+enableMapSet();
 export const createCanvasStore = <T extends CanvasType>({
   emitter = () => undefined,
   canvasKey = "canvas",

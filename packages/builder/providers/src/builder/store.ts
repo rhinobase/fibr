@@ -1,4 +1,3 @@
-import { enableMapSet } from "immer";
 import { StoreApi, UseBoundStore, create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { Env } from "../utils";
@@ -37,7 +36,6 @@ export type BuilderStore = {
   };
 };
 
-enableMapSet();
 export const createBuilderStore = ({
   tabs = {},
   env = Env.DEVELOPMENT,
