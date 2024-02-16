@@ -8,7 +8,15 @@ import {
 import { useBuilder, Env } from "@fibr/providers";
 import { ResizeHandle } from "./ResizeHandle";
 import { useDroppable } from "@dnd-kit/core";
-import { Tab, TabList, TabTrigger, classNames } from "@rafty/ui";
+import {
+  Tab,
+  TabList,
+  TabTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  classNames,
+} from "@rafty/ui";
 
 const DEFAULT_SIZE = 20;
 const MIN_WIDTH = 2.4;
@@ -102,26 +110,31 @@ function SidebarTray({ children, expandPanel, collapsePanel }: SidebarTray) {
     >
       <TabList>
         {Object.entries(all).map(([name, { icon, label }]) => (
-          <TabTrigger
-            key={name}
-            value={name}
-            title={label?.toString()}
-            onClick={(event) => {
-              event.preventDefault();
-              event.stopPropagation();
+          <Tooltip key={name}>
+            <TooltipTrigger asChild>
+              <div>
+                <TabTrigger
+                  value={name}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
 
-              if (active === name && isExpanded) {
-                setActive(null);
-                collapsePanel?.();
-              } else {
-                setActive(name);
-                if (!isExpanded) expandPanel?.();
-              }
-            }}
-            className="hover:text-secondary-700 p-2"
-          >
-            {icon}
-          </TabTrigger>
+                    if (active === name && isExpanded) {
+                      setActive(null);
+                      collapsePanel?.();
+                    } else {
+                      setActive(name);
+                      if (!isExpanded) expandPanel?.();
+                    }
+                  }}
+                  className="hover:text-secondary-700 p-2"
+                >
+                  {icon}
+                </TabTrigger>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="right">{label}</TooltipContent>
+          </Tooltip>
         ))}
       </TabList>
       <div className="border-secondary-200 w-full overflow-hidden border-r">
