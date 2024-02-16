@@ -6,19 +6,18 @@ import { useCallback, useMemo } from "react";
 import {
   Background,
   Connection,
-  Controls,
   DefaultEdgeOptions,
   Edge,
   FitViewOptions,
   Node,
+  OnEdgesChange,
   OnNodesChange,
   ReactFlow,
   SelectionMode,
   addEdge,
+  applyEdgeChanges,
   applyNodeChanges,
   type NodeTypes,
-  OnEdgesChange,
-  applyEdgeChanges,
 } from "reactflow";
 import "reactflow/dist/style.css";
 
@@ -95,7 +94,6 @@ export function Diagram() {
         panOnDrag={[1, 2]}
       >
         <Background />
-        <Controls />
       </ReactFlow>
     </div>
   );

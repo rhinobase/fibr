@@ -16,12 +16,8 @@ export function PageCanvas() {
 
   return (
     <FormProvider {...methods}>
-      <Canvas
-        ref={setNodeRef}
-        className="relative"
-        onClick={() => select(null)}
-      >
-        <div className="flex h-full w-full flex-col bg-white">
+      <Canvas ref={setNodeRef} onClick={() => select(null)}>
+        <div className="flex h-full w-full bg-white">
           <WeaverProvider wrapper={NodeWrapper}>
             <Diagram />
           </WeaverProvider>
