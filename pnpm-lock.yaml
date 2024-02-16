@@ -45,8 +45,8 @@ dependencies:
     specifier: ^1.0.1
     version: 1.0.1(react@18.2.0)
   '@rafty/ui':
-    specifier: ^1.4.7
-    version: 1.4.7(@types/react-dom@18.2.18)(@types/react@18.2.51)(date-fns@3.3.1)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^1.4.8
+    version: 1.4.8(@types/react-dom@18.2.18)(@types/react@18.2.51)(date-fns@3.3.1)(react-dom@18.2.0)(react@18.2.0)
   '@sindresorhus/slugify':
     specifier: ^2.2.1
     version: 2.2.1
@@ -2536,23 +2536,6 @@ packages:
       - verdaccio
     dev: true
 
-  /@nrwl/js@17.2.3(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@18.14.2)(nx@17.2.3)(typescript@5.2.2)(verdaccio@5.29.0):
-    resolution: {integrity: sha512-eH0UxhOac2HeFJLWTzPp4IuNah59vWWeE37VYrpSdBaw6U+Jixe0L6D89S8NT/AOW1aJOVglKbNc0MzVFC6QUQ==}
-    dependencies:
-      '@nx/js': 17.2.3(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@18.14.2)(nx@17.2.3)(typescript@5.2.2)(verdaccio@5.29.0)
-    transitivePeerDependencies:
-      - '@babel/traverse'
-      - '@swc-node/register'
-      - '@swc/core'
-      - '@swc/wasm'
-      - '@types/node'
-      - debug
-      - nx
-      - supports-color
-      - typescript
-      - verdaccio
-    dev: true
-
   /@nrwl/js@17.2.3(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@18.14.2)(nx@17.2.3)(typescript@5.3.3)(verdaccio@5.29.0):
     resolution: {integrity: sha512-eH0UxhOac2HeFJLWTzPp4IuNah59vWWeE37VYrpSdBaw6U+Jixe0L6D89S8NT/AOW1aJOVglKbNc0MzVFC6QUQ==}
     dependencies:
@@ -2781,7 +2764,7 @@ packages:
       '@babel/preset-env': 7.23.9(@babel/core@7.23.9)
       '@babel/preset-typescript': 7.23.3(@babel/core@7.23.9)
       '@babel/runtime': 7.23.9
-      '@nrwl/js': 17.2.3(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@18.14.2)(nx@17.2.3)(typescript@5.2.2)(verdaccio@5.29.0)
+      '@nrwl/js': 17.2.3(@swc-node/register@1.6.8)(@swc/core@1.3.107)(@types/node@18.14.2)(nx@17.2.3)(typescript@5.3.3)(verdaccio@5.29.0)
       '@nx/devkit': 17.2.3(nx@17.2.3)
       '@nx/workspace': 17.2.3(@swc-node/register@1.6.8)(@swc/core@1.3.107)
       '@phenomnomnominal/tsquery': 5.0.1(typescript@5.2.2)
@@ -4351,8 +4334,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@rafty/ui@1.4.7(@types/react-dom@18.2.18)(@types/react@18.2.51)(date-fns@3.3.1)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-ydi0KhxR8WQrrCPtYX03RlaYknj441/0EANQcgMz1KvV8B8H2n566pEhJpBwAQ5Y2kRGdzeJGxSQgnhhWaPrZQ==}
+  /@rafty/ui@1.4.8(@types/react-dom@18.2.18)(@types/react@18.2.51)(date-fns@3.3.1)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-yXzzzNz1w8DkiesyHa6W3qGdIH6L8nOqwHucDQDfPvvPq0hiNq3de7pNd068vJuu2f2dyHbliNi/dtj9+QZJOg==}
     peerDependencies:
       react: ^18.2.0
     dependencies:
