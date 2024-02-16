@@ -20,7 +20,7 @@ export function PaletteCard({
   ...block
 }: PaletteCard) {
   const { type, label, icon: Icon, presets } = block;
-  const { attributes, listeners, setNodeRef } = useDraggable({
+  const { attributes, listeners, isDragging, setNodeRef } = useDraggable({
     id: `${type}-${label}`,
     data: block,
   });
@@ -44,7 +44,11 @@ export function PaletteCard({
     >
       <div
         className={classNames(
-          enableDragging ? "cursor-grab" : "cursor-pointer",
+          isOverlay || isDragging
+            ? "!cursor-grabbing"
+            : enableDragging
+              ? "cursor-grab"
+              : "cursor-pointer",
           "border-secondary-300 dark:border-secondary-700 hover:border-secondary-500/80 flex h-[69px] items-center justify-center rounded border bg-white transition-all ease-in-out",
         )}
       >
