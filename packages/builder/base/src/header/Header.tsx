@@ -8,7 +8,7 @@ export const Header = forwardRef<HTMLDivElement, Header>(
   ({ className, children, ...props }, forwardedRef) => (
     <header
       {...props}
-      className={classNames("flex w-full items-center px-1 py-0.5", className)}
+      className={classNames("flex w-full items-center px-2 py-0.5", className)}
       ref={forwardedRef}
     >
       <Logo className="w-6" />
