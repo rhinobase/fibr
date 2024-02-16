@@ -1,7 +1,7 @@
 import { eventHandler } from "@rafty/shared";
 import type { RangeTuple } from "fuse.js";
 import type { Block } from "../../types";
-import { highlightMatches } from "./HightlightMatches";
+import { highlightMatches } from "../utils";
 import { useDraggable } from "@dnd-kit/core";
 import { classNames } from "@rafty/ui";
 
