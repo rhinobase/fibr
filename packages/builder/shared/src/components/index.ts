@@ -1,4 +1,10 @@
-export { DndWrapper, Empty, SharedWrapper, highlightMatches } from "./utils";
+export {
+  DndWrapper,
+  Empty,
+  SharedWrapper,
+  highlightMatches,
+  WorkflowControls,
+} from "./utils";
 export { Overview } from "./Overview";
 export { Palette } from "./Palette";
 export { Settings } from "./Settings";

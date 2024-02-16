@@ -1,9 +1,8 @@
 import { useCanvas } from "@fibr/providers";
-import { Canvas } from "@fibr/shared";
+import { Canvas, WorkflowControls } from "@fibr/shared";
 import { Diagram } from "./Diagram";
 import { useDroppable } from "@dnd-kit/core";
 import { FormProvider, useForm } from "react-hook-form";
-import { Controls } from "reactflow";
 import { WeaverProvider } from "@fibr/react";
 import { NodeWrapper } from "./NodeWrapper";
 
@@ -22,7 +21,7 @@ export function PageCanvas() {
             <Diagram />
           </WeaverProvider>
         </div>
-        <Controls />
+        <WorkflowControls />
       </Canvas>
     </FormProvider>
   );
