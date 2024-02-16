@@ -13,7 +13,7 @@ export type TabPayload = {
 };
 
 export type CreateBuilderStoreProps = {
-  tabs?: Map<string, Omit<TabPayload, "name">>;
+  tabs?: Record<string, Omit<TabPayload, "name">>;
   env?: Env;
 };
 
@@ -23,7 +23,7 @@ export type Layout = {
 
 export type BuilderStore = {
   tabs: {
-    all: Map<string, Omit<TabPayload, "name">>;
+    all: Record<string, Omit<TabPayload, "name">>;
     add: (tab: TabPayload) => void;
     get: (tab: string) => Omit<TabPayload, "name"> | undefined;
     active: string | null;
@@ -39,7 +39,7 @@ export type BuilderStore = {
 
 enableMapSet();
 export const createBuilderStore = ({
-  tabs = new Map(),
+  tabs = {},
   env = Env.DEVELOPMENT,
 }: CreateBuilderStoreProps) =>
   create(
@@ -51,11 +51,13 @@ export const createBuilderStore = ({
           set((state) => {
             const { name, ...data } = payload;
 
-            state.tabs.all.set(name, data);
+            state.tabs.all[name] = data;
 
-            if (state.tabs.all.size === 1) state.tabs.active = name;
+            const noOfTabs = Object.keys(state.tabs.all).length;
+
+            if (noOfTabs === 1) state.tabs.active = name;
           }),
-        get: (tabId) => get().tabs.all.get(tabId),
+        get: (tabId) => get().tabs.all[tabId],
         setActive: (tabId) =>
           set((state) => {
             state.tabs.active = tabId;

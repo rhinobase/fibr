@@ -32,7 +32,7 @@ export function SidebarTray({
       )}
     >
       <TabList>
-        {Array.from(all).map(([name, { icon, label }]) => (
+        {Object.entries(all).map(([name, { icon, label }]) => (
           <TabTrigger
             key={name}
             value={name}
