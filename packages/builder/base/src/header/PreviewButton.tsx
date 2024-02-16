@@ -5,14 +5,15 @@ import { VscDebugStart } from "react-icons/vsc";
 import { useBuilder, Env } from "@fibr/providers";
 
 export function PreviewButton() {
-  const { isDevelopment, change } = useBuilder((state) => ({
-    isDevelopment: state.env.current === Env.DEVELOPMENT,
-    change: state.env.change,
-  }));
-
-  const toggleEnv = eventHandler(() =>
-    change(isDevelopment ? Env.PRODUCTION : Env.DEVELOPMENT),
+  const { isDevelopment, toggle } = useBuilder(
+    ({ env: { current, change } }) => ({
+      isDevelopment: current === Env.DEVELOPMENT,
+      toggle: () =>
+        change(current === Env.DEVELOPMENT ? Env.PRODUCTION : Env.DEVELOPMENT),
+    }),
   );
+
+  const toggleEnv = eventHandler(() => toggle());
 
   const Icon = isDevelopment ? VscDebugStart : HiOutlineCodeBracketSquare;
 

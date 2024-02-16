@@ -9,6 +9,7 @@ import { useCanvas } from "../canvas";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useBuilder } from "../builder";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
+import { Env } from "../utils";
 
 const ShortcutsContext = createContext<ReturnType<
   typeof useShortcutsManager
@@ -28,10 +29,15 @@ export function ShortcutsProvider({ children }: ShortcutsProvider) {
 
 function useShortcutsManager() {
   const [, copyToClipboard] = useCopyToClipboard();
-  const { layout, setLayout } = useBuilder(({ layout, setLayout }) => ({
-    layout,
-    setLayout,
-  }));
+  const { layout, setLayout, setActive, currentEnv, setEnv } = useBuilder(
+    ({ layout, setLayout, tabs: { setActive }, env: { current, change } }) => ({
+      layout,
+      setLayout,
+      setActive,
+      currentEnv: current,
+      setEnv: change,
+    }),
+  );
   const { get, add, active, remove } = useCanvas(
     ({ active, block: { get, add, remove } }) => ({
       get,
@@ -41,29 +47,59 @@ function useShortcutsManager() {
     }),
   );
 
-  useHotkeys("mod+k", () => console.log("Command palette"), {
-    description: "Command palette",
-    preventDefault: true,
-  });
+  useHotkeys(
+    "mod+k",
+    () =>
+      setLayout({
+        commandPalette: !layout.commandPalette,
+      }),
+    {
+      description: "Command palette",
+      preventDefault: true,
+    },
+  );
 
-  useHotkeys("mod+shift+a", () => console.log("Toggle palette"), {
-    description: "Toggle palette",
-    preventDefault: true,
-  });
+  useHotkeys(
+    "mod+shift+a",
+    () => {
+      setActive("palette");
+      setLayout({
+        sidebar: true,
+      });
+    },
+    {
+      description: "Toggle palette",
+      preventDefault: true,
+    },
+  );
 
-  useHotkeys("mod+shift+d", () => console.log("Toggle overview"), {
-    description: "Toggle overview",
-    preventDefault: true,
-  });
+  useHotkeys(
+    "mod+shift+d",
+    () => {
+      setActive("overview");
+      setLayout({
+        sidebar: true,
+      });
+    },
+    {
+      description: "Toggle overview",
+      preventDefault: true,
+    },
+  );
 
   useHotkeys("mod+u", () => console.log("Toggle inspector"), {
     description: "Toggle inspector",
     preventDefault: true,
   });
 
-  useHotkeys("mod+alt+enter", () => console.log("Toggle preview mode"), {
-    description: "Toggle preview mode",
-  });
+  useHotkeys(
+    "mod+alt+enter",
+    () =>
+      setEnv(currentEnv === Env.DEVELOPMENT ? Env.PRODUCTION : Env.DEVELOPMENT),
+    {
+      description: "Toggle preview mode",
+    },
+  );
 
   useHotkeys(
     "shift+?",

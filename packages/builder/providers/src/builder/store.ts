@@ -19,6 +19,7 @@ export type CreateBuilderStoreProps = {
 export type Layout = {
   sidebar: boolean;
   shortcutsDialog: boolean;
+  commandPalette: boolean;
 };
 
 export type BuilderStore = {
@@ -72,6 +73,7 @@ export const createBuilderStore = ({
       layout: {
         sidebar: false,
         shortcutsDialog: false,
+        commandPalette: false,
       },
       setLayout: (values) =>
         set((state) => {
