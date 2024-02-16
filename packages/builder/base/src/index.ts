@@ -4,4 +4,4 @@ export { Footer } from "./Footer";
 export { Header, PreviewButton, Logo } from "./header";
 export { Settings } from "./Settings";
 export { Workspace } from "./Workspace";
-export { Sidebar, SidebarItem } from "./sidebar";
+export { Sidebar, FloatingSidebar, SidebarItem } from "./sidebar";
