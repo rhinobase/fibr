@@ -190,7 +190,7 @@ export const createCanvasStore = <T extends CanvasType>({
 
             emitter(EditorEvent.BLOCK_ADDITION, { canvasId });
           }),
-        update: (canvasId, blockId, { id, ...values }) =>
+        update: (canvasId, blockId, values) =>
           set((state) => {
             let canvas = state.schema.get(canvasId);
 
@@ -209,7 +209,11 @@ export const createCanvasStore = <T extends CanvasType>({
             // Updating the canvas blocks
             state.schema.set(canvasId, canvas);
 
-            emitter(EditorEvent.BLOCK_UPDATION, { canvasId });
+            emitter(EditorEvent.BLOCK_UPDATION, {
+              canvasId,
+              blockId,
+              values,
+            });
           }),
         updateId: (canvasId, blockId, newId) =>
           set((state) => {

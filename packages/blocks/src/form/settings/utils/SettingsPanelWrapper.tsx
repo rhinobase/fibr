@@ -3,23 +3,21 @@ import { PropsWithChildren, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 export function SettingsPanelWrapper({ children }: PropsWithChildren) {
-  const { _update, ...defaultValues } = useThread<{
+  const { _update, id, ...defaultValues } = useThread<{
     _update: (values: unknown) => void;
   }>();
 
   const methods = useForm({ defaultValues });
 
-  const subscription = methods.watch(_update);
-
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    const id = methods.getValues("id");
-    if (id !== defaultValues.id) methods.reset(defaultValues);
+    methods.reset(defaultValues);
+    const subscription = methods.watch(_update);
 
     return () => {
       subscription.unsubscribe();
     };
-  }, [defaultValues, methods]);
+  }, [id]);
 
   return (
     <FormProvider {...methods}>

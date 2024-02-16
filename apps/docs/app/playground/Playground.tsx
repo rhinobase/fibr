@@ -70,7 +70,7 @@ export default function Playground() {
   return (
     <Workspace
       initialEvents={{
-        [EditorEvent.ALL]: [({ type }) => console.log(type)],
+        [EditorEvent.ALL]: [({ type, ...props }) => console.log(type, props)],
       }}
     >
       <Header>
