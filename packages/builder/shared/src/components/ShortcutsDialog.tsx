@@ -11,6 +11,7 @@ import {
   DialogTitle,
   Kbd,
   SearchField,
+  classNames,
   useBoolean,
 } from "@rafty/ui";
 import {
@@ -23,6 +24,8 @@ import {
 import { useHotkeysContext } from "react-hotkeys-hook";
 import { Hotkey } from "react-hotkeys-hook/dist/types";
 import { Empty, highlightMatches } from "./utils";
+
+const capitalize = (s?: string) => (s && s[0].toUpperCase() + s.slice(1)) || "";
 
 export function ShortcutsDialog() {
   const [isMac, toggleOs] = useBoolean();
@@ -75,7 +78,10 @@ export function ShortcutsDialog() {
   return (
     <Dialog onOpenChange={toggle} open={open} size="lg">
       <DialogOverlay />
-      <DialogContent showCloseButton={false} className="space-y-6">
+      <DialogContent
+        showCloseButton={false}
+        className="flex min-h-[500px] flex-col gap-6"
+      >
         <DialogHeader className="flex-row items-center justify-between space-y-0">
           <DialogTitle>Keboard Shortcuts</DialogTitle>
           <div className="flex flex-row-reverse justify-end gap-2">
@@ -91,16 +97,15 @@ export function ShortcutsDialog() {
             />
           </div>
         </DialogHeader>
-        <div className="grid grid-cols-2 items-center gap-1">
-          {isEmpty ? (
-            <div className="flex flex-1 flex-col justify-center">
-              <Empty
-                title="Shortcut Not Found"
-                description="Please check your spelling and try again."
-              />
-            </div>
-          ) : (
-            searchResults.map(
+        {isEmpty ? (
+          <Empty
+            title="Shortcut Not Found"
+            description="Please check your spelling and try again."
+            className="flex-1"
+          />
+        ) : (
+          <div className="grid grid-cols-2 items-center gap-1.5">
+            {searchResults.map(
               (
                 {
                   description,
@@ -118,26 +123,39 @@ export function ShortcutsDialog() {
                       ? highlightMatches(description ?? "", matches)
                       : description}
                   </p>
-                  <div className="select-none space-x-2">
+                  <div className="select-none space-x-1">
                     {isMod && (
                       <KeyComponent>{isMac ? "⌘" : "Ctrl"}</KeyComponent>
                     )}
                     {isAlt && (
-                      <KeyComponent>{isMac ? "⌥ " : "Alt"}</KeyComponent>
+                      <KeyComponent>{isMac ? "⌥" : "Alt"}</KeyComponent>
                     )}
                     {isShift && <KeyComponent>⇧</KeyComponent>}
-                    <KeyComponent>{keys}</KeyComponent>
+                    <KeyComponent className="capitalize">
+                      {capitalize(keys?.join(""))}
+                    </KeyComponent>
                   </div>
                 </Fragment>
               ),
-            )
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </DialogContent>
     </Dialog>
   );
 }
 
-function KeyComponent({ children }: PropsWithChildren) {
-  return <Kbd className="w-max rounded px-1">{children}</Kbd>;
+type KeyComponent = PropsWithChildren & Pick<Kbd, "className">;
+
+function KeyComponent({ children, className }: KeyComponent) {
+  return (
+    <Kbd
+      className={classNames(
+        "w-max rounded px-1 py-0.5 text-xs leading-none shadow-none",
+        className,
+      )}
+    >
+      {children}
+    </Kbd>
+  );
 }
