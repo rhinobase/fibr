@@ -18,11 +18,11 @@ import { type ReactNode, useState } from "react";
 import { FaGithub, FaXTwitter } from "react-icons/fa6";
 import { Container, TemplateDialog } from "./templates";
 
-type PanelProps = { template: Map<string, ThreadType<CanvasType>> };
+type PanelProps = { template: Record<string, ThreadType<CanvasType>> };
 
 const PANELS: Record<Container, (props: PanelProps) => ReactNode> = {
   [Container.FORM]: ({ template }) => {
-    const key = template.keys().next().value;
+    const key = Object.keys(template)[0];
 
     return (
       <FormBuilder
@@ -35,7 +35,7 @@ const PANELS: Record<Container, (props: PanelProps) => ReactNode> = {
     );
   },
   [Container.WORKFLOW]: ({ template }) => {
-    const key = template.keys().next().value;
+    const key = Object.keys(template)[0];
 
     return (
       <WorkflowBuilder
@@ -47,7 +47,7 @@ const PANELS: Record<Container, (props: PanelProps) => ReactNode> = {
     );
   },
   [Container.PAGE]: ({ template }) => {
-    const key = template.keys().next().value;
+    const key = Object.keys(template)[0];
 
     return (
       <PageBuilder

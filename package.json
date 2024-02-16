@@ -54,7 +54,6 @@
     "remark-mdx": "^3.0.0",
     "shiki": "^0.14.7",
     "simple-functional-loader": "^1.2.1",
-    "superjson": "^2.2.1",
     "tslib": "^2.3.0",
     "unist-util-filter": "^5.0.1",
     "unist-util-visit": "^5.0.0",

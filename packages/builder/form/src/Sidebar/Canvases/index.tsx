@@ -14,7 +14,7 @@ export function Canvases() {
     schema,
   }));
 
-  const isEmpty = schema.size === 0;
+  const isEmpty = Object.keys(schema).length === 0;
 
   const ref = useRef<HTMLInputElement>(null);
 
@@ -72,7 +72,7 @@ export function Canvases() {
 function CanvasesList() {
   const schema = useCanvas(({ schema }) => schema);
 
-  return Array.from(schema).map(([id, canvas]) => (
+  return Object.entries(schema).map(([id, canvas]) => (
     <CanvasCard key={id} id={id} canvas={canvas as CanvasCard["canvas"]} />
   ));
 }

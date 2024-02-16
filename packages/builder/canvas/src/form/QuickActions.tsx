@@ -138,7 +138,7 @@ function QuickActionButtons() {
 
   const index = findIndex(activeCanvas, id);
 
-  if (index == null) return;
+  if (index === -1) return;
 
   const moveComponent = (direction: Direction) => {
     const components = all(activeCanvas);
@@ -155,7 +155,7 @@ function QuickActionButtons() {
           action={() => moveComponent(Direction.UP)}
         />
       )}
-      {index < (get(activeCanvas)?.blocks.size ?? 0) - 1 && (
+      {index < Object.keys(get(activeCanvas)?.blocks ?? {}).length - 1 && (
         <ActionButton
           name="Move down"
           icon={MdOutlineArrowDownward}

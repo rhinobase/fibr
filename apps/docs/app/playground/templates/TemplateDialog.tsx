@@ -19,7 +19,7 @@ import { TEMPLATES } from "./templates";
 export type TemplateDialog = {
   container: Switch["value"];
   onContainerChange: Switch["onValueChange"];
-  onSelect: (template: Map<string, ThreadType<CanvasType>>) => void;
+  onSelect: (template: Record<string, ThreadType<CanvasType>>) => void;
 };
 
 export function TemplateDialog({
@@ -34,7 +34,7 @@ export function TemplateDialog({
     toggle(true);
   }, [toggle]);
 
-  const handleSelect = (template: Map<string, ThreadType<CanvasType>>) =>
+  const handleSelect = (template: Record<string, ThreadType<CanvasType>>) =>
     eventHandler(() => {
       onSelect(template);
       toggle(false);

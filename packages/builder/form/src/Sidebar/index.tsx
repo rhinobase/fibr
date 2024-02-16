@@ -2,7 +2,6 @@ import { Sidebar as BuilderSidebar } from "@fibr/builder";
 import { useCanvas } from "@fibr/providers";
 import { Overview, Palette, CodeGenerator } from "@fibr/shared";
 import { Canvases } from "./Canvases";
-import { useCallback } from "react";
 import { reactHookFormResolver } from "./resolver";
 
 export function Sidebar() {

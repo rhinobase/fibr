@@ -1,6 +1,5 @@
 import { SidebarItem } from "@fibr/builder";
 import { type CanvasType, useCanvas } from "@fibr/providers";
-import { type ThreadType } from "@fibr/react";
 import {
   CheckIcon,
   CodeBracketSquareIcon,
@@ -16,11 +15,10 @@ import {
 } from "@rafty/ui";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { useEffect, useMemo, useState } from "react";
-import superjson from "superjson";
 import { CodeHighlighter } from "./Highlight";
 
 export type CodeGenerator = {
-  resolver?: (schema: Map<string, ThreadType<CanvasType>>) => string;
+  resolver?: (schema: Record<string, CanvasType | undefined>) => string;
 };
 
 enum CodeTab {
@@ -37,7 +35,7 @@ export function CodeGenerator({ resolver }: CodeGenerator) {
   const schema = useCanvas(({ schema }) => schema);
   const [ast, code] = useMemo(
     () => [
-      JSON.stringify(JSON.parse(superjson.stringify(schema)), null, 2),
+      JSON.stringify(schema, null, 2),
       resolver?.(schema) ?? "// No Resolver",
     ],
     [resolver, schema],
