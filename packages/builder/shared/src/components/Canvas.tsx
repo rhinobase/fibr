@@ -1,9 +1,9 @@
 import { Canvas as BuilderCanvas } from "@fibr/builder";
 import { FibrProvider } from "@fibr/react";
-import { forwardRef, type ElementRef, type ReactNode, useMemo } from "react";
+import { forwardRef, type ReactNode, useMemo } from "react";
 import { useBlocks } from "../providers";
 
-export const Canvas = forwardRef<ElementRef<"div">, BuilderCanvas>(
+export const Canvas = forwardRef<HTMLDivElement, BuilderCanvas>(
   (props, forwardedRef) => {
     const config = useBlocks((state) => state.config);
 
