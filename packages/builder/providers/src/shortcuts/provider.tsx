@@ -87,10 +87,19 @@ function useShortcutsManager() {
     },
   );
 
-  useHotkeys("mod+u", () => console.log("Toggle inspector"), {
-    description: "Toggle inspector",
-    preventDefault: true,
-  });
+  useHotkeys(
+    "mod+u",
+    () => {
+      setActive("inspector");
+      setLayout({
+        sidebar: true,
+      });
+    },
+    {
+      description: "Toggle inspector",
+      preventDefault: true,
+    },
+  );
 
   useHotkeys(
     "mod+alt+enter",
