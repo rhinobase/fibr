@@ -25,6 +25,7 @@
     "url": "https://github.com/rhinobase/fibr/issues"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.1.0",
     "@fibr/providers": "^1.0.0",
     "@rafty/ui": "^1.4.2",
     "@rafty/shared": "^1.0.0",

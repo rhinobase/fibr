@@ -1,6 +1,6 @@
 "use client";
 import { Tab, TabList, TabTrigger, classNames } from "@rafty/ui";
-import { type PropsWithChildren } from "react";
+import { useEffect, type PropsWithChildren } from "react";
 import { useBuilder } from "@fibr/providers";
 
 export type SidebarTray = PropsWithChildren<{
@@ -21,6 +21,11 @@ export function SidebarTray({
       isExpanded: layout.showSidebar,
     }),
   );
+
+  useEffect(() => {
+    if (isExpanded) expandPanel?.();
+    else collapsePanel?.();
+  }, [isExpanded, expandPanel, collapsePanel]);
 
   return (
     <Tab

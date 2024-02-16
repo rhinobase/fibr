@@ -8,11 +8,13 @@ import {
 import { useBuilder, Env } from "@fibr/providers";
 import { ResizeHandle } from "./ResizeHandle";
 import { SidebarTray } from "./SidebarTray";
+import { useDroppable } from "@dnd-kit/core";
 
 const DEFAULT_SIZE = 20;
 const MIN_WIDTH = 2.4;
 
 export function Sidebar({ children }: PropsWithChildren) {
+  const { setNodeRef } = useDroppable({ id: "sidebar" });
   const ref = useRef<ImperativePanelHandle>(null);
 
   const { isProduction, isDisabled, defaultSize, setLayout } = useBuilder(
@@ -53,25 +55,14 @@ export function Sidebar({ children }: PropsWithChildren) {
           }}
           style={{ pointerEvents: "auto" }}
         >
-          <SidebarTray
-            expandPanel={() => {
-              const panel = ref.current;
-
-              if (!panel) return;
-
-              panel.expand();
-              panel.resize(defaultSize);
-            }}
-            collapsePanel={() => {
-              const panel = ref.current;
-
-              if (!panel) return;
-
-              panel.collapse();
-            }}
-          >
-            {children}
-          </SidebarTray>
+          <aside className="h-full" ref={setNodeRef}>
+            <SidebarTray
+              expandPanel={() => ref.current?.resize(defaultSize)}
+              collapsePanel={ref.current?.collapse}
+            >
+              {children}
+            </SidebarTray>
+          </aside>
         </Panel>
         <ResizeHandle disabled={isDisabled} />
         <Panel order={2} defaultSize={80} />
