@@ -1,21 +1,20 @@
 "use client";
-import { useRef, type PropsWithChildren } from "react";
+import { useRef, type PropsWithChildren, useEffect } from "react";
 import {
-  ImperativePanelHandle,
+  type ImperativePanelHandle,
   Panel,
   PanelGroup,
 } from "react-resizable-panels";
 import { useBuilder, Env } from "@fibr/providers";
 import { ResizeHandle } from "./ResizeHandle";
-import { SidebarTray } from "./SidebarTray";
 import { useDroppable } from "@dnd-kit/core";
+import { Tab, TabList, TabTrigger, classNames } from "@rafty/ui";
 
 const DEFAULT_SIZE = 20;
 const MIN_WIDTH = 2.4;
 
 export function Sidebar({ children }: PropsWithChildren) {
-  const { setNodeRef } = useDroppable({ id: "sidebar" });
-  const ref = useRef<ImperativePanelHandle>(null);
+  const sidebarRef = useRef<ImperativePanelHandle>(null);
 
   const { isProduction, isDisabled, defaultSize, toggle } = useBuilder(
     ({
@@ -42,7 +41,7 @@ export function Sidebar({ children }: PropsWithChildren) {
       <PanelGroup direction="horizontal">
         <Panel
           id="sidebar"
-          ref={ref}
+          ref={sidebarRef}
           order={1}
           minSize={15}
           maxSize={40}
@@ -55,18 +54,79 @@ export function Sidebar({ children }: PropsWithChildren) {
           }}
           style={{ pointerEvents: "auto" }}
         >
-          <aside className="h-full" ref={setNodeRef}>
-            <SidebarTray
-              expandPanel={() => ref.current?.resize(defaultSize)}
-              collapsePanel={ref.current?.collapse}
-            >
-              {children}
-            </SidebarTray>
-          </aside>
+          <SidebarTray
+            expandPanel={() => sidebarRef.current?.resize(defaultSize)}
+            collapsePanel={sidebarRef.current?.collapse}
+          >
+            {children}
+          </SidebarTray>
         </Panel>
         <ResizeHandle disabled={isDisabled} />
         <Panel order={2} defaultSize={80} />
       </PanelGroup>
     </div>
+  );
+}
+
+type SidebarTray = PropsWithChildren<{
+  expandPanel?: () => void;
+  collapsePanel?: () => void;
+}>;
+
+function SidebarTray({ children, expandPanel, collapsePanel }: SidebarTray) {
+  const { setNodeRef } = useDroppable({ id: "sidebar" });
+
+  const { all, active, setActive, isExpanded } = useBuilder(
+    ({ tabs: { all, active, setActive }, layout }) => ({
+      all,
+      active,
+      setActive,
+      isExpanded: layout.sidebar,
+    }),
+  );
+
+  useEffect(() => {
+    if (isExpanded) expandPanel?.();
+    else collapsePanel?.();
+  }, [isExpanded, expandPanel, collapsePanel]);
+
+  return (
+    <Tab
+      value={isExpanded ? active ?? undefined : "None"}
+      orientation="vertical"
+      className={classNames(
+        (active === null || !isExpanded) && "w-max",
+        "pointer-events-auto h-full bg-white",
+      )}
+      ref={setNodeRef}
+    >
+      <TabList>
+        {Object.entries(all).map(([name, { icon, label }]) => (
+          <TabTrigger
+            key={name}
+            value={name}
+            title={label?.toString()}
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+
+              if (active === name && isExpanded) {
+                setActive(null);
+                collapsePanel?.();
+              } else {
+                setActive(name);
+                if (!isExpanded) expandPanel?.();
+              }
+            }}
+            className="hover:text-secondary-700 p-2"
+          >
+            {icon}
+          </TabTrigger>
+        ))}
+      </TabList>
+      <div className="border-secondary-200 w-full overflow-hidden border-r">
+        {children}
+      </div>
+    </Tab>
   );
 }

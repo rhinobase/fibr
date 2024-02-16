@@ -32,7 +32,7 @@ export function SidebarItem({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const Component = action
+  const HeaderComponent = action
     ? ({ children }: PropsWithChildren) => (
         <div className="flex items-center justify-between">{children}</div>
       )
@@ -43,15 +43,15 @@ export function SidebarItem({
       {...props}
       value={name}
       className={classNames(
-        "border-secondary-200 flex-col overflow-hidden border-r data-[state=active]:flex data-[orientation=vertical]:p-0",
+        "h-full flex-col data-[state=active]:flex data-[orientation=vertical]:p-0",
         className,
       )}
     >
       <div className="space-y-3 p-3">
-        <Component>
+        <HeaderComponent>
           <h4 className="font-medium">{label}</h4>
           {action}
-        </Component>
+        </HeaderComponent>
         <hr />
       </div>
       <div className="h-full overflow-y-auto">
