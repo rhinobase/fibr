@@ -7,7 +7,6 @@ import {
   Palette,
   astResolver,
 } from "@fibr/shared";
-import { Canvases } from "./Canvases";
 import { reactHookFormResolver } from "./resolver";
 
 export function Sidebar() {
@@ -46,7 +45,6 @@ export function Sidebar() {
           canvasId && moveBlock(canvasId, startBlockId, endblockId)
         }
       />
-      <Canvases />
       <InspectorPanel />
       <CodeGenerator
         resolvers={[
