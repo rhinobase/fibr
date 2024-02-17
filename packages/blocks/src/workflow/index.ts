@@ -59,8 +59,8 @@ export const workflowBlocks: Record<string, Block<Partial<Node>>[]> = {
       label: "End",
       icon: LuGitPullRequestClosed,
       presets: {
-        // targetPosition: Position.Left,
-        // resizing: false,
+        targetPosition: Position.Left,
+        resizing: false,
       },
     },
   ],
