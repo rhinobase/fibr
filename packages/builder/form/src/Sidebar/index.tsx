@@ -1,6 +1,12 @@
 import { Sidebar as BuilderSidebar } from "@fibr/builder";
 import { useCanvas } from "@fibr/providers";
-import { Overview, Palette, CodeGenerator, InspectorPanel } from "@fibr/shared";
+import {
+  CodeGenerator,
+  InspectorPanel,
+  Overview,
+  Palette,
+  astResolver,
+} from "@fibr/shared";
 import { Canvases } from "./Canvases";
 import { reactHookFormResolver } from "./resolver";
 
@@ -42,7 +48,22 @@ export function Sidebar() {
       />
       <Canvases />
       <InspectorPanel />
-      <CodeGenerator resolver={reactHookFormResolver} />
+      <CodeGenerator
+        resolvers={[
+          {
+            name: "ast",
+            label: "Ast",
+            language: "js",
+            resolver: astResolver,
+          },
+          {
+            name: "react",
+            label: "React",
+            language: "tsx",
+            resolver: reactHookFormResolver,
+          },
+        ]}
+      />
     </BuilderSidebar>
   );
 }

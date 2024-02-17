@@ -11,46 +11,36 @@ import {
   TabContent,
   TabList,
   TabTrigger,
+  classNames,
   useBoolean,
 } from "@rafty/ui";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
-import { useEffect, useMemo, useState } from "react";
+import { ReactNode, useEffect, useMemo, useState } from "react";
 import { CodeHighlighter } from "./Highlight";
 
 export type CodeGenerator = {
-  resolver?: (schema: Record<string, CanvasType | undefined>) => string;
+  resolvers?: {
+    name: string;
+    label: string;
+    icon?: ReactNode;
+    language?: string;
+    resolver: (schema: Record<string, CanvasType | undefined>) => string;
+  }[];
 };
 
-enum CodeTab {
-  AST = "ast",
-  RESOLVER = "resolver",
-}
-
-export function CodeGenerator({ resolver }: CodeGenerator) {
+export function CodeGenerator({ resolvers }: CodeGenerator) {
   const [, copyToClipboard] = useCopyToClipboard();
   const [copied, toggle] = useBoolean();
-  const [tabValue, setTabValue] = useState(CodeTab.AST);
+  const [tabValue, setTabValue] = useState(0);
 
   // Schema code
   const schema = useCanvas(({ schema }) => schema);
-  const [ast, code] = useMemo(
-    () => [
-      JSON.stringify(schema, null, 2),
-      resolver?.(schema) ?? "// No Resolver",
-    ],
-    [resolver, schema],
+  const computedResolvers = useMemo(
+    () =>
+      resolvers?.map((value) => ({ ...value, code: value.resolver(schema) })) ??
+      [],
+    [resolvers, schema],
   );
-
-  const codeContent: Record<CodeTab, { language: string; content: string }> = {
-    [CodeTab.AST]: {
-      language: "js",
-      content: ast,
-    },
-    [CodeTab.RESOLVER]: {
-      language: "tsx",
-      content: code,
-    },
-  };
 
   useEffect(() => {
     if (!copied) return;
@@ -65,7 +55,7 @@ export function CodeGenerator({ resolver }: CodeGenerator) {
   }, [copied, toggle]);
 
   const handleCopy = () => {
-    copyToClipboard(codeContent[tabValue].content);
+    copyToClipboard(computedResolvers[tabValue].code);
     toggle(true);
   };
 
@@ -94,23 +84,31 @@ export function CodeGenerator({ resolver }: CodeGenerator) {
       <Tab
         className="flex h-full w-full flex-col"
         size="sm"
-        value={tabValue}
-        onValueChange={(value) => setTabValue(value as CodeTab)}
+        value={String(tabValue)}
+        onValueChange={(value) => setTabValue(Number(value))}
       >
         <TabList>
-          {Object.entries(CodeTab).map(([key, value]) => (
-            <TabTrigger key={key} value={value} className="capitalize">
-              {value}
+          {computedResolvers.map(({ name, label, icon }, index) => (
+            <TabTrigger
+              key={name}
+              value={String(index)}
+              className={classNames(
+                icon && "flex items-center gap-1",
+                "group/code-tab-trigger",
+              )}
+            >
+              {icon}
+              {label}
             </TabTrigger>
           ))}
         </TabList>
-        {Object.entries(codeContent).map(([key, data]) => (
+        {computedResolvers.map(({ name, language = "js", code }, index) => (
           <TabContent
-            key={key}
-            value={key}
+            key={name}
+            value={String(index)}
             className="flex-1 overflow-hidden overflow-y-auto"
           >
-            <CodeHighlighter {...data} />
+            <CodeHighlighter language={language} content={code} />
           </TabContent>
         ))}
       </Tab>

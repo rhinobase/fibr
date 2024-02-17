@@ -1,6 +1,12 @@
 import { FloatingSidebar } from "@fibr/builder";
 import { useCanvas } from "@fibr/providers";
-import { CodeGenerator, InspectorPanel, Overview, Palette } from "@fibr/shared";
+import {
+  CodeGenerator,
+  InspectorPanel,
+  Overview,
+  Palette,
+  astResolver,
+} from "@fibr/shared";
 
 export function Sidebar() {
   const {
@@ -40,7 +46,16 @@ export function Sidebar() {
         }
       />
       <InspectorPanel />
-      <CodeGenerator />
+      <CodeGenerator
+        resolvers={[
+          {
+            name: "ast",
+            label: "Ast",
+            language: "js",
+            resolver: astResolver,
+          },
+        ]}
+      />
     </FloatingSidebar>
   );
 }
