@@ -55,7 +55,7 @@ export function PaletteCard({
         <Icon className="h-6 w-6 opacity-50" />
       </div>
       {!isOverlay && (
-        <p className="text-secondary-500 dark:text-secondary-400 text-2xs text-center capitalize ">
+        <p className="text-secondary-500 dark:text-secondary-400 text-2xs text-center capitalize">
           {matches ? highlightMatches(label, matches) : label}
         </p>
       )}
