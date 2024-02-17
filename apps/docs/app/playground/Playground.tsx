@@ -3,6 +3,7 @@
 import {
   formBlocks,
   formConfig,
+  pageBlocks,
   pageConfig,
   workflowBlocks,
   workflowConfig,
@@ -55,7 +56,7 @@ const PANELS: Record<Container, (props: PanelProps) => ReactNode> = {
         initialSchema={template}
         defaultActiveCanvas={key}
         defaultActiveBlock={key}
-        blocks={formBlocks} // As both have same options
+        blocks={pageBlocks}
         config={pageConfig}
       />
     );

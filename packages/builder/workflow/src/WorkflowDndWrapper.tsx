@@ -24,7 +24,7 @@ export function WorkflowDndWrapper(props: PropsWithChildren) {
             add<Omit<Node, "id">>(activeCanvas, {
               type: data.type,
               position,
-              data: data.presets,
+              ...data.presets,
             });
         }
       }}

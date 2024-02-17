@@ -18,6 +18,8 @@ import {
   applyEdgeChanges,
   applyNodeChanges,
   type NodeTypes,
+  useStoreApi,
+  NodeDragHandler,
 } from "reactflow";
 import "reactflow/dist/style.css";
 
@@ -29,7 +31,11 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
   animated: true,
 };
 
+const MIN_DISTANCE = 200;
+
 export function Diagram() {
+  const store = useStoreApi();
+
   const config = useBlocks((state) => state.config);
 
   const { nodes, edges, set } = useCanvas(({ block: { all, set } }) => ({
@@ -75,6 +81,103 @@ export function Diagram() {
     [config],
   );
 
+  const getClosestEdge = useCallback(
+    (node: Node) => {
+      const { nodeInternals } = store.getState();
+      const storeNodes = Array.from(nodeInternals.values());
+
+      const closestNode = storeNodes.reduce<{
+        distance: number;
+        node: Node | null;
+      }>(
+        (res, n) => {
+          if (n.id !== node.id && n.positionAbsolute && node.positionAbsolute) {
+            const dx = n.positionAbsolute.x - node.positionAbsolute.x;
+            const dy = n.positionAbsolute.y - node.positionAbsolute.y;
+            const d = Math.sqrt(dx * dx + dy * dy);
+
+            if (d < res.distance && d < MIN_DISTANCE) {
+              res.distance = d;
+              res.node = n;
+            }
+          }
+
+          return res;
+        },
+        {
+          distance: Number.MAX_VALUE,
+          node: null,
+        },
+      );
+
+      if (!closestNode.node) {
+        return null;
+      }
+
+      let closeNodeIsSource = false;
+
+      if (closestNode.node.positionAbsolute && node.positionAbsolute)
+        closeNodeIsSource =
+          closestNode.node.positionAbsolute.x < node.positionAbsolute.x;
+
+      return {
+        id: closeNodeIsSource
+          ? `${closestNode.node.id}-${node.id}`
+          : `${node.id}-${closestNode.node.id}`,
+        type: "default",
+        source: closeNodeIsSource ? closestNode.node.id : node.id,
+        target: closeNodeIsSource ? node.id : closestNode.node.id,
+        className: "",
+      };
+    },
+    [store],
+  );
+
+  const onNodeDrag: NodeDragHandler = useCallback(
+    (_, node) => {
+      const closeEdge = getClosestEdge(node);
+
+      set("edges", (es) => {
+        const nextEdges = es.filter((e) => e.className !== "temp");
+
+        if (
+          closeEdge &&
+          !nextEdges.find(
+            (ne) =>
+              ne.source === closeEdge.source && ne.target === closeEdge.target,
+          )
+        ) {
+          closeEdge.className = "temp";
+          nextEdges.push(closeEdge);
+        }
+        return nextEdges;
+      });
+    },
+    [getClosestEdge, set],
+  );
+
+  const onNodeDragStop: NodeDragHandler = useCallback(
+    (_, node) => {
+      const closeEdge = getClosestEdge(node);
+
+      set("edges", (es) => {
+        const nextEdges = es.filter((e) => e.className !== "temp");
+
+        if (
+          closeEdge &&
+          !nextEdges.find(
+            (ne) =>
+              ne.source === closeEdge.source && ne.target === closeEdge.target,
+          )
+        )
+          nextEdges.push(closeEdge);
+
+        return nextEdges;
+      });
+    },
+    [getClosestEdge, set],
+  );
+
   return (
     <div className="flex-1">
       <ReactFlow
@@ -83,6 +186,8 @@ export function Diagram() {
         nodesConnectable
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
+        onNodeDrag={onNodeDrag}
+        onNodeDragStop={onNodeDragStop}
         onConnect={onConnect}
         fitViewOptions={fitViewOptions}
         defaultEdgeOptions={defaultEdgeOptions}

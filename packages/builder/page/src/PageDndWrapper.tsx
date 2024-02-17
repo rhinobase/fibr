@@ -27,7 +27,7 @@ export function PageDndWrapper(props: PropsWithChildren) {
             add<Omit<Node, "id">>(activeCanvas, {
               type: data.type,
               position,
-              data: data.presets,
+              ...data.presets,
               // parentNode: "page",
               // extent: "parent",
             });

@@ -17,8 +17,8 @@ export function Sidebar() {
         isDisabled={canvasId == null}
         onBlockSelect={(props) => canvasId && addBlock(canvasId, props)}
       />
-      <CodeGenerator />
       <InspectorPanel />
+      <CodeGenerator />
     </FloatingSidebar>
   );
 }

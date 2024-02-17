@@ -39,8 +39,8 @@ export function Sidebar() {
           canvasId && moveBlock(canvasId, startBlockId, endblockId)
         }
       />
-      <CodeGenerator />
       <InspectorPanel />
+      <CodeGenerator />
     </BuilderSidebar>
   );
 }
