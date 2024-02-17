@@ -1,6 +1,14 @@
 "use client";
 import { type PropsWithChildren, useRef } from "react";
-import { Tab, TabList, TabTrigger, classNames } from "@rafty/ui";
+import {
+  Tab,
+  TabList,
+  TabTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  classNames,
+} from "@rafty/ui";
 import { Env, useBuilder } from "@fibr/providers";
 import { useDroppable } from "@dnd-kit/core";
 import {
@@ -42,7 +50,10 @@ export function FloatingSidebar({ children }: PropsWithChildren) {
         >
           <SidebarTray>{children}</SidebarTray>
         </Panel>
-        <ResizeHandle disabled={isDisabled} />
+        <ResizeHandle
+          disabled={isDisabled}
+          className="my-2 overflow-hidden rounded-r-full"
+        />
         <Panel order={2} defaultSize={80} />
       </PanelGroup>
     </div>
@@ -64,14 +75,9 @@ function SidebarTray({ children }: SidebarTray) {
     }),
   );
 
-  // TODO: need to implement this on provider level
-  // useEffect(() => {
-  //   setActive(null);
-  // }, []);
-
   return (
     <Tab
-      value={active !== null ? active : "None"}
+      value={isExpanded ? active ?? undefined : "None"}
       orientation="vertical"
       className={classNames(
         (active === null || !isExpanded) && "w-max",
@@ -79,31 +85,36 @@ function SidebarTray({ children }: SidebarTray) {
       )}
       ref={setNodeRef}
     >
-      <TabList className="h-max rounded-md bg-white p-1 drop-shadow-md data-[orientation=vertical]:gap-1 data-[orientation=vertical]:rounded-t-md data-[orientation=vertical]:border-r-0">
+      <TabList className="h-max rounded-md bg-white p-1 shadow-md data-[orientation=vertical]:gap-1 data-[orientation=vertical]:rounded-t-md data-[orientation=vertical]:border-r-0">
         {Object.entries(all).map(([name, { icon, label }]) => (
-          <TabTrigger
-            key={name}
-            value={name}
-            title={label?.toString()}
-            onClick={(event) => {
-              event.preventDefault();
-              event.stopPropagation();
+          <Tooltip key={name}>
+            <TooltipTrigger asChild>
+              <div className="focus:ring-1">
+                <TabTrigger
+                  value={name}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
 
-              if (active === name) {
-                setActive(null);
-                toggle(false);
-              } else {
-                setActive(name);
-                toggle(true);
-              }
-            }}
-            className="hover:text-secondary-700 data-[state=active]:bg-primary-100 data-[state=active]:hover:bg-primary-100 rounded p-2 data-[orientation=vertical]:border-r-0"
-          >
-            {icon}
-          </TabTrigger>
+                    if (isExpanded && active === name) {
+                      setActive(null);
+                      toggle(false);
+                    } else {
+                      setActive(name);
+                      toggle(true);
+                    }
+                  }}
+                  className="hover:text-secondary-700 data-[state=active]:bg-primary-100 data-[state=active]:hover:bg-primary-100 rounded p-2 data-[orientation=vertical]:border-r-0"
+                >
+                  {icon}
+                </TabTrigger>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="right">{label}</TooltipContent>
+          </Tooltip>
         ))}
       </TabList>
-      <div className="h-full w-full overflow-hidden rounded-md bg-white drop-shadow-md">
+      <div className="h-full w-full overflow-hidden rounded-md bg-white shadow-md">
         {children}
       </div>
     </Tab>
