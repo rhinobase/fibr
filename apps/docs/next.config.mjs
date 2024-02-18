@@ -5,6 +5,7 @@ import { recmaPlugins } from "./mdx/recma.mjs";
 import { rehypePlugins } from "./mdx/rehype.mjs";
 import { remarkPlugins } from "./mdx/remark.mjs";
 import withSearch from "./mdx/search.mjs";
+import pk from "../../package.json" assert { type: "json" };
 
 const withMDX = nextMDX({
   options: {
@@ -28,6 +29,9 @@ const nextConfig = {
     // optimizePackageImports: ["@rafty/ui"],
   },
   reactStrictMode: false,
+  env: {
+    NEXT_PUBLIC_VERSION: pk.version,
+  },
 };
 
 const plugins = [withSearch, withMDX, withNx];
