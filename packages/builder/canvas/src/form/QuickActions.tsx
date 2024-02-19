@@ -126,26 +126,25 @@ enum Direction {
 
 function QuickActionButtons() {
   const { id, parentNode } = useThread<BaseBlockWithIdType>();
-  const { all, move, remove, duplicate, select, findIndex } = useCanvas(
-    ({ all, move, remove, duplicate, select, findIndex }) => ({
+  const { all, move, remove, duplicate, select } = useCanvas(
+    ({ all, move, remove, duplicate, select }) => ({
       all,
       move,
       remove,
       duplicate,
       select,
-      findIndex,
     }),
   );
 
   const filters: BlockFilters = { parentNode };
-  const components = all(filters);
-  const index = findIndex(id, filters);
+  const blocks = all(filters);
+  const index = blocks.findIndex((block) => block.id === id);
 
   if (index === -1) return;
 
-  const moveComponent = (direction: Direction) => {
+  const onMove = (direction: Direction) => {
     select(id);
-    move(id, components[index + direction].id);
+    move(id, blocks[index + direction].id);
   };
 
   return (
@@ -154,14 +153,14 @@ function QuickActionButtons() {
         <ActionButton
           name="Move up"
           icon={MdOutlineArrowUpward}
-          action={() => moveComponent(Direction.UP)}
+          action={() => onMove(Direction.UP)}
         />
       )}
-      {index < components.length - 1 && (
+      {index < blocks.length - 1 && (
         <ActionButton
           name="Move down"
           icon={MdOutlineArrowDownward}
-          action={() => moveComponent(Direction.DOWN)}
+          action={() => onMove(Direction.DOWN)}
         />
       )}
       <ActionButton

@@ -71,7 +71,6 @@ export type CanvasStore<
   updateId: (blockId: string, newId: string) => void;
   remove: (blockIds: string) => void;
   move: (from: string, to: string) => void;
-  findIndex: (blockId: string, filters?: BlockFilters) => number;
   select: (blockId: string | null) => void;
   duplicate: (blockId: string) => void;
 };
@@ -189,12 +188,9 @@ export const createCanvasStore = <
           // Deleting the block
           delete state.schema[blockId];
 
-          // Finding if the block exist in the active list
-          const blockIndex = state.active.findIndex(
-            (value) => value === blockId,
-          );
           // Removing the block from the active blocks list
-          if (blockIndex !== -1) state.active.splice(blockIndex, 1);
+          if (state.active.includes(blockId))
+            state.active.filter((value) => value !== blockId);
 
           // Firing the event
           emitter(EditorEvent.BLOCK_DELETION, { blockId });
@@ -211,11 +207,6 @@ export const createCanvasStore = <
 
           emitter(EditorEvent.BLOCK_REPOSITION, { from, to });
         }),
-      findIndex: (blockId, filters) => {
-        return get()
-          .all(filters)
-          .findIndex(({ id }) => id === blockId);
-      },
       select: (blockId) =>
         set((state) => {
           if (blockId) {
