@@ -41,7 +41,7 @@ export function OverviewCard({ id, type, groups }: OverviewCard) {
     isDragging,
     attributes,
     listeners,
-  } = useSortable({ id });
+  } = useSortable({ id, data: { type } });
 
   const nodeStyle: CSSProperties = {
     transform: CSS.Transform.toString(transform),

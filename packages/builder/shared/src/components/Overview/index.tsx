@@ -1,9 +1,10 @@
 import { SidebarItem } from "@fibr/builder";
+import { useCanvas, type BlockWithIdType } from "@fibr/providers";
 import { ListBulletIcon } from "@heroicons/react/24/outline";
 import { DEFAULT_GROUP, DndWrapper, Empty, groupByParentNode } from "../utils";
 import { AddFormDialog } from "./AddFormDialog";
 import { OverviewCard } from "./OverviewCard";
-import { useCanvas, type BlockWithIdType } from "@fibr/providers";
+import { OverviewOverlay } from "./OverviewOverlay";
 
 export type Overview = {
   blocks: BlockWithIdType[];
@@ -52,6 +53,7 @@ function FieldsRender({ blocks }: Overview) {
       {groups[DEFAULT_GROUP]?.map(({ id, type }) => (
         <OverviewCard key={id} id={id} type={type} groups={groups} />
       ))}
+      <OverviewOverlay />
     </DndWrapper>
   );
 }

@@ -1,12 +1,7 @@
 import { BlockType, BlockWithIdType, Env, useBuilder } from "@fibr/providers";
 import { useCanvas } from "@fibr/providers";
 import { Loom, WeaverProvider } from "@fibr/react";
-import {
-  DEFAULT_GROUP,
-  DndWrapper,
-  Portal,
-  groupByParentNode,
-} from "@fibr/shared";
+import { DEFAULT_GROUP, DndWrapper, groupByParentNode } from "@fibr/shared";
 import { type PropsWithChildren, type ReactNode } from "react";
 import { FieldPadding } from "./FieldPadding";
 import { FieldWrapper } from "./FieldWrapper";
@@ -53,9 +48,7 @@ export function FormDisplay() {
         {Object.entries(blueprint).map(([id, canvas]) => (
           <Loom key={id} id={id} blueprint={canvas} />
         ))}
-        <Portal>
-          <FieldOverlay />
-        </Portal>
+        <FieldOverlay />
       </DndWrapper>
     </WeaverProvider>
   );
