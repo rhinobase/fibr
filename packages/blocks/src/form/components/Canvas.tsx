@@ -17,7 +17,7 @@ export type Canvas = {
 export function Canvas() {
   // Getting component config
   const config = useThread<Canvas>();
-  const { blocks, onSubmit, onError, id, type } = config;
+  const { blocks, onSubmit, onError } = config;
 
   // Adding provider for forms
   const methods = useForm();

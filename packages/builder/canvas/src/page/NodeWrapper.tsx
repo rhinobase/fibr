@@ -17,7 +17,7 @@ export function NodeWrapper(props: PropsWithChildren) {
 
   return (
     <div
-      className="h-full w-full bg-white"
+      className="h-full w-full bg-white p-2"
       onClick={onSelect}
       onKeyDown={onSelect}
     >

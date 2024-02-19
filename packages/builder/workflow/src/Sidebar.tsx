@@ -9,29 +9,17 @@ import {
 } from "@fibr/shared";
 
 export function Sidebar() {
-  const { all, add, active, select, remove, move } = useCanvas(
-    ({ add, all, select, remove, move, active }) => ({
-      active,
-      add,
-      all,
-      select,
-      remove,
-      move,
-    }),
-  );
+  const { add, all } = useCanvas(({ add, all }) => ({
+    add,
+    all,
+  }));
 
   const blocks = all({ parentNode: "nodes" });
 
   return (
     <FloatingSidebar>
       <Palette enableDragging onSelect={(value) => add(value)} />
-      <Overview
-        blocks={blocks}
-        active={active}
-        onSelect={select}
-        onDelete={remove}
-        onMove={move}
-      />
+      <Overview blocks={blocks} />
       <InspectorPanel />
       <CodeGenerator
         resolvers={[

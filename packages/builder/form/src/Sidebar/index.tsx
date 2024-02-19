@@ -1,9 +1,5 @@
 import { Sidebar as BuilderSidebar } from "@fibr/builder";
-import {
-  type BaseBlockWithIdType,
-  useCanvas,
-  type BaseBlockType,
-} from "@fibr/providers";
+import { useCanvas, type BaseBlockWithIdType } from "@fibr/providers";
 import {
   CodeGenerator,
   DEFAULT_GROUP,
@@ -16,16 +12,11 @@ import {
 import { reactHookFormResolver } from "./resolver";
 
 export function Sidebar() {
-  const { add, all, active, select, remove, move } = useCanvas(
-    ({ add, all, select, remove, move, active }) => ({
-      active,
-      add,
-      all,
-      select,
-      remove,
-      move,
-    }),
-  );
+  const { add, all, active } = useCanvas(({ add, all, active }) => ({
+    active,
+    add,
+    all,
+  }));
 
   const blocks = all();
 
@@ -37,13 +28,7 @@ export function Sidebar() {
           add({ ...value, parentNode });
         }}
       />
-      <Overview
-        blocks={blocks}
-        active={active}
-        onSelect={select}
-        onDelete={remove}
-        onMove={move}
-      />
+      <Overview blocks={blocks} />
       <InspectorPanel />
       <CodeGenerator
         resolvers={[
