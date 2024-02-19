@@ -72,7 +72,7 @@ export function WorkflowControls({
       position={position}
       aria-label={ariaLabel}
       className={classNames(
-        "flex gap-0.5 rounded-md bg-white p-1 drop-shadow-md",
+        "flex gap-0.5 rounded-md bg-white p-1 shadow-md",
         className,
       )}
     >

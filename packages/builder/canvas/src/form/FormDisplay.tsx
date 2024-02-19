@@ -45,9 +45,11 @@ export function FormDisplay() {
             move(String(active.id), String(over.id));
         }}
       >
-        {Object.entries(blueprint).map(([id, canvas]) => (
-          <Loom key={id} id={id} blueprint={canvas} />
-        ))}
+        <div className="space-y-2">
+          {Object.entries(blueprint).map(([id, canvas]) => (
+            <Loom key={id} id={id} blueprint={canvas} />
+          ))}
+        </div>
         <FieldOverlay />
       </DndWrapper>
     </WeaverProvider>

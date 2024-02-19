@@ -55,7 +55,7 @@ export function SidebarItem({
         <hr />
       </div>
       <div className="h-full overflow-y-auto">
-        <div className="flex h-full flex-col gap-3 px-3 pb-3">{children}</div>
+        <div className="flex h-full flex-col px-3 pb-3">{children}</div>
       </div>
     </TabContent>
   );
