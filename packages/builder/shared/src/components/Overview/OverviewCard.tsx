@@ -9,9 +9,11 @@ import {
   AccordionTrigger,
   Button,
   Text,
+  buttonClasses,
   classNames,
 } from "@rafty/ui";
-import { CSSProperties } from "react";
+import { type CSSProperties, useState } from "react";
+import { HiChevronRight } from "react-icons/hi";
 import { MdDelete, MdDragIndicator } from "react-icons/md";
 
 export type OverviewCard = {
@@ -21,6 +23,7 @@ export type OverviewCard = {
 };
 
 export function OverviewCard({ id, type, groups }: OverviewCard) {
+  const [accordionValue, setAccordionValue] = useState<string | undefined>();
   const { active, select, remove } = useCanvas(
     ({ select, remove, active }) => ({
       active,
@@ -49,60 +52,71 @@ export function OverviewCard({ id, type, groups }: OverviewCard) {
 
   const handleNodeDelete = eventHandler(() => remove(id));
 
+  const handleToggleCollapse = eventHandler(() =>
+    setAccordionValue((prev) => (prev === id ? undefined : id)),
+  );
+
   if (hasChildren)
     return (
-      <Accordion type="multiple">
+      <Accordion
+        type="single"
+        value={accordionValue}
+        onValueChange={setAccordionValue}
+      >
         <AccordionItem value={id}>
-          <AccordionTrigger>
-            <div
-              ref={setNodeRef}
-              style={nodeStyle}
+          <AccordionTrigger
+            className={classNames(
+              "dark:bg-secondary-900 border bg-transparent bg-white p-2 transition-none dark:bg-transparent",
+              active.includes(id)
+                ? "border-primary-500"
+                : "border-secondary-300 dark:border-secondary-700",
+            )}
+            showIcon={false}
+            style={nodeStyle}
+            ref={setNodeRef}
+            onClick={handleNodeSelect}
+            onKeyDown={handleNodeSelect}
+          >
+            <span
+              {...attributes}
+              {...listeners}
               className={classNames(
-                "dark:bg-secondary-900 flex cursor-pointer select-none items-center gap-1 rounded border bg-white p-2 drop-shadow hover:drop-shadow-md",
-                !isDragging && "transition-shadow",
-                active.includes(id)
-                  ? "border-primary-500"
-                  : "border-secondary-300 dark:border-secondary-700",
+                buttonClasses({ size: "icon", variant: "ghost" }),
+                "rounded px-0.5 py-1",
+                isDragging ? "cursor-grabbing" : "cursor-grab",
               )}
-              onClick={handleNodeSelect}
-              onKeyDown={handleNodeSelect}
             >
-              {/*Drag Handler Button */}
-              <Button
-                {...attributes}
-                {...listeners}
-                variant="ghost"
-                size="icon"
-                className={classNames(
-                  "rounded px-0.5 py-1",
-                  isDragging ? "cursor-grabbing" : "cursor-grab",
-                )}
-              >
-                <MdDragIndicator className="text-black" />
-              </Button>
-              <span className="text-2xs flex gap-1 truncate font-medium">
-                {id}
-                <Text isMuted className="italic">
-                  ({type})
-                </Text>
-              </span>
-              <div className="flex-1" />
-              {/* Delete Button */}
-              <Button
-                type="button"
-                size="icon"
-                variant="ghost"
-                className="rounded p-0.5"
-                onClick={handleNodeDelete}
-                onKeyDown={handleNodeDelete}
-              >
-                <MdDelete />
-              </Button>
-            </div>
+              <MdDragIndicator className="text-black" />
+            </span>
+            <span
+              className={classNames(
+                buttonClasses({ size: "icon", variant: "ghost" }),
+                "rounded px-0.5 py-1",
+              )}
+              onClick={handleToggleCollapse}
+              onKeyDown={handleToggleCollapse}
+            >
+              <HiChevronRight className="text-secondary-500 transition-transform group-data-[state=open]:rotate-90" />
+            </span>
+            <Text className="text-2xs flex gap-1 truncate px-1 font-medium">
+              {id}
+              <span className="italic">({type})</span>
+            </Text>
+            <div className="flex-1" />
+            <span
+              className={classNames(
+                buttonClasses({ size: "icon", variant: "ghost" }),
+                "rounded p-0.5",
+              )}
+              onClick={handleNodeDelete}
+              onKeyDown={handleNodeDelete}
+            >
+              <MdDelete />
+            </span>
           </AccordionTrigger>
-          <AccordionContent>
+          <AccordionContent className="px-0 pl-4">
             {groups?.[id]?.map((groupProps) => (
-              <OverviewCard {...groupProps} />
+              <OverviewCard key={groupProps.id} {...groupProps} />
             ))}
           </AccordionContent>
         </AccordionItem>
@@ -114,8 +128,7 @@ export function OverviewCard({ id, type, groups }: OverviewCard) {
       ref={setNodeRef}
       style={nodeStyle}
       className={classNames(
-        "dark:bg-secondary-900 flex cursor-pointer select-none items-center gap-1 rounded border bg-white p-2 drop-shadow hover:drop-shadow-md",
-        !isDragging && "transition-shadow",
+        "dark:bg-secondary-900 flex cursor-pointer select-none items-center gap-1 border bg-white p-2",
         active.includes(id)
           ? "border-primary-500"
           : "border-secondary-300 dark:border-secondary-700",
