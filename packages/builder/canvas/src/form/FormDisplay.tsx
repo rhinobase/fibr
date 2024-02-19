@@ -11,6 +11,7 @@ import { type PropsWithChildren, type ReactNode } from "react";
 import { FieldPadding } from "./FieldPadding";
 import { FieldWrapper } from "./FieldWrapper";
 import { FieldOverlay } from "./FieldOverlay";
+import { Text } from "@rafty/ui";
 
 const BLOCK_WRAPPERS: Record<Env, (props: PropsWithChildren) => ReactNode> = {
   [Env.DEVELOPMENT]: FieldWrapper,
@@ -29,6 +30,15 @@ export function FormDisplay() {
   const allBlocks = all();
   const groups = groupByParentNode(allBlocks);
   const blueprint = createBlueprint(DEFAULT_GROUP, groups);
+
+  if (!groups[DEFAULT_GROUP])
+    return (
+      <div className="m-2 rounded-lg border-2 border-dashed p-6 text-center">
+        <Text isMuted className="select-none font-medium">
+          No Active Canvas
+        </Text>
+      </div>
+    );
 
   return (
     <WeaverProvider wrapper={BLOCK_WRAPPERS[currentEnv]}>

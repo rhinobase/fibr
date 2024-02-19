@@ -10,15 +10,17 @@ import {
   type InputWrapperProps,
 } from "../../utils";
 
-export type PasswordInput = Omit<
-  FieldWrapperProps<
-    InputWrapperProps<{
-      placeholder?: string;
-      defaultValue?: string;
-    }>
-  >,
-  "suffixIcon" | "suffixText"
->;
+export type PasswordInput = {
+  data: Omit<
+    FieldWrapperProps<
+      InputWrapperProps<{
+        placeholder?: string;
+        defaultValue?: string;
+      }>
+    >,
+    "suffixIcon" | "suffixText"
+  >;
+};
 
 export function PasswordInput() {
   const [showPassword, toggle] = useBoolean(false);
@@ -27,17 +29,19 @@ export function PasswordInput() {
 
   const {
     id,
-    defaultValue,
-    placeholder,
-    description,
-    disabled,
-    hidden,
-    label,
-    required,
-    tooltip,
-    prefixIcon,
-    prefixText,
-    size,
+    data: {
+      defaultValue,
+      placeholder,
+      description,
+      disabled,
+      hidden,
+      label,
+      required,
+      tooltip,
+      prefixIcon,
+      prefixText,
+      size,
+    },
   } = useThread<PasswordInput>();
 
   const { register } = useFormContext();

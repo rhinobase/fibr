@@ -17,6 +17,7 @@ import {
   StringInputSettings,
   TextareaSettings,
 } from "./settings";
+import type { FieldWrapperProps, InputWrapperProps } from "../utils";
 
 export const formConfig: Record<
   string,
@@ -44,15 +45,16 @@ export const formConfig: Record<
   },
 };
 
-export const formBlocks: Record<string, Block[]> = {
+export type FieldType = Partial<InputWrapperProps & FieldWrapperProps>;
+
+export const formBlocks: Record<string, Block<{ data: FieldType }>[]> = {
   "Text Inputs": [
     {
       type: "string",
       label: "Text Input",
       icon: LuTextCursorInput,
       presets: {
-        label: "Label",
-        description: "Description",
+        data: { label: "Label", description: "Description" },
       },
     },
     {
@@ -60,10 +62,12 @@ export const formBlocks: Record<string, Block[]> = {
       label: "Email",
       icon: MdOutlineMailOutline,
       presets: {
-        inputType: "email",
-        label: "Label",
-        description: "Description",
-        prefixIcon: "envelope",
+        data: {
+          inputType: "email",
+          label: "Label",
+          description: "Description",
+          prefixIcon: "envelope",
+        },
       },
     },
     {
@@ -71,9 +75,7 @@ export const formBlocks: Record<string, Block[]> = {
       label: "url",
       icon: MdLink,
       presets: {
-        inputType: "url",
-        label: "Label",
-        description: "Description",
+        data: { inputType: "url", label: "Label", description: "Description" },
       },
     },
     {
@@ -81,8 +83,7 @@ export const formBlocks: Record<string, Block[]> = {
       label: "password",
       icon: MdOutlineKey,
       presets: {
-        label: "Label",
-        description: "Description",
+        data: { label: "Label", description: "Description" },
       },
     },
     {
@@ -90,8 +91,7 @@ export const formBlocks: Record<string, Block[]> = {
       label: "Textarea",
       icon: BsTextareaT,
       presets: {
-        label: "Label",
-        description: "Description",
+        data: { label: "Label", description: "Description" },
       },
     },
   ],
@@ -101,9 +101,11 @@ export const formBlocks: Record<string, Block[]> = {
       label: "Number Input",
       icon: LuTextCursorInput,
       presets: {
-        inputType: "number",
-        label: "Label",
-        description: "Description",
+        data: {
+          inputType: "number",
+          label: "Label",
+          description: "Description",
+        },
       },
     },
   ],

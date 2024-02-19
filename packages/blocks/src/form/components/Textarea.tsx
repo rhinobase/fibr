@@ -3,22 +3,26 @@ import { Textarea as TextareaField } from "@rafty/ui";
 import { useFormContext } from "react-hook-form";
 import { FieldWrapper, type FieldWrapperProps } from "../../utils";
 
-export type Textarea = FieldWrapperProps<{
-  placeholder?: string;
-  defaultValue?: string;
-}>;
+export type Textarea = {
+  data: FieldWrapperProps<{
+    placeholder?: string;
+    defaultValue?: string;
+  }>;
+};
 
 export function Textarea() {
   const {
     id,
-    defaultValue,
-    placeholder,
-    description,
-    disabled,
-    hidden,
-    label,
-    required,
-    tooltip,
+    data: {
+      defaultValue,
+      placeholder,
+      description,
+      disabled,
+      hidden,
+      label,
+      required,
+      tooltip,
+    },
   } = useThread<Textarea>();
 
   const { register } = useFormContext();

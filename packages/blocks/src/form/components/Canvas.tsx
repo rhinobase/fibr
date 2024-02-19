@@ -11,17 +11,16 @@ export type Canvas = {
   onSubmit?: SubmitHandler<FieldValues>;
   onError?: SubmitErrorHandler<FieldValues>;
 } & {
-  title: string;
   blocks?: Record<string, ThreadType>;
-}; // & UseFormProps<FieldValues, unknown>;
+};
 
 export function Canvas() {
   // Getting component config
   const config = useThread<Canvas>();
-  const { blocks, onSubmit, onError, id, type, title, ...props } = config;
+  const { blocks, onSubmit, onError, id, type } = config;
 
   // Adding provider for forms
-  const methods = useForm(props);
+  const methods = useForm();
 
   return (
     <FormProvider {...methods}>

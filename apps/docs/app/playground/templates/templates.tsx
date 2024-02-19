@@ -1,5 +1,6 @@
 "use client";
-import { type BaseBlockType } from "@fibr/providers";
+import type { FieldType } from "@fibr/blocks";
+import type { BaseBlockType } from "@fibr/providers";
 import type { IconType } from "react-icons";
 import { FiArrowRight } from "react-icons/fi";
 import { GoProjectTemplate } from "react-icons/go";
@@ -11,7 +12,7 @@ export const TEMPLATES: Record<
     id: string;
     name: string;
     icon: IconType;
-    template: Record<string, BaseBlockType>;
+    template: Record<string, BaseBlockType<FieldType>>;
   }[]
 > = {
   [Container.FORM]: [
@@ -26,28 +27,30 @@ export const TEMPLATES: Record<
         },
         name: {
           type: "string",
-          label: "Name",
-          description: "Enter your full name",
+          data: { label: "Name", description: "Enter your full name" },
           parentNode: "canvas",
         },
         email: {
           type: "string",
-          inputType: "email",
-          label: "Email",
-          description: "Enter email id so we can respond to your query",
-          prefixIcon: "envelope",
+          data: {
+            inputType: "email",
+            label: "Email",
+            description: "Enter email id so we can respond to your query",
+            prefixIcon: "envelope",
+          },
           parentNode: "canvas",
         },
         phone: {
           type: "number",
-          label: "Phone Number",
-          description: "Enter your 10 digit mobile number",
+          data: {
+            label: "Phone Number",
+            description: "Enter your 10 digit mobile number",
+          },
           parentNode: "canvas",
         },
         message: {
           type: "textarea",
-          label: "Message",
-          description: "Enter your message here",
+          data: { label: "Message", description: "Enter your message here" },
           parentNode: "canvas",
         },
       },
@@ -63,18 +66,22 @@ export const TEMPLATES: Record<
         },
         email: {
           type: "string",
-          inputType: "email",
-          label: "Email",
-          description: "Enter your email id",
-          required: true,
-          prefixIcon: "envelope",
+          data: {
+            inputType: "email",
+            label: "Email",
+            description: "Enter your email id",
+            required: true,
+            prefixIcon: "envelope",
+          },
           parentNode: "canvas",
         },
         password: {
           type: "password",
-          label: "Password",
-          description: "Enter password",
-          required: true,
+          data: {
+            label: "Password",
+            description: "Enter password",
+            required: true,
+          },
           parentNode: "canvas",
         },
       },
@@ -90,28 +97,27 @@ export const TEMPLATES: Record<
         },
         name: {
           type: "string",
-          label: "Name",
-          required: true,
+          data: { label: "Name", required: true },
           parentNode: "canvas",
         },
         email: {
           type: "string",
-          inputType: "email",
-          label: "Email",
-          required: true,
-          prefixIcon: "envelope",
+          data: {
+            inputType: "email",
+            label: "Email",
+            required: true,
+            prefixIcon: "envelope",
+          },
           parentNode: "canvas",
         },
         password: {
           type: "password",
-          label: "Create a Password",
-          required: true,
+          data: { label: "Create a Password", required: true },
           parentNode: "canvas",
         },
         confirm_password: {
           type: "password",
-          label: "Confirm Password",
-          required: true,
+          data: { label: "Confirm Password", required: true },
           parentNode: "canvas",
         },
       },

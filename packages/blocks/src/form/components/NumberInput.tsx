@@ -8,29 +8,33 @@ import {
   type InputWrapperProps,
 } from "../../utils";
 
-export type NumberInput = FieldWrapperProps<
-  InputWrapperProps<{
-    placeholder?: string;
-    defaultValue?: string;
-  }>
->;
+export type NumberInput = {
+  data: FieldWrapperProps<
+    InputWrapperProps<{
+      placeholder?: string;
+      defaultValue?: string;
+    }>
+  >;
+};
 
 export function NumberInput() {
   const {
     id,
-    defaultValue,
-    placeholder,
-    description,
-    disabled,
-    hidden,
-    label,
-    required,
-    tooltip,
-    size,
-    prefixIcon,
-    prefixText,
-    suffixIcon,
-    suffixText,
+    data: {
+      defaultValue,
+      placeholder,
+      description,
+      disabled,
+      hidden,
+      label,
+      required,
+      tooltip,
+      size,
+      prefixIcon,
+      prefixText,
+      suffixIcon,
+      suffixText,
+    },
   } = useThread<NumberInput>();
 
   const { register } = useFormContext();

@@ -17,7 +17,7 @@ import { Block } from "@fibr/shared";
 import { BsTextareaT } from "react-icons/bs";
 import { LuTextCursorInput } from "react-icons/lu";
 import { MdOutlineMailOutline, MdLink, MdOutlineKey } from "react-icons/md";
-import { Node } from "reactflow";
+import type { Node } from "reactflow";
 
 export const pageConfig: Record<
   string,
