@@ -1,8 +1,15 @@
 "use client";
-import { createContext, useContext, type PropsWithChildren } from "react";
+import {
+  createContext,
+  useContext,
+  type PropsWithChildren,
+  useEffect,
+} from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useBuilder } from "../builder";
-import { Env } from "../utils";
+import { EditorEvent, Env } from "../utils";
+import { useStack } from "./useStack";
+import { useEventBus } from "../events";
 
 const ShortcutsContext = createContext<ReturnType<
   typeof useShortcutsManager
@@ -39,6 +46,14 @@ function useShortcutsManager() {
   //     active,
   //   }),
   // );
+
+  // Undo & Redo
+  const stack = useStack(console.log);
+  const add = useEventBus((state) => state.add);
+
+  useEffect(() => {
+    add(EditorEvent.ALL, stack.pushAction);
+  }, []);
 
   useHotkeys(
     "mod+k",
@@ -120,11 +135,11 @@ function useShortcutsManager() {
     preventDefault: true,
   });
 
-  useHotkeys("mod+z", () => console.log("Undo"), {
+  useHotkeys("mod+z", stack.undo, {
     description: "Undo",
   });
 
-  useHotkeys("mod+y", () => console.log("Redo"), {
+  useHotkeys("mod+y", stack.redo, {
     description: "Redo",
   });
 

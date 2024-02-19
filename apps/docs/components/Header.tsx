@@ -80,9 +80,8 @@ export const Header = forwardRef<HTMLDivElement, Header>(function Header(
       <div className="flex items-center gap-5">
         <nav className="hidden md:block">
           <ul className="flex items-center gap-8">
-            <TopLevelNavItem href="/">API</TopLevelNavItem>
-            <TopLevelNavItem href="#">Documentation</TopLevelNavItem>
-            <TopLevelNavItem href="#">Support</TopLevelNavItem>
+            <TopLevelNavItem href="/">Documentation</TopLevelNavItem>
+            <TopLevelNavItem href="/playground">Playground</TopLevelNavItem>
           </ul>
         </nav>
         <div className="bg-secondary-900/10 hidden h-5 w-px md:block dark:bg-white/15" />

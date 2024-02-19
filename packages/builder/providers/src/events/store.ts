@@ -16,7 +16,7 @@ export type EditorEventBus = {
     type: T,
     func: EditorEventListener<EditorEventListenerProps[T]>,
   ) => void;
-  clear: (type: EditorEvent) => void;
+  clear: (type?: EditorEvent) => void;
   broadcast: <T extends EditorEvent>(
     type: T,
     context?: EditorEventListenerProps[T],
@@ -47,7 +47,9 @@ export const createEditorEventBus = ({
         return { events: { ...events, [type]: tmp } };
       }),
     clear: (type) =>
-      set(({ events }) => ({ events: { ...events, [type]: [] } })),
+      set(({ events }) =>
+        type ? { events: { ...events, [type]: [] } } : { events: {} },
+      ),
     broadcast: (type, context) => {
       const events = get().events[type] ?? ([] as EditorEventListener[]);
 
