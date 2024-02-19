@@ -211,7 +211,12 @@ export const createCanvasStore = <
         set((state) => {
           if (blockId) {
             // Is ctrl/cmd key is pressed
-            if (isHotkeyPressed("shift")) state.active.push(blockId);
+            if (isHotkeyPressed("shift"))
+              if (state.active.includes(blockId))
+                state.active = state.active.filter(
+                  (value) => value !== blockId,
+                );
+              else state.active.push(blockId);
             // Single select
             else state.active = [blockId];
           }
