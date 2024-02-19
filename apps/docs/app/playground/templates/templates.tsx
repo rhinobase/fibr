@@ -1,10 +1,12 @@
 "use client";
 import type { FieldType } from "@fibr/blocks";
-import type { BaseBlockType } from "@fibr/providers";
+import type { BlockType } from "@fibr/providers";
 import type { IconType } from "react-icons";
 import { FiArrowRight } from "react-icons/fi";
 import { GoProjectTemplate } from "react-icons/go";
 import { Container } from "./utils";
+
+export type TemplateType = Record<string, BlockType<FieldType>>;
 
 export const TEMPLATES: Record<
   Container,
@@ -12,7 +14,7 @@ export const TEMPLATES: Record<
     id: string;
     name: string;
     icon: IconType;
-    template: Record<string, BaseBlockType<FieldType>>;
+    template: TemplateType;
   }[]
 > = {
   [Container.FORM]: [

@@ -1,6 +1,6 @@
 import {
   useCanvas,
-  type BaseBlockWithIdType,
+  type BlockWithIdType,
   type BlockFilters,
 } from "@fibr/providers";
 import { useThread } from "@fibr/react";
@@ -125,7 +125,7 @@ enum Direction {
 }
 
 function QuickActionButtons() {
-  const { id, parentNode } = useThread<BaseBlockWithIdType>();
+  const { id, parentNode } = useThread<BlockWithIdType>();
   const { all, move, remove, duplicate, select } = useCanvas(
     ({ all, move, remove, duplicate, select }) => ({
       all,

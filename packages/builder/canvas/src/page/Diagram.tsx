@@ -1,5 +1,5 @@
 "use client";
-import { useCanvas, type BaseBlockWithIdType } from "@fibr/providers";
+import { useCanvas, type BlockWithIdType } from "@fibr/providers";
 import { Thread } from "@fibr/react";
 import { useBlocks } from "@fibr/shared";
 import { useCallback, useMemo } from "react";
@@ -36,8 +36,7 @@ export function Diagram() {
   const onNodesChange: OnNodesChange = useCallback(
     (changes) =>
       set(
-        (nds) =>
-          applyNodeChanges(changes, nds as Node[]) as BaseBlockWithIdType[],
+        (nds) => applyNodeChanges(changes, nds as Node[]) as BlockWithIdType[],
       ),
     [set],
   );

@@ -1,9 +1,9 @@
-import { type BaseBlockType } from "@fibr/providers";
+import { type BlockType } from "@fibr/providers";
 import { SharedWrapper } from "@fibr/shared";
 import { ReactFlowProvider } from "reactflow";
 import { Container } from "./Container";
 
-export function PageBuilder<T extends BaseBlockType>(props: SharedWrapper<T>) {
+export function PageBuilder<T extends BlockType>(props: SharedWrapper<T>) {
   return (
     <SharedWrapper {...props}>
       <ReactFlowProvider>

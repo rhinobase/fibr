@@ -1,6 +1,6 @@
 import { Container as BuilderContainer } from "@fibr/builder";
 import { FormBuilderCanvas } from "@fibr/canvas";
-import { type BaseBlockType, useCanvas } from "@fibr/providers";
+import { type BlockType, useCanvas } from "@fibr/providers";
 import { Settings } from "@fibr/shared";
 import { Sidebar } from "./Sidebar";
 
@@ -12,7 +12,7 @@ export function Container() {
   }));
 
   const blockId = active[0];
-  let block: BaseBlockType | undefined;
+  let block: BlockType | undefined;
 
   if (active.length === 1) {
     block = get(blockId);

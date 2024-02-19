@@ -1,9 +1,4 @@
-import {
-  BaseBlockType,
-  BaseBlockWithIdType,
-  Env,
-  useBuilder,
-} from "@fibr/providers";
+import { BlockType, BlockWithIdType, Env, useBuilder } from "@fibr/providers";
 import { useCanvas } from "@fibr/providers";
 import { Loom, WeaverProvider } from "@fibr/react";
 import { DEFAULT_GROUP, DndWrapper, groupByParentNode } from "@fibr/shared";
@@ -61,12 +56,12 @@ export function FormDisplay() {
 
 type Blueprint = Record<
   string,
-  BaseBlockType<{ label?: string }, { blocks?: Blueprint }>
+  BlockType<{ label?: string }, { blocks?: Blueprint }>
 >;
 
 function createBlueprint(
   key: string,
-  context: Record<string, BaseBlockWithIdType[] | undefined>,
+  context: Record<string, BlockWithIdType[] | undefined>,
 ) {
   const blueprint: Blueprint = {};
 

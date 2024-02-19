@@ -1,5 +1,4 @@
 "use client";
-import { type BaseBlockType } from "@fibr/providers";
 import { eventHandler } from "@rafty/shared";
 import {
   Button,
@@ -13,12 +12,12 @@ import { useEffect } from "react";
 import { FiArrowLeft } from "react-icons/fi";
 import { CustomTemplateForm } from "./CustomTemplateForm";
 import { Switch } from "./Switch";
-import { TEMPLATES } from "./templates";
+import { TEMPLATES, type TemplateType } from "./templates";
 
 export type TemplateDialog = {
   container: Switch["value"];
   onContainerChange: Switch["onValueChange"];
-  onSelect: (template: Record<string, BaseBlockType>) => void;
+  onSelect: (template: TemplateType) => void;
 };
 
 export function TemplateDialog({
@@ -33,7 +32,7 @@ export function TemplateDialog({
     toggle(true);
   }, [toggle]);
 
-  const handleSelect = (template: Record<string, BaseBlockType>) =>
+  const handleSelect = (template: TemplateType) =>
     eventHandler(() => {
       onSelect(template);
       toggle(false);

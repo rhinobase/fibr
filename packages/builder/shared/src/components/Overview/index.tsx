@@ -3,10 +3,10 @@ import { ListBulletIcon } from "@heroicons/react/24/outline";
 import { DEFAULT_GROUP, DndWrapper, Empty, groupByParentNode } from "../utils";
 import { AddFormDialog } from "./AddFormDialog";
 import { OverviewCard } from "./OverviewCard";
-import { useCanvas, type BaseBlockWithIdType } from "@fibr/providers";
+import { useCanvas, type BlockWithIdType } from "@fibr/providers";
 
 export type Overview = {
-  blocks: BaseBlockWithIdType[];
+  blocks: BlockWithIdType[];
 };
 
 export function Overview(props: Overview) {

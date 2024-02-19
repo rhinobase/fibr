@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
-import { type BaseBlockWithIdType, useCanvas } from "@fibr/providers";
+import { type BlockWithIdType, useCanvas } from "@fibr/providers";
 import { Thread } from "@fibr/react";
 import { useBlocks } from "@fibr/shared";
 import { useCallback, useMemo } from "react";
@@ -62,8 +62,7 @@ export function Diagram() {
   const onNodesChange: OnNodesChange = useCallback(
     (changes) =>
       set(
-        (nds) =>
-          applyNodeChanges(changes, nds as Node[]) as BaseBlockWithIdType[],
+        (nds) => applyNodeChanges(changes, nds as Node[]) as BlockWithIdType[],
       ),
     [set],
   );
@@ -72,7 +71,7 @@ export function Diagram() {
     (changes) =>
       set(
         (edgs) =>
-          applyEdgeChanges(changes, edgs as Edge[]) as BaseBlockWithIdType[],
+          applyEdgeChanges(changes, edgs as Edge[]) as BlockWithIdType[],
       ),
     [set],
   );
@@ -84,7 +83,7 @@ export function Diagram() {
           addEdge(
             { ...params, type: "edge" },
             eds as Edge[],
-          ) as BaseBlockWithIdType[],
+          ) as BlockWithIdType[],
       ),
     [set],
   );

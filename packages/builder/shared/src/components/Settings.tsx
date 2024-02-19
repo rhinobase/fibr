@@ -2,10 +2,10 @@ import { Settings as BuilderSettings } from "@fibr/builder";
 import { FibrProvider, Thread } from "@fibr/react";
 import { ReactNode, useMemo } from "react";
 import { useBlocks } from "../providers";
-import type { BaseBlockType, BaseBlockWithIdType } from "@fibr/providers";
+import type { BlockType, BlockWithIdType } from "@fibr/providers";
 
-export type Settings = BaseBlockWithIdType & {
-  _update: (values: Partial<BaseBlockType>) => void;
+export type Settings = BlockWithIdType & {
+  _update: (values: Partial<BlockType>) => void;
 };
 
 export function Settings(props: Settings) {

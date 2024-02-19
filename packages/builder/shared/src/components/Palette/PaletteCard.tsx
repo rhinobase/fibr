@@ -4,12 +4,12 @@ import type { Block } from "../../types";
 import { highlightMatches } from "../utils";
 import { useDraggable } from "@dnd-kit/core";
 import { classNames } from "@rafty/ui";
-import type { BaseBlockType } from "@fibr/providers";
+import type { BlockType } from "@fibr/providers";
 
 export type PaletteCard = Block & {
   isOverlay?: boolean;
   enableDragging?: boolean;
-  onSelect?: (props: BaseBlockType) => void;
+  onSelect?: (props: BlockType) => void;
   matches?: RangeTuple[];
 };
 

@@ -1,5 +1,4 @@
-import type { BaseBlockType } from "@fibr/providers";
+import type { BlockType } from "@fibr/providers";
 
-export const astResolver = (
-  schema: Record<string, BaseBlockType | undefined>,
-) => JSON.stringify(schema, null, 2);
+export const astResolver = (schema: Record<string, BlockType | undefined>) =>
+  JSON.stringify(schema, null, 2);

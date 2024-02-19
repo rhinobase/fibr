@@ -8,7 +8,7 @@ import { EditorEventBus } from "../events";
 import { isHotkeyPressed } from "react-hotkeys-hook";
 import { arrayMove } from "@dnd-kit/sortable";
 
-export type BaseBlockType<
+export type BlockType<
   T = undefined,
   U extends Record<string, unknown> = Record<string, unknown>,
 > = ThreadType<
@@ -21,10 +21,10 @@ export type BaseBlockType<
   } & U
 >;
 
-export type BaseBlockWithIdType<
+export type BlockWithIdType<
   T = undefined,
   U extends Record<string, unknown> = Record<string, unknown>,
-> = ThreadWithIdType<BaseBlockType<T, U>>;
+> = ThreadWithIdType<BlockType<T, U>>;
 
 export type CanvasStoreProps<
   T = undefined,
@@ -44,29 +44,29 @@ export type CanvasStore<
   T = undefined,
   U extends Record<string, unknown> = Record<string, unknown>,
 > = {
-  schema: Record<string, BaseBlockType | undefined>;
+  schema: Record<string, BlockType | undefined>;
   active: string[];
   // Generating unique keys for components
   _unique: Record<string, number>;
   uniqueId: (type: string) => string;
   // ---
-  all: (filters?: BlockFilters) => BaseBlockWithIdType<T, U>[];
-  get: (blockId: string) => BaseBlockType | undefined;
+  all: (filters?: BlockFilters) => BlockWithIdType<T, U>[];
+  get: (blockId: string) => BlockType | undefined;
   add: <
     T = undefined,
     U extends Record<string, unknown> = Record<string, unknown>,
   >(
-    block: BaseBlockType<T, U>,
+    block: BlockType<T, U>,
   ) => void;
   update: <
     T = undefined,
     U extends Record<string, unknown> = Record<string, unknown>,
   >(
     blockId: string,
-    values: Partial<BaseBlockType<T, U>>,
+    values: Partial<BlockType<T, U>>,
   ) => void;
   set: (
-    func: (values: BaseBlockWithIdType<T, U>[]) => BaseBlockWithIdType<T, U>[],
+    func: (values: BlockWithIdType<T, U>[]) => BlockWithIdType<T, U>[],
   ) => void;
   updateId: (blockId: string, newId: string) => void;
   remove: (blockIds: string) => void;
@@ -103,7 +103,7 @@ export const createCanvasStore = <
         return `${type}${id}`;
       },
       all: (filters) =>
-        Object.entries(get().schema).reduce<BaseBlockWithIdType<T, U>[]>(
+        Object.entries(get().schema).reduce<BlockWithIdType<T, U>[]>(
           (prev, [id, block]) => {
             if (!block) return prev;
 
@@ -113,7 +113,7 @@ export const createCanvasStore = <
             prev.push({
               id,
               ...block,
-            } as BaseBlockWithIdType<T, U>);
+            } as BlockWithIdType<T, U>);
 
             return prev;
           },
@@ -124,7 +124,7 @@ export const createCanvasStore = <
         const blockId = get().uniqueId(block.type);
 
         set((state) => {
-          state.schema[blockId] = block as Draft<BaseBlockType>;
+          state.schema[blockId] = block as Draft<BlockType>;
           state.active = [blockId];
         });
 
@@ -167,11 +167,11 @@ export const createCanvasStore = <
         set((state) => {
           const blocks = func(state.all());
 
-          state.schema = blocks.reduce<Record<string, Draft<BaseBlockType>>>(
+          state.schema = blocks.reduce<Record<string, Draft<BlockType>>>(
             (prev, cur) => {
               const { id, ...data } = cur;
 
-              prev[id] = data as Draft<BaseBlockType>;
+              prev[id] = data as Draft<BlockType>;
 
               return prev;
             },
@@ -233,7 +233,7 @@ export const createCanvasStore = <
   ) as UseBoundStore<StoreApi<CanvasStore<T, U>>>;
 };
 
-function revalidateCache(schema: Record<string, BaseBlockType | undefined>) {
+function revalidateCache(schema: Record<string, BlockType | undefined>) {
   return Object.values(schema).reduce<Record<string, number>>((prev, cur) => {
     if (!cur) return prev;
 

@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { BaseBlockWithIdType, useCanvas } from "@fibr/providers";
+import { BlockWithIdType, useCanvas } from "@fibr/providers";
 import { eventHandler } from "@rafty/shared";
 import {
   Accordion,
@@ -17,7 +17,7 @@ import { MdDelete, MdDragIndicator } from "react-icons/md";
 export type OverviewCard = {
   id: string;
   type: string;
-  groups?: Record<string, BaseBlockWithIdType[] | undefined>;
+  groups?: Record<string, BlockWithIdType[] | undefined>;
 };
 
 export function OverviewCard({ id, type, groups }: OverviewCard) {

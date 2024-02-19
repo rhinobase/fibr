@@ -1,11 +1,11 @@
-import type { BaseBlockType, BaseBlockWithIdType } from "@fibr/providers";
+import type { BlockType, BlockWithIdType } from "@fibr/providers";
 import type { ThreadType } from "@fibr/react";
 import { DEFAULT_GROUP, groupByParentNode } from "@fibr/shared";
 
 export function reactHookFormResolver(
-  schema: Record<string, BaseBlockType | undefined>,
+  schema: Record<string, BlockType | undefined>,
 ) {
-  const blocks = Object.entries(schema).reduce<BaseBlockWithIdType[]>(
+  const blocks = Object.entries(schema).reduce<BlockWithIdType[]>(
     (prev, [id, value]) => {
       if (value) prev.push({ id, ...value });
       return prev;

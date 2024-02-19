@@ -1,4 +1,4 @@
-import type { BaseBlockType } from "@fibr/providers";
+import type { BlockType } from "@fibr/providers";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, ErrorMessage, FieldControl, Textarea } from "@rafty/ui";
 import { BaseSyntheticEvent } from "react";
@@ -17,7 +17,7 @@ const schema = z.object({
 
 export type CustomTemplateForm = {
   onSubmit: (
-    template: Record<string, BaseBlockType>,
+    template: Record<string, BlockType>,
   ) => (event: BaseSyntheticEvent) => void;
 };
 

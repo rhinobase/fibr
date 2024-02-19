@@ -11,7 +11,7 @@ import {
 import { Footer, Header, PreviewButton, Workspace } from "@fibr/builder";
 import { FormBuilder } from "@fibr/form";
 import { PageBuilder } from "@fibr/page";
-import { type BaseBlockType, EditorEvent } from "@fibr/providers";
+import { type BlockType, EditorEvent } from "@fibr/providers";
 import { WorkflowBuilder } from "@fibr/workflow";
 import { Text } from "@rafty/ui";
 import Link from "next/link";
@@ -19,7 +19,7 @@ import { type ReactNode, useState } from "react";
 import { FaGithub, FaXTwitter } from "react-icons/fa6";
 import { Container, TemplateDialog } from "./templates";
 
-type PanelProps = { template: Record<string, BaseBlockType> };
+type PanelProps = { template: Record<string, BlockType> };
 
 const PANELS: Record<Container, (props: PanelProps) => ReactNode> = {
   [Container.FORM]: ({ template }) => (

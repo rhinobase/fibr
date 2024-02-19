@@ -1,5 +1,5 @@
 import { Sidebar as BuilderSidebar } from "@fibr/builder";
-import { useCanvas, type BaseBlockWithIdType } from "@fibr/providers";
+import { useCanvas, type BlockWithIdType } from "@fibr/providers";
 import {
   CodeGenerator,
   DEFAULT_GROUP,
@@ -50,7 +50,7 @@ export function Sidebar() {
   );
 }
 
-function findParent(active: string[], context: BaseBlockWithIdType[]) {
+function findParent(active: string[], context: BlockWithIdType[]) {
   const groups = groupByParentNode(context);
 
   if (active.length === 0) return groups[DEFAULT_GROUP]?.[0].id;
