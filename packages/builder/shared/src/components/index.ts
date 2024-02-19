@@ -6,6 +6,7 @@ export {
   WorkflowControls,
   groupByParentNode,
   DEFAULT_GROUP,
+  Portal,
 } from "./utils";
 export { Overview } from "./Overview";
 export { Palette } from "./Palette";

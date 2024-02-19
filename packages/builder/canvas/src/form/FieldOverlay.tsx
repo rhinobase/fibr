@@ -3,11 +3,11 @@ import { Thread, type ThreadType } from "@fibr/react";
 import { FormProvider, useForm } from "react-hook-form";
 
 export function FieldOverlay() {
-  const dummyForm = useForm();
+  const methods = useForm();
   const { active } = useDndContext();
 
   return (
-    <FormProvider {...dummyForm}>
+    <FormProvider {...methods}>
       <DragOverlay dropAnimation={null}>
         {active?.data && (
           <Thread
