@@ -8,9 +8,9 @@ const PANELS = ["page"];
 
 export function NodeWrapper(props: PropsWithChildren) {
   const { id, type } = useThread();
-  const { activeBlock, select } = useCanvas(({ block, active }) => ({
-    select: block.select,
-    activeBlock: active.block,
+  const { active, select } = useCanvas(({ select, active }) => ({
+    select,
+    active,
   }));
 
   const onSelect = eventHandler(() => select(id));
@@ -21,7 +21,9 @@ export function NodeWrapper(props: PropsWithChildren) {
       onClick={onSelect}
       onKeyDown={onSelect}
     >
-      {!PANELS.includes(type) && <NodeResizer isVisible={activeBlock === id} />}
+      {!PANELS.includes(type) && (
+        <NodeResizer isVisible={active.includes(id)} />
+      )}
       {props.children}
     </div>
   );

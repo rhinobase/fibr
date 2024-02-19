@@ -1,4 +1,5 @@
-import type { CanvasType } from "@fibr/providers";
+import type { BaseBlockType } from "@fibr/providers";
 
-export const astResolver = (schema: Record<string, CanvasType | undefined>) =>
-  JSON.stringify(schema, null, 2);
+export const astResolver = (
+  schema: Record<string, BaseBlockType | undefined>,
+) => JSON.stringify(schema, null, 2);

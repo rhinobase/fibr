@@ -1,6 +1,5 @@
 "use client";
-import { CanvasType } from "@fibr/providers";
-import { ThreadType } from "@fibr/react";
+import { type BaseBlockType } from "@fibr/providers";
 import { eventHandler } from "@rafty/shared";
 import {
   Button,
@@ -19,7 +18,7 @@ import { TEMPLATES } from "./templates";
 export type TemplateDialog = {
   container: Switch["value"];
   onContainerChange: Switch["onValueChange"];
-  onSelect: (template: Record<string, ThreadType<CanvasType>>) => void;
+  onSelect: (template: Record<string, BaseBlockType>) => void;
 };
 
 export function TemplateDialog({
@@ -34,7 +33,7 @@ export function TemplateDialog({
     toggle(true);
   }, [toggle]);
 
-  const handleSelect = (template: Record<string, ThreadType<CanvasType>>) =>
+  const handleSelect = (template: Record<string, BaseBlockType>) =>
     eventHandler(() => {
       onSelect(template);
       toggle(false);

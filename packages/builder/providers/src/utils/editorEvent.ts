@@ -1,11 +1,8 @@
 export enum EditorEvent {
   ALL = "all",
   BLOCK_ID_GENERATION = "block_id_generation",
-  // Canvas
-  CANVAS_SELECTION = "canvas_selection",
-  CANVAS_ADDITION = "canvas_addition",
-  CANVAS_DELETION = "canvas_deletion",
-  CANVAS_RESET = "canvas_reset",
+  // Schema
+  SCHEMA_RESET = "canvas_reset",
   // Blocks
   BLOCK_ADDITION = "block_addition",
   BLOCK_UPDATION = "block_updation",

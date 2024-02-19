@@ -1,402 +1,256 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import { arrayMove } from "@dnd-kit/sortable";
 import type { ThreadType, ThreadWithIdType } from "@fibr/react";
-import { type Draft } from "immer";
 import _ from "lodash";
 import { StoreApi, UseBoundStore, create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { enableMapSet } from "immer";
+import { type Draft } from "immer";
 import { EditorEvent } from "../utils";
 import { EditorEventBus } from "../events";
+import { isHotkeyPressed } from "react-hotkeys-hook";
+import { arrayMove } from "@dnd-kit/sortable";
 
-export type CanvasType<
-  T extends Record<string, unknown> = Record<string, unknown>,
+export type BaseBlockType<
+  T = undefined,
+  U extends Record<string, unknown> = Record<string, unknown>,
 > = ThreadType<
   {
-    blocks: Record<string, ThreadType | undefined>;
-  } & T
+    data?: T;
+    hidden?: boolean;
+    selected?: boolean;
+    selectable?: boolean;
+    parentNode?: string;
+  } & U
 >;
 
-export type CanvasStoreProps<T extends CanvasType> = {
-  canvasKey?: string;
-  initialSchema?: CanvasStore<T>["schema"];
-  defaultActiveCanvas?: string | null;
-  defaultActiveBlock?: string | null;
+export type BaseBlockWithIdType<
+  T = undefined,
+  U extends Record<string, unknown> = Record<string, unknown>,
+> = ThreadWithIdType<BaseBlockType<T, U>>;
+
+export type CanvasStoreProps<
+  T = undefined,
+  U extends Record<string, unknown> = Record<string, unknown>,
+> = {
+  initialSchema?: CanvasStore<T, U>["schema"];
+  defaultActiveBlocks?: string[];
   emitter?: EditorEventBus["broadcast"];
 };
 
-export type CanvasStore<T extends CanvasType = CanvasType> = {
-  schema: Record<string, T | undefined>;
-  active: {
-    canvas: string | null;
-    block: string | null;
-  };
-  // Generating unique keys for components
-  _unique: Record<string, Record<string, number>>;
-  uniqueId: <U>(
-    state: U,
-    type: string,
-    key?: string,
-  ) => {
-    id: string;
-    state: U;
-  };
-  // ---
-  canvas: {
-    select: (canvasId: string | null) => void;
-    get: (canvasId: string) => ThreadType<T> | null;
-    add: (title: string | ThreadType<T>) => void;
-    remove: (canvasId: string) => void;
-  };
-  block: {
-    all: (canvasId: string) => ThreadWithIdType[];
-    get: (canvasId: string, blockId: string) => ThreadType | undefined;
-    add: <T extends Record<string, unknown>>(
-      canvasId: string,
-      block: ThreadType<T>,
-    ) => void;
-    update: <T extends Record<string, unknown>>(
-      canvasId: string,
-      blockId: string,
-      values: Partial<ThreadType<T>>,
-    ) => void;
-    set: (
-      canvasId: string,
-      func: (values: ThreadWithIdType[]) => ThreadWithIdType[],
-    ) => void;
-    updateId: (canvasId: string, blockId: string, newId: string) => void;
-    remove: (canvasId: string, blockId: string) => void;
-    move: (canvasId: string, from: string, to: string) => void;
-    select: (blockId: string | null) => void;
-    findIndex: (canvasId: string, blockId: string) => number;
-    duplicate: (canvasId: string, blockId: string) => void;
-  };
+export type BlockFilters = {
+  parentNode?: string;
+  selected?: boolean;
 };
 
-enableMapSet();
-export const createCanvasStore = <T extends CanvasType>({
+export type CanvasStore<
+  T = undefined,
+  U extends Record<string, unknown> = Record<string, unknown>,
+> = {
+  schema: Record<string, BaseBlockType | undefined>;
+  active: string[];
+  // Generating unique keys for components
+  _unique: Record<string, number>;
+  uniqueId: (type: string) => string;
+  // ---
+  all: (filters?: BlockFilters) => BaseBlockWithIdType<T, U>[];
+  get: (blockId: string) => BaseBlockType | undefined;
+  add: <
+    T = undefined,
+    U extends Record<string, unknown> = Record<string, unknown>,
+  >(
+    block: BaseBlockType<T, U>,
+  ) => void;
+  update: <
+    T = undefined,
+    U extends Record<string, unknown> = Record<string, unknown>,
+  >(
+    blockId: string,
+    values: Partial<BaseBlockType<T, U>>,
+  ) => void;
+  set: (
+    func: (values: BaseBlockWithIdType<T, U>[]) => BaseBlockWithIdType<T, U>[],
+  ) => void;
+  updateId: (blockId: string, newId: string) => void;
+  remove: (blockIds: string) => void;
+  move: (from: string, to: string) => void;
+  findIndex: (blockId: string, filters?: BlockFilters) => number;
+  select: (blockId: string | null) => void;
+  duplicate: (blockId: string) => void;
+};
+
+export const createCanvasStore = <
+  T = undefined,
+  U extends Record<string, unknown> = Record<string, unknown>,
+>({
   emitter = () => undefined,
-  canvasKey = "canvas",
   initialSchema = {},
-  defaultActiveCanvas = null,
-  defaultActiveBlock = null,
-}: CanvasStoreProps<T>) => {
+  defaultActiveBlocks = [],
+}: CanvasStoreProps<T, U>) => {
   return create(
     immer<CanvasStore<T>>((set, get) => ({
       schema: initialSchema,
-      active: {
-        canvas: defaultActiveCanvas,
-        block: defaultActiveBlock,
-      },
-      // @ts-ignore
-      _unique: revalidateCache(initialSchema, canvasKey),
-      uniqueId: (state, type, key = canvasKey) => {
-        // Generating new id
+      active: defaultActiveBlocks,
+      _unique: revalidateCache(initialSchema),
+      uniqueId: (type) => {
         let id = 1;
 
-        // Getting cache or init a new one
-        // @ts-ignore
-        const context = state._unique[key] ?? {};
+        set((state) => {
+          let index = 1;
+          while (`${type}${id}` in state.schema) {
+            id = (state._unique[type] ?? 0) + index;
+            index += 1;
+          }
+          state._unique[type] = id;
+        });
 
-        // Starting from 1
-        id = (context[type] ?? 0) + 1;
-
-        // Updating the cache
-        context[type] = id;
-        // @ts-ignore
-        state._unique[key] = context;
-
-        const generatedId = `${type}${id}`;
-
-        emitter(EditorEvent.BLOCK_ID_GENERATION, { state, type, key });
-
-        // Returning the new value
-        return { id: generatedId, state };
+        return `${type}${id}`;
       },
-      canvas: {
-        select: (canvasId) =>
-          set((state) => {
-            state.active.canvas = canvasId;
-            state.active.block = canvasId;
+      all: (filters) =>
+        Object.entries(get().schema).reduce<BaseBlockWithIdType<T, U>[]>(
+          (prev, [id, block]) => {
+            if (!block) return prev;
 
-            emitter(EditorEvent.CANVAS_SELECTION, { canvasId });
-          }),
-        get: (canvasId) => {
-          const canvas = get().schema[canvasId];
-          if (canvas) return canvas;
-          return null;
-        },
-        add: (struct) =>
-          set((oldState) => {
-            const { id: canvasId, state } = oldState.uniqueId(
-              oldState,
-              canvasKey,
-            );
-            const block =
-              typeof struct === "string"
-                ? {
-                    type: canvasKey,
-                    title: struct,
-                    blocks: new Map(),
-                  }
-                : struct;
-
-            state.schema[canvasId] = block as Draft<ThreadType<T>>;
-            state.active.canvas = canvasId;
-            state.active.block = canvasId;
-            emitter(EditorEvent.CANVAS_ADDITION, { struct });
-          }),
-        remove: (canvasId) =>
-          set((state) => {
-            delete state.schema[canvasId];
-
-            if (state.active.canvas === canvasId) state.active.canvas = null;
-
-            if (state.active.block === canvasId) state.active.block = null;
-
-            emitter(EditorEvent.CANVAS_DELETION, { canvasId });
-          }),
-      },
-      block: {
-        all: (canvasId) => {
-          const canvas = get().schema[canvasId];
-
-          if (!canvas) return [];
-
-          return Object.entries(canvas.blocks).reduce<ThreadWithIdType[]>(
-            (prev, [id, block]) => {
-              if (!block) return prev;
-
-              prev.push({
-                id,
-                ...block,
-              });
-
+            if (filters?.parentNode && block.parentNode !== filters.parentNode)
               return prev;
-            },
-            [],
-          );
-        },
-        get: (canvasId, blockId) => {
-          const schema = get().schema;
-          let block: ThreadType | undefined;
 
-          if (schema[blockId]) block = schema[blockId];
-          else block = schema[canvasId]?.blocks[blockId];
+            prev.push({
+              id,
+              ...block,
+            } as BaseBlockWithIdType<T, U>);
 
-          return block;
-        },
-        add: (canvasId, block) =>
-          set((oldState) => {
-            const canvas = oldState.schema[canvasId];
+            return prev;
+          },
+          [],
+        ),
+      get: (blockId) => get().schema[blockId],
+      add: (block) => {
+        const blockId = get().uniqueId(block.type);
 
-            if (!canvas)
-              throw new Error(`Canvas with this ID ${canvasId} doesn't exist!`);
+        set((state) => {
+          state.schema[blockId] = block as Draft<BaseBlockType>;
+          state.active = [blockId];
+        });
 
-            const { id: blockId, state } = oldState.uniqueId(
-              oldState,
-              block.type,
-              canvasId,
-            );
+        emitter(EditorEvent.BLOCK_ADDITION, { block });
+      },
+      update: (blockId, values) =>
+        set((state) => {
+          // Updating the schema
+          state.schema[blockId] = _.merge(state.schema[blockId], values);
 
-            canvas.blocks[blockId] = block;
+          emitter(EditorEvent.BLOCK_UPDATION, {
+            blockId,
+            values,
+          });
+        }),
+      updateId: (blockId, newId) => {
+        set((state) => {
+          const block = state.schema[blockId];
+          if (block && !(newId in state.schema)) {
+            // Deleting the old block
+            delete state.schema[blockId];
+            // Adding the new block
+            state.schema[newId] = block;
 
-            state.schema[canvasId] = canvas;
-            state.active.block = blockId;
+            // Updating the active block
+            state.active = [newId];
 
-            emitter(EditorEvent.BLOCK_ADDITION, { canvasId, block });
-          }),
-        update: (canvasId, blockId, values) =>
-          set((state) => {
-            let canvas = state.schema[canvasId];
+            // Revalidating the cache
+            state._unique = revalidateCache(state.schema);
 
-            if (!canvas)
-              throw new Error(`Canvas with this ID ${canvasId} doesn't exist!`);
-
-            // Updating the canvas data
-            if (canvasId === blockId) canvas = _.merge(canvas, values);
-            // Storing the block with the other canvas blocks
-            else
-              canvas.blocks[blockId] = _.merge(canvas.blocks[blockId], values);
-
-            // Updating the canvas blocks
-            state.schema[canvasId] = canvas;
-
-            emitter(EditorEvent.BLOCK_UPDATION, {
-              canvasId,
-              blockId,
-              values,
-            });
-          }),
-        updateId: (canvasId, blockId, newId) =>
-          set((state) => {
-            const canvas = state.schema[canvasId];
-
-            if (!canvas)
-              throw new Error(`Canvas with this ID ${canvasId} doesn't exist!`);
-
-            if (canvasId === blockId && !state.schema[newId]) {
-              // Geting all the entries
-              const entries = Object.entries(state.schema);
-
-              // Updating the key
-              for (let index = 0; index < entries.length; index++) {
-                const [key] = entries[index];
-
-                if (key === blockId) {
-                  entries[index][0] = newId;
-                  break;
-                }
-              }
-
-              // Updaing the schema
-              state.schema = Object.fromEntries(entries);
-
-              // Updating the active block
-              state.active.block = newId;
-            } else if (!canvas.blocks[newId]) {
-              // Geting all the entries
-              const entries = Object.entries(canvas.blocks);
-
-              // Updating the key
-              for (let index = 0; index < entries.length; index++) {
-                const [key] = entries[index];
-
-                if (key === blockId) {
-                  entries[index][0] = newId;
-                  break;
-                }
-              }
-
-              // Updaing the blocks
-              canvas.blocks = Object.fromEntries(entries);
-
-              // Updating the canvas with the new values
-              state.schema[canvasId] = canvas;
-
-              // Updating the active block
-              state.active.block = newId;
-
-              // Revalidating the cache
-              // @ts-ignore
-              state._unique = revalidateCache(state.schema, canvasKey);
-            }
+            // Firing the event
             emitter(EditorEvent.BLOCK_ID_UPDATION, {
-              canvasId,
               blockId,
               newId,
             });
-          }),
-        set: (canvasId, func) =>
-          set((state) => {
-            const {
-              block: { all },
-            } = state;
+          }
+        });
+      },
+      set: (func) =>
+        set((state) => {
+          const blocks = func(state.all());
 
-            const blocks = func(all(canvasId));
-            const canvas = state.schema[canvasId];
+          state.schema = blocks.reduce<Record<string, Draft<BaseBlockType>>>(
+            (prev, cur) => {
+              const { id, ...data } = cur;
 
-            if (!canvas)
-              throw new Error(`No canvas found with id ${canvasId}!`);
+              prev[id] = data as Draft<BaseBlockType>;
 
-            canvas.blocks = blocks.reduce<Record<string, ThreadType>>(
-              (prev, cur) => {
-                const { id, ...data } = cur;
-
-                prev[id] = data;
-
-                return prev;
-              },
-              {},
-            );
-
-            if (state.active.block && !canvas.blocks[state.active.block])
-              state.active.block = null;
-
-            state.schema[canvasId] = canvas;
-            emitter(EditorEvent.CANVAS_RESET, { canvasId });
-          }),
-        remove: (canvasId, blockId) =>
-          set((state) => {
-            const canvas = state.schema[canvasId];
-
-            if (!canvas)
-              throw new Error(`Canvas with this ID ${canvasId} doesn't exist!`);
-
-            delete canvas.blocks[blockId];
-            state.schema[canvasId] = canvas;
-
-            if (state.active.block === blockId) state.active.block = null;
-            emitter(EditorEvent.BLOCK_DELETION, { canvasId, blockId });
-          }),
-        move: (canvasId, from, to) =>
-          set((state) => {
-            const canvas = state.schema[canvasId];
-
-            if (!canvas)
-              throw new Error(`Canvas with this ID ${canvasId} doesn't exist!`);
-
-            const tmp = Object.entries(canvas.blocks);
-
-            // Getting the blocks index
-            const fromIndex = tmp.findIndex((val) => val[0] === from);
-            const toIndex = tmp.findIndex((val) => val[0] === to);
-
-            canvas.blocks = Object.fromEntries(
-              arrayMove(tmp, fromIndex, toIndex),
-            );
-
-            // Storing the updated blocks arrangement
-            state.schema[canvasId] = canvas;
-            emitter(EditorEvent.BLOCK_REPOSITION, { canvasId, from, to });
-          }),
-        select: (blockId) =>
-          set((state) => {
-            state.active.block = blockId;
-            emitter(EditorEvent.BLOCK_SELECTION, { blockId });
-          }),
-        findIndex: (canvasId, blockId) => {
-          return Object.keys(get().schema[canvasId]?.blocks ?? {}).findIndex(
-            (key) => key === blockId,
+              return prev;
+            },
+            {},
           );
-        },
-        duplicate: (canvasId, blockId) => {
-          const block = get().block.get(canvasId, blockId);
 
-          if (!block)
-            throw new Error(
-              `Unable to find the block with Id ${blockId} in canvas ${canvasId}`,
-            );
+          // Removing the deleted blocks (if any)
+          state.active = state.active.filter((value) => value in state.schema);
 
-          get().block.add(canvasId, block);
-          emitter(EditorEvent.BLOCK_DUPLICATION, { canvasId, blockId });
-        },
+          emitter(EditorEvent.SCHEMA_RESET, {});
+        }),
+      remove: (blockId) =>
+        set((state) => {
+          // Deleting the block
+          delete state.schema[blockId];
+
+          // Finding if the block exist in the active list
+          const blockIndex = state.active.findIndex(
+            (value) => value === blockId,
+          );
+          // Removing the block from the active blocks list
+          if (blockIndex !== -1) state.active.splice(blockIndex, 1);
+
+          // Firing the event
+          emitter(EditorEvent.BLOCK_DELETION, { blockId });
+        }),
+      move: (from, to) =>
+        set((state) => {
+          const tmp = Object.entries(state.schema);
+
+          // Getting the blocks index
+          const fromIndex = tmp.findIndex((val) => val[0] === from);
+          const toIndex = tmp.findIndex((val) => val[0] === to);
+
+          state.schema = Object.fromEntries(arrayMove(tmp, fromIndex, toIndex));
+
+          emitter(EditorEvent.BLOCK_REPOSITION, { from, to });
+        }),
+      findIndex: (blockId, filters) => {
+        return get()
+          .all(filters)
+          .findIndex(({ id }) => id === blockId);
+      },
+      select: (blockId) =>
+        set((state) => {
+          if (blockId) {
+            // Is ctrl/cmd key is pressed
+            if (isHotkeyPressed("shift")) state.active.push(blockId);
+            // Single select
+            else state.active = [blockId];
+          }
+          // Unselect all
+          else state.active = [];
+
+          emitter(EditorEvent.BLOCK_SELECTION, { blockId });
+        }),
+      duplicate: (blockId) => {
+        const block = get().get(blockId);
+
+        if (!block)
+          throw new Error(`Unable to find the block with Id ${blockId}`);
+
+        get().add(block);
+        emitter(EditorEvent.BLOCK_DUPLICATION, { blockId });
       },
     })),
-  ) as UseBoundStore<StoreApi<CanvasStore<T>>>;
+  ) as UseBoundStore<StoreApi<CanvasStore<T, U>>>;
 };
 
-function revalidateCache(schema: Record<string, CanvasType>, key: string) {
-  const data = Object.values(schema).reduce<
-    Record<string, Record<string, number>>
-  >((prev, cur) => {
+function revalidateCache(schema: Record<string, BaseBlockType | undefined>) {
+  return Object.values(schema).reduce<Record<string, number>>((prev, cur) => {
     if (!cur) return prev;
 
-    const { type, blocks } = cur;
+    const { type } = cur;
 
-    if (key in prev) {
-      if (type in prev[key]) prev[key][type] += 1;
-      else prev[key][type] = 1;
-    } else prev[key] = { [type]: 1 };
+    if (type in prev) prev[type] += 1;
+    else prev[type] = 1;
 
-    let sub = {};
-    if (blocks && Object.keys(blocks).length > 0)
-      sub = revalidateCache(blocks as Record<string, CanvasType>, type);
-
-    // TODO: resolve this
-    // biome-ignore lint/performance/noAccumulatingSpread: <explanation>
-    return { ...prev, ...sub };
+    return prev;
   }, {});
-
-  return data;
 }

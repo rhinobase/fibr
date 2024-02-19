@@ -16,10 +16,12 @@ import { QuickActions } from "./QuickActions";
 
 export function FieldWrapper({ children }: PropsWithChildren) {
   const { id, isOverlay, ...field } = useThread();
-  const { activeBlock, select } = useCanvas(({ block, active }) => ({
-    select: block.select,
-    activeBlock: active.block,
+  const { active, select } = useCanvas(({ select, active }) => ({
+    select,
+    active,
   }));
+
+  const isSelected = active.includes(id);
 
   const {
     attributes,
@@ -38,7 +40,7 @@ export function FieldWrapper({ children }: PropsWithChildren) {
   if (field.type === "canvas")
     return (
       <Wrapper
-        selected={activeBlock === id}
+        selected={isSelected}
         className="p-6"
         onClick={onSelect}
         onKeyDown={onSelect}
@@ -63,7 +65,7 @@ export function FieldWrapper({ children }: PropsWithChildren) {
   return (
     <Component>
       <Wrapper
-        selected={activeBlock === id}
+        selected={isSelected}
         ref={setNodeRef}
         style={nodeStyle}
         {...attributes}
@@ -72,7 +74,7 @@ export function FieldWrapper({ children }: PropsWithChildren) {
           "select-none p-4",
           !isDragging && "transition-shadow",
           isDragging && "z-50",
-          activeBlock !== id && "hover:shadow-[0_1px_5px_1px_rgba(0,0,0,0.1)]",
+          !isSelected && "hover:shadow-[0_1px_5px_1px_rgba(0,0,0,0.1)]",
         )}
       >
         {children}

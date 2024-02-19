@@ -10,40 +10,28 @@ import {
 import { reactHookFormResolver } from "./resolver";
 
 export function Sidebar() {
-  const {
-    addBlock,
-    getAllBlocks,
-    active,
-    selectBlock,
-    removeBlock,
-    moveBlock,
-  } = useCanvas(({ block, active }) => ({
-    active,
-    addBlock: block.add,
-    getAllBlocks: block.all,
-    selectBlock: block.select,
-    removeBlock: block.remove,
-    moveBlock: block.move,
-  }));
+  const { add, all, active, select, remove, move } = useCanvas(
+    ({ add, all, select, remove, move, active }) => ({
+      active,
+      add,
+      all,
+      select,
+      remove,
+      move,
+    }),
+  );
 
-  const canvasId = active.canvas;
-
-  const blocks = canvasId ? getAllBlocks(canvasId) : [];
+  const blocks = all();
 
   return (
     <BuilderSidebar>
-      <Palette
-        isDisabled={canvasId == null}
-        onBlockSelect={(props) => canvasId && addBlock(canvasId, props)}
-      />
+      <Palette onSelect={(value) => add(value)} />
       <Overview
         blocks={blocks}
         active={active}
-        selectBlock={selectBlock}
-        removeBlock={(id) => canvasId && removeBlock(canvasId, id)}
-        moveBlock={(startBlockId, endblockId) =>
-          canvasId && moveBlock(canvasId, startBlockId, endblockId)
-        }
+        onSelect={select}
+        onDelete={remove}
+        onMove={move}
       />
       <InspectorPanel />
       <CodeGenerator

@@ -1,4 +1,8 @@
-import { useCanvas } from "@fibr/providers";
+import {
+  useCanvas,
+  type BaseBlockWithIdType,
+  type BlockFilters,
+} from "@fibr/providers";
 import { useThread } from "@fibr/react";
 import { eventHandler } from "@rafty/shared";
 import {
@@ -13,7 +17,7 @@ import {
   classNames,
   useBoolean,
 } from "@rafty/ui";
-import { PropsWithChildren, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type PropsWithChildren } from "react";
 import { HiPencil } from "react-icons/hi";
 import { IconType } from "react-icons/lib";
 import {
@@ -27,7 +31,7 @@ export type QuickActions = PropsWithChildren;
 
 export function QuickActions({ children }: QuickActions) {
   const { id } = useThread();
-  const activeBlock = useCanvas(({ active }) => active.block);
+  const active = useCanvas(({ active }) => active);
 
   const [isHover, setHover] = useState(false);
 
@@ -35,7 +39,7 @@ export function QuickActions({ children }: QuickActions) {
     <HoverCard
       openDelay={50}
       closeDelay={100}
-      open={isHover || activeBlock === id}
+      open={isHover || active.includes(id)}
       onOpenChange={setHover}
     >
       <HoverCardTrigger asChild>{children}</HoverCardTrigger>
@@ -56,10 +60,9 @@ function IdEditField() {
   const { id } = useThread();
   const [isEditable, toggle] = useBoolean(false);
   const ref = useRef<HTMLInputElement>(null);
-  const { select, activeCanvas, updateId } = useCanvas(({ block, active }) => ({
-    select: block.select,
-    activeCanvas: active.canvas,
-    updateId: block.updateId,
+  const { select, updateId } = useCanvas(({ select, updateId }) => ({
+    select,
+    updateId,
   }));
 
   useEffect(() => {
@@ -80,8 +83,7 @@ function IdEditField() {
     e.stopPropagation();
 
     // Updating the value
-    if (activeCanvas && ref.current)
-      updateId(activeCanvas, id, ref.current.value);
+    if (ref.current) updateId(id, ref.current.value);
 
     toggle(false);
   };
@@ -123,27 +125,27 @@ enum Direction {
 }
 
 function QuickActionButtons() {
-  const { id } = useThread();
-  const {
-    get,
-    block: { all, move, remove, findIndex, duplicate, select },
-    activeCanvas,
-  } = useCanvas(({ canvas, block, active }) => ({
-    block,
-    get: canvas.get,
-    activeCanvas: active.canvas,
-  }));
+  const { id, parentNode } = useThread<BaseBlockWithIdType>();
+  const { all, move, remove, duplicate, select, findIndex } = useCanvas(
+    ({ all, move, remove, duplicate, select, findIndex }) => ({
+      all,
+      move,
+      remove,
+      duplicate,
+      select,
+      findIndex,
+    }),
+  );
 
-  if (!activeCanvas) throw new Error("Unable to find an active canvas!");
-
-  const index = findIndex(activeCanvas, id);
+  const filters: BlockFilters = { parentNode };
+  const components = all(filters);
+  const index = findIndex(id, filters);
 
   if (index === -1) return;
 
   const moveComponent = (direction: Direction) => {
-    const components = all(activeCanvas);
     select(id);
-    move(activeCanvas, id, components[index + direction].id);
+    move(id, components[index + direction].id);
   };
 
   return (
@@ -155,7 +157,7 @@ function QuickActionButtons() {
           action={() => moveComponent(Direction.UP)}
         />
       )}
-      {index < Object.keys(get(activeCanvas)?.blocks ?? {}).length - 1 && (
+      {index < components.length - 1 && (
         <ActionButton
           name="Move down"
           icon={MdOutlineArrowDownward}
@@ -165,12 +167,12 @@ function QuickActionButtons() {
       <ActionButton
         name="Duplicate file"
         icon={MdOutlineAddToPhotos}
-        action={() => duplicate(activeCanvas, id)}
+        action={() => duplicate(id)}
       />
       <ActionButton
         name="Delete visual field"
         icon={MdOutlineDelete}
-        action={() => remove(activeCanvas, id)}
+        action={() => remove(id)}
       />
     </div>
   );

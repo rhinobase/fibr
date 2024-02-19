@@ -10,43 +10,28 @@ export type EditorEventListenerProps = {
     key: string;
   };
   // Canvas
-  [EditorEvent.CANVAS_SELECTION]: {
-    canvasId: string | null;
-  };
-  [EditorEvent.CANVAS_ADDITION]: {
-    struct: string | ThreadType;
-  };
-  [EditorEvent.CANVAS_DELETION]: {
-    canvasId: string;
-  };
-  [EditorEvent.CANVAS_RESET]: { canvasId: string };
+  [EditorEvent.SCHEMA_RESET]: Record<string, unknown>;
   // Blocks
   [EditorEvent.BLOCK_ADDITION]: {
-    canvasId: string;
     block: ThreadType;
   };
   [EditorEvent.BLOCK_UPDATION]: {
-    canvasId: string;
     blockId: string;
     values: Partial<ThreadType>;
   };
   [EditorEvent.BLOCK_ID_UPDATION]: {
-    canvasId: string;
     blockId: string;
     newId: string;
   };
   [EditorEvent.BLOCK_DELETION]: {
-    canvasId: string;
     blockId: string;
   };
   [EditorEvent.BLOCK_REPOSITION]: {
-    canvasId: string;
     from: string;
     to: string;
   };
   [EditorEvent.BLOCK_SELECTION]: { blockId: string | null };
   [EditorEvent.BLOCK_DUPLICATION]: {
-    canvasId: string;
     blockId: string;
   };
   // Layout

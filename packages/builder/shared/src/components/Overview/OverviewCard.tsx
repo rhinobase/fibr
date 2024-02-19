@@ -8,16 +8,16 @@ import { MdDelete, MdDragIndicator } from "react-icons/md";
 export type OverviewCard = {
   id: string;
   type: string;
-  selectBlock: (id: string) => void;
-  removeBlock: (id: string) => void;
+  onSelect: (id: string) => void;
+  onDelete: (id: string) => void;
   isActive?: boolean;
 };
 
 export function OverviewCard({
   id,
   type,
-  selectBlock,
-  removeBlock,
+  onSelect,
+  onDelete,
   isActive = false,
 }: OverviewCard) {
   const {
@@ -34,9 +34,9 @@ export function OverviewCard({
     transition,
   };
 
-  const handleNodeSelect = eventHandler(() => selectBlock(id));
+  const handleNodeSelect = eventHandler(() => onSelect(id));
 
-  const handleNodeDelete = eventHandler(() => removeBlock(id));
+  const handleNodeDelete = eventHandler(() => onDelete(id));
 
   return (
     <div

@@ -1,14 +1,7 @@
 "use client";
-import {
-  type PropsWithChildren,
-  createContext,
-  useContext,
-  useEffect,
-} from "react";
-import { useCanvas } from "../canvas";
+import { createContext, useContext, type PropsWithChildren } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useBuilder } from "../builder";
-import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { Env } from "../utils";
 
 const ShortcutsContext = createContext<ReturnType<
@@ -28,7 +21,7 @@ export function ShortcutsProvider({ children }: ShortcutsProvider) {
 }
 
 function useShortcutsManager() {
-  const [, copyToClipboard] = useCopyToClipboard();
+  // const [, copyToClipboard] = useCopyToClipboard();
   const { layout, setLayout, setActive, currentEnv, setEnv } = useBuilder(
     ({ layout, setLayout, tabs: { setActive }, env: { current, change } }) => ({
       layout,
@@ -38,14 +31,14 @@ function useShortcutsManager() {
       setEnv: change,
     }),
   );
-  const { get, add, active, remove } = useCanvas(
-    ({ active, block: { get, add, remove } }) => ({
-      get,
-      add,
-      remove,
-      active,
-    }),
-  );
+  // const { get, add, active, remove } = useCanvas(
+  //   ({ active, get, add, remove }) => ({
+  //     get,
+  //     add,
+  //     remove,
+  //     active,
+  //   }),
+  // );
 
   useHotkeys(
     "mod+k",
@@ -155,54 +148,54 @@ function useShortcutsManager() {
     [layout.sidebar],
   );
 
-  useHotkeys(
-    "mod+c",
-    (event) => {
-      if (active.canvas && active.block) {
-        const block = get(active.canvas, active.block);
-        if (block) {
-          event.preventDefault();
-          copyToClipboard(JSON.stringify(block));
-        }
-      }
-    },
-    { description: "Copy" },
-    [active],
-  );
+  // useHotkeys(
+  //   "mod+c",
+  //   (event) => {
+  //     if (active.canvas && active.block) {
+  //       const block = get(active.canvas, active.block);
+  //       if (block) {
+  //         event.preventDefault();
+  //         copyToClipboard(JSON.stringify(block));
+  //       }
+  //     }
+  //   },
+  //   { description: "Copy" },
+  //   [active],
+  // );
 
-  useHotkeys(
-    "mod+x",
-    (event) => {
-      if (active.canvas && active.block) {
-        const block = get(active.canvas, active.block);
-        if (block) {
-          event.preventDefault();
-          copyToClipboard(JSON.stringify(block));
-          remove(active.canvas, active.block);
-        }
-      }
-    },
-    { description: "Cut" },
-    [active],
-  );
+  // useHotkeys(
+  //   "mod+x",
+  //   (event) => {
+  //     if (active.canvas && active.block) {
+  //       const block = get(active.canvas, active.block);
+  //       if (block) {
+  //         event.preventDefault();
+  //         copyToClipboard(JSON.stringify(block));
+  //         remove(active.canvas, active.block);
+  //       }
+  //     }
+  //   },
+  //   { description: "Cut" },
+  //   [active],
+  // );
 
-  // Paste listener
-  useEffect(() => {
-    const onPaste = (event: ClipboardEvent) => {
-      if (event.clipboardData) {
-        const data = JSON.parse(
-          event.clipboardData.getData("text/plain") ?? "",
-        );
-        if (data) add(active.canvas ?? "nodes", data);
-      }
-    };
+  // // Paste listener
+  // useEffect(() => {
+  //   const onPaste = (event: ClipboardEvent) => {
+  //     if (event.clipboardData) {
+  //       const data = JSON.parse(
+  //         event.clipboardData.getData("text/plain") ?? "",
+  //       );
+  //       if (data) add(active.canvas ?? "nodes", data);
+  //     }
+  //   };
 
-    window.addEventListener("paste", onPaste);
+  //   window.addEventListener("paste", onPaste);
 
-    return () => {
-      window.removeEventListener("paste", onPaste);
-    };
-  }, [add, active]);
+  //   return () => {
+  //     window.removeEventListener("paste", onPaste);
+  //   };
+  // }, [add, active]);
 
   return {};
 }

@@ -1,5 +1,5 @@
 import { SidebarItem } from "@fibr/builder";
-import { type CanvasType, useCanvas } from "@fibr/providers";
+import { type BaseBlockType, useCanvas } from "@fibr/providers";
 import {
   CheckIcon,
   CodeBracketSquareIcon,
@@ -24,7 +24,7 @@ export type CodeGenerator = {
     label: string;
     icon?: ReactNode;
     language?: string;
-    resolver: (schema: Record<string, CanvasType | undefined>) => string;
+    resolver: (schema: Record<string, BaseBlockType | undefined>) => string;
   }[];
 };
 

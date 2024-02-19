@@ -7,7 +7,6 @@ import {
 } from "react";
 import { useStore } from "zustand";
 import {
-  type CanvasType,
   type CanvasStore,
   type CanvasStoreProps,
   createCanvasStore,
@@ -15,10 +14,10 @@ import {
 import { useEventBus } from "../events";
 
 const CanvasContext = createContext<ReturnType<
-  typeof createCanvasStore
+  typeof createCanvasStore<undefined>
 > | null>(null);
 
-export type CanvasProvider = PropsWithChildren<CanvasStoreProps<CanvasType>>;
+export type CanvasProvider = PropsWithChildren<CanvasStoreProps<undefined>>;
 
 export function CanvasProvider({ children, ...props }: CanvasProvider) {
   const emitter = useEventBus((state) => state.broadcast);
@@ -28,9 +27,7 @@ export function CanvasProvider({ children, ...props }: CanvasProvider) {
   );
 }
 
-export function useCanvas<T extends CanvasType, U>(
-  selector: (state: CanvasStore<T>) => U,
-): U {
+export function useCanvas<T>(selector: (state: CanvasStore) => T): T {
   const store = useContext(CanvasContext);
 
   if (!store) throw new Error("Missing CanvasContext.Provider in the tree");

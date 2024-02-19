@@ -4,6 +4,8 @@ export {
   SharedWrapper,
   highlightMatches,
   WorkflowControls,
+  groupByParentNode,
+  DEFAULT_GROUP,
 } from "./utils";
 export { Overview } from "./Overview";
 export { Palette } from "./Palette";

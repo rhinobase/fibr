@@ -5,7 +5,7 @@ import { type PropsWithChildren } from "react";
 
 export function NodeWrapper(props: PropsWithChildren) {
   const { id } = useThread();
-  const select = useCanvas(({ block }) => block.select);
+  const select = useCanvas(({ select }) => select);
 
   const onSelect = eventHandler(() => select(id));
 

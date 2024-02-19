@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
-import { useCanvas } from "@fibr/providers";
-import { Thread, ThreadWithIdType } from "@fibr/react";
+import { type BaseBlockWithIdType, useCanvas } from "@fibr/providers";
+import { Thread } from "@fibr/react";
 import { useBlocks } from "@fibr/shared";
 import { useCallback, useMemo } from "react";
 import {
@@ -10,6 +11,8 @@ import {
   Edge,
   FitViewOptions,
   Node,
+  NodeDragHandler,
+  type NodeTypes,
   OnEdgesChange,
   OnNodesChange,
   ReactFlow,
@@ -17,9 +20,7 @@ import {
   addEdge,
   applyEdgeChanges,
   applyNodeChanges,
-  type NodeTypes,
   useStoreApi,
-  NodeDragHandler,
 } from "reactflow";
 import "reactflow/dist/style.css";
 
@@ -38,17 +39,31 @@ export function Diagram() {
 
   const config = useBlocks((state) => state.config);
 
-  const { nodes, edges, set } = useCanvas(({ block: { all, set } }) => ({
-    nodes: all("nodes") as Node[],
-    edges: all("edges") as Edge[],
-    set,
-  }));
+  const { nodes, edges, set } = useCanvas(({ all, set }) => {
+    const nodes: Node[] = [];
+    const edges: Edge[] = [];
+
+    const blocks = all();
+
+    for (const block of blocks) {
+      if (block.type === "edge") edges.push(block as Edge);
+      else nodes.push(block as Node);
+    }
+
+    return {
+      nodes,
+      edges,
+      set,
+    };
+  });
+
+  console.log(nodes, edges);
 
   const onNodesChange: OnNodesChange = useCallback(
     (changes) =>
       set(
-        "nodes",
-        (nds) => applyNodeChanges(changes, nds as Node[]) as ThreadWithIdType[],
+        (nds) =>
+          applyNodeChanges(changes, nds as Node[]) as BaseBlockWithIdType[],
       ),
     [set],
   );
@@ -56,9 +71,8 @@ export function Diagram() {
   const onEdgesChange: OnEdgesChange = useCallback(
     (changes) =>
       set(
-        "edges",
         (edgs) =>
-          applyEdgeChanges(changes, edgs as Edge[]) as ThreadWithIdType[],
+          applyEdgeChanges(changes, edgs as Edge[]) as BaseBlockWithIdType[],
       ),
     [set],
   );
@@ -66,8 +80,11 @@ export function Diagram() {
   const onConnect = useCallback(
     (params: Connection) =>
       set(
-        "edges",
-        (eds) => addEdge(params, eds as Edge[]) as ThreadWithIdType[],
+        (eds) =>
+          addEdge(
+            { ...params, type: "edge" },
+            eds as Edge[],
+          ) as BaseBlockWithIdType[],
       ),
     [set],
   );
@@ -137,7 +154,7 @@ export function Diagram() {
     (_, node) => {
       const closeEdge = getClosestEdge(node);
 
-      set("edges", (es) => {
+      set((es) => {
         const nextEdges = es.filter((e) => e.className !== "temp");
 
         if (
@@ -148,6 +165,7 @@ export function Diagram() {
           )
         ) {
           closeEdge.className = "temp";
+          // @ts-ignore
           nextEdges.push(closeEdge);
         }
         return nextEdges;
@@ -160,7 +178,7 @@ export function Diagram() {
     (_, node) => {
       const closeEdge = getClosestEdge(node);
 
-      set("edges", (es) => {
+      set((es) => {
         const nextEdges = es.filter((e) => e.className !== "temp");
 
         if (
@@ -170,6 +188,7 @@ export function Diagram() {
               ne.source === closeEdge.source && ne.target === closeEdge.target,
           )
         )
+          // @ts-ignore
           nextEdges.push(closeEdge);
 
         return nextEdges;

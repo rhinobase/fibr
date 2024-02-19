@@ -1,19 +1,19 @@
 import {
   CanvasProvider,
   CanvasStoreProps,
-  CanvasType,
+  type BaseBlockType,
   ShortcutsProvider,
 } from "@fibr/providers";
-import { PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 import { HotkeysProvider } from "react-hotkeys-hook";
 import { BlocksProvider, BlocksStore } from "../../providers";
 import { ShortcutsDialog } from "./ShortcutsDialog";
 
-export type SharedWrapper<T extends CanvasType> = PropsWithChildren<
+export type SharedWrapper<T extends BaseBlockType> = PropsWithChildren<
   BlocksStore & CanvasStoreProps<T>
 >;
 
-export function SharedWrapper<T extends CanvasType>({
+export function SharedWrapper<T extends BaseBlockType>({
   children,
   blocks,
   config,

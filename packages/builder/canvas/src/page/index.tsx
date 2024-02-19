@@ -8,7 +8,7 @@ import { NodeWrapper } from "./NodeWrapper";
 
 export function PageCanvas() {
   const methods = useForm();
-  const select = useCanvas(({ block }) => block.select);
+  const select = useCanvas(({ select }) => select);
   const { setNodeRef } = useDroppable({
     id: "canvas",
   });

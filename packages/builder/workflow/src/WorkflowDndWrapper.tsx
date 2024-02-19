@@ -6,10 +6,7 @@ import { type Node, useReactFlow } from "reactflow";
 
 export function WorkflowDndWrapper(props: PropsWithChildren) {
   const { screenToFlowPosition } = useReactFlow();
-  const { add, activeCanvas } = useCanvas((state) => ({
-    add: state.block.add,
-    activeCanvas: state.active.canvas,
-  }));
+  const add = useCanvas(({ add }) => add);
 
   return (
     <DndContext
@@ -20,8 +17,8 @@ export function WorkflowDndWrapper(props: PropsWithChildren) {
           const { top, left } = active.rect.current.translated;
           const position = screenToFlowPosition({ x: left, y: top });
           const data = active.data.current;
-          if (activeCanvas && data?.type)
-            add<Omit<Node, "id">>(activeCanvas, {
+          if (data?.type)
+            add<Node & { type: string }>({
               type: data.type,
               position,
               ...data.presets,

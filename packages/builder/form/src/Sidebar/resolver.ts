@@ -1,24 +1,34 @@
-import type { CanvasType } from "@fibr/providers";
+import type { BaseBlockType, BaseBlockWithIdType } from "@fibr/providers";
 import type { ThreadType } from "@fibr/react";
+import { DEFAULT_GROUP, groupByParentNode } from "@fibr/shared";
 
 export function reactHookFormResolver(
-  schema: Record<string, CanvasType | undefined>,
+  schema: Record<string, BaseBlockType | undefined>,
 ) {
-  const form = Object.values(schema)[0];
+  const blocks = Object.entries(schema).reduce<BaseBlockWithIdType[]>(
+    (prev, [id, value]) => {
+      if (value) prev.push({ id, ...value });
+      return prev;
+    },
+    [],
+  );
+
+  const group = groupByParentNode(blocks);
+  const form = group[DEFAULT_GROUP]?.[0];
 
   if (!form) return "";
 
   const capitalizedTitle = formatTitle(form.title as string);
-  const blocks = Object.entries(form.blocks);
+  const fields = group[form.id];
 
-  const defaultValues = blocks
-    .reduce<string[]>((prev, [name, block]) => {
-      if (block?.defaultValue == null) return prev;
+  const defaultValues = fields
+    ?.reduce<string[]>((prev, { id, ...field }) => {
+      if (field?.defaultValue == null) return prev;
 
-      const { type, defaultValue } = block;
+      const { type, defaultValue } = field;
 
       prev.push(
-        `${name}: ${type === "number" ? `${defaultValue}` : `"${defaultValue}"`}`,
+        `${id}: ${type === "number" ? `${defaultValue}` : `"${defaultValue}"`}`,
       );
 
       return prev;
@@ -34,7 +44,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldControl, Label, InputField, Textarea, ErrorMessage, Tooltip, TooltipTrigger, TooltipContent } from "@rafty/ui";
 
 export const schema = z.object({
-  ${blocks.map(([name, field]) => generateZodSchema(name, field)).join(`\n${" ".repeat(2)}`)}
+  ${fields?.map(({ id, ...field }) => generateZodSchema(id, field)).join(`\n${" ".repeat(2)}`)}
 });
 
 // Generated ${capitalizedTitle} form
@@ -52,8 +62,8 @@ export function ${capitalizedTitle}Form() {
       onSubmit={handleSubmit(console.log, console.error)}
       className="space-y-3"
     >
-      ${blocks
-        .map(([name, field]) => generateFieldComponent(name, field))
+      ${fields
+        ?.map(({ id, ...field }) => generateFieldComponent(id, field))
         .join(`\n${" ".repeat(6)}`)}
       <Button isLoading={isSubmitting} type="submit" colorScheme="primary">
         Submit

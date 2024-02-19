@@ -1,22 +1,17 @@
 "use client";
-import { useCanvas } from "@fibr/providers";
-import { Thread, type ThreadWithIdType } from "@fibr/react";
+import { useCanvas, type BaseBlockWithIdType } from "@fibr/providers";
+import { Thread } from "@fibr/react";
 import { useBlocks } from "@fibr/shared";
 import { useCallback, useMemo } from "react";
 import {
   Background,
   BackgroundVariant,
-  Connection,
   DefaultEdgeOptions,
-  Edge,
   FitViewOptions,
   Node,
-  OnEdgesChange,
   OnNodesChange,
   ReactFlow,
   SelectionMode,
-  addEdge,
-  applyEdgeChanges,
   applyNodeChanges,
   type NodeTypes,
 } from "reactflow";
@@ -33,36 +28,16 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
 export function Diagram() {
   const config = useBlocks((state) => state.config);
 
-  const { nodes, edges, set } = useCanvas(({ block: { all, set } }) => ({
-    nodes: all("nodes") as Node[],
-    edges: all("edges") as Edge[],
+  const { nodes, set } = useCanvas(({ all, set }) => ({
+    nodes: all() as Node[],
     set,
   }));
 
   const onNodesChange: OnNodesChange = useCallback(
     (changes) =>
       set(
-        "nodes",
-        (nds) => applyNodeChanges(changes, nds as Node[]) as ThreadWithIdType[],
-      ),
-    [set],
-  );
-
-  const onEdgesChange: OnEdgesChange = useCallback(
-    (changes) =>
-      set(
-        "edges",
-        (edgs) =>
-          applyEdgeChanges(changes, edgs as Edge[]) as ThreadWithIdType[],
-      ),
-    [set],
-  );
-
-  const onConnect = useCallback(
-    (params: Connection) =>
-      set(
-        "edges",
-        (eds) => addEdge(params, eds as Edge[]) as ThreadWithIdType[],
+        (nds) =>
+          applyNodeChanges(changes, nds as Node[]) as BaseBlockWithIdType[],
       ),
     [set],
   );
@@ -80,14 +55,11 @@ export function Diagram() {
     <div className="flex-1">
       <ReactFlow
         nodes={nodes}
-        edges={edges}
         nodesConnectable
         snapToGrid
         snapGrid={[20, 20]}
         fitView
         onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
         fitViewOptions={fitViewOptions}
         defaultEdgeOptions={defaultEdgeOptions}
         nodeTypes={builders}

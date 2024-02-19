@@ -12,7 +12,7 @@ export type Canvas = {
   onError?: SubmitErrorHandler<FieldValues>;
 } & {
   title: string;
-  blocks: Record<string, ThreadType>;
+  blocks?: Record<string, ThreadType>;
 }; // & UseFormProps<FieldValues, unknown>;
 
 export function Canvas() {
@@ -30,9 +30,10 @@ export function Canvas() {
         className="space-y-3"
         autoComplete="off"
       >
-        {Object.entries(blocks).map(([id, field]) => (
-          <Thread key={id} id={id} {...field} />
-        ))}
+        {blocks &&
+          Object.entries(blocks).map(([id, field]) => (
+            <Thread key={id} id={id} {...field} />
+          ))}
       </form>
     </FormProvider>
   );

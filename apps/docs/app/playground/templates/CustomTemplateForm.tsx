@@ -1,5 +1,4 @@
-import type { CanvasType } from "@fibr/providers";
-import type { ThreadType } from "@fibr/react";
+import type { BaseBlockType } from "@fibr/providers";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, ErrorMessage, FieldControl, Textarea } from "@rafty/ui";
 import { BaseSyntheticEvent } from "react";
@@ -18,7 +17,7 @@ const schema = z.object({
 
 export type CustomTemplateForm = {
   onSubmit: (
-    template: Record<string, ThreadType<CanvasType>>,
+    template: Record<string, BaseBlockType>,
   ) => (event: BaseSyntheticEvent) => void;
 };
 

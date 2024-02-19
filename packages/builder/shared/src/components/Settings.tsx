@@ -1,16 +1,14 @@
 import { Settings as BuilderSettings } from "@fibr/builder";
-import { FibrProvider, Thread, type ThreadWithIdType } from "@fibr/react";
+import { FibrProvider, Thread } from "@fibr/react";
 import { ReactNode, useMemo } from "react";
 import { useBlocks } from "../providers";
+import type { BaseBlockType, BaseBlockWithIdType } from "@fibr/providers";
 
-export type Settings<T extends Record<string, unknown>> =
-  ThreadWithIdType<T> & {
-    _update: (values: Partial<T>) => void;
-  };
+export type Settings = BaseBlockWithIdType & {
+  _update: (values: Partial<BaseBlockType>) => void;
+};
 
-export function Settings<T extends Record<string, unknown>>(
-  props: Settings<T>,
-) {
+export function Settings(props: Settings) {
   const config = useBlocks((state) => state.config);
 
   const settingBuilders = useMemo(

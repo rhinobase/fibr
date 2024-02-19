@@ -11,8 +11,7 @@ import {
 import { Footer, Header, PreviewButton, Workspace } from "@fibr/builder";
 import { FormBuilder } from "@fibr/form";
 import { PageBuilder } from "@fibr/page";
-import { type CanvasType, EditorEvent } from "@fibr/providers";
-import type { ThreadType } from "@fibr/react";
+import { type BaseBlockType, EditorEvent } from "@fibr/providers";
 import { WorkflowBuilder } from "@fibr/workflow";
 import { Text } from "@rafty/ui";
 import Link from "next/link";
@@ -20,47 +19,30 @@ import { type ReactNode, useState } from "react";
 import { FaGithub, FaXTwitter } from "react-icons/fa6";
 import { Container, TemplateDialog } from "./templates";
 
-type PanelProps = { template: Record<string, ThreadType<CanvasType>> };
+type PanelProps = { template: Record<string, BaseBlockType> };
 
 const PANELS: Record<Container, (props: PanelProps) => ReactNode> = {
-  [Container.FORM]: ({ template }) => {
-    const key = Object.keys(template)[0];
-
-    return (
-      <FormBuilder
-        initialSchema={template}
-        defaultActiveCanvas={key}
-        defaultActiveBlock={key}
-        blocks={formBlocks}
-        config={formConfig}
-      />
-    );
-  },
-  [Container.WORKFLOW]: ({ template }) => {
-    const key = Object.keys(template)[0];
-
-    return (
-      <WorkflowBuilder
-        initialSchema={template}
-        defaultActiveCanvas={key}
-        blocks={workflowBlocks}
-        config={workflowConfig}
-      />
-    );
-  },
-  [Container.PAGE]: ({ template }) => {
-    const key = Object.keys(template)[0];
-
-    return (
-      <PageBuilder
-        initialSchema={template}
-        defaultActiveCanvas={key}
-        defaultActiveBlock={key}
-        blocks={pageBlocks}
-        config={pageConfig}
-      />
-    );
-  },
+  [Container.FORM]: ({ template }) => (
+    <FormBuilder
+      initialSchema={template}
+      blocks={formBlocks}
+      config={formConfig}
+    />
+  ),
+  [Container.WORKFLOW]: ({ template }) => (
+    <WorkflowBuilder
+      initialSchema={template}
+      blocks={workflowBlocks}
+      config={workflowConfig}
+    />
+  ),
+  [Container.PAGE]: ({ template }) => (
+    <PageBuilder
+      initialSchema={template}
+      blocks={pageBlocks}
+      config={pageConfig}
+    />
+  ),
 };
 
 export default function Playground() {
@@ -94,7 +76,7 @@ export default function Playground() {
       )}
       <Footer className="[&>p]:text-2xs [&>p]:select-none">
         <Text isMuted className="px-1">
-          version 1.0.0
+          version {process.env.NEXT_PUBLIC_VERSION}
         </Text>
         <div className="flex-1" />
         <Text isMuted>

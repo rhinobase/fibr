@@ -2,14 +2,11 @@ import { DndContext, pointerWithin } from "@dnd-kit/core";
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 import { useCanvas } from "@fibr/providers";
 import { type PropsWithChildren } from "react";
-import { Node, useReactFlow } from "reactflow";
+import { type Node, useReactFlow } from "reactflow";
 
 export function PageDndWrapper(props: PropsWithChildren) {
   const { screenToFlowPosition } = useReactFlow();
-  const { add, activeCanvas } = useCanvas((state) => ({
-    add: state.block.add,
-    activeCanvas: state.active.canvas,
-  }));
+  const add = useCanvas(({ add }) => add);
 
   return (
     <DndContext
@@ -23,8 +20,8 @@ export function PageDndWrapper(props: PropsWithChildren) {
           );
           const position = screenToFlowPosition({ x: left, y: top });
           const data = active.data.current;
-          if (activeCanvas && data)
-            add<Omit<Node, "id">>(activeCanvas, {
+          if (data)
+            add<Node & { type: string }>({
               type: data.type,
               position,
               ...data.presets,

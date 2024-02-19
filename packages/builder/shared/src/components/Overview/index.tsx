@@ -1,17 +1,14 @@
 import { SidebarItem } from "@fibr/builder";
-import type { ThreadWithIdType } from "@fibr/react";
 import { ListBulletIcon } from "@heroicons/react/24/outline";
-import { DndWrapper, Empty } from "../utils";
+import { DEFAULT_GROUP, DndWrapper, Empty, groupByParentNode } from "../utils";
 import { OverviewCard } from "./OverviewCard";
+import type { BaseBlockWithIdType } from "@fibr/providers";
 
 export type Overview = {
-  blocks: ThreadWithIdType[];
-} & Pick<OverviewCard, "selectBlock" | "removeBlock"> & {
-    moveBlock: (startBlockId: string, endblockId: string) => void;
-    active: {
-      canvas: string | null;
-      block: string | null;
-    };
+  blocks: BaseBlockWithIdType[];
+} & Pick<OverviewCard, "onSelect" | "onDelete"> & {
+    onMove: (from: string, to: string) => void;
+    active: string[];
   };
 
 export function Overview(props: Overview) {
@@ -27,16 +24,6 @@ export function Overview(props: Overview) {
 }
 
 function FieldsRender(props: Overview) {
-  if (!props.active.canvas)
-    return (
-      <div className="flex flex-1 flex-col justify-center">
-        <Empty
-          title="No Canvas"
-          description="You can go to canvas tab to add canvas"
-        />
-      </div>
-    );
-
   if (props.blocks.length === 0)
     return (
       <div className="flex flex-1 flex-col justify-center">
@@ -47,23 +34,25 @@ function FieldsRender(props: Overview) {
       </div>
     );
 
+  const groups = groupByParentNode(props.blocks);
+
   return (
     <DndWrapper
       items={props.blocks.map(({ id }) => id)}
-      onDragStart={({ active }) => props.selectBlock(String(active.id))}
+      onDragStart={({ active }) => props.onSelect(String(active.id))}
       onDragEnd={({ active, over }) => {
         if (over && active.id !== over.id)
-          props.moveBlock(String(active.id), String(over.id));
+          props.onMove(String(active.id), String(over.id));
       }}
     >
-      {props.blocks.map(({ id, type }) => (
+      {groups[DEFAULT_GROUP]?.map(({ id, type }) => (
         <OverviewCard
           key={id}
           id={id}
           type={type}
-          selectBlock={props.selectBlock}
-          removeBlock={props.removeBlock}
-          isActive={props.active.block === id}
+          onSelect={props.onSelect}
+          onDelete={props.onDelete}
+          isActive={props.active.includes(id)}
         />
       ))}
     </DndWrapper>
