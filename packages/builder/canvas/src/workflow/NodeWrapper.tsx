@@ -1,16 +1,18 @@
-import { useCanvas } from "@fibr/providers";
 import { useThread } from "@fibr/react";
-import { eventHandler } from "@rafty/shared";
+import { classNames } from "@rafty/ui";
 import { type PropsWithChildren } from "react";
+import type { Node } from "reactflow";
 
 export function NodeWrapper(props: PropsWithChildren) {
-  const { id } = useThread();
-  const select = useCanvas(({ select }) => select);
-
-  const onSelect = eventHandler(() => select({ blockId: id }));
+  const { selected } = useThread<Node>();
 
   return (
-    <div className="rounded bg-white" onClick={onSelect} onKeyDown={onSelect}>
+    <div
+      className={classNames(
+        selected ? "border-primary-500" : "border-transparent",
+        "h-full w-full border bg-white p-2",
+      )}
+    >
       {props.children}
     </div>
   );
