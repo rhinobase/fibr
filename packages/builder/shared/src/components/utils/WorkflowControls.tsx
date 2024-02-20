@@ -1,5 +1,7 @@
+import { EditorEvent, Env, useEventBus } from "@fibr/providers";
 import { eventHandler } from "@rafty/shared";
 import { Button, classNames } from "@rafty/ui";
+import { useEffect } from "react";
 import { HiMinus, HiPlus } from "react-icons/hi";
 import { HiLockClosed, HiLockOpen } from "react-icons/hi2";
 import { PiCornersOut } from "react-icons/pi";
@@ -40,6 +42,21 @@ export function WorkflowControls({
     }),
   );
   const { zoomIn, zoomOut, fitView } = useReactFlow();
+  const addEvent = useEventBus(({ add }) => add);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    addEvent(EditorEvent.ENV_CHANGE, ({ env }) => {
+      let interactive = true;
+      if (env === Env.PRODUCTION) interactive = false;
+
+      store.setState({
+        nodesDraggable: interactive,
+        nodesConnectable: interactive,
+        elementsSelectable: interactive,
+      });
+    });
+  }, [store]);
 
   const onZoomInHandler = eventHandler(() => {
     zoomIn();
