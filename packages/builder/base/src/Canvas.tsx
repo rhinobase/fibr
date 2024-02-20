@@ -1,9 +1,9 @@
 import { classNames } from "@rafty/ui";
-import { forwardRef, type ElementRef, type HTMLAttributes } from "react";
+import { forwardRef, type HTMLAttributes } from "react";
 
 export type Canvas = HTMLAttributes<HTMLDivElement>;
 
-export const Canvas = forwardRef<ElementRef<"div">, Canvas>(
+export const Canvas = forwardRef<HTMLDivElement, Canvas>(
   ({ children, className, ...props }, forwardedRef) => {
     return (
       <div
