@@ -19,9 +19,11 @@ export function WorkflowDndWrapper(props: PropsWithChildren) {
           const data = active.data.current;
           if (data?.type)
             add<Node & { type: string }>({
-              type: data.type,
-              position,
-              ...data.presets,
+              block: {
+                type: data.type,
+                position,
+                ...data.presets,
+              },
             });
         }
       }}

@@ -15,18 +15,17 @@ export function PageDndWrapper(props: PropsWithChildren) {
       onDragEnd={({ active, over }) => {
         if (over?.id === "canvas" && active.rect.current.translated) {
           const { top, left } = active.rect.current.translated;
-          console.log(
-            JSON.parse(JSON.stringify(active.rect.current.translated)),
-          );
           const position = screenToFlowPosition({ x: left, y: top });
           const data = active.data.current;
           if (data)
             add<Node & { type: string }>({
-              type: data.type,
-              position,
-              ...data.presets,
-              // parentNode: "page",
-              // extent: "parent",
+              block: {
+                type: data.type,
+                position,
+                ...data.presets,
+                // parentNode: "page",
+                // extent: "parent",
+              },
             });
         }
       }}

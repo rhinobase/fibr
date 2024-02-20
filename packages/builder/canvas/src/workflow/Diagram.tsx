@@ -57,8 +57,6 @@ export function Diagram() {
     };
   });
 
-  console.log(nodes, edges);
-
   const onNodesChange: OnNodesChange = useCallback(
     (changes) =>
       set({
