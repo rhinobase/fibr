@@ -55,7 +55,6 @@ export function Diagram() {
     <div className="flex-1">
       <ReactFlow
         nodes={nodes}
-        nodesConnectable
         snapToGrid
         snapGrid={[20, 20]}
         fitView
