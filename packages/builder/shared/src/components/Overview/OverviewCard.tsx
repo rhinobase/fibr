@@ -13,11 +13,11 @@ import {
 } from "@rafty/ui";
 import { cva } from "class-variance-authority";
 import { HTMLAttributes, type CSSProperties } from "react";
-import { HiChevronRight } from "react-icons/hi";
-import { MdDelete, MdDragIndicator } from "react-icons/md";
+import { HiChevronRight, HiX } from "react-icons/hi";
+import { MdDragIndicator } from "react-icons/md";
 
 const cardClasses = cva(
-  "dark:bg-secondary-900 border bg-transparent bg-white p-2 transition-none dark:bg-transparent",
+  "dark:bg-secondary-900 border bg-transparent bg-white p-2 transition-none dark:bg-transparent gap-1",
   {
     variants: {
       selected: {
@@ -65,13 +65,15 @@ export function OverviewCard({ id, type, groups, onToggle }: OverviewCard) {
 
   const CardRender = () => (
     <>
-      <DragHandler {...attributes} {...listeners} />
-      {hasChildren && (
-        <CollapseButton
-          onClick={handleToggleCollapse}
-          onKeyDown={handleToggleCollapse}
-        />
-      )}
+      <span className="flex items-center">
+        <DragHandler {...attributes} {...listeners} />
+        {hasChildren && (
+          <CollapseButton
+            onClick={handleToggleCollapse}
+            onKeyDown={handleToggleCollapse}
+          />
+        )}
+      </span>
       <span className="text-2xs flex gap-1 truncate font-medium">
         {id}
         <Text isMuted className="italic">
@@ -137,7 +139,10 @@ function CollapseButton({ className, ...props }: CollapseButton) {
         className,
       )}
     >
-      <HiChevronRight className="text-secondary-500 transition-transform group-data-[state=open]:rotate-90" />
+      <HiChevronRight
+        size={18}
+        className="transition-transform group-data-[state=open]:rotate-90"
+      />
     </span>
   );
 }
@@ -169,11 +174,11 @@ function DeleteButton({ className, ...props }: DeleteButton) {
       {...props}
       className={classNames(
         buttonClasses({ size: "icon", variant: "ghost" }),
-        "cursor-pointer rounded p-0.5",
+        "cursor-pointer rounded p-0.5 hover:bg-red-200/40 hover:text-red-500 dark:hover:bg-red-300/10 dark:hover:text-red-300",
         className,
       )}
     >
-      <MdDelete />
+      <HiX size={15} />
     </span>
   );
 }

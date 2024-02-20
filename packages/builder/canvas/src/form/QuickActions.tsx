@@ -167,6 +167,7 @@ function QuickActionButtons() {
         name="Delete visual field"
         icon={MdOutlineDelete}
         action={() => remove({ blockId: id })}
+        className="hover:bg-red-200/40 hover:text-red-500 dark:hover:bg-red-300/10 dark:hover:text-red-300"
       />
     </div>
   );
@@ -176,9 +177,9 @@ type ActionButton = {
   name: string;
   icon: IconType;
   action: () => void;
-};
+} & Pick<Button, "className">;
 
-function ActionButton({ name, icon: Icon, action }: ActionButton) {
+function ActionButton({ name, icon: Icon, action, className }: ActionButton) {
   const manageAction = eventHandler(action);
 
   return (
@@ -187,7 +188,7 @@ function ActionButton({ name, icon: Icon, action }: ActionButton) {
         <Button
           variant="ghost"
           size="icon"
-          className="rounded p-1"
+          className={classNames("rounded p-1", className)}
           onClick={manageAction}
           onKeyDown={manageAction}
         >
