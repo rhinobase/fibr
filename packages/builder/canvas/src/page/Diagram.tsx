@@ -28,9 +28,10 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
 export function Diagram() {
   const config = useBlocks((state) => state.config);
 
-  const { nodes, set } = useCanvas(({ all, set }) => ({
+  const { nodes, set, select } = useCanvas(({ all, set, select }) => ({
     nodes: all() as Node[],
     set,
+    select,
   }));
 
   const onNodesChange: OnNodesChange = useCallback(

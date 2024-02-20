@@ -5,9 +5,9 @@ export function CommonInputSettings() {
   return (
     <>
       <Label>Placeholder</Label>
-      <SettingInput name="placeholder" />
+      <SettingInput name="data.placeholder" />
       <Label>Default Value</Label>
-      <SettingInput name="defaultValues" />
+      <SettingInput name="data.defaultValues" />
     </>
   );
 }

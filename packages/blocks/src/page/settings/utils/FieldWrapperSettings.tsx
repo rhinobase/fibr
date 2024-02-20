@@ -6,17 +6,17 @@ export function FieldWrapperSettings() {
   return (
     <>
       <Label>Label</Label>
-      <SettingInput name="label" />
+      <SettingInput name="data.label" />
       <Label>Description</Label>
-      <SettingInput name="description" />
+      <SettingInput name="data.description" />
       <Label>Required</Label>
-      <SettingSwitch name="required" />
+      <SettingSwitch name="data.required" />
       <Label>Disabled</Label>
-      <SettingSwitch name="disabled" />
+      <SettingSwitch name="data.disabled" />
       <Label>Hidden</Label>
-      <SettingSwitch name="hidden" />
+      <SettingSwitch name="data.hidden" />
       <Label>Tooltip</Label>
-      <SettingInput name="tooltip" />
+      <SettingInput name="data.tooltip" />
     </>
   );
 }

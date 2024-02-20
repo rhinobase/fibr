@@ -144,7 +144,7 @@ export const createCanvasStore = <
             emitter(EditorEvent.BLOCK_UPDATION, {
               id: blockId,
               updatedValues: values as Partial<BlockType>,
-              oldValues: state.schema[blockId] as Partial<BlockType>,
+              oldValues: original(state.schema[blockId]) as Partial<BlockType>,
             });
 
           // Updating the schema
