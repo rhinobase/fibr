@@ -14,7 +14,7 @@ export function Sidebar() {
     all,
   }));
 
-  const blocks = all({ filters: { parentNode: "nodes" } });
+  const blocks = all();
 
   return (
     <FloatingSidebar>
