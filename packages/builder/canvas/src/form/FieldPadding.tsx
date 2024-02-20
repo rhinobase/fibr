@@ -7,7 +7,10 @@ export function FieldPadding({ children }: PropsWithChildren) {
 
   return (
     <div
-      className={classNames(type === "form" ? "bg-white p-6" : "p-4", "w-full")}
+      className={classNames(
+        type === "canvas" ? "bg-white p-6" : "p-4",
+        "w-full border border-transparent",
+      )}
     >
       {children}
     </div>
