@@ -118,6 +118,7 @@ export const createCanvasStore = <
         const blockId = id ?? get().uniqueId(block.type);
 
         const payload = [blockId, block] as [string, Draft<BlockType>];
+
         set((state) => {
           const schema = Object.entries(state.schema);
 
@@ -223,8 +224,7 @@ export const createCanvasStore = <
           delete state.schema[blockId];
 
           // Removing the block from the active blocks list
-          if (state.active.includes(blockId))
-            state.active.filter((value) => value !== blockId);
+          state.active = state.active.filter((value) => value !== blockId);
 
           // Firing the event
           if (shouldEmit)
