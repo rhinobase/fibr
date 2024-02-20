@@ -98,11 +98,11 @@ function useShortcutsManager() {
     }
 
     if (event_type === EditorEvent.BLOCK_DELETION) {
-      const { blockId, block } =
+      const { blockId, block, index } =
         data as EditorEventListenerProps[EditorEvent.BLOCK_DELETION];
 
       if (action === ActionType.UNDO)
-        add({ block, id: blockId, shouldEmit: false });
+        add({ block, id: blockId, shouldEmit: false, index });
       else remove({ blockId, shouldEmit: false });
     }
 

@@ -1,8 +1,4 @@
-import {
-  useCanvas,
-  type BlockWithIdType,
-  type BlockFilters,
-} from "@fibr/providers";
+import { useCanvas, type BlockWithIdType } from "@fibr/providers";
 import { useThread } from "@fibr/react";
 import { eventHandler } from "@rafty/shared";
 import {
@@ -136,8 +132,7 @@ function QuickActionButtons() {
     }),
   );
 
-  const filters: BlockFilters = { parentNode };
-  const blocks = all({ filters });
+  const blocks = all({ filters: { parentNode } });
   const index = blocks.findIndex((block) => block.id === id);
 
   if (index === -1) return;

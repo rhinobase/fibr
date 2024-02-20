@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { StoreApi, UseBoundStore, create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { type Draft } from "immer";
+import { original, type Draft } from "immer";
 import { EditorEvent } from "../utils";
 import { EditorEventBus } from "../events";
 import { isHotkeyPressed } from "react-hotkeys-hook";
@@ -114,11 +114,17 @@ export const createCanvasStore = <
           [],
         ),
       get: ({ blockId }) => get().schema[blockId],
-      add: ({ block, id, shouldEmit = true }) => {
+      add: ({ block, id, shouldEmit = true, index = -1 }) => {
         const blockId = id ?? get().uniqueId(block.type);
 
+        const payload = [blockId, block] as [string, Draft<BlockType>];
         set((state) => {
-          state.schema[blockId] = block as Draft<BlockType>;
+          const schema = Object.entries(state.schema);
+
+          if (index !== -1) schema.splice(index, 0, payload);
+          else schema.push(payload);
+
+          state.schema = Object.fromEntries(schema);
           state.active = [blockId];
         });
 
@@ -198,7 +204,21 @@ export const createCanvasStore = <
         }),
       remove: ({ blockId, shouldEmit = true }) =>
         set((state) => {
-          const block = { ...get().schema[blockId] };
+          let index = -1;
+          let blockContent: BlockType | undefined;
+
+          state.schema = Object.entries(state.schema).reduce<
+            Record<string, Draft<BlockType>>
+          >((prev, [id, block], i) => {
+            if (block)
+              if (id === blockId) {
+                index = i;
+                blockContent = original(block);
+              } else prev[id] = block;
+
+            return prev;
+          }, {});
+
           // Deleting the block
           delete state.schema[blockId];
 
@@ -210,7 +230,8 @@ export const createCanvasStore = <
           if (shouldEmit)
             emitter(EditorEvent.BLOCK_DELETION, {
               blockId,
-              block: block as BlockType,
+              block: blockContent as BlockType,
+              index,
             });
         }),
       move: ({ from, to, shouldEmit = true }) =>

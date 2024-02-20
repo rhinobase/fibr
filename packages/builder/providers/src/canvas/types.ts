@@ -37,6 +37,7 @@ export type AddBlockProps<
 > = ShouldEmitEvent<{
   block: BlockType<T, U>;
   id?: string;
+  index?: number;
 }>;
 
 export type UpdateBlockProps<
