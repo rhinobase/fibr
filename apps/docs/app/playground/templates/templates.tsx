@@ -58,37 +58,6 @@ export const TEMPLATES: Record<
       },
     },
     {
-      id: "sign-in",
-      name: "Sign In",
-      icon: GoProjectTemplate,
-      template: {
-        canvas: {
-          type: "canvas",
-          title: "Sign In",
-        },
-        email: {
-          type: "string",
-          data: {
-            inputType: "email",
-            label: "Email",
-            description: "Enter your email id",
-            required: true,
-            prefixIcon: "envelope",
-          },
-          parentNode: "canvas",
-        },
-        password: {
-          type: "password",
-          data: {
-            label: "Password",
-            description: "Enter password",
-            required: true,
-          },
-          parentNode: "canvas",
-        },
-      },
-    },
-    {
       id: "sign-up",
       name: "Sign Up",
       icon: GoProjectTemplate,
