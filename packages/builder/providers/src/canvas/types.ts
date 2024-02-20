@@ -1,5 +1,9 @@
 import type { ThreadType, ThreadWithIdType } from "@fibr/react";
 
+export type ShouldEmitEvent<T> = {
+  shouldEmit?: boolean;
+} & T;
+
 export type BlockType<
   T = undefined,
   U extends Record<string, unknown> = Record<string, unknown>,
@@ -18,41 +22,40 @@ export type BlockWithIdType<
   U extends Record<string, unknown> = Record<string, unknown>,
 > = ThreadWithIdType<BlockType<T, U>>;
 
-export type BlockFilters = {
-  parentNode?: string;
-  selected?: boolean;
-};
+export type AllBlocksProps = ShouldEmitEvent<{
+  filters?: {
+    parentNode?: string;
+    selected?: boolean;
+  };
+}>;
 
-export type UniqueIdProps = { type: string };
-
-export type AllBlocksProps = {
-  filters?: BlockFilters;
-};
-
-export type GetBlockProps = { blockId: string };
+export type GetBlockProps = ShouldEmitEvent<{ blockId: string }>;
 
 export type AddBlockProps<
   T = undefined,
   U extends Record<string, unknown> = Record<string, unknown>,
-> = {
+> = ShouldEmitEvent<{
   block: BlockType<T, U>;
   id?: string;
-};
+}>;
 
 export type UpdateBlockProps<
   T = undefined,
   U extends Record<string, unknown> = Record<string, unknown>,
-> = {
+> = ShouldEmitEvent<{
   blockId: string;
   values: Partial<BlockType<T, U>>;
-};
+}>;
 
-export type UpdateIdBlockProps = { blockId: string; newId: string };
+export type UpdateIdBlockProps = ShouldEmitEvent<{
+  blockId: string;
+  newId: string;
+}>;
 
-export type RemoveBlockProps = { blockId: string };
+export type RemoveBlockProps = ShouldEmitEvent<{ blockId: string }>;
 
-export type MoveBlockProps = { from: string; to: string };
+export type MoveBlockProps = ShouldEmitEvent<{ from: string; to: string }>;
 
-export type SelectBlockProps = { blockId: string | null };
+export type SelectBlockProps = ShouldEmitEvent<{ blockId: string | null }>;
 
-export type DuplicateBlockProps = { blockId: string };
+export type DuplicateBlockProps = ShouldEmitEvent<{ blockId: string }>;

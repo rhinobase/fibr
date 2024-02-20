@@ -75,16 +75,17 @@ function useShortcutsManager() {
         data as EditorEventListenerProps[EditorEvent.BLOCK_ID_UPDATION];
 
       if (action === ActionType.UNDO)
-        updateId({ blockId: newId, newId: blockId });
-      else updateId({ blockId, newId });
+        updateId({ blockId: newId, newId: blockId, shouldEmit: false });
+      else updateId({ blockId, newId, shouldEmit: false });
     }
 
     if (event_type === EditorEvent.BLOCK_ADDITION) {
       const { block, id } =
         data as EditorEventListenerProps[EditorEvent.BLOCK_ADDITION];
 
-      if (action === ActionType.UNDO) remove({ blockId: id ?? "" });
-      else add({ block, id });
+      if (action === ActionType.UNDO)
+        remove({ blockId: id ?? "", shouldEmit: false });
+      else add({ block, id, shouldEmit: false });
     }
 
     if (event_type === EditorEvent.BLOCK_UPDATION) {
@@ -92,32 +93,35 @@ function useShortcutsManager() {
         data as EditorEventListenerProps[EditorEvent.BLOCK_UPDATION];
 
       if (action === ActionType.UNDO)
-        update({ blockId: id, values: oldValues });
-      else update({ blockId: id, values: updatedValues });
+        update({ blockId: id, values: oldValues, shouldEmit: false });
+      else update({ blockId: id, values: updatedValues, shouldEmit: false });
     }
 
     if (event_type === EditorEvent.BLOCK_DELETION) {
       const { blockId, block } =
         data as EditorEventListenerProps[EditorEvent.BLOCK_DELETION];
 
-      if (action === ActionType.UNDO) add({ block, id: blockId });
-      else remove({ blockId });
+      if (action === ActionType.UNDO)
+        add({ block, id: blockId, shouldEmit: false });
+      else remove({ blockId, shouldEmit: false });
     }
 
     if (event_type === EditorEvent.BLOCK_REPOSITION) {
       const { from, to } =
         data as EditorEventListenerProps[EditorEvent.BLOCK_REPOSITION];
 
-      if (action === ActionType.UNDO) move({ to: from, from: to });
-      else move({ to, from });
+      if (action === ActionType.UNDO)
+        move({ to: from, from: to, shouldEmit: false });
+      else move({ to, from, shouldEmit: false });
     }
 
     if (event_type === EditorEvent.BLOCK_DUPLICATION) {
       const { newId, block } =
         data as EditorEventListenerProps[EditorEvent.BLOCK_DUPLICATION];
 
-      if (action === ActionType.UNDO) remove({ blockId: newId });
-      else add({ id: newId, block });
+      if (action === ActionType.UNDO)
+        remove({ blockId: newId, shouldEmit: false });
+      else add({ id: newId, block, shouldEmit: false });
     }
 
     if (event_type === EditorEvent.SCHEMA_RESET) {
