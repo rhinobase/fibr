@@ -147,10 +147,16 @@ export const createCanvasStore = <
         set((state) => {
           const block = state.schema[blockId];
           if (block && !(newId in state.schema)) {
-            // Deleting the old block
-            delete state.schema[blockId];
-            // Adding the new block
-            state.schema[newId] = block;
+            // Updating schema with the new Id
+            state.schema = Object.entries(state.schema).reduce<
+              Record<string, Draft<BlockType>>
+            >((prev, [id, block]) => {
+              if (block)
+                if (id === blockId) prev[newId] = block;
+                else prev[id] = block;
+
+              return prev;
+            }, {});
 
             // Updating the active block
             state.active = [newId];
