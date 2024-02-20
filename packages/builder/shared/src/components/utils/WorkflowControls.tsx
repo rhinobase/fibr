@@ -78,57 +78,61 @@ export function WorkflowControls({
     >
       {showZoom && (
         <>
-          <Button
+          <CustomButton
             title="zoom in"
             aria-label="zoom in"
-            size="icon"
-            variant="ghost"
-            className="rounded p-1"
             isDisabled={maxZoomReached}
             onClick={onZoomInHandler}
             onKeyDown={onZoomInHandler}
           >
             <HiPlus />
-          </Button>
-          <Button
+          </CustomButton>
+          <CustomButton
             title="zoom out"
             aria-label="zoom out"
-            size="icon"
-            variant="ghost"
-            className="rounded p-1"
             isDisabled={minZoomReached}
             onClick={onZoomOutHandler}
             onKeyDown={onZoomOutHandler}
           >
             <HiMinus />
-          </Button>
+          </CustomButton>
         </>
       )}
       {showFitView && (
-        <Button
+        <CustomButton
           title="fit view"
           aria-label="fit view"
-          size="icon"
-          variant="ghost"
-          className="rounded p-1"
           onClick={onFitViewHandler}
         >
           <PiCornersOut className="stroke-[3]" />
-        </Button>
+        </CustomButton>
       )}
       {showInteractive && (
-        <Button
+        <CustomButton
           title="toggle interactivity"
           aria-label="toggle interactivity"
-          size="icon"
-          variant="ghost"
-          className="rounded p-1"
           onClick={onToggleInteractivity}
         >
           {isInteractive ? <HiLockOpen /> : <HiLockClosed />}
-        </Button>
+        </CustomButton>
       )}
       {children}
     </Panel>
+  );
+}
+
+function CustomButton({
+  size = "icon",
+  variant = "ghost",
+  className,
+  ...props
+}: Button) {
+  return (
+    <Button
+      size={size}
+      variant={variant}
+      {...props}
+      className={classNames("rounded p-1", className)}
+    />
   );
 }
