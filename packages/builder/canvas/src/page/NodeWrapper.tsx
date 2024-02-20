@@ -1,6 +1,5 @@
 import { useCanvas } from "@fibr/providers";
 import { useThread } from "@fibr/react";
-import { eventHandler } from "@rafty/shared";
 import { type PropsWithChildren } from "react";
 import { NodeResizer } from "reactflow";
 
@@ -13,14 +12,10 @@ export function NodeWrapper(props: PropsWithChildren) {
     active,
   }));
 
-  const onSelect = eventHandler(() => select({ blockId: id }));
+  const onSelect = () => select({ blockId: id });
 
   return (
-    <div
-      className="h-full w-full bg-white p-2"
-      onClick={onSelect}
-      onKeyDown={onSelect}
-    >
+    <div className="h-full w-full bg-white p-2" onPointerDown={onSelect}>
       {!PANELS.includes(type) && (
         <NodeResizer isVisible={active.includes(id)} />
       )}
