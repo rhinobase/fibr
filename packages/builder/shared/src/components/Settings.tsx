@@ -13,7 +13,7 @@ export function Settings() {
   }));
 
   const blockId = active[0];
-  const block = get(blockId);
+  const block = get({ blockId });
 
   const config = useBlocks((state) => state.config);
 
@@ -59,7 +59,9 @@ export function Settings() {
             <Thread
               id={blockId}
               {...block}
-              _update={(values: Partial<BlockType>) => update(blockId, values)}
+              _update={(values: Partial<BlockType>) =>
+                update({ blockId, values })
+              }
             />
           </FibrProvider>
         )}

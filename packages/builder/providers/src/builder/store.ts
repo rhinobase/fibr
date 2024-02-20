@@ -3,6 +3,14 @@ import { immer } from "zustand/middleware/immer";
 import { EditorEvent, Env } from "../utils";
 import _ from "lodash";
 import { EditorEventBus } from "../events";
+import {
+  ActiveTabProps,
+  AddTabProps,
+  EnvChangeProps,
+  GetTabProps,
+  Layout,
+  LayoutUpdateProps,
+} from "./types";
 
 export type TabPayload = {
   name: string;
@@ -18,25 +26,19 @@ export type CreateBuilderStoreProps = {
   emitter?: EditorEventBus["broadcast"];
 };
 
-export type Layout = {
-  sidebar: boolean;
-  shortcutsDialog: boolean;
-  commandPalette: boolean;
-};
-
 export type BuilderStore = {
   tabs: {
     all: Record<string, Omit<TabPayload, "name">>;
-    add: (tab: TabPayload) => void;
-    get: (tab: string) => Omit<TabPayload, "name"> | undefined;
+    add: (props: AddTabProps) => void;
+    get: (props: GetTabProps) => Omit<TabPayload, "name"> | undefined;
     active: string | null;
-    setActive: (tabId: string | null) => void;
+    setActive: (props: ActiveTabProps) => void;
   };
   layout: Layout;
-  setLayout: (values: Partial<Layout>) => void;
+  setLayout: (props: LayoutUpdateProps) => void;
   env: {
     current: Env;
-    change: (env: Env) => void;
+    change: (props: EnvChangeProps) => void;
   };
 };
 
@@ -50,7 +52,7 @@ export const createBuilderStore = ({
       tabs: {
         all: tabs,
         active: null,
-        add: (payload) =>
+        add: ({ payload }) =>
           set((state) => {
             const { name, ...data } = payload;
 
@@ -61,8 +63,8 @@ export const createBuilderStore = ({
             if (noOfTabs === 1) state.tabs.active = name;
             emitter(EditorEvent.ADD_TAB, payload);
           }),
-        get: (tabId) => get().tabs.all[tabId],
-        setActive: (tabId) =>
+        get: ({ tabId }) => get().tabs.all[tabId],
+        setActive: ({ tabId }) =>
           set((state) => {
             state.tabs.active = tabId;
             emitter(EditorEvent.ACTIVE_TAB, { tabId });
@@ -70,7 +72,7 @@ export const createBuilderStore = ({
       },
       env: {
         current: env,
-        change: (env) =>
+        change: ({ env }) =>
           set((state) => {
             state.env.current = env;
             emitter(EditorEvent.ENV_CHANGE, { env });
@@ -81,7 +83,7 @@ export const createBuilderStore = ({
         shortcutsDialog: false,
         commandPalette: false,
       },
-      setLayout: (values) =>
+      setLayout: ({ values }) =>
         set((state) => {
           state.layout = _.merge(state.layout, values);
           emitter(EditorEvent.LAYOUT_UPDATE, { values });

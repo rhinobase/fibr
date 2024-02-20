@@ -1,6 +1,20 @@
-import { ThreadType } from "@fibr/react";
-import { Layout, TabPayload } from "../builder";
-import { EditorEvent, Env } from "../utils";
+import { TabPayload } from "../builder";
+import {
+  ActiveTabProps,
+  EnvChangeProps,
+  LayoutUpdateProps,
+} from "../builder/types";
+import {
+  AddBlockProps,
+  BlockWithIdType,
+  DuplicateBlockProps,
+  MoveBlockProps,
+  RemoveBlockProps,
+  SelectBlockProps,
+  UpdateBlockProps,
+  UpdateIdBlockProps,
+} from "../canvas";
+import { EditorEvent } from "../utils";
 
 export type EditorEventListenerProps = {
   [EditorEvent.ALL]: unknown;
@@ -10,37 +24,20 @@ export type EditorEventListenerProps = {
     key: string;
   };
   // Canvas
-  [EditorEvent.SCHEMA_RESET]: Record<string, unknown>;
+  [EditorEvent.SCHEMA_RESET]: { blocks: BlockWithIdType[] };
   // Blocks
-  [EditorEvent.BLOCK_ADDITION]: {
-    block: ThreadType;
-  };
-  [EditorEvent.BLOCK_UPDATION]: {
-    blockId: string;
-    values: Partial<ThreadType>;
-  };
-  [EditorEvent.BLOCK_ID_UPDATION]: {
-    blockId: string;
-    newId: string;
-  };
-  [EditorEvent.BLOCK_DELETION]: {
-    blockId: string;
-  };
-  [EditorEvent.BLOCK_REPOSITION]: {
-    from: string;
-    to: string;
-  };
-  [EditorEvent.BLOCK_SELECTION]: { blockId: string | null };
-  [EditorEvent.BLOCK_DUPLICATION]: {
-    blockId: string;
-  };
+  [EditorEvent.BLOCK_ADDITION]: AddBlockProps;
+  [EditorEvent.BLOCK_UPDATION]: UpdateBlockProps;
+  [EditorEvent.BLOCK_ID_UPDATION]: UpdateIdBlockProps;
+  [EditorEvent.BLOCK_DELETION]: RemoveBlockProps;
+  [EditorEvent.BLOCK_REPOSITION]: MoveBlockProps;
+  [EditorEvent.BLOCK_SELECTION]: SelectBlockProps;
+  [EditorEvent.BLOCK_DUPLICATION]: DuplicateBlockProps;
   // Layout
-  [EditorEvent.LAYOUT_UPDATE]: {
-    values: Partial<Layout>;
-  };
+  [EditorEvent.LAYOUT_UPDATE]: LayoutUpdateProps;
   // Env
-  [EditorEvent.ENV_CHANGE]: { env: Env };
+  [EditorEvent.ENV_CHANGE]: EnvChangeProps;
   // Tab
-  [EditorEvent.ACTIVE_TAB]: { tabId: string | null };
+  [EditorEvent.ACTIVE_TAB]: ActiveTabProps;
   [EditorEvent.ADD_TAB]: TabPayload;
 };

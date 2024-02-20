@@ -13,7 +13,7 @@ export function NodeWrapper(props: PropsWithChildren) {
     active,
   }));
 
-  const onSelect = eventHandler(() => select(id));
+  const onSelect = eventHandler(() => select({ blockId: id }));
 
   return (
     <div

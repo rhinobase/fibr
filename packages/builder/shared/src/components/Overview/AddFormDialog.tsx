@@ -51,8 +51,10 @@ function AddForm() {
     <form
       onSubmit={handleSubmit(({ title }) =>
         add({
-          title: title,
-          type: "canvas",
+          block: {
+            title: title,
+            type: "canvas",
+          },
         }),
       )}
       className="space-y-3"

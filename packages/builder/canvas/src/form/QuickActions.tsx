@@ -71,7 +71,7 @@ function IdEditField() {
 
   const handleClick = eventHandler(() => {
     toggle(true);
-    select(id);
+    select({ blockId: id });
   });
 
   const onSubmit = (
@@ -83,7 +83,7 @@ function IdEditField() {
     e.stopPropagation();
 
     // Updating the value
-    if (ref.current) updateId(id, ref.current.value);
+    if (ref.current) updateId({ blockId: id, newId: ref.current.value });
 
     toggle(false);
   };
@@ -137,14 +137,14 @@ function QuickActionButtons() {
   );
 
   const filters: BlockFilters = { parentNode };
-  const blocks = all(filters);
+  const blocks = all({ filters });
   const index = blocks.findIndex((block) => block.id === id);
 
   if (index === -1) return;
 
   const onMove = (direction: Direction) => {
-    select(id);
-    move(id, blocks[index + direction].id);
+    select({ blockId: id });
+    move({ from: id, to: blocks[index + direction].id });
   };
 
   return (
@@ -166,12 +166,12 @@ function QuickActionButtons() {
       <ActionButton
         name="Duplicate file"
         icon={MdOutlineAddToPhotos}
-        action={() => duplicate(id)}
+        action={() => duplicate({ blockId: id })}
       />
       <ActionButton
         name="Delete visual field"
         icon={MdOutlineDelete}
-        action={() => remove(id)}
+        action={() => remove({ blockId: id })}
       />
     </div>
   );

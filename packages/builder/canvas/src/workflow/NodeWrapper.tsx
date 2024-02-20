@@ -7,7 +7,7 @@ export function NodeWrapper(props: PropsWithChildren) {
   const { id } = useThread();
   const select = useCanvas(({ select }) => select);
 
-  const onSelect = eventHandler(() => select(id));
+  const onSelect = eventHandler(() => select({ blockId: id }));
 
   return (
     <div className="rounded bg-white" onClick={onSelect} onKeyDown={onSelect}>

@@ -25,7 +25,7 @@ export function Sidebar() {
       <Palette
         onSelect={(value) => {
           const parentNode = findParent(active, blocks);
-          add({ ...value, parentNode });
+          add({ block: { ...value, parentNode } });
         }}
       />
       <Overview blocks={blocks} />

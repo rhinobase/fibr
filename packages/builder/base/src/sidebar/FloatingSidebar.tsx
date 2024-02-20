@@ -25,7 +25,7 @@ export function FloatingSidebar({ children }: PropsWithChildren) {
 
   const { isProduction, defaultSize, isDisabled } = useBuilder(
     ({ env: { current }, layout: { sidebar }, tabs: { get, active } }) => {
-      const currentTab = active != null ? get(active) : undefined;
+      const currentTab = active != null ? get({ tabId: active }) : undefined;
 
       return {
         isProduction: current === Env.PRODUCTION,
@@ -71,7 +71,7 @@ function SidebarTray({ children }: SidebarTray) {
       active,
       setActive,
       isExpanded: layout.sidebar,
-      toggle: (value: boolean) => setLayout({ sidebar: value }),
+      toggle: (value: boolean) => setLayout({ values: { sidebar: value } }),
     }),
   );
 
@@ -97,10 +97,10 @@ function SidebarTray({ children }: SidebarTray) {
                     event.stopPropagation();
 
                     if (isExpanded && active === name) {
-                      setActive(null);
+                      setActive({ tabId: null });
                       toggle(false);
                     } else {
-                      setActive(name);
+                      setActive({ tabId: name });
                       toggle(true);
                     }
                   }}

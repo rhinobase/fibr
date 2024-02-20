@@ -59,7 +59,9 @@ function useShortcutsManager() {
     "mod+k",
     () =>
       setLayout({
-        commandPalette: !layout.commandPalette,
+        values: {
+          commandPalette: !layout.commandPalette,
+        },
       }),
     {
       description: "Command palette",
@@ -70,9 +72,11 @@ function useShortcutsManager() {
   useHotkeys(
     "mod+shift+a",
     () => {
-      setActive("palette");
+      setActive({ tabId: "palette" });
       setLayout({
-        sidebar: true,
+        values: {
+          sidebar: true,
+        },
       });
     },
     {
@@ -84,9 +88,11 @@ function useShortcutsManager() {
   useHotkeys(
     "mod+shift+d",
     () => {
-      setActive("overview");
+      setActive({ tabId: "overview" });
       setLayout({
-        sidebar: true,
+        values: {
+          sidebar: true,
+        },
       });
     },
     {
@@ -98,9 +104,11 @@ function useShortcutsManager() {
   useHotkeys(
     "mod+u",
     () => {
-      setActive("inspector");
+      setActive({ tabId: "inspector" });
       setLayout({
-        sidebar: true,
+        values: {
+          sidebar: true,
+        },
       });
     },
     {
@@ -112,7 +120,9 @@ function useShortcutsManager() {
   useHotkeys(
     "mod+alt+enter",
     () =>
-      setEnv(currentEnv === Env.DEVELOPMENT ? Env.PRODUCTION : Env.DEVELOPMENT),
+      setEnv({
+        env: currentEnv === Env.DEVELOPMENT ? Env.PRODUCTION : Env.DEVELOPMENT,
+      }),
     {
       description: "Toggle preview mode",
     },
@@ -122,7 +132,9 @@ function useShortcutsManager() {
     "shift+?",
     () =>
       setLayout({
-        shortcutsDialog: !layout.shortcutsDialog,
+        values: {
+          shortcutsDialog: !layout.shortcutsDialog,
+        },
       }),
     {
       description: "Shortcut dialog",
@@ -157,7 +169,9 @@ function useShortcutsManager() {
     "mod+b",
     () =>
       setLayout({
-        sidebar: !layout.sidebar,
+        values: {
+          sidebar: !layout.sidebar,
+        },
       }),
     { description: "Toggle sidebar", preventDefault: true },
     [layout.sidebar],

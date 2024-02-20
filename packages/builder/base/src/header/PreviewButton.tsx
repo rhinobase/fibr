@@ -9,7 +9,9 @@ export function PreviewButton() {
     ({ env: { current, change } }) => ({
       isDevelopment: current === Env.DEVELOPMENT,
       toggle: () =>
-        change(current === Env.DEVELOPMENT ? Env.PRODUCTION : Env.DEVELOPMENT),
+        change({
+          env: current === Env.DEVELOPMENT ? Env.PRODUCTION : Env.DEVELOPMENT,
+        }),
     }),
   );
 

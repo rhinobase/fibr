@@ -34,7 +34,7 @@ export function FieldWrapper({ children }: PropsWithChildren) {
 
   const onSelect = eventHandler((event) => {
     event.stopPropagation();
-    select(id);
+    select({ blockId: id });
   });
 
   if (field.type === "canvas")

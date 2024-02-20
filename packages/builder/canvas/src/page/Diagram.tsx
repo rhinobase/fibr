@@ -35,9 +35,10 @@ export function Diagram() {
 
   const onNodesChange: OnNodesChange = useCallback(
     (changes) =>
-      set(
-        (nds) => applyNodeChanges(changes, nds as Node[]) as BlockWithIdType[],
-      ),
+      set({
+        func: (nds) =>
+          applyNodeChanges(changes, nds as Node[]) as BlockWithIdType[],
+      }),
     [set],
   );
 

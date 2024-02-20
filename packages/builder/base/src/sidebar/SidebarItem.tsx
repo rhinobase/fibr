@@ -28,7 +28,7 @@ export function SidebarItem({
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: This needs to run only on init
   useEffect(() => {
-    add({ name, icon, label, isResizeable, defaultSize });
+    add({ payload: { name, icon, label, isResizeable, defaultSize } });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

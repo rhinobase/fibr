@@ -61,30 +61,31 @@ export function Diagram() {
 
   const onNodesChange: OnNodesChange = useCallback(
     (changes) =>
-      set(
-        (nds) => applyNodeChanges(changes, nds as Node[]) as BlockWithIdType[],
-      ),
+      set({
+        func: (nds) =>
+          applyNodeChanges(changes, nds as Node[]) as BlockWithIdType[],
+      }),
     [set],
   );
 
   const onEdgesChange: OnEdgesChange = useCallback(
     (changes) =>
-      set(
-        (edgs) =>
+      set({
+        func: (edgs) =>
           applyEdgeChanges(changes, edgs as Edge[]) as BlockWithIdType[],
-      ),
+      }),
     [set],
   );
 
   const onConnect = useCallback(
     (params: Connection) =>
-      set(
-        (eds) =>
+      set({
+        func: (eds) =>
           addEdge(
             { ...params, type: "edge" },
             eds as Edge[],
           ) as BlockWithIdType[],
-      ),
+      }),
     [set],
   );
 
@@ -153,21 +154,24 @@ export function Diagram() {
     (_, node) => {
       const closeEdge = getClosestEdge(node);
 
-      set((es) => {
-        const nextEdges = es.filter((e) => e.className !== "temp");
+      set({
+        func: (es) => {
+          const nextEdges = es.filter((e) => e.className !== "temp");
 
-        if (
-          closeEdge &&
-          !nextEdges.find(
-            (ne) =>
-              ne.source === closeEdge.source && ne.target === closeEdge.target,
-          )
-        ) {
-          closeEdge.className = "temp";
-          // @ts-ignore
-          nextEdges.push(closeEdge);
-        }
-        return nextEdges;
+          if (
+            closeEdge &&
+            !nextEdges.find(
+              (ne) =>
+                ne.source === closeEdge.source &&
+                ne.target === closeEdge.target,
+            )
+          ) {
+            closeEdge.className = "temp";
+            // @ts-ignore
+            nextEdges.push(closeEdge);
+          }
+          return nextEdges;
+        },
       });
     },
     [getClosestEdge, set],
@@ -177,20 +181,23 @@ export function Diagram() {
     (_, node) => {
       const closeEdge = getClosestEdge(node);
 
-      set((es) => {
-        const nextEdges = es.filter((e) => e.className !== "temp");
+      set({
+        func: (es) => {
+          const nextEdges = es.filter((e) => e.className !== "temp");
 
-        if (
-          closeEdge &&
-          !nextEdges.find(
-            (ne) =>
-              ne.source === closeEdge.source && ne.target === closeEdge.target,
+          if (
+            closeEdge &&
+            !nextEdges.find(
+              (ne) =>
+                ne.source === closeEdge.source &&
+                ne.target === closeEdge.target,
+            )
           )
-        )
-          // @ts-ignore
-          nextEdges.push(closeEdge);
+            // @ts-ignore
+            nextEdges.push(closeEdge);
 
-        return nextEdges;
+          return nextEdges;
+        },
       });
     },
     [getClosestEdge, set],

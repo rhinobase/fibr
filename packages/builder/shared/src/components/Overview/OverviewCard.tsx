@@ -48,9 +48,9 @@ export function OverviewCard({ id, type, groups }: OverviewCard) {
     transition,
   };
 
-  const handleNodeSelect = eventHandler(() => select(id));
+  const handleNodeSelect = eventHandler(() => select({ blockId: id }));
 
-  const handleNodeDelete = eventHandler(() => remove(id));
+  const handleNodeDelete = eventHandler(() => remove({ blockId: id }));
 
   const handleToggleCollapse = eventHandler(() =>
     setAccordionValue((prev) => (prev === id ? undefined : id)),

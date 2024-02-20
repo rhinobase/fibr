@@ -14,11 +14,11 @@ export function Sidebar() {
     all,
   }));
 
-  const blocks = all({ parentNode: "nodes" });
+  const blocks = all({ filters: { parentNode: "nodes" } });
 
   return (
     <FloatingSidebar>
-      <Palette enableDragging onSelect={(value) => add(value)} />
+      <Palette enableDragging onSelect={(value) => add({ block: value })} />
       <Overview blocks={blocks} />
       <InspectorPanel />
       <CodeGenerator

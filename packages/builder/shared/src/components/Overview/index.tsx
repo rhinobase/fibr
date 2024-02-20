@@ -44,10 +44,10 @@ function FieldsRender({ blocks }: Overview) {
   return (
     <DndWrapper
       items={blocks.map(({ id }) => id)}
-      onDragStart={({ active }) => select(String(active.id))}
+      onDragStart={({ active }) => select({ blockId: String(active.id) })}
       onDragEnd={({ active, over }) => {
         if (over && active.id !== over.id)
-          move(String(active.id), String(over.id));
+          move({ from: String(active.id), to: String(over.id) });
       }}
     >
       {groups[DEFAULT_GROUP]?.map(({ id, type }) => (
