@@ -56,7 +56,7 @@ export default function Playground() {
       initialEvents={{
         [EditorEvent.ALL]: [
           // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-          ({ type, ...props }: any) => console.log(type, props),
+          ({ event_type, ...props }: any) => console.log(event_type, props),
         ],
       }}
     >

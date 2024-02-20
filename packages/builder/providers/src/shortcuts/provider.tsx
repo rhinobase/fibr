@@ -8,8 +8,10 @@ import {
 import { useHotkeys } from "react-hotkeys-hook";
 import { useBuilder } from "../builder";
 import { EditorEvent, Env } from "../utils";
-import { useStack } from "./useStack";
+import { ActionType, useStack } from "./useStack";
 import { useEventBus } from "../events";
+import { useCanvas } from "../canvas";
+import { EditorEventListenerProps } from "../types";
 
 const ShortcutsContext = createContext<ReturnType<
   typeof useShortcutsManager
@@ -27,6 +29,16 @@ export function ShortcutsProvider({ children }: ShortcutsProvider) {
   );
 }
 
+const EDITOR_EVENT_STACK = [
+  EditorEvent.BLOCK_ADDITION,
+  EditorEvent.BLOCK_UPDATION,
+  EditorEvent.BLOCK_ID_UPDATION,
+  EditorEvent.BLOCK_DELETION,
+  EditorEvent.BLOCK_REPOSITION,
+  EditorEvent.BLOCK_DUPLICATION,
+  EditorEvent.SCHEMA_RESET,
+];
+
 function useShortcutsManager() {
   // const [, copyToClipboard] = useCopyToClipboard();
   const { layout, setLayout, setActive, currentEnv, setEnv } = useBuilder(
@@ -38,21 +50,93 @@ function useShortcutsManager() {
       setEnv: change,
     }),
   );
-  // const { get, add, active, remove } = useCanvas(
-  //   ({ active, get, add, remove }) => ({
-  //     get,
-  //     add,
-  //     remove,
-  //     active,
-  //   }),
-  // );
+  const { updateId, update, add, remove, move } = useCanvas(
+    ({ updateId, remove, add, update, move, duplicate }) => ({
+      update,
+      remove,
+      move,
+      add,
+      updateId,
+    }),
+  );
 
   // Undo & Redo
-  const stack = useStack(console.log);
-  const add = useEventBus((state) => state.add);
+  function resolveStackActions({
+    action,
+    data,
+  }: {
+    action: ActionType;
+    data: unknown;
+  }) {
+    const event_type = (data as { event_type: EditorEvent }).event_type;
+
+    if (event_type === EditorEvent.BLOCK_ID_UPDATION) {
+      const { blockId, newId } =
+        data as EditorEventListenerProps[EditorEvent.BLOCK_ID_UPDATION];
+
+      if (action === ActionType.UNDO)
+        updateId({ blockId: newId, newId: blockId });
+      else updateId({ blockId, newId });
+    }
+
+    if (event_type === EditorEvent.BLOCK_ADDITION) {
+      const { block, id } =
+        data as EditorEventListenerProps[EditorEvent.BLOCK_ADDITION];
+
+      if (action === ActionType.UNDO) remove({ blockId: id ?? "" });
+      else add({ block, id });
+    }
+
+    if (event_type === EditorEvent.BLOCK_UPDATION) {
+      const { id, updatedValues, oldValues } =
+        data as EditorEventListenerProps[EditorEvent.BLOCK_UPDATION];
+
+      if (action === ActionType.UNDO)
+        update({ blockId: id, values: oldValues });
+      else update({ blockId: id, values: updatedValues });
+    }
+
+    if (event_type === EditorEvent.BLOCK_DELETION) {
+      const { blockId, block } =
+        data as EditorEventListenerProps[EditorEvent.BLOCK_DELETION];
+
+      if (action === ActionType.UNDO) add({ block, id: blockId });
+      else remove({ blockId });
+    }
+
+    if (event_type === EditorEvent.BLOCK_REPOSITION) {
+      const { from, to } =
+        data as EditorEventListenerProps[EditorEvent.BLOCK_REPOSITION];
+
+      if (action === ActionType.UNDO) move({ to: from, from: to });
+      else move({ to, from });
+    }
+
+    if (event_type === EditorEvent.BLOCK_DUPLICATION) {
+      const { newId, block } =
+        data as EditorEventListenerProps[EditorEvent.BLOCK_DUPLICATION];
+
+      if (action === ActionType.UNDO) remove({ blockId: newId });
+      else add({ id: newId, block });
+    }
+
+    if (event_type === EditorEvent.SCHEMA_RESET) {
+      const { blocks } =
+        data as EditorEventListenerProps[EditorEvent.SCHEMA_RESET];
+
+      if (action === ActionType.UNDO) console.log(blocks);
+      else console.log(blocks);
+    }
+  }
+
+  const stack = useStack<unknown>(resolveStackActions);
+  const addEvent = useEventBus((state) => state.add);
 
   useEffect(() => {
-    add(EditorEvent.ALL, stack.pushAction);
+    // Actions
+    for (const event of EDITOR_EVENT_STACK) {
+      addEvent(event, stack.pushAction);
+    }
   }, []);
 
   useHotkeys(
@@ -162,6 +246,11 @@ function useShortcutsManager() {
 
   useHotkeys("mod+d", () => console.log("Duplicate"), {
     description: "Duplicate",
+    preventDefault: true,
+  });
+
+  useHotkeys("mod+g", () => console.log("Group"), {
+    description: "Group",
     preventDefault: true,
   });
 

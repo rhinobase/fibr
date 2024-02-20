@@ -56,7 +56,7 @@ export const createEditorEventBus = ({
       if (type !== EditorEvent.ALL)
         events.push(...(get().events[EditorEvent.ALL] ?? []));
 
-      const payload = { type, ...(context ?? {}) };
+      const payload = { event_type: type, ...(context ?? {}) };
 
       for (const event of events) {
         event(payload);

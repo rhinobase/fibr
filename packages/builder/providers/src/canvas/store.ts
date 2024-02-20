@@ -112,25 +112,32 @@ export const createCanvasStore = <
           [],
         ),
       get: ({ blockId }) => get().schema[blockId],
-      add: ({ block }) => {
-        const blockId = get().uniqueId({ type: block.type });
+      add: ({ block, id }) => {
+        const blockId = id ?? get().uniqueId({ type: block.type });
 
         set((state) => {
           state.schema[blockId] = block as Draft<BlockType>;
           state.active = [blockId];
         });
 
-        emitter(EditorEvent.BLOCK_ADDITION, { block: block as BlockType });
+        emitter(EditorEvent.BLOCK_ADDITION, {
+          block: block as BlockType,
+          id: blockId,
+        });
       },
       update: ({ blockId, values }) =>
         set((state) => {
-          // Updating the schema
-          state.schema[blockId] = _.merge(state.schema[blockId], values);
+          // Merging the current props with the new ones
+          const combinedValues = _.merge(state.schema[blockId], values);
 
           emitter(EditorEvent.BLOCK_UPDATION, {
-            blockId,
-            values: values as Partial<BlockType>,
+            id: blockId,
+            updatedValues: values as Partial<BlockType>,
+            oldValues: state.schema[blockId] as Partial<BlockType>,
           });
+
+          // Updating the schema
+          state.schema[blockId] = combinedValues;
         }),
       updateId: ({ blockId, newId }) => {
         set((state) => {
@@ -179,6 +186,7 @@ export const createCanvasStore = <
         }),
       remove: ({ blockId }) =>
         set((state) => {
+          const block = { ...get().schema[blockId] };
           // Deleting the block
           delete state.schema[blockId];
 
@@ -187,7 +195,10 @@ export const createCanvasStore = <
             state.active.filter((value) => value !== blockId);
 
           // Firing the event
-          emitter(EditorEvent.BLOCK_DELETION, { blockId });
+          emitter(EditorEvent.BLOCK_DELETION, {
+            blockId,
+            block: block as BlockType,
+          });
         }),
       move: ({ from, to }) =>
         set((state) => {
@@ -225,8 +236,10 @@ export const createCanvasStore = <
         if (!block)
           throw new Error(`Unable to find the block with Id ${blockId}`);
 
-        get().add({ block });
-        emitter(EditorEvent.BLOCK_DUPLICATION, { blockId });
+        const id = get().uniqueId({ type: block.type });
+
+        get().add({ block, id });
+        emitter(EditorEvent.BLOCK_DUPLICATION, { newId: id, block });
       },
     })),
   ) as UseBoundStore<StoreApi<CanvasStore<T, U>>>;

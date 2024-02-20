@@ -36,6 +36,7 @@ export type AddBlockProps<
   U extends Record<string, unknown> = Record<string, unknown>,
 > = {
   block: BlockType<T, U>;
+  id?: string;
 };
 
 export type UpdateBlockProps<

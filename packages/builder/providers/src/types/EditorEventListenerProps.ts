@@ -6,12 +6,11 @@ import {
 } from "../builder/types";
 import {
   AddBlockProps,
+  BlockType,
   BlockWithIdType,
-  DuplicateBlockProps,
   MoveBlockProps,
   RemoveBlockProps,
   SelectBlockProps,
-  UpdateBlockProps,
   UpdateIdBlockProps,
 } from "../canvas";
 import { EditorEvent } from "../utils";
@@ -27,12 +26,19 @@ export type EditorEventListenerProps = {
   [EditorEvent.SCHEMA_RESET]: { blocks: BlockWithIdType[] };
   // Blocks
   [EditorEvent.BLOCK_ADDITION]: AddBlockProps;
-  [EditorEvent.BLOCK_UPDATION]: UpdateBlockProps;
+  [EditorEvent.BLOCK_UPDATION]: {
+    id: string;
+    updatedValues: Partial<BlockType>;
+    oldValues: Partial<BlockType>;
+  };
   [EditorEvent.BLOCK_ID_UPDATION]: UpdateIdBlockProps;
-  [EditorEvent.BLOCK_DELETION]: RemoveBlockProps;
+  [EditorEvent.BLOCK_DELETION]: RemoveBlockProps & { block: BlockType };
   [EditorEvent.BLOCK_REPOSITION]: MoveBlockProps;
   [EditorEvent.BLOCK_SELECTION]: SelectBlockProps;
-  [EditorEvent.BLOCK_DUPLICATION]: DuplicateBlockProps;
+  [EditorEvent.BLOCK_DUPLICATION]: {
+    newId: string;
+    block: BlockType;
+  };
   // Layout
   [EditorEvent.LAYOUT_UPDATE]: LayoutUpdateProps;
   // Env
