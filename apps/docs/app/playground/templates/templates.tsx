@@ -125,6 +125,37 @@ export const TEMPLATES: Record<
       },
     },
     {
+      id: "nested",
+      name: "Nested",
+      icon: GoProjectTemplate,
+      template: {
+        canvas: {
+          type: "canvas",
+          title: "Nested",
+        },
+        name: {
+          type: "string",
+          data: {
+            label: "Student's Name",
+            description: "Enter your full name",
+          },
+          parentNode: "canvas",
+        },
+        father: {
+          type: "canvas",
+          title: "Father",
+          parentNode: "canvas",
+        },
+        father_name: {
+          type: "string",
+          data: {
+            label: "Father's Name",
+          },
+          parentNode: "father",
+        },
+      },
+    },
+    {
       id: "custom",
       name: "Custom Form",
       icon: FiArrowRight,
