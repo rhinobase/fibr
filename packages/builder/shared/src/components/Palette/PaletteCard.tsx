@@ -26,7 +26,7 @@ export function PaletteCard({
     data: block,
   });
 
-  const dragableProps = enableDragging
+  const draggableProps = enableDragging
     ? {
         ref: setNodeRef,
         ...attributes,
@@ -41,7 +41,7 @@ export function PaletteCard({
       className={classNames("w-[72px]", !isOverlay && "space-y-1")}
       onClick={handleSelect}
       onKeyDown={handleSelect}
-      {...dragableProps}
+      {...draggableProps}
     >
       <div
         className={classNames(

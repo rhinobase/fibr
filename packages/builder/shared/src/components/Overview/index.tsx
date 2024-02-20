@@ -2,7 +2,6 @@ import { SidebarItem } from "@fibr/builder";
 import { useCanvas, type BlockWithIdType } from "@fibr/providers";
 import { ListBulletIcon } from "@heroicons/react/24/outline";
 import { DEFAULT_GROUP, DndWrapper, Empty, groupByParentNode } from "../utils";
-import { AddFormDialog } from "./AddFormDialog";
 import { OverviewCard } from "./OverviewCard";
 import { OverviewOverlay } from "./OverviewOverlay";
 import { Accordion } from "@rafty/ui";
@@ -10,22 +9,23 @@ import { useState } from "react";
 
 export type Overview = {
   blocks: BlockWithIdType[];
-};
+} & Pick<SidebarItem, "action"> &
+  Pick<OverviewCard, "enableDragging">;
 
-export function Overview(props: Overview) {
+export function Overview({ action, ...props }: Overview) {
   return (
     <SidebarItem
       name="overview"
       label="Overview"
       icon={<ListBulletIcon className="h-5 w-5 stroke-2" />}
-      action={<AddFormDialog />}
+      action={action}
     >
       <FieldsRender {...props} />
     </SidebarItem>
   );
 }
 
-function FieldsRender({ blocks }: Overview) {
+function FieldsRender({ blocks, enableDragging }: Overview) {
   const [isOpen, setOpen] = useState<string[]>([]);
   const { select, move } = useCanvas(({ move, select }) => ({
     select,
@@ -67,6 +67,7 @@ function FieldsRender({ blocks }: Overview) {
                 return [...prev, value];
               })
             }
+            enableDragging={enableDragging}
           />
         ))}
       </Accordion>

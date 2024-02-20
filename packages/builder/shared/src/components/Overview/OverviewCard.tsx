@@ -33,9 +33,16 @@ export type OverviewCard = {
   type: string;
   groups?: Record<string, BlockWithIdType[] | undefined>;
   onToggle?: (value: string) => void;
+  enableDragging?: boolean;
 };
 
-export function OverviewCard({ id, type, groups, onToggle }: OverviewCard) {
+export function OverviewCard({
+  id,
+  type,
+  groups,
+  onToggle,
+  enableDragging = false,
+}: OverviewCard) {
   const { active, select, remove } = useCanvas(
     ({ select, remove, active }) => ({
       active,
@@ -54,6 +61,13 @@ export function OverviewCard({ id, type, groups, onToggle }: OverviewCard) {
     transition,
   };
 
+  const draggableProps = enableDragging
+    ? {
+        style: nodeStyle,
+        ref: setNodeRef,
+      }
+    : {};
+
   const handleNodeSelect = eventHandler(() => select({ blockId: id }));
 
   const handleNodeDelete = eventHandler(() => remove({ blockId: id }));
@@ -66,7 +80,7 @@ export function OverviewCard({ id, type, groups, onToggle }: OverviewCard) {
   const CardRender = () => (
     <>
       <span className="flex items-center">
-        <DragHandler {...attributes} {...listeners} />
+        {enableDragging && <DragHandler {...attributes} {...listeners} />}
         {hasChildren && (
           <CollapseButton
             onClick={handleToggleCollapse}
@@ -91,8 +105,7 @@ export function OverviewCard({ id, type, groups, onToggle }: OverviewCard) {
         <AccordionTrigger
           className={cardClasses({ selected: active.includes(id) })}
           showIcon={false}
-          style={nodeStyle}
-          ref={setNodeRef}
+          {...draggableProps}
           onClick={handleNodeSelect}
           onKeyDown={handleNodeSelect}
         >
@@ -105,6 +118,7 @@ export function OverviewCard({ id, type, groups, onToggle }: OverviewCard) {
               {...block}
               groups={groups}
               onToggle={onToggle}
+              enableDragging={enableDragging}
             />
           ))}
         </AccordionContent>
@@ -113,8 +127,7 @@ export function OverviewCard({ id, type, groups, onToggle }: OverviewCard) {
 
   return (
     <div
-      ref={setNodeRef}
-      style={nodeStyle}
+      {...draggableProps}
       className={classNames(
         accordionTriggerClasses(),
         cardClasses({ selected: active.includes(id) }),

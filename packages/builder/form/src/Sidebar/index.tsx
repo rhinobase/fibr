@@ -10,6 +10,7 @@ import {
   groupByParentNode,
 } from "@fibr/shared";
 import { reactHookFormResolver } from "./resolver";
+import { AddFormDialog } from "./AddFormDialog";
 
 export function Sidebar() {
   const { add, all, active } = useCanvas(({ add, all, active }) => ({
@@ -28,7 +29,7 @@ export function Sidebar() {
           add({ block: { ...value, parentNode } });
         }}
       />
-      <Overview blocks={blocks} />
+      <Overview blocks={blocks} action={<AddFormDialog />} enableDragging />
       <InspectorPanel />
       <CodeGenerator
         resolvers={[

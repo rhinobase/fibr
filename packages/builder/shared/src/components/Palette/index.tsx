@@ -10,9 +10,8 @@ import { PaletteCard } from "./PaletteCard";
 import { PaletteCardOverlay } from "./PaletteCardOverlay";
 
 export type Palette = {
-  enableDragging?: boolean;
   onSelect: PaletteCard["onSelect"];
-};
+} & Pick<PaletteCard, "enableDragging">;
 
 export function Palette({ enableDragging = false, onSelect }: Palette) {
   const blocks = useBlocks((state) => state.blocks);
