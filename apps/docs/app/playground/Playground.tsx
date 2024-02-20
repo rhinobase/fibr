@@ -67,7 +67,7 @@ export default function Playground() {
       <TemplateDialog
         container={container}
         onContainerChange={setContainer}
-        onSelect={setTemplate}
+        onSelect={(value) => setTemplate(value as PanelProps["template"])}
       />
       {template ? (
         <Component template={template} />
