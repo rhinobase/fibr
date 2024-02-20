@@ -6,6 +6,6 @@ export const adjustTranslate: Modifier = ({ transform }) => {
   // This modification can be used, for example, to lift an element by 25 pixels when dragging
   return {
     ...transform, // Keeping the other properties of the transform unchanged
-    y: transform.y - 25, // Adjusting the translateY property
+    // y: transform.y - 10, // Adjusting the translateY property
   };
 };

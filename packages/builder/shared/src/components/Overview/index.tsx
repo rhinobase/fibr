@@ -5,6 +5,8 @@ import { DEFAULT_GROUP, DndWrapper, Empty, groupByParentNode } from "../utils";
 import { AddFormDialog } from "./AddFormDialog";
 import { OverviewCard } from "./OverviewCard";
 import { OverviewOverlay } from "./OverviewOverlay";
+import { Accordion } from "@rafty/ui";
+import { useState } from "react";
 
 export type Overview = {
   blocks: BlockWithIdType[];
@@ -24,6 +26,7 @@ export function Overview(props: Overview) {
 }
 
 function FieldsRender({ blocks }: Overview) {
+  const [isOpen, setOpen] = useState<string[]>([]);
   const { select, move } = useCanvas(({ move, select }) => ({
     select,
     move,
@@ -50,9 +53,23 @@ function FieldsRender({ blocks }: Overview) {
           move({ from: String(active.id), to: String(over.id) });
       }}
     >
-      {groups[DEFAULT_GROUP]?.map(({ id, type }) => (
-        <OverviewCard key={id} id={id} type={type} groups={groups} />
-      ))}
+      <Accordion type="multiple" value={isOpen} onValueChange={setOpen}>
+        {groups[DEFAULT_GROUP]?.map(({ id, type }) => (
+          <OverviewCard
+            key={id}
+            id={id}
+            type={type}
+            groups={groups}
+            onToggle={(value) =>
+              setOpen((prev) => {
+                if (prev.includes(value))
+                  return prev.filter((val) => val !== value);
+                return [...prev, value];
+              })
+            }
+          />
+        ))}
+      </Accordion>
       <OverviewOverlay />
     </DndWrapper>
   );
