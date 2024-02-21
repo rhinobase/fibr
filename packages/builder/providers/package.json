@@ -5,7 +5,6 @@
     "@dnd-kit/sortable": "^8.0.0",
     "@fibr/react": "^0.0.1",
     "@swc/helpers": "^0.5.3",
-    "@uidotdev/usehooks": "^2.4.1",
     "immer": "^10.0.3",
     "lodash": "^4.17.21",
     "react-hotkeys-hook": "^4.5.0",
