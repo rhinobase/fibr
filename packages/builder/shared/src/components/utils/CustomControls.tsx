@@ -13,9 +13,9 @@ import {
   useStoreApi,
 } from "reactflow";
 
-export type WorkflowControls = ControlProps;
+export type CustomControls = ControlProps;
 
-export function WorkflowControls({
+export function CustomControls({
   showZoom = true,
   showFitView = true,
   showInteractive = true,
@@ -29,7 +29,7 @@ export function WorkflowControls({
   position = "bottom-center",
   "aria-label": ariaLabel = "React Flow controls",
   ...props
-}: WorkflowControls) {
+}: CustomControls) {
   const store = useStoreApi();
   const { isInteractive, minZoomReached, maxZoomReached } = useStore(
     (state) => ({

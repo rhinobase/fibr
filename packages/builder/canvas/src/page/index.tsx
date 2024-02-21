@@ -1,7 +1,7 @@
 import { useDroppable } from "@dnd-kit/core";
 import { useCanvas } from "@fibr/providers";
 import { WeaverProvider } from "@fibr/react";
-import { Canvas, WorkflowControls } from "@fibr/shared";
+import { Canvas, CustomControls } from "@fibr/shared";
 import { eventHandler } from "@rafty/shared";
 import { Button, useBoolean } from "@rafty/ui";
 import { FormProvider, useForm } from "react-hook-form";
@@ -27,7 +27,7 @@ export function PageCanvas() {
             <Diagram />
           </WeaverProvider>
         </div>
-        <WorkflowControls>
+        <CustomControls>
           <Button
             title="toggle interactivity"
             aria-label="toggle interactivity"
@@ -38,7 +38,7 @@ export function PageCanvas() {
           >
             {isMobile ? <HiComputerDesktop /> : <HiDevicePhoneMobile />}
           </Button>
-        </WorkflowControls>
+        </CustomControls>
       </Canvas>
     </FormProvider>
   );

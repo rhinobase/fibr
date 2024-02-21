@@ -1,4 +1,4 @@
-import { Canvas, WorkflowControls } from "@fibr/shared";
+import { Canvas, CustomControls } from "@fibr/shared";
 import "reactflow/dist/base.css";
 import { Diagram } from "./Diagram";
 import { useDroppable } from "@dnd-kit/core";
@@ -21,7 +21,7 @@ export function WorkflowCanvas() {
       <WeaverProvider wrapper={NodeWrapper}>
         <Diagram />
       </WeaverProvider>
-      <WorkflowControls />
+      <CustomControls />
     </Canvas>
   );
 }

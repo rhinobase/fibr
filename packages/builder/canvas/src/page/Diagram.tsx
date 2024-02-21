@@ -44,7 +44,7 @@ export function Diagram() {
     [set, shouldEmit],
   );
 
-  const builders = useMemo(
+  const nodeTypes = useMemo(
     () =>
       Object.keys(config).reduce<NodeTypes>((prev, name) => {
         prev[name] = Thread;
@@ -65,7 +65,7 @@ export function Diagram() {
         onNodeDragStop={() => toggle(true)}
         fitViewOptions={fitViewOptions}
         defaultEdgeOptions={defaultEdgeOptions}
-        nodeTypes={builders}
+        nodeTypes={nodeTypes}
         proOptions={{ hideAttribution: true }}
         selectionMode={SelectionMode.Partial}
         selectionOnDrag

@@ -3,7 +3,7 @@ export {
   Empty,
   SharedWrapper,
   highlightMatches,
-  WorkflowControls,
+  CustomControls,
   groupByParentNode,
   DEFAULT_GROUP,
   Portal,

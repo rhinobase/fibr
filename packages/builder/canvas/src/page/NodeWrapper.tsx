@@ -1,5 +1,5 @@
 import { useThread } from "@fibr/react";
-import { classNames } from "@rafty/ui";
+import { classNames, useBoolean } from "@rafty/ui";
 import { type PropsWithChildren } from "react";
 import {
   ControlPosition,
@@ -10,7 +10,7 @@ import {
 
 const PANELS = ["page"];
 
-export function NodeWrapper(props: PropsWithChildren) {
+export function NodeWrapper({ children }: PropsWithChildren) {
   const { type, selected } = useThread<Node>();
 
   const isGroup = PANELS.includes(type);
@@ -29,19 +29,21 @@ export function NodeWrapper(props: PropsWithChildren) {
           <ResizeNodeBorder position="right" />
         </>
       )}
-      {props.children}
+      {children}
     </div>
   );
 }
 
 function ResizeNodeBorder({ position }: { position: ControlPosition }) {
-  const { resizing } = useThread<Node>();
+  const [resizing, toggle] = useBoolean();
 
   return (
     <NodeResizeControl
       variant={ResizeControlVariant.Line}
       position={position}
       style={{ border: "none" }}
+      onResizeStart={() => toggle(true)}
+      onResizeEnd={() => toggle(false)}
     >
       <div
         className={classNames(
