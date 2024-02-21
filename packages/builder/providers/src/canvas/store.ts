@@ -1,18 +1,14 @@
+import { arrayMove } from "@dnd-kit/sortable";
+import { type Draft } from "immer";
 import _ from "lodash";
 import { StoreApi, UseBoundStore, create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { original, type Draft } from "immer";
-import { EditorEvent } from "../utils";
 import { EditorEventBus } from "../events";
-import { isHotkeyPressed } from "react-hotkeys-hook";
-import { arrayMove } from "@dnd-kit/sortable";
+import { EditorEvent } from "../utils";
 import {
   AddBlockProps,
-  AllBlocksProps,
   BlockType,
-  BlockWithIdType,
   DuplicateBlockProps,
-  GetBlockProps,
   MoveBlockProps,
   RemoveBlockProps,
   SelectBlockProps,
@@ -21,27 +17,18 @@ import {
   UpdateIdBlockProps,
 } from "./types";
 
-export type CanvasStoreProps<
-  T = undefined,
-  U extends Record<string, unknown> = Record<string, unknown>,
-> = {
-  initialSchema?: CanvasStore<T, U>["schema"];
-  defaultActiveBlocks?: string[];
+export type CanvasStoreProps = {
+  initialSchema?: BlockType[];
   emitter?: EditorEventBus["broadcast"];
 };
 
-export type CanvasStore<
-  T = undefined,
-  U extends Record<string, unknown> = Record<string, unknown>,
-> = {
-  schema: Record<string, BlockType | undefined>;
-  active: string[];
+export type CanvasStore = {
+  schema: BlockType[];
   // Generating unique keys for components
   _unique: Record<string, number>;
   uniqueId: (type: string) => string;
   // ---
-  all: (props?: AllBlocksProps) => BlockWithIdType<T, U>[];
-  get: (props: GetBlockProps) => BlockType | undefined;
+  get: (props: { blockId: string }) => BlockType | undefined;
   add: <
     T = undefined,
     U extends Record<string, unknown> = Record<string, unknown>,
@@ -54,9 +41,12 @@ export type CanvasStore<
   >(
     props: UpdateBlockProps<T, U>,
   ) => void;
-  set: (
+  set: <
+    T = undefined,
+    U extends Record<string, unknown> = Record<string, unknown>,
+  >(
     props: ShouldEmitEvent<{
-      func: (values: BlockWithIdType<T, U>[]) => BlockWithIdType<T, U>[];
+      func: (values: BlockType<T, U>[]) => BlockType<T, U>[];
     }>,
   ) => void;
   updateId: (props: UpdateIdBlockProps) => void;
@@ -66,18 +56,13 @@ export type CanvasStore<
   duplicate: (props: DuplicateBlockProps) => void;
 };
 
-export const createCanvasStore = <
-  T = undefined,
-  U extends Record<string, unknown> = Record<string, unknown>,
->({
+export const createCanvasStore = ({
   emitter = () => undefined,
-  initialSchema = {},
-  defaultActiveBlocks = [],
-}: CanvasStoreProps<T, U>) => {
+  initialSchema = [],
+}: CanvasStoreProps) => {
   return create(
-    immer<CanvasStore<T>>((set, get) => ({
+    immer<CanvasStore>((set, get) => ({
       schema: initialSchema,
-      active: defaultActiveBlocks,
       _unique: revalidateCache(initialSchema),
       uniqueId: (type) => {
         let id = 1;
@@ -93,40 +78,19 @@ export const createCanvasStore = <
 
         return `${type}${id}`;
       },
-      all: (props) =>
-        Object.entries(get().schema).reduce<BlockWithIdType<T, U>[]>(
-          (prev, [id, block]) => {
-            if (!block) return prev;
-
-            if (
-              props?.filters?.parentNode &&
-              block.parentNode !== props.filters.parentNode
-            )
-              return prev;
-
-            prev.push({
-              id,
-              ...block,
-            } as BlockWithIdType<T, U>);
-
-            return prev;
-          },
-          [],
-        ),
-      get: ({ blockId }) => get().schema[blockId],
+      get: ({ blockId }) => get().schema.find((block) => block.id === blockId),
       add: ({ block, id, shouldEmit = true, index = -1 }) => {
         const blockId = id ?? get().uniqueId(block.type);
 
-        const payload = [blockId, block] as [string, Draft<BlockType>];
+        const payload = { ...block, id, selected: true } as Draft<BlockType>;
+
+        const schema = [...get().schema];
+
+        if (index !== -1) schema.splice(index, 0, payload);
+        else schema.push(payload);
 
         set((state) => {
-          const schema = Object.entries(state.schema);
-
-          if (index !== -1) schema.splice(index, 0, payload);
-          else schema.push(payload);
-
-          state.schema = Object.fromEntries(schema);
-          state.active = [blockId];
+          state.schema = schema;
         });
 
         if (shouldEmit)
@@ -135,135 +99,126 @@ export const createCanvasStore = <
             id: blockId,
           });
       },
-      update: ({ blockId, values, shouldEmit = true }) =>
+      update: ({ blockId, values, shouldEmit = true }) => {
+        const schema = get().schema;
+        const index = schema.findIndex((block) => block.id === blockId);
+        const oldValues = schema[index];
+
+        // Making sure we are not overriding these properties
+        values.id = undefined;
+        values.parentNode = undefined;
+
+        // Merging the current props with the new ones
+        const combinedValues = _.merge(oldValues, values);
+
+        // Updating the schema
         set((state) => {
-          // Merging the current props with the new ones
-          const combinedValues = _.merge(state.schema[blockId], values);
-
-          if (shouldEmit)
-            emitter(EditorEvent.BLOCK_UPDATION, {
-              id: blockId,
-              updatedValues: values as Partial<BlockType>,
-              oldValues: original(state.schema[blockId]) as Partial<BlockType>,
-            });
-
-          // Updating the schema
-          state.schema[blockId] = combinedValues;
-        }),
-      updateId: ({ blockId, newId, shouldEmit = true }) => {
-        set((state) => {
-          const block = state.schema[blockId];
-          if (block && !(newId in state.schema)) {
-            // Updating schema with the new Id
-            state.schema = Object.entries(state.schema).reduce<
-              Record<string, Draft<BlockType>>
-            >((prev, [id, block]) => {
-              if (block)
-                if (id === blockId) prev[newId] = block;
-                else prev[id] = block;
-
-              return prev;
-            }, {});
-
-            // Updating the active block
-            state.active = [newId];
-
-            // Revalidating the cache
-            state._unique = revalidateCache(state.schema);
-
-            // Firing the event
-            if (shouldEmit)
-              emitter(EditorEvent.BLOCK_ID_UPDATION, {
-                blockId,
-                newId,
-              });
-          }
+          state.schema[index] = combinedValues;
         });
+
+        if (shouldEmit)
+          emitter(EditorEvent.BLOCK_UPDATION, {
+            id: blockId,
+            updatedValues: values as Partial<BlockType>,
+            oldValues,
+          });
       },
-      set: ({ func, shouldEmit = true }) =>
+      updateId: ({ blockId, newId, shouldEmit = true }) => {
+        const schema = [...get().schema];
+        const blockIndex = schema.findIndex((block) => block.id === blockId);
+        const block = schema[blockIndex];
+
+        // Check if this is a unique combo
+        const index = schema.findIndex(
+          (item) => item.id === newId && item.parentNode === block?.parentNode,
+        );
+
+        if (index !== -1) return;
+
         set((state) => {
-          const blocks = func(state.all());
+          // Updating schema with the new Id
+          state.schema[blockIndex] = { ...block, id: newId, selected: true };
 
-          state.schema = blocks.reduce<Record<string, Draft<BlockType>>>(
-            (prev, cur) => {
-              const { id, ...data } = cur;
+          // Revalidating the cache
+          state._unique = revalidateCache(state.schema);
+        });
 
-              prev[id] = data as Draft<BlockType>;
+        // Firing the event
+        if (shouldEmit)
+          emitter(EditorEvent.BLOCK_ID_UPDATION, {
+            blockId,
+            newId,
+          });
+      },
+      set: ({ func, shouldEmit = true }) => {
+        const blocks = func(get().schema as any);
 
-              return prev;
-            },
-            {},
-          );
-
-          // Removing the deleted blocks (if any)
-          state.active = state.active.filter((value) => value in state.schema);
-
-          if (shouldEmit)
-            emitter(EditorEvent.SCHEMA_RESET, {
-              blocks: blocks as BlockWithIdType[],
-            });
-        }),
-      remove: ({ blockId, shouldEmit = true }) =>
         set((state) => {
-          let index = -1;
-          let blockContent: BlockType | undefined;
+          state.schema = blocks as BlockType[];
+        });
 
-          state.schema = Object.entries(state.schema).reduce<
-            Record<string, Draft<BlockType>>
-          >((prev, [id, block], i) => {
-            if (block)
-              if (id === blockId) {
-                index = i;
-                blockContent = original(block);
-              } else prev[id] = block;
+        if (shouldEmit)
+          emitter(EditorEvent.SCHEMA_RESET, {
+            blocks,
+          });
+      },
+      // TODO: Implment delete for parentNode
+      remove: ({ blockId, shouldEmit = true }) => {
+        let index = -1;
+        let blockContent: BlockType | undefined;
 
-            return prev;
-          }, {});
+        const blocks = get().schema.reduce<BlockType[]>((prev, block, i) => {
+          if (block.id === blockId) {
+            index = i;
+            blockContent = block;
+          } else prev.push(block);
 
-          // Deleting the block
-          delete state.schema[blockId];
+          return prev;
+        }, []);
 
-          // Removing the block from the active blocks list
-          state.active = state.active.filter((value) => value !== blockId);
+        set((state) => {
+          state.schema = blocks;
+        });
 
-          // Firing the event
-          if (shouldEmit)
-            emitter(EditorEvent.BLOCK_DELETION, {
-              blockId,
-              block: blockContent as BlockType,
-              index,
-            });
-        }),
+        // Firing the event
+        if (shouldEmit)
+          emitter(EditorEvent.BLOCK_DELETION, {
+            blockId,
+            block: blockContent as BlockType,
+            index,
+          });
+      },
       move: ({ from, to, shouldEmit = true }) =>
         set((state) => {
-          const tmp = Object.entries(state.schema);
+          const tmp = [...state.schema];
 
           // Getting the blocks index
           const fromIndex = tmp.findIndex((val) => val[0] === from);
           const toIndex = tmp.findIndex((val) => val[0] === to);
 
-          state.schema = Object.fromEntries(arrayMove(tmp, fromIndex, toIndex));
+          const fromParentNode = tmp[fromIndex].parentNode;
+          tmp[fromIndex].parentNode = tmp[toIndex].parentNode;
+          tmp[toIndex].parentNode = fromParentNode;
+
+          state.schema = arrayMove(tmp, fromIndex, toIndex);
 
           if (shouldEmit) emitter(EditorEvent.BLOCK_REPOSITION, { from, to });
         }),
-      select: ({ blockId, shouldEmit = true }) =>
-        set((state) => {
-          if (blockId) {
-            // Is ctrl/cmd key is pressed
-            if (isHotkeyPressed("shift"))
-              if (state.active.includes(blockId))
-                state.active = state.active.filter(
-                  (value) => value !== blockId,
-                );
-              else state.active.push(blockId);
-            // Single select
-            else state.active = [blockId];
-          }
-          // Unselect all
-          else state.active = [];
+      // TODO: Add parent Node
+      select: ({ blockId, shouldEmit = true }) => {
+        const ids = Array.isArray(blockId) ? blockId : [blockId];
 
-          if (shouldEmit) emitter(EditorEvent.BLOCK_SELECTION, { blockId });
-        }),
+        set((state) => {
+          state.schema = state.schema.map((block) => {
+            if (ids.includes(block.id)) block.selected = true;
+            else block.selected = false;
+
+            return block;
+          });
+        });
+
+        if (shouldEmit) emitter(EditorEvent.BLOCK_SELECTION, { blockId });
+      },
       duplicate: ({ blockId, shouldEmit = true }) => {
         const block = get().get({ blockId });
 
@@ -278,11 +233,11 @@ export const createCanvasStore = <
           emitter(EditorEvent.BLOCK_DUPLICATION, { newId: id, block });
       },
     })),
-  ) as UseBoundStore<StoreApi<CanvasStore<T, U>>>;
+  ) as UseBoundStore<StoreApi<CanvasStore>>;
 };
 
-function revalidateCache(schema: Record<string, BlockType | undefined>) {
-  return Object.values(schema).reduce<Record<string, number>>((prev, cur) => {
+function revalidateCache(schema: BlockType[]) {
+  return schema.reduce<Record<string, number>>((prev, cur) => {
     if (!cur) return prev;
 
     const { type } = cur;

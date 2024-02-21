@@ -14,10 +14,10 @@ import {
 import { useEventBus } from "../events";
 
 const CanvasContext = createContext<ReturnType<
-  typeof createCanvasStore<undefined>
+  typeof createCanvasStore
 > | null>(null);
 
-export type CanvasProvider = PropsWithChildren<CanvasStoreProps<undefined>>;
+export type CanvasProvider = PropsWithChildren<CanvasStoreProps>;
 
 export function CanvasProvider({ children, ...props }: CanvasProvider) {
   const emitter = useEventBus((state) => state.broadcast);

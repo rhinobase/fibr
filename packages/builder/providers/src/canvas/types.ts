@@ -1,4 +1,4 @@
-import type { ThreadType, ThreadWithIdType } from "@fibr/react";
+import type { ThreadWithIdType } from "@fibr/react";
 
 export type ShouldEmitEvent<T> = {
   shouldEmit?: boolean;
@@ -7,29 +7,19 @@ export type ShouldEmitEvent<T> = {
 export type BlockType<
   T = undefined,
   U extends Record<string, unknown> = Record<string, unknown>,
-> = ThreadType<
+> = ThreadWithIdType<
   {
     data?: T;
     hidden?: boolean;
     selected?: boolean;
+    dragging?: boolean;
+    draggable?: boolean;
     selectable?: boolean;
+    deletable?: boolean;
     parentNode?: string;
+    resizing?: boolean;
   } & U
 >;
-
-export type BlockWithIdType<
-  T = undefined,
-  U extends Record<string, unknown> = Record<string, unknown>,
-> = ThreadWithIdType<BlockType<T, U>>;
-
-export type AllBlocksProps = ShouldEmitEvent<{
-  filters?: {
-    parentNode?: string;
-    selected?: boolean;
-  };
-}>;
-
-export type GetBlockProps = ShouldEmitEvent<{ blockId: string }>;
 
 export type AddBlockProps<
   T = undefined,
@@ -57,6 +47,6 @@ export type RemoveBlockProps = ShouldEmitEvent<{ blockId: string }>;
 
 export type MoveBlockProps = ShouldEmitEvent<{ from: string; to: string }>;
 
-export type SelectBlockProps = ShouldEmitEvent<{ blockId: string | null }>;
+export type SelectBlockProps = ShouldEmitEvent<{ blockId: string | string[] }>;
 
 export type DuplicateBlockProps = ShouldEmitEvent<{ blockId: string }>;
