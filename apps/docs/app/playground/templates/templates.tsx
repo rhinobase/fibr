@@ -4,9 +4,11 @@ import type { BlockType } from "@fibr/providers";
 import type { IconType } from "react-icons";
 import { FiArrowRight } from "react-icons/fi";
 import { GoProjectTemplate } from "react-icons/go";
+import type { Node } from "reactflow";
 import { Container } from "./utils";
 
-export type TemplateType = BlockType<FieldType | { title: string }>[];
+export type TemplateType = (BlockType<FieldType | { title: string }> &
+  Partial<Node>)[];
 
 export const TEMPLATES: Record<
   Container,
@@ -167,13 +169,14 @@ export const TEMPLATES: Record<
       name: "Custom Page",
       icon: FiArrowRight,
       template: [
-        // {
-        //   id: "canvas",
-        //   type: "page",
-        //   position: { x: 920, y: 440 },
-        //   width: 1920,
-        //   height: 1080,
-        // },
+        {
+          id: "canvas",
+          type: "page",
+          position: { x: 920, y: 440 },
+          width: 1920,
+          height: 1080,
+          draggable: false,
+        },
       ],
     },
   ],

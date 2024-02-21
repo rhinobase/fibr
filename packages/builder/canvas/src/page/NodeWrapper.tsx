@@ -13,14 +13,17 @@ const PANELS = ["page"];
 export function NodeWrapper(props: PropsWithChildren) {
   const { type, selected } = useThread<Node>();
 
+  const isGroup = PANELS.includes(type);
+
   return (
     <div
       className={classNames(
+        !isGroup && "p-2",
         selected ? "border-primary-500" : "border-transparent",
-        "h-full w-full border bg-white p-2",
+        "h-full w-full border bg-white",
       )}
     >
-      {!PANELS.includes(type) && selected && (
+      {!isGroup && selected && (
         <>
           <ResizeNodeBorder position="left" />
           <ResizeNodeBorder position="right" />

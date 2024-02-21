@@ -23,7 +23,7 @@ export function PageDndWrapper(props: PropsWithChildren) {
                 type: data.type,
                 position,
                 ...data.presets,
-                // parentNode: "page",
+                // parentNode: "canvas",
                 // extent: "parent",
               },
             });
