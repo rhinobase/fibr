@@ -22,6 +22,7 @@ import {
   MdOutlineArrowUpward,
   MdOutlineDelete,
 } from "react-icons/md";
+import type { Node } from "reactflow";
 
 export type QuickActions = PropsWithChildren;
 
@@ -51,7 +52,7 @@ export function QuickActions({ children }: QuickActions) {
 }
 
 function IdEditField() {
-  const { id } = useThread();
+  const { id, parentNode } = useThread<Node>();
   const [isEditable, toggle] = useBoolean(false);
   const ref = useRef<HTMLInputElement>(null);
   const { select, updateId } = useCanvas(({ select, updateId }) => ({
@@ -65,7 +66,7 @@ function IdEditField() {
 
   const handleClick = eventHandler(() => {
     toggle(true);
-    select({ selectedBlockIds: id });
+    select({ selectedBlockIds: { id, parentNode } });
   });
 
   const onSubmit = (
@@ -137,7 +138,7 @@ function QuickActionButtons() {
   if (index === -1) return;
 
   const onMove = (direction: Direction) => {
-    select({ selectedBlockIds: id });
+    select({ selectedBlockIds: { id, parentNode } });
     move({ sourceBlockId: id, targetBlockId: blocks[index + direction].id });
   };
 
@@ -170,7 +171,7 @@ function QuickActionButtons() {
       <ActionButton
         name="Delete visual field"
         icon={MdOutlineDelete}
-        action={() => remove({ blockId: id })}
+        action={() => remove({ blockId: id, parentNode })}
         className="hover:bg-red-200/40 hover:text-red-500 dark:hover:bg-red-300/10 dark:hover:text-red-300"
       />
     </div>

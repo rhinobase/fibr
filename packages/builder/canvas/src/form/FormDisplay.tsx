@@ -39,7 +39,12 @@ export function FormDisplay() {
       <DndWrapper
         items={blocks.map(({ id }) => id)}
         onDragStart={({ active }) =>
-          select({ selectedBlockIds: active.id.toString() })
+          select({
+            selectedBlockIds: {
+              id: active.id.toString(),
+              parentNode: active.data.current?.parentNode,
+            },
+          })
         }
         onDragEnd={({ active, over }) => {
           if (over && active.id !== over.id)

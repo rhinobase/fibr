@@ -32,7 +32,10 @@ export type UpdateIdBlockProps = ShouldEmitEvent<{
   newBlockId: string;
 }>;
 
-export type RemoveBlockProps = ShouldEmitEvent<{ blockId: string }>;
+export type RemoveBlockProps = ShouldEmitEvent<{
+  blockId: string;
+  parentNode?: string;
+}>;
 
 export type MoveBlockProps = ShouldEmitEvent<{
   sourceBlockId: string;
@@ -40,7 +43,9 @@ export type MoveBlockProps = ShouldEmitEvent<{
 }>;
 
 export type SelectBlockProps = ShouldEmitEvent<{
-  selectedBlockIds: string | string[];
+  selectedBlockIds:
+    | { id: string; parentNode?: string }
+    | { id: string; parentNode?: string }[];
 }>;
 
 export type DuplicateBlockProps = ShouldEmitEvent<{ originalBlockId: string }>;

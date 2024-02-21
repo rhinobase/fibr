@@ -41,11 +41,12 @@ export type OverviewCard = {
 } & BlockType;
 
 export function OverviewCard({
-  hidden,
   id,
   type,
   groups,
+  hidden,
   onToggle,
+  parentNode,
   enableDragging = false,
   selected: isSelected = false,
 }: OverviewCard) {
@@ -74,9 +75,13 @@ export function OverviewCard({
       }
     : {};
 
-  const handleNodeSelect = eventHandler(() => select({ selectedBlockIds: id }));
+  const handleNodeSelect = eventHandler(() =>
+    select({ selectedBlockIds: { id, parentNode } }),
+  );
 
-  const handleNodeDelete = eventHandler(() => remove({ blockId: id }));
+  const handleNodeDelete = eventHandler(() =>
+    remove({ blockId: id, parentNode }),
+  );
 
   const handleToggleCollapse = eventHandler(() => onToggle?.(id));
 

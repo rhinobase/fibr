@@ -96,7 +96,10 @@ export const createCanvasStore = ({
         });
 
         get().select({
-          selectedBlockIds: [generatedBlockId],
+          selectedBlockIds: {
+            id: generatedBlockId,
+            parentNode: blockData.parentNode,
+          },
           shouldEmit: false,
         });
 
@@ -165,7 +168,7 @@ export const createCanvasStore = ({
           });
       },
       set: ({ func, shouldEmit = true }) => {
-        const currentBlocks = [...(get().schema as any)];
+        const currentBlocks = get().schema as any[];
         const blocks = func(currentBlocks);
 
         set((state) => {
@@ -178,13 +181,12 @@ export const createCanvasStore = ({
             cur: blocks as BlockType[],
           });
       },
-      // TODO: Implment delete for parentNode
-      remove: ({ blockId, shouldEmit = true }) => {
+      remove: ({ blockId, parentNode, shouldEmit = true }) => {
         let index = -1;
         let blockContent: BlockType | undefined;
 
         const blocks = get().schema.reduce<BlockType[]>((prev, block, i) => {
-          if (block.id === blockId) {
+          if (block.id === blockId && block.parentNode === parentNode) {
             index = i;
             blockContent = block;
           } else prev.push(block);
@@ -226,15 +228,27 @@ export const createCanvasStore = ({
               targetBlockId,
             });
         }),
-      // TODO: Add parent Node
       select: ({ selectedBlockIds, shouldEmit = true }) => {
-        const ids = Array.isArray(selectedBlockIds)
-          ? selectedBlockIds
-          : [selectedBlockIds];
+        const { ids, parents } = (
+          Array.isArray(selectedBlockIds)
+            ? selectedBlockIds
+            : [selectedBlockIds]
+        ).reduce<{
+          ids: Record<string, boolean>;
+          parents: Record<string, boolean>;
+        }>(
+          (prev, { id, parentNode }) => {
+            prev.ids[id] = true;
+            prev.parents[String(parentNode)] = true;
+            return prev;
+          },
+          { ids: {}, parents: {} },
+        );
 
         set((state) => {
           state.schema = state.schema.map((block) => {
-            if (ids.includes(block.id)) block.selected = true;
+            if (ids[block.id] && parents[String(block.parentNode)])
+              block.selected = true;
             else block.selected = false;
 
             return block;

@@ -48,7 +48,12 @@ function FieldsRender({ blocks, enableDragging }: Overview) {
     <DndWrapper
       items={blocks.map(({ id }) => id)}
       onDragStart={({ active }) =>
-        select({ selectedBlockIds: String(active.id) })
+        select({
+          selectedBlockIds: {
+            id: String(active.id),
+            parentNode: active.data.current?.parentNode,
+          },
+        })
       }
       onDragEnd={({ active, over }) => {
         if (over && active.id !== over.id)

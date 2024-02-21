@@ -35,6 +35,8 @@ export function Diagram() {
     set,
   }));
 
+  console.log(nodes);
+
   const onNodesChange: OnNodesChange = useCallback(
     (changes) =>
       set({

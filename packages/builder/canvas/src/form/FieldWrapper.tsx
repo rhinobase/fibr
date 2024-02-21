@@ -15,7 +15,7 @@ import {
 import { QuickActions } from "./QuickActions";
 
 export function FieldWrapper({ children }: PropsWithChildren) {
-  const { id, isOverlay, ...field } = useThread<
+  const { id, isOverlay, parentNode, ...field } = useThread<
     BlockType & { isOverlay?: boolean }
   >();
   const { select } = useCanvas(({ select }) => ({
@@ -35,7 +35,7 @@ export function FieldWrapper({ children }: PropsWithChildren) {
 
   const onSelect = eventHandler((event) => {
     event.stopPropagation();
-    select({ selectedBlockIds: id });
+    select({ selectedBlockIds: { id, parentNode } });
   });
 
   if (field.type === "canvas")

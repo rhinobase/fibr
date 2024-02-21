@@ -84,7 +84,12 @@ function useShortcutsManager() {
         const { blockData, blockId = "" } =
           data as EditorEventListenerProps[EditorEvent.BLOCK_ADDITION];
 
-        if (action === ActionType.UNDO) remove({ blockId, shouldEmit: false });
+        if (action === ActionType.UNDO)
+          remove({
+            blockId,
+            parentNode: blockData.parentNode,
+            shouldEmit: false,
+          });
         else add({ blockData, blockId, shouldEmit: false });
       }
 
@@ -108,7 +113,8 @@ function useShortcutsManager() {
             shouldEmit: false,
             insertionIndex: index,
           });
-        else remove({ blockId, shouldEmit: false });
+        else
+          remove({ blockId, parentNode: block.parentNode, shouldEmit: false });
       }
 
       if (event_type === EditorEvent.BLOCK_REPOSITION) {
@@ -129,7 +135,11 @@ function useShortcutsManager() {
           data as EditorEventListenerProps[EditorEvent.BLOCK_DUPLICATION];
 
         if (action === ActionType.UNDO)
-          remove({ blockId: newId, shouldEmit: false });
+          remove({
+            blockId: newId,
+            parentNode: block.parentNode,
+            shouldEmit: false,
+          });
         else add({ blockId: newId, blockData: block, shouldEmit: false });
       }
 
