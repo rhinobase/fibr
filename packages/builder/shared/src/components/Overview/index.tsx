@@ -47,10 +47,15 @@ function FieldsRender({ blocks, enableDragging }: Overview) {
   return (
     <DndWrapper
       items={blocks.map(({ id }) => id)}
-      onDragStart={({ active }) => select({ blockId: String(active.id) })}
+      onDragStart={({ active }) =>
+        select({ selectedBlockIds: String(active.id) })
+      }
       onDragEnd={({ active, over }) => {
         if (over && active.id !== over.id)
-          move({ from: String(active.id), to: String(over.id) });
+          move({
+            sourceBlockId: String(active.id),
+            targetBlockId: String(over.id),
+          });
       }}
     >
       <Accordion type="multiple" value={isOpen} onValueChange={setOpen}>

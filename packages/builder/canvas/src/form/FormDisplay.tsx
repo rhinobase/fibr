@@ -38,10 +38,15 @@ export function FormDisplay() {
     <WeaverProvider wrapper={BLOCK_WRAPPERS[currentEnv]}>
       <DndWrapper
         items={blocks.map(({ id }) => id)}
-        onDragStart={({ active }) => select({ blockId: active.id.toString() })}
+        onDragStart={({ active }) =>
+          select({ selectedBlockIds: active.id.toString() })
+        }
         onDragEnd={({ active, over }) => {
           if (over && active.id !== over.id)
-            move({ from: String(active.id), to: String(over.id) });
+            move({
+              sourceBlockId: String(active.id),
+              targetBlockId: String(over.id),
+            });
         }}
       >
         {Object.entries(blueprint).map(([id, canvas]) => (

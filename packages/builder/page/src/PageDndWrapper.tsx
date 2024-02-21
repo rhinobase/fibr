@@ -19,7 +19,7 @@ export function PageDndWrapper(props: PropsWithChildren) {
           const data = active.data.current;
           if (data)
             add<Node & { type: string }>({
-              block: {
+              blockData: {
                 type: data.type,
                 position,
                 ...data.presets,

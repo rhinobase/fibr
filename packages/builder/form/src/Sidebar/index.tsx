@@ -23,7 +23,7 @@ export function Sidebar() {
       <Palette
         onSelect={(value) => {
           const parentNode = findParent(blocks);
-          add({ block: { ...value, parentNode } });
+          add({ blockData: { ...value, parentNode } });
         }}
       />
       <Overview blocks={blocks} action={<AddFormDialog />} enableDragging />

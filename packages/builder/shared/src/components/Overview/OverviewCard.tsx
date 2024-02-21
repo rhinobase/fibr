@@ -74,7 +74,7 @@ export function OverviewCard({
       }
     : {};
 
-  const handleNodeSelect = eventHandler(() => select({ blockId: id }));
+  const handleNodeSelect = eventHandler(() => select({ selectedBlockIds: id }));
 
   const handleNodeDelete = eventHandler(() => remove({ blockId: id }));
 
@@ -110,7 +110,9 @@ export function OverviewCard({
         size="icon"
         variant="ghost"
         className={classNames(hidden && "text-secondary-400", "p-0.5")}
-        onClick={() => update({ blockId: id, values: { hidden: !hidden } })}
+        onClick={() =>
+          update({ blockId: id, updatedValues: { hidden: !hidden } })
+        }
       >
         {hidden ? <HiOutlineEye /> : <HiOutlineEyeOff />}
       </Button>

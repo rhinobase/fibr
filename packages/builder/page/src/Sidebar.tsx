@@ -16,7 +16,7 @@ export function Sidebar() {
 
   return (
     <BuilderSidebar>
-      <Palette enableDragging onSelect={(value) => add({ block: value })} />
+      <Palette enableDragging onSelect={(value) => add({ blockData: value })} />
       <Overview blocks={blocks} />
       <InspectorPanel />
       <CodeGenerator

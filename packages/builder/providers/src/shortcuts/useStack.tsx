@@ -24,7 +24,7 @@ export function useStack<T>(
       callback?.({ action: ActionType.UNDO, data: lastAction });
       setUndoStack((prev) => [...prev, lastAction]);
     }
-  }, [mainStack]);
+  }, [mainStack, callback]);
 
   // Redo the last undone action
   const redo = useCallback(() => {
@@ -34,7 +34,7 @@ export function useStack<T>(
       callback?.({ action: ActionType.REDO, data: lastUndoneAction });
       setMainStack((prev) => [...prev, lastUndoneAction]);
     }
-  }, [undoStack]);
+  }, [undoStack, callback]);
 
   // Clear undo stack
   const clearUndoStack = useCallback(() => {

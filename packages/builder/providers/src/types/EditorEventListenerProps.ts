@@ -22,7 +22,7 @@ export type EditorEventListenerProps = {
     key: string;
   };
   // Canvas
-  [EditorEvent.SCHEMA_RESET]: { blocks: BlockType[] };
+  [EditorEvent.SCHEMA_RESET]: { prev: BlockType[]; cur: BlockType[] };
   // Blocks
   [EditorEvent.BLOCK_ADDITION]: AddBlockProps;
   [EditorEvent.BLOCK_UPDATION]: {

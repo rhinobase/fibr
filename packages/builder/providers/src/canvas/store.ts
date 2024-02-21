@@ -26,7 +26,7 @@ export type CanvasStore = {
   schema: BlockType[];
   // Generating unique keys for components
   _unique: Record<string, number>;
-  uniqueId: (type: string) => string;
+  uniqueId: (type: string, parentNode?: string) => string;
   // ---
   get: (props: { blockId: string }) => BlockType | undefined;
   add: <T = undefined>(props: AddBlockProps<T>) => void;
@@ -51,61 +51,72 @@ export const createCanvasStore = ({
     immer<CanvasStore>((set, get) => ({
       schema: initialSchema,
       _unique: revalidateCache(initialSchema),
-      uniqueId: (type) => {
-        let id = 1;
+      uniqueId: (type, parentNode) => {
+        let typeCount = 1;
+
+        const blocks = get().schema;
+
+        const ids = blocks.reduce<Record<string, boolean>>(
+          (prev, { id, parentNode }) => {
+            prev[`${id}-${parentNode}`] = true;
+            return prev;
+          },
+          {},
+        );
 
         set((state) => {
           let index = 1;
-          // TODO: Improve this
-          while (
-            state.schema.findIndex((block) => block.id === `${type}${id}`) !==
-            -1
-          ) {
-            id = (state._unique[type] ?? 0) + index;
+
+          while (ids[`${type}${typeCount}-${parentNode}`]) {
+            typeCount = (state._unique[type] ?? 0) + index;
             index += 1;
           }
-          state._unique[type] = id;
+          state._unique[type] = typeCount;
         });
 
-        return `${type}${id}`;
+        return `${type}${typeCount}`;
       },
       get: ({ blockId }) => get().schema.find((block) => block.id === blockId),
-      add: ({ block, id, shouldEmit = true, index = -1 }) => {
-        const blockId = id ?? get().uniqueId(block.type);
+      add: ({ blockData, blockId, shouldEmit = true, insertionIndex = -1 }) => {
+        const generatedBlockId =
+          blockId ?? get().uniqueId(blockData.type, blockData.parentNode);
 
         const payload = {
-          ...block,
-          id: blockId,
+          ...blockData,
+          id: generatedBlockId,
         } as Draft<BlockType>;
 
         const schema = [...get().schema];
 
-        if (index !== -1) schema.splice(index, 0, payload);
+        if (insertionIndex !== -1) schema.splice(insertionIndex, 0, payload);
         else schema.push(payload);
 
         set((state) => {
           state.schema = schema;
         });
 
-        get().select({ blockId: [blockId], shouldEmit: false });
+        get().select({
+          selectedBlockIds: [generatedBlockId],
+          shouldEmit: false,
+        });
 
         if (shouldEmit)
           emitter(EditorEvent.BLOCK_ADDITION, {
-            block: block as BlockType,
-            id: blockId,
+            blockData: blockData as BlockType,
+            blockId: generatedBlockId,
           });
       },
-      update: ({ blockId, values, shouldEmit = true }) => {
-        const schema = get().schema;
-        const index = schema.findIndex((block) => block.id === blockId);
-        const oldValues = schema[index];
+      update: ({ blockId, updatedValues, shouldEmit = true }) => {
+        const blocks = get().schema;
+        const index = blocks.findIndex((block) => block.id === blockId);
+        const oldValues = blocks[index];
 
         // Making sure we are not overriding these properties
-        values.id = undefined;
-        values.parentNode = undefined;
+        updatedValues.id = undefined;
+        updatedValues.parentNode = undefined;
 
         // Merging the current props with the new ones
-        const combinedValues = _.merge({}, oldValues, values);
+        const combinedValues = _.merge({}, oldValues, updatedValues);
 
         // Updating the schema
         set((state) => {
@@ -115,25 +126,32 @@ export const createCanvasStore = ({
         if (shouldEmit)
           emitter(EditorEvent.BLOCK_UPDATION, {
             id: blockId,
-            updatedValues: values as Partial<BlockType>,
+            updatedValues: updatedValues as Partial<BlockType>,
             oldValues,
           });
       },
-      updateId: ({ blockId, newId, shouldEmit = true }) => {
+      updateId: ({ currentBlockId, newBlockId, shouldEmit = true }) => {
         const schema = [...get().schema];
-        const blockIndex = schema.findIndex((block) => block.id === blockId);
+        const blockIndex = schema.findIndex(
+          (block) => block.id === currentBlockId,
+        );
         const block = schema[blockIndex];
 
         // Check if this is a unique combo
         const index = schema.findIndex(
-          (item) => item.id === newId && item.parentNode === block?.parentNode,
+          (item) =>
+            item.id === newBlockId && item.parentNode === block?.parentNode,
         );
 
         if (index !== -1) return;
 
         set((state) => {
           // Updating schema with the new Id
-          state.schema[blockIndex] = { ...block, id: newId, selected: true };
+          state.schema[blockIndex] = {
+            ...block,
+            id: newBlockId,
+            selected: true,
+          };
 
           // Revalidating the cache
           state._unique = revalidateCache(state.schema);
@@ -142,12 +160,13 @@ export const createCanvasStore = ({
         // Firing the event
         if (shouldEmit)
           emitter(EditorEvent.BLOCK_ID_UPDATION, {
-            blockId,
-            newId,
+            currentBlockId,
+            newBlockId,
           });
       },
       set: ({ func, shouldEmit = true }) => {
-        const blocks = func(get().schema as any);
+        const currentBlocks = [...(get().schema as any)];
+        const blocks = func(currentBlocks);
 
         set((state) => {
           state.schema = blocks as BlockType[];
@@ -155,7 +174,8 @@ export const createCanvasStore = ({
 
         if (shouldEmit)
           emitter(EditorEvent.SCHEMA_RESET, {
-            blocks: blocks as BlockType[],
+            prev: currentBlocks,
+            cur: blocks as BlockType[],
           });
       },
       // TODO: Implment delete for parentNode
@@ -184,13 +204,15 @@ export const createCanvasStore = ({
             index,
           });
       },
-      move: ({ from, to, shouldEmit = true }) =>
+      move: ({ sourceBlockId, targetBlockId, shouldEmit = true }) =>
         set((state) => {
           const tmp = [...state.schema];
 
           // Getting the blocks index
-          const fromIndex = tmp.findIndex((block) => block.id === from);
-          const toIndex = tmp.findIndex((block) => block.id === to);
+          const fromIndex = tmp.findIndex(
+            (block) => block.id === sourceBlockId,
+          );
+          const toIndex = tmp.findIndex((block) => block.id === targetBlockId);
 
           const fromParentNode = tmp[fromIndex].parentNode;
           tmp[fromIndex].parentNode = tmp[toIndex].parentNode;
@@ -198,11 +220,17 @@ export const createCanvasStore = ({
 
           state.schema = arrayMove(tmp, fromIndex, toIndex);
 
-          if (shouldEmit) emitter(EditorEvent.BLOCK_REPOSITION, { from, to });
+          if (shouldEmit)
+            emitter(EditorEvent.BLOCK_REPOSITION, {
+              sourceBlockId,
+              targetBlockId,
+            });
         }),
       // TODO: Add parent Node
-      select: ({ blockId, shouldEmit = true }) => {
-        const ids = Array.isArray(blockId) ? blockId : [blockId];
+      select: ({ selectedBlockIds, shouldEmit = true }) => {
+        const ids = Array.isArray(selectedBlockIds)
+          ? selectedBlockIds
+          : [selectedBlockIds];
 
         set((state) => {
           state.schema = state.schema.map((block) => {
@@ -213,20 +241,26 @@ export const createCanvasStore = ({
           });
         });
 
-        if (shouldEmit) emitter(EditorEvent.BLOCK_SELECTION, { blockId });
+        if (shouldEmit)
+          emitter(EditorEvent.BLOCK_SELECTION, { selectedBlockIds });
       },
-      duplicate: ({ blockId, shouldEmit = true }) => {
-        const block = get().get({ blockId });
+      duplicate: ({ originalBlockId, shouldEmit = true }) => {
+        const blockData = get().get({ blockId: originalBlockId });
 
-        if (!block)
-          throw new Error(`Unable to find the block with Id ${blockId}`);
+        if (!blockData)
+          throw new Error(
+            `Unable to find the block with Id ${originalBlockId}`,
+          );
 
-        const id = get().uniqueId(block.type);
+        const id = get().uniqueId(blockData.type);
 
-        get().add({ block, id });
+        get().add({ blockData, blockId: id });
 
         if (shouldEmit)
-          emitter(EditorEvent.BLOCK_DUPLICATION, { newId: id, block });
+          emitter(EditorEvent.BLOCK_DUPLICATION, {
+            newId: id,
+            block: blockData,
+          });
       },
     })),
   ) as UseBoundStore<StoreApi<CanvasStore>>;

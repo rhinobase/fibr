@@ -4,6 +4,7 @@ import {
   useContext,
   type PropsWithChildren,
   useEffect,
+  useCallback,
 } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useBuilder } from "../builder";
@@ -50,88 +51,98 @@ function useShortcutsManager() {
       setEnv: change,
     }),
   );
-  const { updateId, update, add, remove, move } = useCanvas(
-    ({ updateId, remove, add, update, move, duplicate }) => ({
+  const { updateId, update, add, remove, move, set } = useCanvas(
+    ({ updateId, remove, add, update, move, set }) => ({
       update,
       remove,
       move,
       add,
       updateId,
+      set,
     }),
   );
 
   // Undo & Redo
-  function resolveStackActions({
-    action,
-    data,
-  }: {
-    action: ActionType;
-    data: unknown;
-  }) {
-    const event_type = (data as { event_type: EditorEvent }).event_type;
+  const resolveStackActions = useCallback(
+    ({ action, data }: { action: ActionType; data: unknown }) => {
+      const event_type = (data as { event_type: EditorEvent }).event_type;
 
-    if (event_type === EditorEvent.BLOCK_ID_UPDATION) {
-      const { blockId, newId } =
-        data as EditorEventListenerProps[EditorEvent.BLOCK_ID_UPDATION];
+      if (event_type === EditorEvent.BLOCK_ID_UPDATION) {
+        const { currentBlockId, newBlockId } =
+          data as EditorEventListenerProps[EditorEvent.BLOCK_ID_UPDATION];
 
-      if (action === ActionType.UNDO)
-        updateId({ blockId: newId, newId: blockId, shouldEmit: false });
-      else updateId({ blockId, newId, shouldEmit: false });
-    }
+        if (action === ActionType.UNDO)
+          updateId({
+            currentBlockId: newBlockId,
+            newBlockId: currentBlockId,
+            shouldEmit: false,
+          });
+        else updateId({ currentBlockId, newBlockId, shouldEmit: false });
+      }
 
-    if (event_type === EditorEvent.BLOCK_ADDITION) {
-      const { block, id } =
-        data as EditorEventListenerProps[EditorEvent.BLOCK_ADDITION];
+      if (event_type === EditorEvent.BLOCK_ADDITION) {
+        const { blockData, blockId = "" } =
+          data as EditorEventListenerProps[EditorEvent.BLOCK_ADDITION];
 
-      if (action === ActionType.UNDO)
-        remove({ blockId: id ?? "", shouldEmit: false });
-      else add({ block, id, shouldEmit: false });
-    }
+        if (action === ActionType.UNDO) remove({ blockId, shouldEmit: false });
+        else add({ blockData, blockId, shouldEmit: false });
+      }
 
-    if (event_type === EditorEvent.BLOCK_UPDATION) {
-      const { id, updatedValues, oldValues } =
-        data as EditorEventListenerProps[EditorEvent.BLOCK_UPDATION];
+      if (event_type === EditorEvent.BLOCK_UPDATION) {
+        const { id, updatedValues, oldValues } =
+          data as EditorEventListenerProps[EditorEvent.BLOCK_UPDATION];
 
-      if (action === ActionType.UNDO)
-        update({ blockId: id, values: oldValues, shouldEmit: false });
-      else update({ blockId: id, values: updatedValues, shouldEmit: false });
-    }
+        if (action === ActionType.UNDO)
+          update({ blockId: id, updatedValues: oldValues, shouldEmit: false });
+        else update({ blockId: id, updatedValues, shouldEmit: false });
+      }
 
-    if (event_type === EditorEvent.BLOCK_DELETION) {
-      const { blockId, block, index } =
-        data as EditorEventListenerProps[EditorEvent.BLOCK_DELETION];
+      if (event_type === EditorEvent.BLOCK_DELETION) {
+        const { blockId, block, index } =
+          data as EditorEventListenerProps[EditorEvent.BLOCK_DELETION];
 
-      if (action === ActionType.UNDO)
-        add({ block, id: blockId, shouldEmit: false, index });
-      else remove({ blockId, shouldEmit: false });
-    }
+        if (action === ActionType.UNDO)
+          add({
+            blockData: block,
+            blockId,
+            shouldEmit: false,
+            insertionIndex: index,
+          });
+        else remove({ blockId, shouldEmit: false });
+      }
 
-    if (event_type === EditorEvent.BLOCK_REPOSITION) {
-      const { from, to } =
-        data as EditorEventListenerProps[EditorEvent.BLOCK_REPOSITION];
+      if (event_type === EditorEvent.BLOCK_REPOSITION) {
+        const { sourceBlockId, targetBlockId } =
+          data as EditorEventListenerProps[EditorEvent.BLOCK_REPOSITION];
 
-      if (action === ActionType.UNDO)
-        move({ to: from, from: to, shouldEmit: false });
-      else move({ to, from, shouldEmit: false });
-    }
+        if (action === ActionType.UNDO)
+          move({
+            sourceBlockId: targetBlockId,
+            targetBlockId: sourceBlockId,
+            shouldEmit: false,
+          });
+        else move({ sourceBlockId, targetBlockId, shouldEmit: false });
+      }
 
-    if (event_type === EditorEvent.BLOCK_DUPLICATION) {
-      const { newId, block } =
-        data as EditorEventListenerProps[EditorEvent.BLOCK_DUPLICATION];
+      if (event_type === EditorEvent.BLOCK_DUPLICATION) {
+        const { newId, block } =
+          data as EditorEventListenerProps[EditorEvent.BLOCK_DUPLICATION];
 
-      if (action === ActionType.UNDO)
-        remove({ blockId: newId, shouldEmit: false });
-      else add({ id: newId, block, shouldEmit: false });
-    }
+        if (action === ActionType.UNDO)
+          remove({ blockId: newId, shouldEmit: false });
+        else add({ blockId: newId, blockData: block, shouldEmit: false });
+      }
 
-    if (event_type === EditorEvent.SCHEMA_RESET) {
-      const { blocks } =
-        data as EditorEventListenerProps[EditorEvent.SCHEMA_RESET];
+      if (event_type === EditorEvent.SCHEMA_RESET) {
+        const { prev, cur } =
+          data as EditorEventListenerProps[EditorEvent.SCHEMA_RESET];
 
-      if (action === ActionType.UNDO) console.log(blocks);
-      else console.log(blocks);
-    }
-  }
+        if (action === ActionType.UNDO) set({ func: () => prev });
+        else set({ func: () => cur });
+      }
+    },
+    [add, remove, set, update, updateId, move],
+  );
 
   const stack = useStack<unknown>(resolveStackActions);
   const addEvent = useEventBus((state) => state.add);

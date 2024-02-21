@@ -2,6 +2,7 @@
 import { useCanvas, type BlockType } from "@fibr/providers";
 import { Thread } from "@fibr/react";
 import { useBlocks } from "@fibr/shared";
+import { useBoolean } from "@rafty/ui";
 import { useCallback, useMemo } from "react";
 import {
   Background,
@@ -26,6 +27,7 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
 };
 
 export function Diagram() {
+  const [shouldEmit, toggle] = useBoolean(true);
   const config = useBlocks((state) => state.config);
 
   const { nodes, set } = useCanvas(({ schema, set }) => ({
@@ -37,8 +39,9 @@ export function Diagram() {
     (changes) =>
       set({
         func: (nds) => applyNodeChanges(changes, nds as Node[]) as BlockType[],
+        shouldEmit,
       }),
-    [set],
+    [set, shouldEmit],
   );
 
   const builders = useMemo(
@@ -58,6 +61,8 @@ export function Diagram() {
         snapGrid={[20, 20]}
         fitView
         onNodesChange={onNodesChange}
+        onNodeDragStart={() => toggle(false)}
+        onNodeDragStop={() => toggle(true)}
         fitViewOptions={fitViewOptions}
         defaultEdgeOptions={defaultEdgeOptions}
         nodeTypes={builders}

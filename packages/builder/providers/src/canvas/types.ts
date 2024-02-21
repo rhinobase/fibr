@@ -17,25 +17,30 @@ export type BlockType<T = undefined> = ThreadWithIdType<{
 }>;
 
 export type AddBlockProps<T = undefined> = ShouldEmitEvent<{
-  block: Omit<BlockType<T>, "id">;
-  id?: string;
-  index?: number;
+  blockData: Omit<BlockType<T>, "id">;
+  blockId?: string;
+  insertionIndex?: number;
 }>;
 
 export type UpdateBlockProps<T = undefined> = ShouldEmitEvent<{
   blockId: string;
-  values: Partial<BlockType<T>>;
+  updatedValues: Partial<BlockType<T>>;
 }>;
 
 export type UpdateIdBlockProps = ShouldEmitEvent<{
-  blockId: string;
-  newId: string;
+  currentBlockId: string;
+  newBlockId: string;
 }>;
 
 export type RemoveBlockProps = ShouldEmitEvent<{ blockId: string }>;
 
-export type MoveBlockProps = ShouldEmitEvent<{ from: string; to: string }>;
+export type MoveBlockProps = ShouldEmitEvent<{
+  sourceBlockId: string;
+  targetBlockId: string;
+}>;
 
-export type SelectBlockProps = ShouldEmitEvent<{ blockId: string | string[] }>;
+export type SelectBlockProps = ShouldEmitEvent<{
+  selectedBlockIds: string | string[];
+}>;
 
-export type DuplicateBlockProps = ShouldEmitEvent<{ blockId: string }>;
+export type DuplicateBlockProps = ShouldEmitEvent<{ originalBlockId: string }>;
