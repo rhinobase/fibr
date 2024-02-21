@@ -1,4 +1,4 @@
-import { BlockType, BlockWithIdType, Env, useBuilder } from "@fibr/providers";
+import { type BlockType, Env, useBuilder } from "@fibr/providers";
 import { useCanvas } from "@fibr/providers";
 import { Loom, WeaverProvider } from "@fibr/react";
 import { DEFAULT_GROUP, DndWrapper, groupByParentNode } from "@fibr/shared";
@@ -14,16 +14,15 @@ const BLOCK_WRAPPERS: Record<Env, (props: PropsWithChildren) => ReactNode> = {
 };
 
 export function FormDisplay() {
-  const { all, select, move } = useCanvas(({ all, select, move }) => ({
-    all,
+  const { blocks, select, move } = useCanvas(({ schema, select, move }) => ({
+    blocks: schema,
     select,
     move,
   }));
 
   const currentEnv = useBuilder((state) => state.env.current);
 
-  const allBlocks = all();
-  const groups = groupByParentNode(allBlocks);
+  const groups = groupByParentNode(blocks);
   const blueprint = createBlueprint(DEFAULT_GROUP, groups);
 
   if (!groups[DEFAULT_GROUP])
@@ -38,7 +37,7 @@ export function FormDisplay() {
   return (
     <WeaverProvider wrapper={BLOCK_WRAPPERS[currentEnv]}>
       <DndWrapper
-        items={allBlocks.map(({ id }) => id)}
+        items={blocks.map(({ id }) => id)}
         onDragStart={({ active }) => select({ blockId: active.id.toString() })}
         onDragEnd={({ active, over }) => {
           if (over && active.id !== over.id)
@@ -56,12 +55,12 @@ export function FormDisplay() {
 
 type Blueprint = Record<
   string,
-  BlockType<{ label?: string }, { blocks?: Blueprint }>
+  Omit<BlockType<{ label?: string }>, "id"> & { blocks?: Blueprint }
 >;
 
 function createBlueprint(
   key: string,
-  context: Record<string, BlockWithIdType[] | undefined>,
+  context: Record<string, BlockType[] | undefined>,
 ) {
   const blueprint: Blueprint = {};
 

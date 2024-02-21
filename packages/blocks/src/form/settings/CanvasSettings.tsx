@@ -5,7 +5,7 @@ export function CanvasSettings() {
   return (
     <SettingsPanelWrapper>
       <Label>Title</Label>
-      <SettingInput name="title" />
+      <SettingInput name="data.title" />
     </SettingsPanelWrapper>
   );
 }

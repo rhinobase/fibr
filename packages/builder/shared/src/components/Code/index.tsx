@@ -24,7 +24,7 @@ export type CodeGenerator = {
     label: string;
     icon?: ReactNode;
     language?: string;
-    resolver: (schema: Record<string, BlockType | undefined>) => string;
+    resolver: (schema: BlockType[]) => string;
   }[];
 };
 

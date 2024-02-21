@@ -29,24 +29,11 @@ export type CanvasStore = {
   uniqueId: (type: string) => string;
   // ---
   get: (props: { blockId: string }) => BlockType | undefined;
-  add: <
-    T = undefined,
-    U extends Record<string, unknown> = Record<string, unknown>,
-  >(
-    props: AddBlockProps<T, U>,
-  ) => void;
-  update: <
-    T = undefined,
-    U extends Record<string, unknown> = Record<string, unknown>,
-  >(
-    props: UpdateBlockProps<T, U>,
-  ) => void;
-  set: <
-    T = undefined,
-    U extends Record<string, unknown> = Record<string, unknown>,
-  >(
+  add: <T = undefined>(props: AddBlockProps<T>) => void;
+  update: <T = undefined>(props: UpdateBlockProps<T>) => void;
+  set: <T = BlockType>(
     props: ShouldEmitEvent<{
-      func: (values: BlockType<T, U>[]) => BlockType<T, U>[];
+      func: (values: T[]) => T[];
     }>,
   ) => void;
   updateId: (props: UpdateIdBlockProps) => void;
@@ -69,7 +56,11 @@ export const createCanvasStore = ({
 
         set((state) => {
           let index = 1;
-          while (`${type}${id}` in state.schema) {
+          // TODO: Improve this
+          while (
+            state.schema.findIndex((block) => block.id === `${type}${id}`) !==
+            -1
+          ) {
             id = (state._unique[type] ?? 0) + index;
             index += 1;
           }
@@ -82,7 +73,10 @@ export const createCanvasStore = ({
       add: ({ block, id, shouldEmit = true, index = -1 }) => {
         const blockId = id ?? get().uniqueId(block.type);
 
-        const payload = { ...block, id, selected: true } as Draft<BlockType>;
+        const payload = {
+          ...block,
+          id: blockId,
+        } as Draft<BlockType>;
 
         const schema = [...get().schema];
 
@@ -92,6 +86,8 @@ export const createCanvasStore = ({
         set((state) => {
           state.schema = schema;
         });
+
+        get().select({ blockId: [blockId], shouldEmit: false });
 
         if (shouldEmit)
           emitter(EditorEvent.BLOCK_ADDITION, {
@@ -109,7 +105,7 @@ export const createCanvasStore = ({
         values.parentNode = undefined;
 
         // Merging the current props with the new ones
-        const combinedValues = _.merge(oldValues, values);
+        const combinedValues = _.merge({}, oldValues, values);
 
         // Updating the schema
         set((state) => {
@@ -159,7 +155,7 @@ export const createCanvasStore = ({
 
         if (shouldEmit)
           emitter(EditorEvent.SCHEMA_RESET, {
-            blocks,
+            blocks: blocks as BlockType[],
           });
       },
       // TODO: Implment delete for parentNode
@@ -193,8 +189,8 @@ export const createCanvasStore = ({
           const tmp = [...state.schema];
 
           // Getting the blocks index
-          const fromIndex = tmp.findIndex((val) => val[0] === from);
-          const toIndex = tmp.findIndex((val) => val[0] === to);
+          const fromIndex = tmp.findIndex((block) => block.id === from);
+          const toIndex = tmp.findIndex((block) => block.id === to);
 
           const fromParentNode = tmp[fromIndex].parentNode;
           tmp[fromIndex].parentNode = tmp[toIndex].parentNode;

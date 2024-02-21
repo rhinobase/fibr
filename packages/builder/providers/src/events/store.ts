@@ -51,7 +51,7 @@ export const createEditorEventBus = ({
         type ? { events: { ...events, [type]: [] } } : { events: {} },
       ),
     broadcast: (type, context) => {
-      const events = get().events[type] ?? ([] as EditorEventListener[]);
+      const events = [...(get().events[type] ?? ([] as EditorEventListener[]))];
 
       if (type !== EditorEvent.ALL)
         events.push(...(get().events[EditorEvent.ALL] ?? []));

@@ -1,5 +1,5 @@
 import { Sidebar as BuilderSidebar } from "@fibr/builder";
-import { useCanvas, type BlockWithIdType } from "@fibr/providers";
+import { useCanvas, type BlockType } from "@fibr/providers";
 import {
   CodeGenerator,
   DEFAULT_GROUP,
@@ -13,19 +13,16 @@ import { reactHookFormResolver } from "./resolver";
 import { AddFormDialog } from "./AddFormDialog";
 
 export function Sidebar() {
-  const { add, all, active } = useCanvas(({ add, all, active }) => ({
-    active,
+  const { add, blocks } = useCanvas(({ add, schema }) => ({
     add,
-    all,
+    blocks: schema,
   }));
-
-  const blocks = all();
 
   return (
     <BuilderSidebar>
       <Palette
         onSelect={(value) => {
-          const parentNode = findParent(active, blocks);
+          const parentNode = findParent(blocks);
           add({ block: { ...value, parentNode } });
         }}
       />
@@ -51,12 +48,13 @@ export function Sidebar() {
   );
 }
 
-function findParent(active: string[], context: BlockWithIdType[]) {
+function findParent(context: BlockType[]) {
+  const active = context.filter((block) => block.selected);
   const groups = groupByParentNode(context);
 
   if (active.length === 0) return groups[DEFAULT_GROUP]?.[0].id;
 
-  let current = context.find((value) => value.id === active[0]);
+  let current = context.find((value) => value.id === active[0].id);
 
   while (current?.parentNode != null) {
     current = context.find((value) => value.id === current?.parentNode);

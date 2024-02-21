@@ -6,14 +6,11 @@ import { ReactNode, useMemo } from "react";
 import { useBlocks } from "../providers";
 
 export function Settings() {
-  const { active, get, update } = useCanvas(({ active, get, update }) => ({
-    active,
+  const { blocks, update } = useCanvas(({ schema, get, update }) => ({
+    blocks: schema.filter((block) => block.selected),
     get,
     update,
   }));
-
-  const blockId = active[0];
-  const block = get({ blockId });
 
   const config = useBlocks((state) => state.config);
 
@@ -29,19 +26,20 @@ export function Settings() {
     [config],
   );
 
-  const activeBlocks = active.length;
+  const activeBlocksLength = blocks.length;
+  const block = blocks[0];
 
   if (block)
     return (
       <BuilderSettings className="flex flex-col gap-3">
-        {activeBlocks > 1 ? (
+        {activeBlocksLength > 1 ? (
           <>
             <Text
               isMuted
               className="text-right italic"
-            >{`${activeBlocks} components selected`}</Text>
+            >{`${activeBlocksLength} components selected`}</Text>
             <div className="bg-secondary-50 divide-y rounded border px-2">
-              {active.map((id) => (
+              {blocks.map(({ id }) => (
                 <Text key={id} className="text-secondary-600 py-0.5 text-sm">
                   {id}
                 </Text>
@@ -57,10 +55,9 @@ export function Settings() {
         ) : (
           <FibrProvider plugins={settingBuilders}>
             <Thread
-              id={blockId}
               {...block}
               _update={(values: Partial<BlockType>) =>
-                update({ blockId, values })
+                update({ blockId: block.id, values })
               }
             />
           </FibrProvider>

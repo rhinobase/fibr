@@ -9,7 +9,7 @@ import type { BlockType } from "@fibr/providers";
 export type PaletteCard = Block & {
   isOverlay?: boolean;
   enableDragging?: boolean;
-  onSelect?: (props: BlockType) => void;
+  onSelect?: (props: Omit<BlockType, "id">) => void;
   matches?: RangeTuple[];
 };
 
@@ -56,7 +56,12 @@ export function PaletteCard({
         <Icon className="h-6 w-6 opacity-50" />
       </div>
       {!isOverlay && (
-        <p className="text-secondary-500 dark:text-secondary-400 text-2xs text-center capitalize">
+        <p
+          className={classNames(
+            enableDragging && "select-none",
+            "text-secondary-500 dark:text-secondary-400 text-2xs text-center capitalize",
+          )}
+        >
           {matches ? highlightMatches(label, matches) : label}
         </p>
       )}

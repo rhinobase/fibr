@@ -1,7 +1,6 @@
 import {
   CanvasProvider,
   CanvasStoreProps,
-  type BlockType,
   ShortcutsProvider,
 } from "@fibr/providers";
 import { type PropsWithChildren } from "react";
@@ -9,16 +8,14 @@ import { HotkeysProvider } from "react-hotkeys-hook";
 import { BlocksProvider, BlocksStore } from "../../providers";
 import { ShortcutsDialog } from "./ShortcutsDialog";
 
-export type SharedWrapper<T extends BlockType> = PropsWithChildren<
-  BlocksStore & CanvasStoreProps<T>
->;
+export type SharedWrapper = PropsWithChildren<BlocksStore & CanvasStoreProps>;
 
-export function SharedWrapper<T extends BlockType>({
+export function SharedWrapper({
   children,
   blocks,
   config,
   ...builderProps
-}: SharedWrapper<T>) {
+}: SharedWrapper) {
   return (
     <BlocksProvider blocks={blocks} config={config}>
       <CanvasProvider {...builderProps}>

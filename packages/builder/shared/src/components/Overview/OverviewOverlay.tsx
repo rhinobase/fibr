@@ -12,8 +12,8 @@ export function OverviewOverlay() {
       <DragOverlay modifiers={[adjustTranslate]}>
         {active && (
           <OverviewCard
-            id={String(active.id)}
             {...(active.data.current as BlockType)}
+            id={String(active.id)}
           />
         )}
       </DragOverlay>

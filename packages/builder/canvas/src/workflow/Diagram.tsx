@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
-import { type BlockWithIdType, useCanvas } from "@fibr/providers";
+import { type BlockType, useCanvas } from "@fibr/providers";
 import { Thread } from "@fibr/react";
 import { useBlocks } from "@fibr/shared";
 import { useCallback, useMemo } from "react";
@@ -39,11 +39,9 @@ export function Diagram() {
 
   const config = useBlocks((state) => state.config);
 
-  const { nodes, edges, set } = useCanvas(({ all, set }) => {
+  const { nodes, edges, set } = useCanvas(({ schema: blocks, set }) => {
     const nodes: Node[] = [];
     const edges: Edge[] = [];
-
-    const blocks = all();
 
     for (const block of blocks) {
       if (block.type === "edge") edges.push(block as Edge);
@@ -60,8 +58,7 @@ export function Diagram() {
   const onNodesChange: OnNodesChange = useCallback(
     (changes) =>
       set({
-        func: (nds) =>
-          applyNodeChanges(changes, nds as Node[]) as BlockWithIdType[],
+        func: (nds) => applyNodeChanges(changes, nds as Node[]) as BlockType[],
       }),
     [set],
   );
@@ -70,7 +67,7 @@ export function Diagram() {
     (changes) =>
       set({
         func: (edgs) =>
-          applyEdgeChanges(changes, edgs as Edge[]) as BlockWithIdType[],
+          applyEdgeChanges(changes, edgs as Edge[]) as BlockType[],
       }),
     [set],
   );
@@ -79,10 +76,7 @@ export function Diagram() {
     (params: Connection) =>
       set({
         func: (eds) =>
-          addEdge(
-            { ...params, type: "edge" },
-            eds as Edge[],
-          ) as BlockWithIdType[],
+          addEdge({ ...params, type: "edge" }, eds as Edge[]) as BlockType[],
       }),
     [set],
   );
@@ -153,7 +147,7 @@ export function Diagram() {
       const closeEdge = getClosestEdge(node);
 
       set({
-        func: (es) => {
+        func: (es: (BlockType & Edge)[]) => {
           const nextEdges = es.filter((e) => e.className !== "temp");
 
           if (
@@ -180,7 +174,7 @@ export function Diagram() {
       const closeEdge = getClosestEdge(node);
 
       set({
-        func: (es) => {
+        func: (es: (BlockType & Edge)[]) => {
           const nextEdges = es.filter((e) => e.className !== "temp");
 
           if (

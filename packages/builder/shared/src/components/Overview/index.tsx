@@ -1,5 +1,5 @@
 import { SidebarItem } from "@fibr/builder";
-import { useCanvas, type BlockWithIdType } from "@fibr/providers";
+import { useCanvas, type BlockType } from "@fibr/providers";
 import { ListBulletIcon } from "@heroicons/react/24/outline";
 import { DEFAULT_GROUP, DndWrapper, Empty, groupByParentNode } from "../utils";
 import { OverviewCard } from "./OverviewCard";
@@ -8,7 +8,7 @@ import { Accordion } from "@rafty/ui";
 import { useState } from "react";
 
 export type Overview = {
-  blocks: BlockWithIdType[];
+  blocks: BlockType[];
 } & Pick<SidebarItem, "action"> &
   Pick<OverviewCard, "enableDragging">;
 
@@ -54,11 +54,10 @@ function FieldsRender({ blocks, enableDragging }: Overview) {
       }}
     >
       <Accordion type="multiple" value={isOpen} onValueChange={setOpen}>
-        {groups[DEFAULT_GROUP]?.map(({ id, type }) => (
+        {groups[DEFAULT_GROUP]?.map((block) => (
           <OverviewCard
-            key={id}
-            id={id}
-            type={type}
+            key={block.id}
+            {...block}
             groups={groups}
             onToggle={(value) =>
               setOpen((prev) => {

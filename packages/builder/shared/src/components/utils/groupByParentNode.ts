@@ -1,8 +1,8 @@
 import type { BlockType } from "@fibr/providers";
 
 export const DEFAULT_GROUP = "__default";
-export function groupByParentNode<T extends BlockType>(arr: T[]) {
-  return arr.reduce<Record<string, T[] | undefined>>((prev, cur) => {
+export function groupByParentNode<T = undefined>(arr: BlockType<T>[]) {
+  return arr.reduce<Record<string, BlockType<T>[] | undefined>>((prev, cur) => {
     const key = cur.parentNode ?? DEFAULT_GROUP;
     if (key in prev) prev[key]?.push(cur);
     else prev[key] = [cur];

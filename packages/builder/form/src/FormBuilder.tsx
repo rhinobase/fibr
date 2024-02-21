@@ -1,8 +1,7 @@
-import { type BlockType } from "@fibr/providers";
 import { SharedWrapper } from "@fibr/shared";
 import { Container } from "./Container";
 
-export function FormBuilder<T extends BlockType>(props: SharedWrapper<T>) {
+export function FormBuilder(props: SharedWrapper) {
   return (
     <SharedWrapper {...props}>
       <Container />

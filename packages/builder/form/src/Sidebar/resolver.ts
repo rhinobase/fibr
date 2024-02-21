@@ -1,31 +1,26 @@
-import type { BlockType, BlockWithIdType } from "@fibr/providers";
+import type { BlockType } from "@fibr/providers";
 import type { ThreadType } from "@fibr/react";
 import { DEFAULT_GROUP, groupByParentNode } from "@fibr/shared";
 
 export function reactHookFormResolver(
-  schema: Record<string, BlockType | undefined>,
+  blocks: BlockType<{ title?: string; defaultValue?: string }>[],
 ) {
-  const blocks = Object.entries(schema).reduce<BlockWithIdType[]>(
-    (prev, [id, value]) => {
-      if (value) prev.push({ id, ...value });
-      return prev;
-    },
-    [],
-  );
-
   const group = groupByParentNode(blocks);
   const form = group[DEFAULT_GROUP]?.[0];
 
   if (!form) return "";
 
-  const capitalizedTitle = formatTitle(form.title as string);
+  const capitalizedTitle = formatTitle(form.data?.title ?? "");
   const fields = group[form.id];
 
   const defaultValues = fields
     ?.reduce<string[]>((prev, { id, ...field }) => {
-      if (field?.defaultValue == null) return prev;
+      if (field?.data?.defaultValue == null) return prev;
 
-      const { type, defaultValue } = field;
+      const {
+        type,
+        data: { defaultValue },
+      } = field;
 
       prev.push(
         `${id}: ${type === "number" ? `${defaultValue}` : `"${defaultValue}"`}`,

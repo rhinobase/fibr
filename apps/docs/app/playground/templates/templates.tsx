@@ -6,7 +6,7 @@ import { FiArrowRight } from "react-icons/fi";
 import { GoProjectTemplate } from "react-icons/go";
 import { Container } from "./utils";
 
-export type TemplateType = Record<string, BlockType<FieldType>>;
+export type TemplateType = BlockType<FieldType | { title: string }>[];
 
 export const TEMPLATES: Record<
   Container,
@@ -22,17 +22,16 @@ export const TEMPLATES: Record<
       id: "contact-us",
       name: "Contact Us",
       icon: GoProjectTemplate,
-      template: {
-        canvas: {
-          type: "canvas",
-          title: "Contact Us",
-        },
-        name: {
+      template: [
+        { id: "canvas", type: "canvas", data: { title: "Contact Us" } },
+        {
+          id: "name",
           type: "string",
           data: { label: "Name", description: "Enter your full name" },
           parentNode: "canvas",
         },
-        email: {
+        {
+          id: "email",
           type: "string",
           data: {
             inputType: "email",
@@ -42,7 +41,8 @@ export const TEMPLATES: Record<
           },
           parentNode: "canvas",
         },
-        phone: {
+        {
+          id: "phone",
           type: "number",
           data: {
             label: "Phone Number",
@@ -50,28 +50,34 @@ export const TEMPLATES: Record<
           },
           parentNode: "canvas",
         },
-        message: {
+        {
+          id: "message",
           type: "textarea",
           data: { label: "Message", description: "Enter your message here" },
           parentNode: "canvas",
         },
-      },
+      ],
     },
     {
       id: "sign-up",
       name: "Sign Up",
       icon: GoProjectTemplate,
-      template: {
-        canvas: {
+      template: [
+        {
+          id: "canvas",
           type: "canvas",
-          title: "Sign Up",
+          data: {
+            title: "Sign Up",
+          },
         },
-        name: {
+        {
+          id: "name",
           type: "string",
           data: { label: "Name", required: true },
           parentNode: "canvas",
         },
-        email: {
+        {
+          id: "email",
           type: "string",
           data: {
             inputType: "email",
@@ -81,28 +87,32 @@ export const TEMPLATES: Record<
           },
           parentNode: "canvas",
         },
-        password: {
+        {
+          id: "password",
           type: "password",
           data: { label: "Create a Password", required: true },
           parentNode: "canvas",
         },
-        confirm_password: {
+        {
+          id: "confirm_password",
           type: "password",
           data: { label: "Confirm Password", required: true },
           parentNode: "canvas",
         },
-      },
+      ],
     },
     {
       id: "nested",
       name: "Nested",
       icon: GoProjectTemplate,
-      template: {
-        canvas: {
+      template: [
+        {
+          id: "canvas",
           type: "canvas",
-          title: "Nested",
+          data: { title: "Nested" },
         },
-        name: {
+        {
+          id: "name",
           type: "string",
           data: {
             label: "Student's Name",
@@ -110,30 +120,37 @@ export const TEMPLATES: Record<
           },
           parentNode: "canvas",
         },
-        father: {
+        {
+          id: "father",
           type: "canvas",
-          title: "Father",
+          data: {
+            title: "Father",
+          },
           parentNode: "canvas",
         },
-        father_name: {
+        {
+          id: "father_name",
           type: "string",
           data: {
             label: "Father's Name",
           },
           parentNode: "father",
         },
-      },
+      ],
     },
     {
       id: "custom",
       name: "Custom Form",
       icon: FiArrowRight,
-      template: {
-        canvas: {
+      template: [
+        {
+          id: "canvas",
           type: "canvas",
-          title: "Custom",
+          data: {
+            title: "Custom",
+          },
         },
-      },
+      ],
     },
   ],
   [Container.WORKFLOW]: [
@@ -141,7 +158,7 @@ export const TEMPLATES: Record<
       id: "custom",
       name: "Custom Flow",
       icon: FiArrowRight,
-      template: {},
+      template: [],
     },
   ],
   [Container.PAGE]: [
@@ -149,14 +166,15 @@ export const TEMPLATES: Record<
       id: "custom",
       name: "Custom Page",
       icon: FiArrowRight,
-      template: {
-        canvas: {
-          type: "page",
-          position: { x: 920, y: 440 },
-          width: 1920,
-          height: 1080,
-        },
-      },
+      template: [
+        // {
+        //   id: "canvas",
+        //   type: "page",
+        //   position: { x: 920, y: 440 },
+        //   width: 1920,
+        //   height: 1080,
+        // },
+      ],
     },
   ],
 };

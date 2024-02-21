@@ -4,38 +4,27 @@ export type ShouldEmitEvent<T> = {
   shouldEmit?: boolean;
 } & T;
 
-export type BlockType<
-  T = undefined,
-  U extends Record<string, unknown> = Record<string, unknown>,
-> = ThreadWithIdType<
-  {
-    data?: T;
-    hidden?: boolean;
-    selected?: boolean;
-    dragging?: boolean;
-    draggable?: boolean;
-    selectable?: boolean;
-    deletable?: boolean;
-    parentNode?: string;
-    resizing?: boolean;
-  } & U
->;
+export type BlockType<T = undefined> = ThreadWithIdType<{
+  data?: T;
+  hidden?: boolean;
+  selected?: boolean;
+  dragging?: boolean;
+  draggable?: boolean;
+  selectable?: boolean;
+  deletable?: boolean;
+  parentNode?: string;
+  resizing?: boolean;
+}>;
 
-export type AddBlockProps<
-  T = undefined,
-  U extends Record<string, unknown> = Record<string, unknown>,
-> = ShouldEmitEvent<{
-  block: BlockType<T, U>;
+export type AddBlockProps<T = undefined> = ShouldEmitEvent<{
+  block: Omit<BlockType<T>, "id">;
   id?: string;
   index?: number;
 }>;
 
-export type UpdateBlockProps<
-  T = undefined,
-  U extends Record<string, unknown> = Record<string, unknown>,
-> = ShouldEmitEvent<{
+export type UpdateBlockProps<T = undefined> = ShouldEmitEvent<{
   blockId: string;
-  values: Partial<BlockType<T, U>>;
+  values: Partial<BlockType<T>>;
 }>;
 
 export type UpdateIdBlockProps = ShouldEmitEvent<{

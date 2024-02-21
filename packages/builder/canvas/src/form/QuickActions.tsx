@@ -1,4 +1,4 @@
-import { useCanvas, type BlockWithIdType } from "@fibr/providers";
+import { useCanvas, type BlockType } from "@fibr/providers";
 import { useThread } from "@fibr/react";
 import { eventHandler } from "@rafty/shared";
 import {
@@ -26,16 +26,14 @@ import {
 export type QuickActions = PropsWithChildren;
 
 export function QuickActions({ children }: QuickActions) {
-  const { id } = useThread();
-  const active = useCanvas(({ active }) => active);
-
+  const { selected = false } = useThread<BlockType>();
   const [isHover, setHover] = useState(false);
 
   return (
     <HoverCard
       openDelay={50}
       closeDelay={100}
-      open={isHover || active.includes(id)}
+      open={isHover || selected}
       onOpenChange={setHover}
     >
       <HoverCardTrigger asChild>{children}</HoverCardTrigger>
@@ -121,10 +119,10 @@ enum Direction {
 }
 
 function QuickActionButtons() {
-  const { id, parentNode } = useThread<BlockWithIdType>();
-  const { all, move, remove, duplicate, select } = useCanvas(
-    ({ all, move, remove, duplicate, select }) => ({
-      all,
+  const { id, parentNode } = useThread<BlockType>();
+  const { blocks, move, remove, duplicate, select } = useCanvas(
+    ({ schema, move, remove, duplicate, select }) => ({
+      blocks: schema.filter((block) => block.parentNode === parentNode),
       move,
       remove,
       duplicate,
@@ -132,7 +130,6 @@ function QuickActionButtons() {
     }),
   );
 
-  const blocks = all({ filters: { parentNode } });
   const index = blocks.findIndex((block) => block.id === id);
 
   if (index === -1) return;

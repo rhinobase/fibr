@@ -21,7 +21,7 @@ export function PageCanvas() {
 
   return (
     <FormProvider {...methods}>
-      <Canvas ref={setNodeRef} onClick={() => select({ blockId: null })}>
+      <Canvas ref={setNodeRef} onClick={() => select({ blockId: [] })}>
         <div className="flex h-full w-full bg-white">
           <WeaverProvider wrapper={NodeWrapper}>
             <Diagram />

@@ -16,9 +16,7 @@ const schema = z.object({
 });
 
 export type CustomTemplateForm = {
-  onSubmit: (
-    template: Record<string, BlockType>,
-  ) => (event: BaseSyntheticEvent) => void;
+  onSubmit: (template: BlockType[]) => (event: BaseSyntheticEvent) => void;
 };
 
 export function CustomTemplateForm(props: CustomTemplateForm) {

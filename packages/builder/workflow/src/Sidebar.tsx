@@ -9,12 +9,10 @@ import {
 } from "@fibr/shared";
 
 export function Sidebar() {
-  const { add, all } = useCanvas(({ add, all }) => ({
+  const { add, blocks } = useCanvas(({ add, schema: blocks }) => ({
     add,
-    all,
+    blocks,
   }));
-
-  const blocks = all();
 
   return (
     <FloatingSidebar>

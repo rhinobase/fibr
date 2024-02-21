@@ -1,5 +1,5 @@
 "use client";
-import { useCanvas, type BlockWithIdType } from "@fibr/providers";
+import { useCanvas, type BlockType } from "@fibr/providers";
 import { Thread } from "@fibr/react";
 import { useBlocks } from "@fibr/shared";
 import { useCallback, useMemo } from "react";
@@ -28,16 +28,15 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
 export function Diagram() {
   const config = useBlocks((state) => state.config);
 
-  const { nodes, set } = useCanvas(({ all, set }) => ({
-    nodes: all() as Node[],
+  const { nodes, set } = useCanvas(({ schema, set }) => ({
+    nodes: schema as Node[],
     set,
   }));
 
   const onNodesChange: OnNodesChange = useCallback(
     (changes) =>
       set({
-        func: (nds) =>
-          applyNodeChanges(changes, nds as Node[]) as BlockWithIdType[],
+        func: (nds) => applyNodeChanges(changes, nds as Node[]) as BlockType[],
       }),
     [set],
   );

@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useCanvas } from "@fibr/providers";
+import { BlockType, useCanvas } from "@fibr/providers";
 import { useThread } from "@fibr/react";
 import { eventHandler } from "@rafty/shared";
 import { classNames } from "@rafty/ui";
@@ -15,13 +15,14 @@ import {
 import { QuickActions } from "./QuickActions";
 
 export function FieldWrapper({ children }: PropsWithChildren) {
-  const { id, isOverlay, ...field } = useThread();
-  const { active, select } = useCanvas(({ select, active }) => ({
+  const { id, isOverlay, ...field } = useThread<
+    BlockType & { isOverlay?: boolean }
+  >();
+  const { select } = useCanvas(({ select }) => ({
     select,
-    active,
   }));
 
-  const isSelected = active.includes(id);
+  const isSelected = field.selected ?? false;
 
   const {
     attributes,

@@ -7,7 +7,6 @@ import {
 import {
   AddBlockProps,
   BlockType,
-  BlockWithIdType,
   MoveBlockProps,
   RemoveBlockProps,
   SelectBlockProps,
@@ -23,7 +22,7 @@ export type EditorEventListenerProps = {
     key: string;
   };
   // Canvas
-  [EditorEvent.SCHEMA_RESET]: { blocks: BlockWithIdType[] };
+  [EditorEvent.SCHEMA_RESET]: { blocks: BlockType[] };
   // Blocks
   [EditorEvent.BLOCK_ADDITION]: AddBlockProps;
   [EditorEvent.BLOCK_UPDATION]: {

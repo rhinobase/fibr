@@ -52,7 +52,7 @@ function AddForm() {
       onSubmit={handleSubmit(({ title }) =>
         add({
           block: {
-            title: title,
+            data: { title },
             type: "canvas",
           },
         }),

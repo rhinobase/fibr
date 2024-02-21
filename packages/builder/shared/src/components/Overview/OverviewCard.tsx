@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { BlockWithIdType, useCanvas } from "@fibr/providers";
+import { type BlockType, useCanvas } from "@fibr/providers";
 import { eventHandler } from "@rafty/shared";
 import {
   AccordionContent,
@@ -29,12 +29,10 @@ const cardClasses = cva(
 );
 
 export type OverviewCard = {
-  id: string;
-  type: string;
-  groups?: Record<string, BlockWithIdType[] | undefined>;
+  groups?: Record<string, BlockType[] | undefined>;
   onToggle?: (value: string) => void;
   enableDragging?: boolean;
-};
+} & BlockType;
 
 export function OverviewCard({
   id,
@@ -42,14 +40,12 @@ export function OverviewCard({
   groups,
   onToggle,
   enableDragging = false,
+  selected: isSelected = false,
 }: OverviewCard) {
-  const { active, select, remove } = useCanvas(
-    ({ select, remove, active }) => ({
-      active,
-      select,
-      remove,
-    }),
-  );
+  const { select, remove } = useCanvas(({ select, remove }) => ({
+    select,
+    remove,
+  }));
 
   const hasChildren = groups ? id in groups : false;
 
@@ -103,7 +99,7 @@ export function OverviewCard({
     return (
       <AccordionItem value={id}>
         <AccordionTrigger
-          className={cardClasses({ selected: active.includes(id) })}
+          className={cardClasses({ selected: isSelected })}
           showIcon={false}
           {...draggableProps}
           onClick={handleNodeSelect}
@@ -130,7 +126,7 @@ export function OverviewCard({
       {...draggableProps}
       className={classNames(
         accordionTriggerClasses(),
-        cardClasses({ selected: active.includes(id) }),
+        cardClasses({ selected: isSelected }),
       )}
       onClick={handleNodeSelect}
       onKeyDown={handleNodeSelect}
