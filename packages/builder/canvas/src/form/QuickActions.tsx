@@ -14,7 +14,7 @@ import {
   useBoolean,
 } from "@rafty/ui";
 import { useEffect, useRef, useState, type PropsWithChildren } from "react";
-import { HiPencil } from "react-icons/hi";
+import { HiPencil, HiOutlineEyeOff } from "react-icons/hi";
 import { IconType } from "react-icons/lib";
 import {
   MdOutlineAddToPhotos,
@@ -120,13 +120,14 @@ enum Direction {
 
 function QuickActionButtons() {
   const { id, parentNode } = useThread<BlockType>();
-  const { blocks, move, remove, duplicate, select } = useCanvas(
-    ({ schema, move, remove, duplicate, select }) => ({
+  const { blocks, move, remove, duplicate, select, update } = useCanvas(
+    ({ schema, move, remove, duplicate, select, update }) => ({
       blocks: schema.filter((block) => block.parentNode === parentNode),
       move,
       remove,
       duplicate,
       select,
+      update,
     }),
   );
 
@@ -155,6 +156,11 @@ function QuickActionButtons() {
           action={() => onMove(Direction.DOWN)}
         />
       )}
+      <ActionButton
+        name="Hidden"
+        icon={HiOutlineEyeOff}
+        action={() => update({ blockId: id, values: { hidden: true } })}
+      />
       <ActionButton
         name="Duplicate file"
         icon={MdOutlineAddToPhotos}

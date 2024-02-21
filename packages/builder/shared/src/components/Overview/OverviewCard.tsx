@@ -6,6 +6,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
+  Button,
   Text,
   accordionTriggerClasses,
   buttonClasses,
@@ -13,7 +14,12 @@ import {
 } from "@rafty/ui";
 import { cva } from "class-variance-authority";
 import { HTMLAttributes, type CSSProperties } from "react";
-import { HiChevronRight, HiX } from "react-icons/hi";
+import {
+  HiChevronRight,
+  HiX,
+  HiOutlineEye,
+  HiOutlineEyeOff,
+} from "react-icons/hi";
 import { MdDragIndicator } from "react-icons/md";
 
 const cardClasses = cva(
@@ -35,6 +41,7 @@ export type OverviewCard = {
 } & BlockType;
 
 export function OverviewCard({
+  hidden,
   id,
   type,
   groups,
@@ -42,10 +49,13 @@ export function OverviewCard({
   enableDragging = false,
   selected: isSelected = false,
 }: OverviewCard) {
-  const { select, remove } = useCanvas(({ select, remove }) => ({
-    select,
-    remove,
-  }));
+  const { select, remove, update } = useCanvas(
+    ({ select, remove, update }) => ({
+      select,
+      remove,
+      update,
+    }),
+  );
 
   const hasChildren = groups ? id in groups : false;
 
@@ -75,7 +85,7 @@ export function OverviewCard({
 
   const CardRender = () => (
     <>
-      <span className="flex items-center">
+      <span className={classNames(hidden && "opacity-40", "flex items-center")}>
         {enableDragging && <DragHandler {...attributes} {...listeners} />}
         {hasChildren && (
           <CollapseButton
@@ -84,14 +94,31 @@ export function OverviewCard({
           />
         )}
       </span>
-      <span className="text-2xs flex gap-1 truncate font-medium">
+      <span
+        className={classNames(
+          hidden && "opacity-40",
+          "text-2xs flex gap-1 truncate font-medium",
+        )}
+      >
         {id}
         <Text isMuted className="italic">
           ({type})
         </Text>
       </span>
       <div className="flex-1" />
-      <DeleteButton onClick={handleNodeDelete} onKeyDown={handleNodeDelete} />
+      <Button
+        size="icon"
+        variant="ghost"
+        className={classNames(hidden && "text-secondary-400", "p-0.5")}
+        onClick={() => update({ blockId: id, values: { hidden: !hidden } })}
+      >
+        {hidden ? <HiOutlineEye /> : <HiOutlineEyeOff />}
+      </Button>
+      <DeleteButton
+        onClick={handleNodeDelete}
+        onKeyDown={handleNodeDelete}
+        className={hidden ? "opacity-40" : undefined}
+      />
     </>
   );
 

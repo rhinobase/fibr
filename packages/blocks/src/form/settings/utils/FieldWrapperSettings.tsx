@@ -13,8 +13,6 @@ export function FieldWrapperSettings() {
       <SettingSwitch name="data.required" />
       <Label>Disabled</Label>
       <SettingSwitch name="data.disabled" />
-      <Label>Hidden</Label>
-      <SettingSwitch name="data.hidden" />
       <Label>Tooltip</Label>
       <SettingInput name="data.tooltip" />
     </>

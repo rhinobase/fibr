@@ -15,7 +15,7 @@ const BLOCK_WRAPPERS: Record<Env, (props: PropsWithChildren) => ReactNode> = {
 
 export function FormDisplay() {
   const { blocks, select, move } = useCanvas(({ schema, select, move }) => ({
-    blocks: schema,
+    blocks: schema.filter((block) => !block.hidden),
     select,
     move,
   }));
