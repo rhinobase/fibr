@@ -1,12 +1,11 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { type BlockType, useCanvas } from "@fibr/providers";
+import { useCanvas, type BlockType } from "@fibr/providers";
 import { eventHandler } from "@rafty/shared";
 import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-  Button,
   Text,
   accordionTriggerClasses,
   buttonClasses,
@@ -16,9 +15,9 @@ import { cva } from "class-variance-authority";
 import { HTMLAttributes, type CSSProperties } from "react";
 import {
   HiChevronRight,
-  HiX,
   HiOutlineEye,
   HiOutlineEyeOff,
+  HiX,
 } from "react-icons/hi";
 import { MdDragIndicator } from "react-icons/md";
 
@@ -85,6 +84,14 @@ export function OverviewCard({
 
   const handleToggleCollapse = eventHandler(() => onToggle?.(id));
 
+  const handleNodeHidden = eventHandler(() =>
+    update({
+      blockId: id,
+      parentNode,
+      updatedValues: { hidden: !hidden, selected: hidden },
+    }),
+  );
+
   // TODO: this is not working
   // if (isDragging) return <div className="bg-primary-500 h-1 w-full" />;
 
@@ -111,20 +118,20 @@ export function OverviewCard({
         </Text>
       </span>
       <div className="flex-1" />
-      <Button
-        size="icon"
-        variant="ghost"
-        className={classNames(hidden && "text-secondary-400", "p-0.5")}
-        onClick={() =>
-          update({
-            blockId: id,
-            parentNode,
-            updatedValues: { hidden: !hidden },
-          })
-        }
+      <span
+        className={classNames(
+          buttonClasses({
+            size: "icon",
+            variant: "ghost",
+          }),
+          hidden && "text-secondary-400",
+          "cursor-pointer p-0.5",
+        )}
+        onClick={handleNodeHidden}
+        onKeyDown={handleNodeHidden}
       >
         {hidden ? <HiOutlineEye /> : <HiOutlineEyeOff />}
-      </Button>
+      </span>
       <DeleteButton
         onClick={handleNodeDelete}
         onKeyDown={handleNodeDelete}

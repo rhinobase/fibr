@@ -10,7 +10,6 @@ import {
   MoveBlockProps,
   RemoveBlockProps,
   SelectBlockProps,
-  UnselectBlockProps,
   UpdateIdBlockProps,
 } from "../canvas";
 import { EditorEvent } from "../utils";
@@ -38,7 +37,6 @@ export type EditorEventListenerProps = {
   };
   [EditorEvent.BLOCK_REPOSITION]: MoveBlockProps;
   [EditorEvent.BLOCK_SELECTION]: SelectBlockProps;
-  [EditorEvent.BLOCK_UNSELECT]: UnselectBlockProps;
   [EditorEvent.BLOCK_DUPLICATION]: {
     newId: string;
     block: BlockType;

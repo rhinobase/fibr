@@ -41,7 +41,7 @@ export function FieldWrapper({
     <TooltipWrapper tooltip={tooltip}>
       <FieldControl
         name={id}
-        className={classNames(hidden && "hidden", "gap-2", className)}
+        className={classNames(hidden && "opacity-40", "gap-2", className)}
         isRequired={required}
         isDisabled={disabled}
       >

@@ -13,7 +13,6 @@ import {
   RemoveBlockProps,
   SelectBlockProps,
   ShouldEmitEvent,
-  UnselectBlockProps,
   UpdateBlockProps,
   UpdateIdBlockProps,
 } from "./types";
@@ -41,7 +40,6 @@ export type CanvasStore = {
   remove: (props: RemoveBlockProps) => void;
   move: (props: MoveBlockProps) => void;
   select: (props: SelectBlockProps) => void;
-  unselect: (props: UnselectBlockProps) => void;
   duplicate: (props: DuplicateBlockProps) => void;
 };
 
@@ -278,35 +276,6 @@ export const createCanvasStore = ({
         });
 
         if (shouldEmit) emitter(EditorEvent.BLOCK_SELECTION, params);
-      },
-      unselect: (params) => {
-        const { unselectBlockIds, shouldEmit = true } = params;
-        const { ids, parents } = (
-          Array.isArray(unselectBlockIds)
-            ? unselectBlockIds
-            : [unselectBlockIds]
-        ).reduce<{
-          ids: Record<string, boolean>;
-          parents: Record<string, boolean>;
-        }>(
-          (prev, { id, parentNode }) => {
-            prev.ids[id] = true;
-            prev.parents[String(parentNode)] = true;
-            return prev;
-          },
-          { ids: {}, parents: {} },
-        );
-
-        set((state) => {
-          state.schema = state.schema.map((block) => {
-            if (ids[block.id] && parents[String(block.parentNode)])
-              block.selected = false;
-
-            return block;
-          });
-        });
-
-        if (shouldEmit) emitter(EditorEvent.BLOCK_UNSELECT, params);
       },
       duplicate: (params) => {
         const { originalBlockId, shouldEmit = true } = params;
