@@ -60,7 +60,7 @@ export default function Playground() {
         ],
       }}
     >
-      <Header>
+      <Header className="gap-1">
         <div className="flex-1" />
         <ThemeToggle />
         <PreviewButton />
