@@ -16,6 +16,7 @@ import {
   UpdateBlockProps,
   UpdateIdBlockProps,
 } from "./types";
+import { isHotkeyPressed } from "react-hotkeys-hook";
 
 export type CanvasStoreProps = {
   initialSchema?: BlockType[];
@@ -26,12 +27,9 @@ export type CanvasStore = {
   schema: BlockType[];
   // Generating unique keys for components
   _unique: Record<string, number>;
-  uniqueId: (type: string, parentNode?: string) => string;
+  uniqueId: (type: string) => string;
   // ---
-  get: (props: {
-    blockId: string;
-    parentNode?: string;
-  }) => BlockType | undefined;
+  get: (props: { blockId: string }) => BlockType | undefined;
   add: <T = undefined>(props: AddBlockProps<T>) => void;
   update: <T = undefined>(props: UpdateBlockProps<T>) => void;
   set: <T = BlockType>(
@@ -54,23 +52,20 @@ export const createCanvasStore = ({
     immer<CanvasStore>((set, get) => ({
       schema: initialSchema,
       _unique: revalidateCache(initialSchema),
-      uniqueId: (type, parentNode) => {
+      uniqueId: (type) => {
         let typeCount = 1;
 
         const blocks = get().schema;
 
-        const ids = blocks.reduce<Record<string, boolean>>(
-          (prev, { id, parentNode }) => {
-            prev[`${id}-${parentNode}`] = true;
-            return prev;
-          },
-          {},
-        );
+        const ids = blocks.reduce<Record<string, boolean>>((prev, { id }) => {
+          prev[id] = true;
+          return prev;
+        }, {});
 
         set((state) => {
           let index = 1;
 
-          while (ids[`${type}${typeCount}-${parentNode}`]) {
+          while (ids[`${type}${typeCount}`]) {
             typeCount = (state._unique[type] ?? 0) + index;
             index += 1;
           }
@@ -79,13 +74,9 @@ export const createCanvasStore = ({
 
         return `${type}${typeCount}`;
       },
-      get: ({ blockId, parentNode }) =>
-        get().schema.find(
-          (block) => block.id === blockId && block.parentNode === parentNode,
-        ),
+      get: ({ blockId }) => get().schema.find((block) => block.id === blockId),
       add: ({ blockData, blockId, shouldEmit = true, insertionIndex = -1 }) => {
-        const generatedBlockId =
-          blockId ?? get().uniqueId(blockData.type, blockData.parentNode);
+        const generatedBlockId = blockId ?? get().uniqueId(blockData.type);
 
         const payload = {
           ...blockData,
@@ -102,10 +93,7 @@ export const createCanvasStore = ({
         });
 
         get().select({
-          selectedBlockIds: {
-            id: generatedBlockId,
-            parentNode: blockData.parentNode,
-          },
+          selectedBlockIds: generatedBlockId,
           shouldEmit: false,
         });
 
@@ -115,11 +103,9 @@ export const createCanvasStore = ({
             blockId: generatedBlockId,
           });
       },
-      update: ({ blockId, parentNode, updatedValues, shouldEmit = true }) => {
+      update: ({ blockId, updatedValues, shouldEmit = true }) => {
         const blocks = get().schema;
-        const index = blocks.findIndex(
-          (block) => block.id === blockId && block.parentNode === parentNode,
-        );
+        const index = blocks.findIndex((block) => block.id === blockId);
         const oldValues = blocks[index];
 
         // Making sure we are not overriding these properties
@@ -141,24 +127,15 @@ export const createCanvasStore = ({
             oldValues,
           });
       },
-      updateId: ({
-        currentBlockId,
-        parentNode,
-        newBlockId,
-        shouldEmit = true,
-      }) => {
+      updateId: ({ currentBlockId, newBlockId, shouldEmit = true }) => {
         const schema = get().schema;
         const blockIndex = schema.findIndex(
-          (block) =>
-            block.id === currentBlockId && block.parentNode === parentNode,
+          (block) => block.id === currentBlockId,
         );
         const block = schema[blockIndex];
 
         // Check if this is a unique combo
-        const index = schema.findIndex(
-          (item) =>
-            item.id === newBlockId && item.parentNode === block?.parentNode,
-        );
+        const index = schema.findIndex((item) => item.id === newBlockId);
 
         if (index !== -1) return;
 
@@ -195,12 +172,12 @@ export const createCanvasStore = ({
             cur: blocks as BlockType[],
           });
       },
-      remove: ({ blockId, parentNode, shouldEmit = true }) => {
+      remove: ({ blockId, shouldEmit = true }) => {
         let index = -1;
         let blockContent: BlockType | undefined;
 
         const blocks = get().schema.reduce<BlockType[]>((prev, block, i) => {
-          if (block.id === blockId && block.parentNode === parentNode) {
+          if (block.id === blockId) {
             index = i;
             blockContent = block;
           } else prev.push(block);
@@ -221,28 +198,16 @@ export const createCanvasStore = ({
           });
       },
       move: (params) => {
-        const {
-          sourceBlockId,
-          sourceParentNode,
-          targetBlockId,
-          targetParentNode,
-          shouldEmit = true,
-        } = params;
+        const { sourceBlockId, targetBlockId, shouldEmit = true } = params;
 
         set((state) => {
           const tmp = [...state.schema];
 
           // Getting the blocks index
           const fromIndex = tmp.findIndex(
-            (block) =>
-              block.id === sourceBlockId &&
-              block.parentNode === sourceParentNode,
+            (block) => block.id === sourceBlockId,
           );
-          const toIndex = tmp.findIndex(
-            (block) =>
-              block.id === targetBlockId &&
-              block.parentNode === targetParentNode,
-          );
+          const toIndex = tmp.findIndex((block) => block.id === targetBlockId);
 
           const fromParentNode = tmp[fromIndex].parentNode;
           tmp[fromIndex].parentNode = tmp[toIndex].parentNode;
@@ -255,27 +220,22 @@ export const createCanvasStore = ({
       },
       select: (params) => {
         const { selectedBlockIds, shouldEmit = true } = params;
-        const { ids, parents } = (
+
+        const ids = (
           Array.isArray(selectedBlockIds)
             ? selectedBlockIds
-            : [selectedBlockIds]
-        ).reduce<{
-          ids: Record<string, boolean>;
-          parents: Record<string, boolean>;
-        }>(
-          (prev, { id, parentNode }) => {
-            prev.ids[id] = true;
-            prev.parents[String(parentNode)] = true;
-            return prev;
-          },
-          { ids: {}, parents: {} },
-        );
+            : selectedBlockIds
+              ? [selectedBlockIds]
+              : []
+        ).reduce<Record<string, boolean>>((prev, cur) => {
+          prev[cur] = true;
+          return prev;
+        }, {});
 
         set((state) => {
           state.schema = state.schema.map((block) => {
-            if (ids[block.id] && parents[String(block.parentNode)])
-              block.selected = true;
-            else block.selected = false;
+            if (ids[block.id]) block.selected = true;
+            else if (!isHotkeyPressed("shift")) block.selected = false;
 
             return block;
           });
@@ -284,15 +244,15 @@ export const createCanvasStore = ({
         if (shouldEmit) emitter(EditorEvent.BLOCK_SELECTION, params);
       },
       duplicate: (params) => {
-        const { originalBlockId, parentNode, shouldEmit = true } = params;
-        const blockData = get().get({ blockId: originalBlockId, parentNode });
+        const { originalBlockId, shouldEmit = true } = params;
+        const blockData = get().get({ blockId: originalBlockId });
 
         if (!blockData)
           throw new Error(
             `Unable to find the block with Id ${originalBlockId}`,
           );
 
-        const id = get().uniqueId(blockData.type, parentNode);
+        const id = get().uniqueId(blockData.type);
 
         get().add({ blockData, blockId: id });
 

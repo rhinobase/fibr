@@ -40,19 +40,14 @@ export function FormDisplay() {
         items={blocks.map(({ id, parentNode }) => `${id}-${parentNode}`)}
         onDragStart={({ active }) => {
           select({
-            selectedBlockIds: {
-              id: active.data.current?.id,
-              parentNode: active.data.current?.parentNode,
-            },
+            selectedBlockIds: active.data.current?.id,
           });
         }}
         onDragEnd={({ active, over }) => {
           if (over && active.id !== over.id)
             move({
               sourceBlockId: active.data.current?.id,
-              sourceParentNode: active.data.current?.parentNode,
               targetBlockId: over.data.current?.id,
-              targetParentNode: over.data.current?.parentNode,
             });
         }}
       >

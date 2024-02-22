@@ -34,7 +34,7 @@ export function FieldWrapper({ children }: PropsWithChildren) {
   const onSelect = eventHandler((event) => {
     event.stopPropagation();
     select({
-      selectedBlockIds: { id: field.id, parentNode: field.parentNode },
+      selectedBlockIds: field.id,
     });
   });
 

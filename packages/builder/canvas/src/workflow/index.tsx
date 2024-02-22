@@ -16,7 +16,7 @@ export function WorkflowCanvas() {
     <Canvas
       ref={setNodeRef}
       className="items-stretch justify-normal"
-      onClick={() => select({ selectedBlockIds: [] })}
+      onClick={() => select({ selectedBlockIds: null })}
     >
       <WeaverProvider wrapper={NodeWrapper}>
         <Diagram />

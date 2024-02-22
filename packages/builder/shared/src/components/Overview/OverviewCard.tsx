@@ -75,19 +75,16 @@ export function OverviewCard({
     : {};
 
   const handleNodeSelect = eventHandler(
-    () => !hidden && select({ selectedBlockIds: { id, parentNode } }),
+    () => !hidden && select({ selectedBlockIds: id }),
   );
 
-  const handleNodeDelete = eventHandler(() =>
-    remove({ blockId: id, parentNode }),
-  );
+  const handleNodeDelete = eventHandler(() => remove({ blockId: id }));
 
   const handleToggleCollapse = eventHandler(() => onToggle?.(id));
 
   const handleNodeHidden = eventHandler(() =>
     update({
       blockId: id,
-      parentNode,
       updatedValues: { hidden: !hidden, selected: hidden },
     }),
   );

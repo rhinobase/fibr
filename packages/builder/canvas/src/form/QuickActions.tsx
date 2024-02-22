@@ -52,7 +52,7 @@ export function QuickActions({ children }: QuickActions) {
 }
 
 function IdEditField() {
-  const { id, parentNode } = useThread<Node>();
+  const { id } = useThread<Node>();
   const [isEditable, toggle] = useBoolean(false);
   const ref = useRef<HTMLInputElement>(null);
   const { select, updateId } = useCanvas(({ select, updateId }) => ({
@@ -66,7 +66,7 @@ function IdEditField() {
 
   const handleClick = eventHandler(() => {
     toggle(true);
-    select({ selectedBlockIds: { id, parentNode } });
+    select({ selectedBlockIds: id });
   });
 
   const onSubmit = (
@@ -81,7 +81,6 @@ function IdEditField() {
     if (ref.current)
       updateId({
         currentBlockId: id,
-        parentNode,
         newBlockId: ref.current.value,
       });
 
@@ -142,14 +141,12 @@ function QuickActionButtons() {
   if (index === -1) return;
 
   const onMove = (direction: Direction) => {
-    select({ selectedBlockIds: { id, parentNode } });
+    select({ selectedBlockIds: id });
 
     const target = blocks[index + direction];
     move({
       sourceBlockId: id,
-      sourceParentNode: parentNode,
       targetBlockId: target.id,
-      targetParentNode: target.parentNode,
     });
   };
 
@@ -175,7 +172,6 @@ function QuickActionButtons() {
         action={() =>
           update({
             blockId: id,
-            parentNode,
             updatedValues: { hidden: true, selected: false },
           })
         }
@@ -183,12 +179,12 @@ function QuickActionButtons() {
       <ActionButton
         name="Duplicate file"
         icon={MdOutlineAddToPhotos}
-        action={() => duplicate({ originalBlockId: id, parentNode })}
+        action={() => duplicate({ originalBlockId: id })}
       />
       <ActionButton
         name="Delete visual field"
         icon={MdOutlineDelete}
-        action={() => remove({ blockId: id, parentNode })}
+        action={() => remove({ blockId: id })}
         className="hover:bg-red-200/40 hover:text-red-500 dark:hover:bg-red-300/10 dark:hover:text-red-300"
       />
     </div>

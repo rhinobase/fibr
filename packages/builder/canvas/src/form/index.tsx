@@ -8,7 +8,7 @@ export function FormBuilderCanvas() {
   return (
     <Canvas
       className="min-h-min py-10"
-      onClick={() => select({ selectedBlockIds: [] })}
+      onClick={() => select({ selectedBlockIds: null })}
     >
       <div className="w-[500px] space-y-2 rounded">
         <FormDisplay />

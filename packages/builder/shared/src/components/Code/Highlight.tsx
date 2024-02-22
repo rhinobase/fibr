@@ -10,7 +10,7 @@ export function CodeHighlighter({ content, language }: CodeHighlighter) {
   const { resolvedTheme } = useTheme();
 
   const highlightTheme =
-    resolvedTheme === "light" ? themes.vsLight : themes.vsDark;
+    resolvedTheme === "light" ? themes.github : themes.dracula;
 
   console.log(resolvedTheme);
 

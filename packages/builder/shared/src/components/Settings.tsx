@@ -38,7 +38,6 @@ export function Settings() {
           _update={(values: Partial<BlockType>) =>
             updateBlock({
               blockId: block.id,
-              parentNode: block.parentNode,
               updatedValues: values,
             })
           }

@@ -71,20 +71,18 @@ function useShortcutsManager() {
       const event_type = (data as { event_type: EditorEvent }).event_type;
 
       if (event_type === EditorEvent.BLOCK_ID_UPDATION) {
-        const { currentBlockId, parentNode, newBlockId } =
+        const { currentBlockId, newBlockId } =
           data as EditorEventListenerProps[EditorEvent.BLOCK_ID_UPDATION];
 
         if (action === ActionType.UNDO)
           updateId({
             currentBlockId: newBlockId,
-            parentNode,
             newBlockId: currentBlockId,
             shouldEmit: false,
           });
         else
           updateId({
             currentBlockId,
-            parentNode,
             newBlockId,
             shouldEmit: false,
           });
@@ -97,7 +95,6 @@ function useShortcutsManager() {
         if (action === ActionType.UNDO)
           remove({
             blockId,
-            parentNode: blockData.parentNode,
             shouldEmit: false,
           });
         else add({ blockData, blockId, shouldEmit: false });
@@ -123,32 +120,23 @@ function useShortcutsManager() {
             shouldEmit: false,
             insertionIndex: index,
           });
-        else
-          remove({ blockId, parentNode: block.parentNode, shouldEmit: false });
+        else remove({ blockId, shouldEmit: false });
       }
 
       if (event_type === EditorEvent.BLOCK_REPOSITION) {
-        const {
-          sourceBlockId,
-          sourceParentNode,
-          targetBlockId,
-          targetParentNode,
-        } = data as EditorEventListenerProps[EditorEvent.BLOCK_REPOSITION];
+        const { sourceBlockId, targetBlockId } =
+          data as EditorEventListenerProps[EditorEvent.BLOCK_REPOSITION];
 
         if (action === ActionType.UNDO)
           move({
             sourceBlockId: targetBlockId,
-            sourceParentNode: targetParentNode,
             targetBlockId: sourceBlockId,
-            targetParentNode: sourceParentNode,
             shouldEmit: false,
           });
         else
           move({
             sourceBlockId,
-            sourceParentNode,
             targetBlockId,
-            targetParentNode,
             shouldEmit: false,
           });
       }
@@ -160,7 +148,6 @@ function useShortcutsManager() {
         if (action === ActionType.UNDO)
           remove({
             blockId: newId,
-            parentNode: block.parentNode,
             shouldEmit: false,
           });
         else add({ blockId: newId, blockData: block, shouldEmit: false });
@@ -296,10 +283,7 @@ function useShortcutsManager() {
     "mod+a",
     () =>
       select({
-        selectedBlockIds: schema.map(({ id, parentNode }) => ({
-          id,
-          parentNode,
-        })),
+        selectedBlockIds: schema.map(({ id }) => id),
       }),
     {
       description: "Select All",
