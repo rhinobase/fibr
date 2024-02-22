@@ -3,6 +3,7 @@ import { useCanvas, type BlockType } from "@fibr/providers";
 import { Thread } from "@fibr/react";
 import { useBlocks } from "@fibr/shared";
 import { useBoolean } from "@rafty/ui";
+import { useTheme } from "next-themes";
 import { useCallback, useMemo } from "react";
 import {
   Background,
@@ -27,6 +28,8 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
 };
 
 export function Diagram() {
+  const { resolvedTheme } = useTheme();
+
   const [shouldEmit, toggle] = useBoolean(true);
   const config = useBlocks((state) => state.config);
 
@@ -53,6 +56,8 @@ export function Diagram() {
     [config],
   );
 
+  const backgroundLineColor = resolvedTheme === "light" ? "#d4d4d8" : "#52525b";
+
   return (
     <div className="flex-1">
       <ReactFlow
@@ -70,9 +75,12 @@ export function Diagram() {
         selectionMode={SelectionMode.Partial}
         selectionOnDrag
         panOnScroll
-        panOnDrag={[1, 2]}
+        panOnDrag={[1, 1]}
       >
-        <Background variant={BackgroundVariant.Lines} gap={18} />
+        <Background
+          variant={BackgroundVariant.Lines}
+          color={backgroundLineColor}
+        />
       </ReactFlow>
     </div>
   );

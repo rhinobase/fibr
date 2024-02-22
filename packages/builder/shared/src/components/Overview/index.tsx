@@ -46,7 +46,7 @@ function FieldsRender({ blocks, enableDragging }: Overview) {
 
   return (
     <DndWrapper
-      items={blocks.map(({ id, parentNode }) => `${id}-${parentNode}`)}
+      items={blocks.map(({ id }) => id)}
       onDragStart={({ active }) =>
         select({
           selectedBlockIds: active.data.current?.id,

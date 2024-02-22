@@ -19,7 +19,7 @@ export function PageCanvas() {
         ref={setNodeRef}
         onClick={() => select({ selectedBlockIds: null })}
       >
-        <div className="flex h-full w-full bg-white">
+        <div className="dark:bg-secondary-950 flex h-full w-full bg-white">
           <WeaverProvider wrapper={NodeWrapper}>
             <Diagram />
           </WeaverProvider>

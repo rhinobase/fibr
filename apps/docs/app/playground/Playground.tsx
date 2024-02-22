@@ -52,39 +52,41 @@ export default function Playground() {
   const Component = PANELS[container];
 
   return (
-    <Workspace
-      initialEvents={{
-        [EditorEvent.ALL]: [
-          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-          // ({ event_type, ...props }: any) => console.log(event_type, props),
-        ],
-      }}
-    >
-      <Header className="gap-1">
-        <div className="flex-1" />
-        <ThemeToggle />
-        <PreviewButton />
-      </Header>
+    <>
+      <Workspace
+        initialEvents={{
+          [EditorEvent.ALL]: [
+            // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+            // ({ event_type, ...props }: any) => console.log(event_type, props),
+          ],
+        }}
+      >
+        <Header className="gap-1">
+          <div className="flex-1" />
+          <ThemeToggle />
+          <PreviewButton />
+        </Header>
+        {template ? (
+          <Component template={template} />
+        ) : (
+          <div className="flex-1" />
+        )}
+        <Footer className="[&>p]:text-2xs [&>p]:select-none">
+          <Text isMuted>version {process.env.NEXT_PUBLIC_VERSION}</Text>
+          <div className="flex-1" />
+          <Text isMuted>
+            © {new Date().getFullYear()} rhinobase, Inc. All rights reserved.
+          </Text>
+          <div className="flex-1" />
+          <Socials />
+        </Footer>
+      </Workspace>
       <TemplateDialog
         container={container}
         onContainerChange={setContainer}
         onSelect={(value) => setTemplate(value as PanelProps["template"])}
       />
-      {template ? (
-        <Component template={template} />
-      ) : (
-        <div className="flex-1" />
-      )}
-      <Footer className="[&>p]:text-2xs [&>p]:select-none">
-        <Text isMuted>version {process.env.NEXT_PUBLIC_VERSION}</Text>
-        <div className="flex-1" />
-        <Text isMuted>
-          © {new Date().getFullYear()} rhinobase, Inc. All rights reserved.
-        </Text>
-        <div className="flex-1" />
-        <Socials />
-      </Footer>
-    </Workspace>
+    </>
   );
 }
 

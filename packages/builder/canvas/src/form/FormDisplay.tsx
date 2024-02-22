@@ -2,7 +2,7 @@ import { type BlockType, Env, useBuilder } from "@fibr/providers";
 import { useCanvas } from "@fibr/providers";
 import { Loom, WeaverProvider } from "@fibr/react";
 import { DEFAULT_GROUP, DndWrapper, groupByParentNode } from "@fibr/shared";
-import { type PropsWithChildren, type ReactNode } from "react";
+import type { PropsWithChildren, ReactNode } from "react";
 import { FieldPadding } from "./FieldPadding";
 import { FieldWrapper } from "./FieldWrapper";
 import { FieldOverlay } from "./FieldOverlay";
@@ -37,7 +37,7 @@ export function FormDisplay() {
   return (
     <WeaverProvider wrapper={BLOCK_WRAPPERS[currentEnv]}>
       <DndWrapper
-        items={blocks.map(({ id, parentNode }) => `${id}-${parentNode}`)}
+        items={blocks.map(({ id }) => id)}
         onDragStart={({ active }) => {
           select({
             selectedBlockIds: active.data.current?.id,
