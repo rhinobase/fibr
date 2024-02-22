@@ -76,9 +76,7 @@ export default function Playground() {
         <div className="flex-1" />
       )}
       <Footer className="[&>p]:text-2xs [&>p]:select-none">
-        <Text isMuted className="px-1">
-          version {process.env.NEXT_PUBLIC_VERSION}
-        </Text>
+        <Text isMuted>version {process.env.NEXT_PUBLIC_VERSION}</Text>
         <div className="flex-1" />
         <Text isMuted>
           © {new Date().getFullYear()} rhinobase, Inc. All rights reserved.
@@ -109,7 +107,7 @@ function Socials() {
           key={name}
           href={link}
           title={name}
-          className="text-secondary-500 transition-all ease-in-out hover:text-black"
+          className="text-secondary-500 dark:text-secondary-400 dark:hover:text-secondary-50 transition-all ease-in-out hover:text-black"
           target="_blank"
           rel="noopener"
         >

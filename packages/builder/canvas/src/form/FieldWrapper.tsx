@@ -77,7 +77,8 @@ export function FieldWrapper({ children }: PropsWithChildren) {
           "select-none p-4",
           !isDragging && "transition-shadow",
           isDragging && "z-50",
-          !isSelected && "hover:shadow-[0_1px_5px_1px_rgba(0,0,0,0.1)]",
+          !isSelected &&
+            "dark:hover:border-secondary-900 hover:shadow-[0_1px_5px_1px_rgba(0,0,0,0.1)] dark:hover:shadow-none",
         )}
       >
         {children}
