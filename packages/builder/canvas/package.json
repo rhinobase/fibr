@@ -12,6 +12,7 @@
     "@rafty/ui": "^1.4.2",
     "@swc/helpers": "^0.5.3",
     "class-variance-authority": "^0.7.0",
+    "next-themes": "^0.2.1",
     "reactflow": "^11.10.3",
     "react-icons": "^5.0.1",
     "react-hook-form": "^7.50.1"

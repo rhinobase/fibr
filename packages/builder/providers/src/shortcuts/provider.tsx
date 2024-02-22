@@ -13,6 +13,8 @@ import { ActionType, useStack } from "./useStack";
 import { useEventBus } from "../events";
 import { useCanvas } from "../canvas";
 import { EditorEventListenerProps } from "../types";
+import toast from "react-hot-toast";
+import { Toast } from "@rafty/ui";
 
 const ShortcutsContext = createContext<ReturnType<
   typeof useShortcutsManager
@@ -266,13 +268,33 @@ function useShortcutsManager() {
     preventDefault: true,
   });
 
-  useHotkeys("mod+z", stack.undo, {
-    description: "Undo",
-  });
+  useHotkeys(
+    "mod+z",
+    () => {
+      toast.custom((t) => (
+        <Toast title="Undo!" severity="success" visible={t.visible} />
+      ));
 
-  useHotkeys("mod+y", stack.redo, {
-    description: "Redo",
-  });
+      stack.undo();
+    },
+    {
+      description: "Undo",
+    },
+  );
+
+  useHotkeys(
+    "mod+y",
+    () => {
+      toast.custom((t) => (
+        <Toast title="Redo!" severity="success" visible={t.visible} />
+      ));
+
+      stack.redo();
+    },
+    {
+      description: "Redo",
+    },
+  );
 
   useHotkeys("mod+g", () => console.log("Group"), {
     description: "Group",

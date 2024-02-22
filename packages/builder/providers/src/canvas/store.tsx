@@ -17,6 +17,8 @@ import {
   UpdateIdBlockProps,
 } from "./types";
 import { isHotkeyPressed } from "react-hotkeys-hook";
+import toast from "react-hot-toast";
+import { Toast } from "@rafty/ui";
 
 export type CanvasStoreProps = {
   initialSchema?: BlockType[];
@@ -108,6 +110,19 @@ export const createCanvasStore = ({
       update: ({ blockId, updatedValues, shouldEmit = true }) => {
         const blocks = get().schema;
         const index = blocks.findIndex((block) => block.id === blockId);
+
+        if (index === -1) {
+          toast.custom((t) => (
+            <Toast
+              title="Unable to find the block!"
+              severity="error"
+              visible={t.visible}
+            />
+          ));
+
+          return;
+        }
+
         const oldValues = blocks[index];
 
         // Making sure we are not overriding these properties
@@ -139,7 +154,16 @@ export const createCanvasStore = ({
         // Check if this is a unique combo
         const index = schema.findIndex((item) => item.id === newBlockId);
 
-        if (index !== -1) return;
+        if (index !== -1) {
+          toast.custom((t) => (
+            <Toast
+              title={`"${newBlockId}" is a component that already exists!`}
+              severity="error"
+              visible={t.visible}
+            />
+          ));
+          return;
+        }
 
         set((state) => {
           // Updating schema with the new Id
@@ -211,6 +235,16 @@ export const createCanvasStore = ({
           );
           const toIndex = tmp.findIndex((block) => block.id === targetBlockId);
 
+          if (fromIndex === -1 || toIndex === -1) {
+            return toast.custom((t) => (
+              <Toast
+                title="Unable to find the block!"
+                severity="error"
+                visible={t.visible}
+              />
+            ));
+          }
+
           const fromParentNode = tmp[fromIndex].parentNode;
           tmp[fromIndex].parentNode = tmp[toIndex].parentNode;
           tmp[toIndex].parentNode = fromParentNode;
@@ -250,10 +284,15 @@ export const createCanvasStore = ({
         const { originalBlockId, shouldEmit = true } = params;
         const blockData = get().get({ blockId: originalBlockId });
 
-        if (!blockData)
-          throw new Error(
-            `Unable to find the block with Id ${originalBlockId}`,
-          );
+        if (!blockData) {
+          return toast.custom((t) => (
+            <Toast
+              title={`Unable to find the block with Id "${originalBlockId}"`}
+              severity="error"
+              visible={t.visible}
+            />
+          ));
+        }
 
         const id = get().uniqueId(blockData.type);
 

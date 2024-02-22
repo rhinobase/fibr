@@ -1,4 +1,6 @@
+import { Toast } from "@rafty/ui";
 import { useCallback, useState } from "react";
+import toast from "react-hot-toast";
 
 export enum ActionType {
   UNDO = "undo",
@@ -23,7 +25,14 @@ export function useStack<T>(
     if (lastAction) {
       callback?.({ action: ActionType.UNDO, data: lastAction });
       setUndoStack((prev) => [...prev, lastAction]);
-    }
+    } else
+      toast.custom((t) => (
+        <Toast
+          title="No more action to Undo"
+          severity="error"
+          visible={t.visible}
+        />
+      ));
   }, [mainStack, callback]);
 
   // Redo the last undone action
@@ -33,7 +42,14 @@ export function useStack<T>(
     if (lastUndoneAction) {
       callback?.({ action: ActionType.REDO, data: lastUndoneAction });
       setMainStack((prev) => [...prev, lastUndoneAction]);
-    }
+    } else
+      toast.custom((t) => (
+        <Toast
+          title="No more action to Redo"
+          severity="error"
+          visible={t.visible}
+        />
+      ));
   }, [undoStack, callback]);
 
   // Clear undo stack
