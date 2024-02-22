@@ -287,16 +287,6 @@ function useShortcutsManager() {
     description: "Redo",
   });
 
-  useHotkeys("mod+a", () => console.log("Select all"), {
-    description: "Select all",
-    preventDefault: true,
-  });
-
-  useHotkeys("mod+d", () => console.log("Duplicate"), {
-    description: "Duplicate",
-    preventDefault: true,
-  });
-
   useHotkeys("mod+g", () => console.log("Group"), {
     description: "Group",
     preventDefault: true,

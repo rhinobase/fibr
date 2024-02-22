@@ -39,7 +39,6 @@ export function FormDisplay() {
       <DndWrapper
         items={blocks.map(({ id, parentNode }) => `${id}-${parentNode}`)}
         onDragStart={({ active }) => {
-          console.log(JSON.stringify(active, null, 2));
           select({
             selectedBlockIds: {
               id: active.data.current?.id,
