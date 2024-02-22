@@ -85,7 +85,7 @@ function SidebarTray({ children }: SidebarTray) {
       )}
       ref={setNodeRef}
     >
-      <TabList className="h-max rounded-md bg-white p-1 shadow-md data-[orientation=vertical]:gap-1 data-[orientation=vertical]:rounded-t-md data-[orientation=vertical]:border-r-0">
+      <TabList className="dark:bg-secondary-950 h-max rounded-md bg-white p-1 shadow-md data-[orientation=vertical]:gap-1 data-[orientation=vertical]:rounded-t-md data-[orientation=vertical]:border-r-0">
         {Object.entries(all).map(([name, { icon, label }]) => (
           <Tooltip key={name}>
             <TooltipTrigger asChild>
@@ -114,7 +114,7 @@ function SidebarTray({ children }: SidebarTray) {
           </Tooltip>
         ))}
       </TabList>
-      <div className="h-full w-full overflow-hidden rounded-md bg-white shadow-md">
+      <div className="dark:bg-secondary-950 h-full w-full overflow-hidden rounded-md bg-white shadow-md">
         {children}
       </div>
     </Tab>

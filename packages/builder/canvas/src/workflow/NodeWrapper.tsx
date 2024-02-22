@@ -9,8 +9,10 @@ export function NodeWrapper(props: PropsWithChildren) {
   return (
     <div
       className={classNames(
-        selected ? "border-primary-500" : "border-transparent",
-        "h-full w-full border bg-white p-2",
+        selected
+          ? "border-primary-500 dark:border-primary-400"
+          : "border-transparent",
+        "dark:bg-secondary-950 h-full w-full border bg-white p-2",
       )}
     >
       {props.children}

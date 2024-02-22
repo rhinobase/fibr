@@ -1,14 +1,21 @@
 import { classNames } from "@rafty/ui";
 import { Highlight, themes } from "prism-react-renderer";
 import { useId } from "react";
+import { useTheme } from "next-themes";
 
 export type CodeHighlighter = { content: string; language: string };
 
 export function CodeHighlighter({ content, language }: CodeHighlighter) {
   const id = useId();
+  const { resolvedTheme } = useTheme();
+
+  const highlightTheme =
+    resolvedTheme === "light" ? themes.vsLight : themes.vsDark;
+
+  console.log(resolvedTheme);
 
   return (
-    <Highlight theme={themes.oneDark} code={content} language={language}>
+    <Highlight theme={highlightTheme} code={content} language={language}>
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <pre
           style={style}

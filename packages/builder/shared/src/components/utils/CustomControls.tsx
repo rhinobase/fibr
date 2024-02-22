@@ -89,7 +89,7 @@ export function CustomControls({
       position={position}
       aria-label={ariaLabel}
       className={classNames(
-        "flex gap-0.5 rounded-md bg-white p-1 shadow-md",
+        "dark:bg-secondary-950 flex gap-0.5 rounded-md bg-white p-1 shadow-md",
         className,
       )}
     >
