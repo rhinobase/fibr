@@ -51,16 +51,19 @@ function useShortcutsManager() {
       setEnv: change,
     }),
   );
-  const { updateId, update, add, remove, move, set } = useCanvas(
-    ({ updateId, remove, add, update, move, set }) => ({
-      update,
-      remove,
-      move,
-      add,
-      updateId,
-      set,
-    }),
-  );
+  const { schema, select, updateId, update, add, remove, move, set } =
+    useCanvas(
+      ({ schema, select, updateId, remove, add, update, move, set }) => ({
+        schema,
+        select,
+        update,
+        remove,
+        move,
+        add,
+        updateId,
+        set,
+      }),
+    );
 
   // Undo & Redo
   const resolveStackActions = useCallback(
@@ -278,6 +281,33 @@ function useShortcutsManager() {
     description: "Group",
     preventDefault: true,
   });
+
+  useHotkeys(
+    "mod+a",
+    () =>
+      select({
+        selectedBlockIds: schema.map(({ id, parentNode }) => ({
+          id,
+          parentNode,
+        })),
+      }),
+    {
+      description: "Select All",
+      preventDefault: true,
+    },
+  );
+
+  useHotkeys(
+    "mod+d",
+    () =>
+      select({
+        selectedBlockIds: [],
+      }),
+    {
+      description: "Select All",
+      preventDefault: true,
+    },
+  );
 
   useHotkeys(
     "mod+b",
