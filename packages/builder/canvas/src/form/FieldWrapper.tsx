@@ -86,14 +86,17 @@ export function FieldWrapper({ children }: PropsWithChildren) {
   );
 }
 
-const wrapperClasses = cva("w-full cursor-pointer border bg-white rounded", {
-  variants: {
-    selected: {
-      true: "border-primary-500",
-      false: "border-transparent",
+const wrapperClasses = cva(
+  "w-full cursor-pointer border bg-white dark:bg-secondary-950 rounded",
+  {
+    variants: {
+      selected: {
+        true: "border-primary-500 dark:border-primary-400",
+        false: "border-transparent",
+      },
     },
   },
-});
+);
 
 type WrapperProps = HTMLAttributes<HTMLDivElement> & {
   selected: boolean;

@@ -104,11 +104,11 @@ function SidebarTray({ children, expandPanel, collapsePanel }: SidebarTray) {
       orientation="vertical"
       className={classNames(
         (active === null || !isExpanded) && "w-max",
-        "pointer-events-auto h-full bg-white",
+        "dark:bg-secondary-950 pointer-events-auto h-full bg-white",
       )}
       ref={setNodeRef}
     >
-      <TabList>
+      <TabList className="dark:border-secondary-800">
         {Object.entries(all).map(([name, { icon, label }]) => (
           <Tooltip key={name}>
             <TooltipTrigger asChild>
@@ -127,7 +127,7 @@ function SidebarTray({ children, expandPanel, collapsePanel }: SidebarTray) {
                       if (!isExpanded) expandPanel?.();
                     }
                   }}
-                  className="hover:text-secondary-700 p-2"
+                  className="hover:text-secondary-700 dark:hover:text-secondary-300 p-2"
                 >
                   {icon}
                 </TabTrigger>
@@ -137,7 +137,7 @@ function SidebarTray({ children, expandPanel, collapsePanel }: SidebarTray) {
           </Tooltip>
         ))}
       </TabList>
-      <div className="border-secondary-200 w-full overflow-hidden border-r">
+      <div className="border-secondary-200 dark:border-secondary-800 w-full overflow-hidden border-r">
         {children}
       </div>
     </Tab>

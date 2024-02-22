@@ -52,7 +52,7 @@ export function SidebarItem({
           <h4 className="font-medium">{label}</h4>
           {action}
         </HeaderComponent>
-        <hr />
+        <hr className="dark:border-secondary-700" />
       </div>
       <div className="h-full overflow-y-auto">
         <div className="flex h-full flex-col px-3 pb-3">{children}</div>

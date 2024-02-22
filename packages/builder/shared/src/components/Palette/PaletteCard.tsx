@@ -50,7 +50,7 @@ export function PaletteCard({
             : enableDragging
               ? "cursor-grab"
               : "cursor-pointer",
-          "border-secondary-300 dark:border-secondary-700 hover:border-secondary-500/80 flex h-[69px] items-center justify-center rounded border bg-white transition-all ease-in-out",
+          "border-secondary-300 dark:border-secondary-700 dark:hover:bg-secondary-800/70 hover:border-secondary-500/80 dark:bg-secondary-950 flex h-[69px] items-center justify-center rounded border bg-white transition-all ease-in-out",
         )}
       >
         <Icon className="h-6 w-6 opacity-50" />

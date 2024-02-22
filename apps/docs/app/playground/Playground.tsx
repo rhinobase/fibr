@@ -16,6 +16,7 @@ import { Text } from "@rafty/ui";
 import Link from "next/link";
 import { type ReactNode, useState } from "react";
 import { FaGithub, FaXTwitter } from "react-icons/fa6";
+import { ThemeToggle } from "../../components/ThemeToggle";
 import { Container, TemplateDialog } from "./templates";
 
 type PanelProps = { template: BlockType[] };
@@ -61,6 +62,7 @@ export default function Playground() {
     >
       <Header>
         <div className="flex-1" />
+        <ThemeToggle />
         <PreviewButton />
       </Header>
       <TemplateDialog
@@ -117,3 +119,46 @@ function Socials() {
     </div>
   );
 }
+
+// const THEMES = {
+//   light: HiOutlineSun,
+//   dark: HiOutlineMoon,
+//   system: HiOutlineTv,
+// } as const;
+
+// function ThemeSelector() {
+//   const { theme, setTheme } = useTheme();
+
+//   // Current theme icon
+//   const TriggerIcon = THEMES[theme as keyof typeof THEMES];
+
+//   return (
+//     <Menu>
+//       <MenuTrigger
+//         size="icon"
+//         variant="ghost"
+//         aria-label="Change Theme"
+//         title="Change Theme"
+//         className="hidden md:block"
+//       >
+//         <TriggerIcon height={18} width={18} className="stroke-2" />
+//       </MenuTrigger>
+//       <MenuContent className="z-[60] gap-0.5">
+//         {Object.entries(THEMES).map(([name, Icon]) => (
+//           <MenuItem
+//             key={name}
+//             onClick={() => setTheme(name)}
+//             className={classNames(
+//               theme === name &&
+//                 "bg-secondary-200/70 text-primary-500 dark:bg-secondary-700/60 dark:text-primary-400",
+//               "capitalize",
+//             )}
+//           >
+//             <Icon height={18} width={18} className="stroke-2" />
+//             {name}
+//           </MenuItem>
+//         ))}
+//       </MenuContent>
+//     </Menu>
+//   );
+// }

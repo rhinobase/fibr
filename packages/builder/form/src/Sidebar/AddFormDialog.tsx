@@ -22,7 +22,7 @@ export function AddFormDialog() {
         <PlusIcon className="size-4" />
       </DialogTrigger>
       <DialogOverlay />
-      <DialogContent className="space-y-2">
+      <DialogContent className="dark:bg-secondary-900 space-y-2">
         <DialogHeader>Add Form</DialogHeader>
         <AddForm />
       </DialogContent>

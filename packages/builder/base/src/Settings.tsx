@@ -18,13 +18,13 @@ export function Settings({ className, children, ...props }: Settings) {
     <div
       {...props}
       className={classNames(
-        "border-secondary-200 absolute right-0 top-0 h-full w-96 border-l bg-white p-3",
+        "border-secondary-200 dark:border-secondary-800 dark:bg-secondary-950 absolute right-0 top-0 h-full w-96 border-l bg-white p-3",
         className,
       )}
       ref={setNodeRef}
     >
       <h4 className="font-medium">Settings</h4>
-      <hr />
+      <hr className="dark:border-secondary-700" />
       {children}
     </div>
   );

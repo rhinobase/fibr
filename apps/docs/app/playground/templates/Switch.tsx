@@ -14,7 +14,7 @@ export function Switch({ value, onValueChange }: Switch) {
       value={value}
       onValueChange={(value) => onValueChange(value as Container)}
     >
-      <TabList className="bg-secondary-200 gap-0.5 rounded-md border-none p-0.5">
+      <TabList className="bg-secondary-200 dark:bg-secondary-800 gap-0.5 rounded-md border-none p-0.5">
         <SwitchTrigger value={Container.FORM}>Form</SwitchTrigger>
         <SwitchTrigger value={Container.WORKFLOW}>Workflow</SwitchTrigger>
         <SwitchTrigger value={Container.PAGE}>Page</SwitchTrigger>
@@ -28,7 +28,7 @@ function SwitchTrigger({ className, ...props }: TabTrigger) {
     <TabTrigger
       {...props}
       className={classNames(
-        "rounded border-none py-0.5 leading-snug data-[state=active]:bg-white",
+        "dark:data-[state=active]:bg-secondary-900 rounded border-none py-0.5 leading-snug data-[state=active]:bg-white",
         className,
       )}
     />

@@ -22,11 +22,11 @@ import {
 import { MdDragIndicator } from "react-icons/md";
 
 const cardClasses = cva(
-  "dark:bg-secondary-900 border bg-transparent bg-white p-2 transition-none dark:bg-transparent gap-1",
+  "dark:bg-secondary-950 border bg-white p-2 transition-none gap-1 cursor-pointer",
   {
     variants: {
       selected: {
-        true: "border-primary-500",
+        true: "border-primary-500 dark:border-primary-400",
         false: "border-secondary-300 dark:border-secondary-700",
       },
     },
@@ -215,7 +215,7 @@ function DragHandler({ className, isDragging, ...props }: DragHandler) {
         isDragging ? "cursor-grabbing" : "cursor-grab",
       )}
     >
-      <MdDragIndicator className="text-black" />
+      <MdDragIndicator className="dark:text-secondary-300 text-black" />
     </span>
   );
 }

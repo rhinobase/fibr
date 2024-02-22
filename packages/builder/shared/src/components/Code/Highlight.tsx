@@ -8,7 +8,7 @@ export function CodeHighlighter({ content, language }: CodeHighlighter) {
   const id = useId();
 
   return (
-    <Highlight theme={themes.github} code={content} language={language}>
+    <Highlight theme={themes.oneDark} code={content} language={language}>
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <pre
           style={style}

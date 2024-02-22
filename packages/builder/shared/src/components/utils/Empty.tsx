@@ -10,7 +10,7 @@ export function Empty({ title, description, className }: Empty) {
   return (
     <div
       className={classNames(
-        "text-secondary-500 flex w-full select-none flex-col items-center justify-center gap-1 p-3 text-center font-medium",
+        "text-secondary-500 dark:text-secondary-400 flex w-full select-none flex-col items-center justify-center gap-1 p-3 text-center font-medium",
         className,
       )}
     >

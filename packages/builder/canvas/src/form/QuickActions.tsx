@@ -42,7 +42,7 @@ export function QuickActions({ children }: QuickActions) {
         side="right"
         sideOffset={10}
         align="start"
-        className="space-y-1.5 border-none bg-transparent p-0 shadow-none transition-opacity data-[state=closed]:ease-out data-[state=open]:ease-in"
+        className="space-y-1.5 border-none bg-transparent p-0 shadow-none transition-opacity data-[state=closed]:ease-out data-[state=open]:ease-in dark:bg-transparent"
       >
         <IdEditField />
         <QuickActionButtons />
@@ -91,7 +91,7 @@ function IdEditField() {
   return (
     <div
       className={classNames(
-        "bg-secondary-200/70 text-secondary-600 w-max rounded-md",
+        "bg-secondary-200/70 dark:bg-secondary-800 text-secondary-600 dark:text-secondary-400 w-max rounded-md",
         !isEditable && "px-2 py-1.5",
       )}
       onClick={handleClick}
@@ -102,7 +102,7 @@ function IdEditField() {
           size="sm"
           ref={ref}
           defaultValue={id}
-          className="w-[100px] bg-white font-mono"
+          className="dark:bg-secondary-950 w-[100px] bg-white font-mono"
           onBlur={onSubmit}
           onKeyDown={(event) => {
             const { key } = event;
@@ -154,7 +154,7 @@ function QuickActionButtons() {
   };
 
   return (
-    <div className="flex w-max gap-1 rounded-md border bg-white p-1 shadow">
+    <div className="dark:bg-secondary-800 dark:border-secondary-800 flex w-max gap-1 rounded-md border bg-white p-1 shadow">
       {index > 0 && (
         <ActionButton
           name="Move up"
