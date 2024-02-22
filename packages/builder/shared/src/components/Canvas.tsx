@@ -1,6 +1,6 @@
 import { Canvas as BuilderCanvas } from "@fibr/builder";
 import { FibrProvider } from "@fibr/react";
-import { forwardRef, type ReactNode, useMemo } from "react";
+import { type ReactNode, forwardRef, useMemo } from "react";
 import { useBlocks } from "../providers";
 
 export const Canvas = forwardRef<HTMLDivElement, BuilderCanvas>(

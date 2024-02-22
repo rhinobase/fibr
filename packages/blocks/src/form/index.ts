@@ -1,8 +1,10 @@
 import type { Block } from "@fibr/shared";
 import type { ReactNode } from "react";
 import { BsTextareaT } from "react-icons/bs";
+import { BsBraces } from "react-icons/bs";
 import { LuTextCursorInput } from "react-icons/lu";
 import { MdLink, MdOutlineKey, MdOutlineMailOutline } from "react-icons/md";
+import type { FieldWrapperProps, InputWrapperProps } from "../utils";
 import {
   Canvas,
   NumberInput,
@@ -19,8 +21,6 @@ import {
   StringInputSettings,
   TextareaSettings,
 } from "./settings";
-import type { FieldWrapperProps, InputWrapperProps } from "../utils";
-import { BsBraces } from "react-icons/bs";
 
 export const formConfig: Record<
   string,

@@ -1,20 +1,20 @@
 "use client";
+import { Toast } from "@rafty/ui";
 import {
-  createContext,
-  useContext,
   type PropsWithChildren,
-  useEffect,
+  createContext,
   useCallback,
+  useContext,
+  useEffect,
 } from "react";
+import toast from "react-hot-toast";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useBuilder } from "../builder";
+import { useCanvas } from "../canvas";
+import { useEventBus } from "../events";
+import { EditorEventListenerProps } from "../types";
 import { EditorEvent, Env } from "../utils";
 import { ActionType, useStack } from "./useStack";
-import { useEventBus } from "../events";
-import { useCanvas } from "../canvas";
-import { EditorEventListenerProps } from "../types";
-import toast from "react-hot-toast";
-import { Toast } from "@rafty/ui";
 
 const ShortcutsContext = createContext<ReturnType<
   typeof useShortcutsManager

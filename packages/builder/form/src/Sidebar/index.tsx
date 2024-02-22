@@ -1,5 +1,5 @@
 import { Sidebar as BuilderSidebar } from "@fibr/builder";
-import { useCanvas, type BlockType } from "@fibr/providers";
+import { type BlockType, useCanvas } from "@fibr/providers";
 import {
   CodeGenerator,
   DEFAULT_GROUP,
@@ -9,8 +9,8 @@ import {
   astResolver,
   groupByParentNode,
 } from "@fibr/shared";
-import { reactHookFormResolver } from "./resolver";
 import { AddFormDialog } from "./AddFormDialog";
+import { reactHookFormResolver } from "./resolver";
 
 export function Sidebar() {
   const { add, blocks } = useCanvas(({ add, schema }) => ({
@@ -57,7 +57,7 @@ function findParent(context: BlockType[]) {
 
   if (active.length === 0) return defaultCanvas;
 
-  let current = context.find((value) => value.id === active[0].id);
+  const current = context.find((value) => value.id === active[0].id);
 
   if (current && GROUP_TYPES.includes(current.type)) return current.id;
 

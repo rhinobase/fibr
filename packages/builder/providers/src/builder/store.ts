@@ -1,8 +1,8 @@
+import _ from "lodash";
 import { StoreApi, UseBoundStore, create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { EditorEvent, Env } from "../utils";
-import _ from "lodash";
 import { EditorEventBus } from "../events";
+import { EditorEvent, Env } from "../utils";
 import {
   ActiveTabProps,
   AddTabProps,

@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useCanvas, type BlockType } from "@fibr/providers";
+import { type BlockType, useCanvas } from "@fibr/providers";
 import { eventHandler } from "@rafty/shared";
 import {
   AccordionContent,
@@ -12,7 +12,7 @@ import {
   classNames,
 } from "@rafty/ui";
 import { cva } from "class-variance-authority";
-import { HTMLAttributes, type CSSProperties } from "react";
+import { type CSSProperties, HTMLAttributes } from "react";
 import {
   HiChevronRight,
   HiOutlineEye,

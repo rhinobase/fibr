@@ -1,5 +1,5 @@
-import { NodeWrapper } from "../utils/NodeWrapper";
 import { Position } from "reactflow";
+import { NodeWrapper } from "../utils/NodeWrapper";
 
 export function EndNode() {
   return (

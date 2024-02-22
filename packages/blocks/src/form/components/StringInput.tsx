@@ -3,8 +3,8 @@ import { InputField } from "@rafty/ui";
 import { useFormContext } from "react-hook-form";
 import {
   FieldWrapper,
-  InputWrapper,
   type FieldWrapperProps,
+  InputWrapper,
   type InputWrapperProps,
 } from "../../utils";
 

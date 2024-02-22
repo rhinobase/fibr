@@ -1,4 +1,5 @@
 "use client";
+import { TabPayload, useBuilder } from "@fibr/providers";
 import { TabContent, classNames } from "@rafty/ui";
 import {
   Fragment,
@@ -6,7 +7,6 @@ import {
   type ReactNode,
   useEffect,
 } from "react";
-import { TabPayload, useBuilder } from "@fibr/providers";
 
 export type SidebarItem = Omit<TabContent, "value"> &
   TabPayload & {

@@ -1,10 +1,10 @@
-import { PropsWithChildren } from "react";
 import { BuilderProvider, type CreateBuilderStoreProps } from "@fibr/providers";
-import { Toaster } from "react-hot-toast";
 import {
-  EventManagerProvider,
   type EditorEventBusProps,
+  EventManagerProvider,
 } from "@fibr/providers";
+import { PropsWithChildren } from "react";
+import { Toaster } from "react-hot-toast";
 
 export function Workspace({
   children,

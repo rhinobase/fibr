@@ -1,8 +1,8 @@
 import { Container as BuilderContainer } from "@fibr/builder";
 import { PageCanvas } from "@fibr/canvas";
 import { Settings } from "@fibr/shared";
-import { Sidebar } from "./Sidebar";
 import { PageDndWrapper } from "./PageDndWrapper";
+import { Sidebar } from "./Sidebar";
 
 export function Container() {
   return (

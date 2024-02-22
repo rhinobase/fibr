@@ -2,11 +2,11 @@ import { type BlockType, Env, useBuilder } from "@fibr/providers";
 import { useCanvas } from "@fibr/providers";
 import { Loom, WeaverProvider } from "@fibr/react";
 import { DEFAULT_GROUP, DndWrapper, groupByParentNode } from "@fibr/shared";
+import { Text } from "@rafty/ui";
 import type { PropsWithChildren, ReactNode } from "react";
+import { FieldOverlay } from "./FieldOverlay";
 import { FieldPadding } from "./FieldPadding";
 import { FieldWrapper } from "./FieldWrapper";
-import { FieldOverlay } from "./FieldOverlay";
-import { Text } from "@rafty/ui";
 
 const BLOCK_WRAPPERS: Record<Env, (props: PropsWithChildren) => ReactNode> = {
   [Env.DEVELOPMENT]: FieldWrapper,

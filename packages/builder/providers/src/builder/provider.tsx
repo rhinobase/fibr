@@ -6,12 +6,12 @@ import {
   useRef,
 } from "react";
 import { useStore } from "zustand";
+import { useEventBus } from "../events";
 import {
   type BuilderStore,
   type CreateBuilderStoreProps,
   createBuilderStore,
 } from "./store";
-import { useEventBus } from "../events";
 
 const BuilderContext = createContext<ReturnType<
   typeof createBuilderStore

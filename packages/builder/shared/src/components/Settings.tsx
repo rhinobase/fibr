@@ -1,5 +1,5 @@
 import { Settings as BuilderSettings } from "@fibr/builder";
-import { useCanvas, type BlockType } from "@fibr/providers";
+import { type BlockType, useCanvas } from "@fibr/providers";
 import { FibrProvider, Thread } from "@fibr/react";
 import { Button, Text } from "@rafty/ui";
 import { ReactNode, useMemo } from "react";

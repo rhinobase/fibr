@@ -1,5 +1,6 @@
 "use client";
-import { type PropsWithChildren, useRef } from "react";
+import { useDroppable } from "@dnd-kit/core";
+import { Env, useBuilder } from "@fibr/providers";
 import {
   Tab,
   TabList,
@@ -9,8 +10,7 @@ import {
   TooltipTrigger,
   classNames,
 } from "@rafty/ui";
-import { Env, useBuilder } from "@fibr/providers";
-import { useDroppable } from "@dnd-kit/core";
+import { type PropsWithChildren, useRef } from "react";
 import {
   ImperativePanelHandle,
   Panel,

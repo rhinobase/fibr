@@ -1,5 +1,5 @@
 "use client";
-import { useCanvas, type BlockType } from "@fibr/providers";
+import { type BlockType, useCanvas } from "@fibr/providers";
 import { Thread } from "@fibr/react";
 import { useBlocks } from "@fibr/shared";
 import { useBoolean } from "@rafty/ui";
@@ -11,11 +11,11 @@ import {
   DefaultEdgeOptions,
   FitViewOptions,
   Node,
+  type NodeTypes,
   OnNodesChange,
   ReactFlow,
   SelectionMode,
   applyNodeChanges,
-  type NodeTypes,
 } from "reactflow";
 import "reactflow/dist/style.css";
 

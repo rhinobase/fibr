@@ -1,5 +1,5 @@
 import { classNames } from "@rafty/ui";
-import { forwardRef, type HTMLAttributes } from "react";
+import { type HTMLAttributes, forwardRef } from "react";
 
 export type Canvas = HTMLAttributes<HTMLDivElement>;
 

@@ -1,7 +1,7 @@
+import { RaftyIcon } from "@rafty/icons";
 import { InputGroup, LeftAddon, Prefix, RightAddon, Suffix } from "@rafty/ui";
 import { cva } from "class-variance-authority";
 import { type PropsWithChildren } from "react";
-import { RaftyIcon } from "@rafty/icons";
 
 const addonTextClasses = cva(
   "text-secondary-600 dark:text-secondary-400 font-medium",

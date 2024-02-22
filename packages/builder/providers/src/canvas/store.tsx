@@ -1,6 +1,9 @@
 import { arrayMove } from "@dnd-kit/sortable";
+import { Toast } from "@rafty/ui";
 import { type Draft } from "immer";
 import _ from "lodash";
+import toast from "react-hot-toast";
+import { isHotkeyPressed } from "react-hotkeys-hook";
 import { StoreApi, UseBoundStore, create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { EditorEventBus } from "../events";
@@ -16,9 +19,6 @@ import {
   UpdateBlockProps,
   UpdateIdBlockProps,
 } from "./types";
-import { isHotkeyPressed } from "react-hotkeys-hook";
-import toast from "react-hot-toast";
-import { Toast } from "@rafty/ui";
 
 export type CanvasStoreProps = {
   initialSchema?: BlockType[];

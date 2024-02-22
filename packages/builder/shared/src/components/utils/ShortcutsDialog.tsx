@@ -1,6 +1,5 @@
 "use client";
 import { useBuilder } from "@fibr/providers";
-import Fuse, { type RangeTuple } from "fuse.js";
 import {
   Button,
   Dialog,
@@ -14,6 +13,7 @@ import {
   classNames,
   useBoolean,
 } from "@rafty/ui";
+import Fuse, { type RangeTuple } from "fuse.js";
 import {
   Fragment,
   PropsWithChildren,
@@ -23,8 +23,8 @@ import {
 } from "react";
 import { useHotkeysContext } from "react-hotkeys-hook";
 import { Hotkey } from "react-hotkeys-hook/dist/types";
-import { highlightMatches } from "./HightlightMatches";
 import { Empty } from "./Empty";
+import { highlightMatches } from "./HightlightMatches";
 
 const capitalize = (s?: string) => (s && s[0].toUpperCase() + s.slice(1)) || "";
 

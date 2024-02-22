@@ -1,7 +1,7 @@
 import { classNames } from "@rafty/ui";
+import { useTheme } from "next-themes";
 import { Highlight, themes } from "prism-react-renderer";
 import { useId } from "react";
-import { useTheme } from "next-themes";
 
 export type CodeHighlighter = { content: string; language: string };
 

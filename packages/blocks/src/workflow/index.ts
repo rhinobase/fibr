@@ -7,9 +7,9 @@ import {
   LuGitPullRequestDraft,
 } from "react-icons/lu";
 import { MdCropFree, MdInput, MdOutput } from "react-icons/md";
-import { StartNode, ConditionNode, EndNode, TransitNode } from "./components";
-import { NodeSettings } from "./settings";
 import { Node, Position } from "reactflow";
+import { ConditionNode, EndNode, StartNode, TransitNode } from "./components";
+import { NodeSettings } from "./settings";
 
 export const workflowConfig: Record<
   string,

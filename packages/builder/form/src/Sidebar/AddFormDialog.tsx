@@ -1,5 +1,6 @@
-import z from "zod";
-import { useForm } from "react-hook-form";
+import { useCanvas } from "@fibr/providers";
+import { PlusIcon } from "@heroicons/react/24/outline";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
   Dialog,
@@ -11,9 +12,8 @@ import {
   FieldControl,
   InputField,
 } from "@rafty/ui";
-import { PlusIcon } from "@heroicons/react/24/outline";
-import { useCanvas } from "@fibr/providers";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import z from "zod";
 
 export function AddFormDialog() {
   return (

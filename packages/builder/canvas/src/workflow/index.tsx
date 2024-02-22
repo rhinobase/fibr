@@ -1,10 +1,10 @@
+import { useDroppable } from "@dnd-kit/core";
+import { useCanvas } from "@fibr/providers";
+import { WeaverProvider } from "@fibr/react";
 import { Canvas, CustomControls } from "@fibr/shared";
 import "reactflow/dist/base.css";
 import { Diagram } from "./Diagram";
-import { useDroppable } from "@dnd-kit/core";
-import { WeaverProvider } from "@fibr/react";
 import { NodeWrapper } from "./NodeWrapper";
-import { useCanvas } from "@fibr/providers";
 
 export function WorkflowCanvas() {
   const select = useCanvas(({ select }) => select);

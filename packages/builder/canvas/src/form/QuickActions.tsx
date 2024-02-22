@@ -1,4 +1,4 @@
-import { useCanvas, type BlockType } from "@fibr/providers";
+import { type BlockType, useCanvas } from "@fibr/providers";
 import { useThread } from "@fibr/react";
 import { eventHandler } from "@rafty/shared";
 import {
@@ -13,8 +13,8 @@ import {
   classNames,
   useBoolean,
 } from "@rafty/ui";
-import { useEffect, useRef, useState, type PropsWithChildren } from "react";
-import { HiPencil, HiOutlineEyeOff } from "react-icons/hi";
+import { type PropsWithChildren, useEffect, useRef, useState } from "react";
+import { HiOutlineEyeOff, HiPencil } from "react-icons/hi";
 import { IconType } from "react-icons/lib";
 import {
   MdOutlineAddToPhotos,

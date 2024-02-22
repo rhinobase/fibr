@@ -1,13 +1,6 @@
 "use client";
-import { useRef, type PropsWithChildren, useEffect } from "react";
-import {
-  type ImperativePanelHandle,
-  Panel,
-  PanelGroup,
-} from "react-resizable-panels";
-import { useBuilder, Env } from "@fibr/providers";
-import { ResizeHandle } from "./ResizeHandle";
 import { useDroppable } from "@dnd-kit/core";
+import { Env, useBuilder } from "@fibr/providers";
 import {
   Tab,
   TabList,
@@ -17,6 +10,13 @@ import {
   TooltipTrigger,
   classNames,
 } from "@rafty/ui";
+import { type PropsWithChildren, useEffect, useRef } from "react";
+import {
+  type ImperativePanelHandle,
+  Panel,
+  PanelGroup,
+} from "react-resizable-panels";
+import { ResizeHandle } from "./ResizeHandle";
 
 const DEFAULT_SIZE = 20;
 const MIN_WIDTH = 2.4;

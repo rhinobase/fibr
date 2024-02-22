@@ -5,8 +5,8 @@ import { Button, InputField, Suffix, useBoolean } from "@rafty/ui";
 import { useFormContext } from "react-hook-form";
 import {
   FieldWrapper,
-  InputWrapper,
   type FieldWrapperProps,
+  InputWrapper,
   type InputWrapperProps,
 } from "../../utils";
 

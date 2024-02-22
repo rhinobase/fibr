@@ -1,8 +1,8 @@
-import { Portal } from "../utils";
 import { DragOverlay, useDndContext } from "@dnd-kit/core";
+import type { BlockType } from "@fibr/providers";
+import { Portal } from "../utils";
 import { OverviewCard } from "./OverviewCard";
 import { adjustTranslate } from "./utils";
-import type { BlockType } from "@fibr/providers";
 
 export function OverviewOverlay() {
   const { active } = useDndContext();

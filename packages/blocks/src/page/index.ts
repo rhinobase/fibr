@@ -1,7 +1,12 @@
+import { Block } from "@fibr/shared";
 import type { ReactNode } from "react";
+import { BsTextareaT } from "react-icons/bs";
+import { LuTextCursorInput } from "react-icons/lu";
+import { MdLink, MdOutlineKey, MdOutlineMailOutline } from "react-icons/md";
+import type { Node } from "reactflow";
 import {
-  Page,
   NumberInput,
+  Page,
   PasswordInput,
   StringInput,
   Textarea,
@@ -13,11 +18,6 @@ import {
   StringInputSettings,
   TextareaSettings,
 } from "./settings";
-import { Block } from "@fibr/shared";
-import { BsTextareaT } from "react-icons/bs";
-import { LuTextCursorInput } from "react-icons/lu";
-import { MdOutlineMailOutline, MdLink, MdOutlineKey } from "react-icons/md";
-import type { Node } from "reactflow";
 
 export const pageConfig: Record<
   string,

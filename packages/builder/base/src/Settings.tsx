@@ -1,8 +1,8 @@
 "use client";
+import { useDroppable } from "@dnd-kit/core";
+import { Env, useBuilder } from "@fibr/providers";
 import { classNames } from "@rafty/ui";
 import { type HTMLAttributes } from "react";
-import { useBuilder, Env } from "@fibr/providers";
-import { useDroppable } from "@dnd-kit/core";
 
 export type Settings = HTMLAttributes<HTMLDivElement>;
 

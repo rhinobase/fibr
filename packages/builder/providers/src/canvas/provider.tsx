@@ -6,12 +6,12 @@ import {
   useRef,
 } from "react";
 import { useStore } from "zustand";
+import { useEventBus } from "../events";
 import {
   type CanvasStore,
   type CanvasStoreProps,
   createCanvasStore,
 } from "./store";
-import { useEventBus } from "../events";
 
 const CanvasContext = createContext<ReturnType<
   typeof createCanvasStore

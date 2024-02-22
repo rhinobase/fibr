@@ -39,7 +39,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldControl, Label, InputField, Textarea, ErrorMessage, Tooltip, TooltipTrigger, TooltipContent } from "@rafty/ui";
 
 export const schema = z.object({
-  ${fields?.map(({ id, ...field }) => generateZodSchema(id, field)).join(`\n${" ".repeat(2)}`)}
+  ${fields
+    ?.map(({ id, ...field }) => generateZodSchema(id, field))
+    .join(`\n${" ".repeat(2)}`)}
 });
 
 // Generated ${capitalizedTitle} form
@@ -49,7 +51,9 @@ export function ${capitalizedTitle}Form() {
     register,
     formState: { errors, isSubmitting },
   } = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),${defaultValues ? `\n${" ".repeat(4)}${defaultValues}` : ""}
+    resolver: zodResolver(schema),${
+      defaultValues ? `\n${" ".repeat(4)}${defaultValues}` : ""
+    }
   });
 
   return (
@@ -99,10 +103,20 @@ const generateFieldComponent = (name: string, field?: ThreadType) => {
   if (tooltip) props.push(`tooltip="${tooltip}"`);
 
   return generateTooltip(
-    `<FieldControl name="${name}"${props.length > 0 ? ` ${props.join(" ")}` : ""}>
+    `<FieldControl name="${name}"${
+      props.length > 0 ? ` ${props.join(" ")}` : ""
+    }>
         <Label>${label}</Label>
-        ${description ? `<Text className="text-xs font-medium leading-[10px]" isMuted>${description}</Text>` : "\r"}
-        <${type === "textarea" ? "Textarea" : "InputField"} {...register("${name}")}${placeholder ? ` placeholder="${placeholder}"` : ""} />
+        ${
+          description
+            ? `<Text className="text-xs font-medium leading-[10px]" isMuted>${description}</Text>`
+            : "\r"
+        }
+        <${
+          type === "textarea" ? "Textarea" : "InputField"
+        } {...register("${name}")}${
+          placeholder ? ` placeholder="${placeholder}"` : ""
+        } />
         <ErrorMessage>{errors.${name}?.message as string}</ErrorMessage>
       </FieldControl>`,
     tooltip,

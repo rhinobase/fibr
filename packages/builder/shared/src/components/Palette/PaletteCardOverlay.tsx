@@ -1,6 +1,6 @@
 import { DragOverlay, useDndContext } from "@dnd-kit/core";
-import { PaletteCard } from "./PaletteCard";
 import { Block } from "../../types";
+import { PaletteCard } from "./PaletteCard";
 
 export function PaletteCardOverlay() {
   const { active } = useDndContext();

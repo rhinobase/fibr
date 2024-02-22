@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { EditorEventListenerProps, EditorEventListener } from "../types";
+import { EditorEventListener, EditorEventListenerProps } from "../types";
 import { EditorEvent } from "../utils";
 
 export type EditorEventBusProps = {

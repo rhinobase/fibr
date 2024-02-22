@@ -1,11 +1,11 @@
 import { SidebarItem } from "@fibr/builder";
-import { useCanvas, type BlockType } from "@fibr/providers";
+import { type BlockType, useCanvas } from "@fibr/providers";
 import { ListBulletIcon } from "@heroicons/react/24/outline";
+import { Accordion } from "@rafty/ui";
+import { useState } from "react";
 import { DEFAULT_GROUP, DndWrapper, Empty, groupByParentNode } from "../utils";
 import { OverviewCard } from "./OverviewCard";
 import { OverviewOverlay } from "./OverviewOverlay";
-import { Accordion } from "@rafty/ui";
-import { useState } from "react";
 
 export type Overview = {
   blocks: BlockType[];
