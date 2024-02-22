@@ -15,7 +15,7 @@ import {
 import { QuickActions } from "./QuickActions";
 
 export function FieldWrapper({ children }: PropsWithChildren) {
-  const { id, isOverlay, parentNode, ...field } = useThread<
+  const { isOverlay, ...field } = useThread<
     BlockType & { isOverlay?: boolean }
   >();
   const { select } = useCanvas(({ select }) => ({
@@ -31,11 +31,13 @@ export function FieldWrapper({ children }: PropsWithChildren) {
     transform,
     transition,
     isDragging,
-  } = useSortable({ id, data: field });
+  } = useSortable({ id: `${field.id}-${field.parentNode}`, data: field });
 
   const onSelect = eventHandler((event) => {
     event.stopPropagation();
-    select({ selectedBlockIds: { id, parentNode } });
+    select({
+      selectedBlockIds: { id: field.id, parentNode: field.parentNode },
+    });
   });
 
   if (field.type === "canvas")

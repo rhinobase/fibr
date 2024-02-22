@@ -71,16 +71,23 @@ function useShortcutsManager() {
       const event_type = (data as { event_type: EditorEvent }).event_type;
 
       if (event_type === EditorEvent.BLOCK_ID_UPDATION) {
-        const { currentBlockId, newBlockId } =
+        const { currentBlockId, parentNode, newBlockId } =
           data as EditorEventListenerProps[EditorEvent.BLOCK_ID_UPDATION];
 
         if (action === ActionType.UNDO)
           updateId({
             currentBlockId: newBlockId,
+            parentNode,
             newBlockId: currentBlockId,
             shouldEmit: false,
           });
-        else updateId({ currentBlockId, newBlockId, shouldEmit: false });
+        else
+          updateId({
+            currentBlockId,
+            parentNode,
+            newBlockId,
+            shouldEmit: false,
+          });
       }
 
       if (event_type === EditorEvent.BLOCK_ADDITION) {
@@ -121,16 +128,29 @@ function useShortcutsManager() {
       }
 
       if (event_type === EditorEvent.BLOCK_REPOSITION) {
-        const { sourceBlockId, targetBlockId } =
-          data as EditorEventListenerProps[EditorEvent.BLOCK_REPOSITION];
+        const {
+          sourceBlockId,
+          sourceParentNode,
+          targetBlockId,
+          targetParentNode,
+        } = data as EditorEventListenerProps[EditorEvent.BLOCK_REPOSITION];
 
         if (action === ActionType.UNDO)
           move({
             sourceBlockId: targetBlockId,
+            sourceParentNode: targetParentNode,
             targetBlockId: sourceBlockId,
+            targetParentNode: sourceParentNode,
             shouldEmit: false,
           });
-        else move({ sourceBlockId, targetBlockId, shouldEmit: false });
+        else
+          move({
+            sourceBlockId,
+            sourceParentNode,
+            targetBlockId,
+            targetParentNode,
+            shouldEmit: false,
+          });
       }
 
       if (event_type === EditorEvent.BLOCK_DUPLICATION) {

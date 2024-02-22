@@ -61,7 +61,7 @@ export function OverviewCard({
   const hasChildren = groups ? id in groups : false;
 
   const { setNodeRef, transform, transition, attributes, listeners } =
-    useSortable({ id, data: { type } });
+    useSortable({ id: `${id}-${parentNode}`, data: { id, type, parentNode } });
 
   const nodeStyle: CSSProperties = {
     transform: CSS.Transform.toString(transform),
@@ -116,7 +116,11 @@ export function OverviewCard({
         variant="ghost"
         className={classNames(hidden && "text-secondary-400", "p-0.5")}
         onClick={() =>
-          update({ blockId: id, updatedValues: { hidden: !hidden } })
+          update({
+            blockId: id,
+            parentNode,
+            updatedValues: { hidden: !hidden },
+          })
         }
       >
         {hidden ? <HiOutlineEye /> : <HiOutlineEyeOff />}

@@ -10,6 +10,7 @@ export enum EditorEvent {
   BLOCK_DELETION = "block_deletion",
   BLOCK_REPOSITION = "block_reposition",
   BLOCK_SELECTION = "block_selection",
+  BLOCK_UNSELECT = "block_unselect",
   BLOCK_DUPLICATION = "block_duplication",
   // Layout
   LAYOUT_UPDATE = "layout_update",

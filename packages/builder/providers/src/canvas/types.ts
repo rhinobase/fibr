@@ -24,11 +24,13 @@ export type AddBlockProps<T = undefined> = ShouldEmitEvent<{
 
 export type UpdateBlockProps<T = undefined> = ShouldEmitEvent<{
   blockId: string;
+  parentNode?: string;
   updatedValues: Partial<BlockType<T>>;
 }>;
 
 export type UpdateIdBlockProps = ShouldEmitEvent<{
   currentBlockId: string;
+  parentNode?: string;
   newBlockId: string;
 }>;
 
@@ -39,11 +41,19 @@ export type RemoveBlockProps = ShouldEmitEvent<{
 
 export type MoveBlockProps = ShouldEmitEvent<{
   sourceBlockId: string;
+  sourceParentNode?: string;
   targetBlockId: string;
+  targetParentNode?: string;
 }>;
 
 export type SelectBlockProps = ShouldEmitEvent<{
   selectedBlockIds:
+    | { id: string; parentNode?: string }
+    | { id: string; parentNode?: string }[];
+}>;
+
+export type UnselectBlockProps = ShouldEmitEvent<{
+  unselectBlockIds:
     | { id: string; parentNode?: string }
     | { id: string; parentNode?: string }[];
 }>;

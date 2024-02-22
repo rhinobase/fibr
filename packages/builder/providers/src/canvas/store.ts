@@ -13,6 +13,7 @@ import {
   RemoveBlockProps,
   SelectBlockProps,
   ShouldEmitEvent,
+  UnselectBlockProps,
   UpdateBlockProps,
   UpdateIdBlockProps,
 } from "./types";
@@ -40,6 +41,7 @@ export type CanvasStore = {
   remove: (props: RemoveBlockProps) => void;
   move: (props: MoveBlockProps) => void;
   select: (props: SelectBlockProps) => void;
+  unselect: (props: UnselectBlockProps) => void;
   duplicate: (props: DuplicateBlockProps) => void;
 };
 
@@ -109,9 +111,11 @@ export const createCanvasStore = ({
             blockId: generatedBlockId,
           });
       },
-      update: ({ blockId, updatedValues, shouldEmit = true }) => {
+      update: ({ blockId, parentNode, updatedValues, shouldEmit = true }) => {
         const blocks = get().schema;
-        const index = blocks.findIndex((block) => block.id === blockId);
+        const index = blocks.findIndex(
+          (block) => block.id === blockId && block.parentNode === parentNode,
+        );
         const oldValues = blocks[index];
 
         // Making sure we are not overriding these properties
@@ -133,10 +137,16 @@ export const createCanvasStore = ({
             oldValues,
           });
       },
-      updateId: ({ currentBlockId, newBlockId, shouldEmit = true }) => {
-        const schema = [...get().schema];
+      updateId: ({
+        currentBlockId,
+        parentNode,
+        newBlockId,
+        shouldEmit = true,
+      }) => {
+        const schema = get().schema;
         const blockIndex = schema.findIndex(
-          (block) => block.id === currentBlockId,
+          (block) =>
+            block.id === currentBlockId && block.parentNode === parentNode,
         );
         const block = schema[blockIndex];
 
@@ -206,29 +216,41 @@ export const createCanvasStore = ({
             index,
           });
       },
-      move: ({ sourceBlockId, targetBlockId, shouldEmit = true }) =>
+      move: (params) => {
+        const {
+          sourceBlockId,
+          sourceParentNode,
+          targetBlockId,
+          targetParentNode,
+          shouldEmit = true,
+        } = params;
+
         set((state) => {
           const tmp = [...state.schema];
 
           // Getting the blocks index
           const fromIndex = tmp.findIndex(
-            (block) => block.id === sourceBlockId,
+            (block) =>
+              block.id === sourceBlockId &&
+              block.parentNode === sourceParentNode,
           );
-          const toIndex = tmp.findIndex((block) => block.id === targetBlockId);
+          const toIndex = tmp.findIndex(
+            (block) =>
+              block.id === targetBlockId &&
+              block.parentNode === targetParentNode,
+          );
 
           const fromParentNode = tmp[fromIndex].parentNode;
           tmp[fromIndex].parentNode = tmp[toIndex].parentNode;
           tmp[toIndex].parentNode = fromParentNode;
 
           state.schema = arrayMove(tmp, fromIndex, toIndex);
+        });
 
-          if (shouldEmit)
-            emitter(EditorEvent.BLOCK_REPOSITION, {
-              sourceBlockId,
-              targetBlockId,
-            });
-        }),
-      select: ({ selectedBlockIds, shouldEmit = true }) => {
+        if (shouldEmit) emitter(EditorEvent.BLOCK_REPOSITION, params);
+      },
+      select: (params) => {
+        const { selectedBlockIds, shouldEmit = true } = params;
         const { ids, parents } = (
           Array.isArray(selectedBlockIds)
             ? selectedBlockIds
@@ -255,10 +277,39 @@ export const createCanvasStore = ({
           });
         });
 
-        if (shouldEmit)
-          emitter(EditorEvent.BLOCK_SELECTION, { selectedBlockIds });
+        if (shouldEmit) emitter(EditorEvent.BLOCK_SELECTION, params);
       },
-      duplicate: ({ originalBlockId, shouldEmit = true }) => {
+      unselect: (params) => {
+        const { unselectBlockIds, shouldEmit = true } = params;
+        const { ids, parents } = (
+          Array.isArray(unselectBlockIds)
+            ? unselectBlockIds
+            : [unselectBlockIds]
+        ).reduce<{
+          ids: Record<string, boolean>;
+          parents: Record<string, boolean>;
+        }>(
+          (prev, { id, parentNode }) => {
+            prev.ids[id] = true;
+            prev.parents[String(parentNode)] = true;
+            return prev;
+          },
+          { ids: {}, parents: {} },
+        );
+
+        set((state) => {
+          state.schema = state.schema.map((block) => {
+            if (ids[block.id] && parents[String(block.parentNode)])
+              block.selected = false;
+
+            return block;
+          });
+        });
+
+        if (shouldEmit) emitter(EditorEvent.BLOCK_UNSELECT, params);
+      },
+      duplicate: (params) => {
+        const { originalBlockId, shouldEmit = true } = params;
         const blockData = get().get({ blockId: originalBlockId });
 
         if (!blockData)

@@ -38,19 +38,22 @@ export function FormDisplay() {
     <WeaverProvider wrapper={BLOCK_WRAPPERS[currentEnv]}>
       <DndWrapper
         items={blocks.map(({ id }) => id)}
-        onDragStart={({ active }) =>
+        onDragStart={({ active }) => {
+          console.log(JSON.stringify(active, null, 2));
           select({
             selectedBlockIds: {
-              id: active.id.toString(),
+              id: active.data.current?.id,
               parentNode: active.data.current?.parentNode,
             },
-          })
-        }
+          });
+        }}
         onDragEnd={({ active, over }) => {
           if (over && active.id !== over.id)
             move({
-              sourceBlockId: String(active.id),
-              targetBlockId: String(over.id),
+              sourceBlockId: active.data.current?.id,
+              sourceParentNode: active.data.current?.parentNode,
+              targetBlockId: over.data.current?.id,
+              targetParentNode: over.data.current?.parentNode,
             });
         }}
       >

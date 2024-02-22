@@ -79,7 +79,11 @@ function IdEditField() {
 
     // Updating the value
     if (ref.current)
-      updateId({ currentBlockId: id, newBlockId: ref.current.value });
+      updateId({
+        currentBlockId: id,
+        parentNode,
+        newBlockId: ref.current.value,
+      });
 
     toggle(false);
   };
@@ -139,7 +143,14 @@ function QuickActionButtons() {
 
   const onMove = (direction: Direction) => {
     select({ selectedBlockIds: { id, parentNode } });
-    move({ sourceBlockId: id, targetBlockId: blocks[index + direction].id });
+
+    const target = blocks[index + direction];
+    move({
+      sourceBlockId: id,
+      sourceParentNode: parentNode,
+      targetBlockId: target.id,
+      targetParentNode: target.parentNode,
+    });
   };
 
   return (

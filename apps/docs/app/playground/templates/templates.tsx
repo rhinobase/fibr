@@ -131,7 +131,7 @@ export const TEMPLATES: Record<
           parentNode: "canvas",
         },
         {
-          id: "father_name",
+          id: "name",
           type: "string",
           data: {
             label: "Father's Name",

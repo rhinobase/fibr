@@ -50,7 +50,7 @@ function FieldsRender({ blocks, enableDragging }: Overview) {
       onDragStart={({ active }) =>
         select({
           selectedBlockIds: {
-            id: String(active.id),
+            id: active.data.current?.id,
             parentNode: active.data.current?.parentNode,
           },
         })
@@ -58,8 +58,10 @@ function FieldsRender({ blocks, enableDragging }: Overview) {
       onDragEnd={({ active, over }) => {
         if (over && active.id !== over.id)
           move({
-            sourceBlockId: String(active.id),
-            targetBlockId: String(over.id),
+            sourceBlockId: active.data.current?.id,
+            sourceParentNode: active.data.current?.parentNode,
+            targetBlockId: over.data.current?.id,
+            targetParentNode: over.data.current?.parentNode,
           });
       }}
     >

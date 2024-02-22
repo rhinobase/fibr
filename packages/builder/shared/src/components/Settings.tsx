@@ -57,7 +57,11 @@ export function Settings() {
             <Thread
               {...block}
               _update={(values: Partial<BlockType>) =>
-                update({ blockId: block.id, updatedValues: values })
+                update({
+                  blockId: block.id,
+                  parentNode: block.parentNode,
+                  updatedValues: values,
+                })
               }
             />
           </FibrProvider>
