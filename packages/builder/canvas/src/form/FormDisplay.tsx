@@ -37,7 +37,7 @@ export function FormDisplay() {
   return (
     <WeaverProvider wrapper={BLOCK_WRAPPERS[currentEnv]}>
       <DndWrapper
-        items={blocks.map(({ id }) => id)}
+        items={blocks.map(({ id, parentNode }) => `${id}-${parentNode}`)}
         onDragStart={({ active }) => {
           console.log(JSON.stringify(active, null, 2));
           select({

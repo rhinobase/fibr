@@ -52,4 +52,7 @@ export type SelectBlockProps = ShouldEmitEvent<{
     | { id: string; parentNode?: string }[];
 }>;
 
-export type DuplicateBlockProps = ShouldEmitEvent<{ originalBlockId: string }>;
+export type DuplicateBlockProps = ShouldEmitEvent<{
+  originalBlockId: string;
+  parentNode?: string;
+}>;

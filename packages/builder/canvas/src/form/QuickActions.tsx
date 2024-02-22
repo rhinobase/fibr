@@ -172,12 +172,18 @@ function QuickActionButtons() {
       <ActionButton
         name="Hidden"
         icon={HiOutlineEyeOff}
-        action={() => update({ blockId: id, updatedValues: { hidden: true } })}
+        action={() =>
+          update({
+            blockId: id,
+            parentNode,
+            updatedValues: { hidden: true, selected: false },
+          })
+        }
       />
       <ActionButton
         name="Duplicate file"
         icon={MdOutlineAddToPhotos}
-        action={() => duplicate({ originalBlockId: id })}
+        action={() => duplicate({ originalBlockId: id, parentNode })}
       />
       <ActionButton
         name="Delete visual field"

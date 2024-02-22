@@ -28,7 +28,10 @@ export type CanvasStore = {
   _unique: Record<string, number>;
   uniqueId: (type: string, parentNode?: string) => string;
   // ---
-  get: (props: { blockId: string }) => BlockType | undefined;
+  get: (props: {
+    blockId: string;
+    parentNode?: string;
+  }) => BlockType | undefined;
   add: <T = undefined>(props: AddBlockProps<T>) => void;
   update: <T = undefined>(props: UpdateBlockProps<T>) => void;
   set: <T = BlockType>(
@@ -76,7 +79,10 @@ export const createCanvasStore = ({
 
         return `${type}${typeCount}`;
       },
-      get: ({ blockId }) => get().schema.find((block) => block.id === blockId),
+      get: ({ blockId, parentNode }) =>
+        get().schema.find(
+          (block) => block.id === blockId && block.parentNode === parentNode,
+        ),
       add: ({ blockData, blockId, shouldEmit = true, insertionIndex = -1 }) => {
         const generatedBlockId =
           blockId ?? get().uniqueId(blockData.type, blockData.parentNode);
@@ -278,15 +284,15 @@ export const createCanvasStore = ({
         if (shouldEmit) emitter(EditorEvent.BLOCK_SELECTION, params);
       },
       duplicate: (params) => {
-        const { originalBlockId, shouldEmit = true } = params;
-        const blockData = get().get({ blockId: originalBlockId });
+        const { originalBlockId, parentNode, shouldEmit = true } = params;
+        const blockData = get().get({ blockId: originalBlockId, parentNode });
 
         if (!blockData)
           throw new Error(
             `Unable to find the block with Id ${originalBlockId}`,
           );
 
-        const id = get().uniqueId(blockData.type);
+        const id = get().uniqueId(blockData.type, parentNode);
 
         get().add({ blockData, blockId: id });
 

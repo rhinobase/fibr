@@ -9,7 +9,7 @@ export function FieldPadding({ children }: PropsWithChildren) {
     <div
       className={classNames(
         type === "canvas" ? "dark:bg-secondary-950 bg-white p-6" : "p-4",
-        "w-full border border-transparent",
+        "w-full border border-transparent empty:hidden",
       )}
     >
       {children}
