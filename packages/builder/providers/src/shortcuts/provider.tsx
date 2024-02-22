@@ -295,7 +295,7 @@ function useShortcutsManager() {
     "mod+d",
     () =>
       select({
-        selectedBlockIds: [],
+        selectedBlockIds: null,
       }),
     {
       description: "Select All",

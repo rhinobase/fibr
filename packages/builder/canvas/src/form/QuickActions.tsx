@@ -124,10 +124,10 @@ enum Direction {
 }
 
 function QuickActionButtons() {
-  const { id, parentNode } = useThread<BlockType>();
+  const { id } = useThread<BlockType>();
   const { blocks, move, remove, duplicate, select, update } = useCanvas(
     ({ schema, move, remove, duplicate, select, update }) => ({
-      blocks: schema.filter((block) => block.parentNode === parentNode),
+      blocks: schema,
       move,
       remove,
       duplicate,

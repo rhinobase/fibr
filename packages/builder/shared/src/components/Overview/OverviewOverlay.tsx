@@ -13,7 +13,7 @@ export function OverviewOverlay() {
         {active && (
           <OverviewCard
             {...(active.data.current as BlockType)}
-            id={String(active.id)}
+            id={`${active.id}`}
           />
         )}
       </DragOverlay>

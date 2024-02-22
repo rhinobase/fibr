@@ -3,7 +3,7 @@ import { Container } from "./Container";
 
 export function FormBuilder(props: SharedWrapper) {
   return (
-    <SharedWrapper {...props}>
+    <SharedWrapper {...props} enableMultiSelect={false}>
       <Container />
     </SharedWrapper>
   );

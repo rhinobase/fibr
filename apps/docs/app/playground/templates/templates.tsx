@@ -124,17 +124,28 @@ export const TEMPLATES: Record<
         },
         {
           id: "father",
-          type: "canvas",
+          type: "object",
           data: {
-            title: "Father",
+            label: "Father",
+            description: "Enter father related information here",
           },
           parentNode: "canvas",
         },
         {
-          id: "name",
+          id: "father_name",
           type: "string",
           data: {
-            label: "Father's Name",
+            label: "Name",
+            description: "Enter father's name",
+          },
+          parentNode: "father",
+        },
+        {
+          id: "occupation",
+          type: "string",
+          data: {
+            label: "Occupation",
+            description: "Enter father's occupation",
           },
           parentNode: "father",
         },

@@ -6,6 +6,7 @@ import { MdLink, MdOutlineKey, MdOutlineMailOutline } from "react-icons/md";
 import {
   Canvas,
   NumberInput,
+  ObjectField,
   PasswordInput,
   StringInput,
   Textarea,
@@ -13,11 +14,13 @@ import {
 import {
   CanvasSettings,
   NumberInputSettings,
+  ObjectSettings,
   PasswordInputSettings,
   StringInputSettings,
   TextareaSettings,
 } from "./settings";
 import type { FieldWrapperProps, InputWrapperProps } from "../utils";
+import { BsBraces } from "react-icons/bs";
 
 export const formConfig: Record<
   string,
@@ -42,6 +45,10 @@ export const formConfig: Record<
   number: {
     builder: NumberInput,
     settings: NumberInputSettings,
+  },
+  object: {
+    builder: ObjectField,
+    settings: ObjectSettings,
   },
 };
 
@@ -103,6 +110,19 @@ export const formBlocks: Record<string, Block<{ data: FieldType }>[]> = {
       presets: {
         data: {
           inputType: "number",
+          label: "Label",
+          description: "Description",
+        },
+      },
+    },
+  ],
+  "Nested Object": [
+    {
+      type: "object",
+      label: "Object Group",
+      icon: BsBraces,
+      presets: {
+        data: {
           label: "Label",
           description: "Description",
         },

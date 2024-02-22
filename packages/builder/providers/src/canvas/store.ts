@@ -20,6 +20,7 @@ import { isHotkeyPressed } from "react-hotkeys-hook";
 
 export type CanvasStoreProps = {
   initialSchema?: BlockType[];
+  enableMultiSelect?: boolean;
   emitter?: EditorEventBus["broadcast"];
 };
 
@@ -45,8 +46,9 @@ export type CanvasStore = {
 };
 
 export const createCanvasStore = ({
-  emitter = () => undefined,
   initialSchema = [],
+  enableMultiSelect = true,
+  emitter = () => undefined,
 }: CanvasStoreProps) => {
   return create(
     immer<CanvasStore>((set, get) => ({
@@ -235,7 +237,8 @@ export const createCanvasStore = ({
         set((state) => {
           state.schema = state.schema.map((block) => {
             if (ids[block.id]) block.selected = true;
-            else if (!isHotkeyPressed("shift")) block.selected = false;
+            else if (!(enableMultiSelect && isHotkeyPressed("shift")))
+              block.selected = false;
 
             return block;
           });

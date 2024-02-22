@@ -32,7 +32,7 @@ export function FieldWrapper({ children }: PropsWithChildren) {
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: `${field.id}-${field.parentNode}`, data: field });
+  } = useSortable({ id: field.id, data: field });
 
   const onSelect = eventHandler((event) => {
     event.stopPropagation();

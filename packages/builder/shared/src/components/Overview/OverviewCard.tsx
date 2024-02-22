@@ -45,7 +45,6 @@ export function OverviewCard({
   groups,
   hidden = false,
   onToggle,
-  parentNode,
   enableDragging = false,
   selected: isSelected = false,
 }: OverviewCard) {
@@ -60,7 +59,7 @@ export function OverviewCard({
   const hasChildren = groups ? id in groups : false;
 
   const { setNodeRef, transform, transition, attributes, listeners } =
-    useSortable({ id: `${id}-${parentNode}`, data: { id, type, parentNode } });
+    useSortable({ id, data: { type } });
 
   const nodeStyle: CSSProperties = {
     transform: CSS.Transform.toString(transform),

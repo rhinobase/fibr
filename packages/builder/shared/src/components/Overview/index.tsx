@@ -49,14 +49,14 @@ function FieldsRender({ blocks, enableDragging }: Overview) {
       items={blocks.map(({ id }) => id)}
       onDragStart={({ active }) =>
         select({
-          selectedBlockIds: active.data.current?.id,
+          selectedBlockIds: String(active.id),
         })
       }
       onDragEnd={({ active, over }) => {
         if (over && active.id !== over.id)
           move({
-            sourceBlockId: active.data.current?.id,
-            targetBlockId: over.data.current?.id,
+            sourceBlockId: String(active.id),
+            targetBlockId: String(over.id),
           });
       }}
     >

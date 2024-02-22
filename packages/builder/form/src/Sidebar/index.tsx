@@ -48,17 +48,18 @@ export function Sidebar() {
   );
 }
 
+const GROUP_TYPES = ["canvas", "object"];
 function findParent(context: BlockType[]) {
   const active = context.filter((block) => block.selected);
   const groups = groupByParentNode(context);
 
-  if (active.length === 0) return groups[DEFAULT_GROUP]?.[0].id;
+  const defaultCanvas = groups[DEFAULT_GROUP]?.[0].id;
+
+  if (active.length === 0) return defaultCanvas;
 
   let current = context.find((value) => value.id === active[0].id);
 
-  while (current?.parentNode != null) {
-    current = context.find((value) => value.id === current?.parentNode);
-  }
+  if (current && GROUP_TYPES.includes(current.type)) return current.id;
 
-  return current?.id;
+  return current?.parentNode ?? defaultCanvas;
 }
