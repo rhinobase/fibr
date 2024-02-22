@@ -3,7 +3,6 @@ import { FieldControl, Label, Text, classNames } from "@rafty/ui";
 import { Fragment, PropsWithChildren } from "react";
 import { FieldErrorMessage } from "./FieldErrorMessage";
 import { TooltipWrapper, TooltipWrapperProps } from "./TooltipWrapper";
-import { useBuilder, Env } from "@fibr/providers";
 
 export type FieldWrapperProps<
   T extends Record<string, unknown> = Record<string, unknown>,
@@ -32,15 +31,10 @@ export function FieldWrapper({
   children,
 }: FieldWrapper) {
   const { id } = useThread<FieldWrapperProps>();
-  const isProduction = useBuilder(
-    (state) => state.env.current === Env.PRODUCTION,
-  );
   const LabelAndDescriptionWrapper =
     label && description
       ? ({ children }: PropsWithChildren) => <div>{children}</div>
       : Fragment;
-
-  if (hidden && isProduction) return;
 
   return (
     <TooltipWrapper tooltip={tooltip}>

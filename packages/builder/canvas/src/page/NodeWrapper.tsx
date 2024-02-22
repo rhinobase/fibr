@@ -12,7 +12,6 @@ const PANELS = ["page"];
 
 export function NodeWrapper({ children }: PropsWithChildren) {
   const { type, selected } = useThread<Node>();
-
   const isGroup = PANELS.includes(type);
 
   return (

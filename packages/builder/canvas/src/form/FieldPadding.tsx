@@ -1,6 +1,6 @@
 import { useThread } from "@fibr/react";
 import { classNames } from "@rafty/ui";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 
 export function FieldPadding({ children }: PropsWithChildren) {
   const { type } = useThread();
