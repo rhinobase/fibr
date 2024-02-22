@@ -18,9 +18,7 @@ export function FieldWrapper({ children }: PropsWithChildren) {
   const { isOverlay, ...field } = useThread<
     BlockType & { isOverlay?: boolean }
   >();
-  const { select } = useCanvas(({ select }) => ({
-    select,
-  }));
+  const select = useCanvas(({ select }) => select);
 
   const isSelected = field.selected ?? false;
 

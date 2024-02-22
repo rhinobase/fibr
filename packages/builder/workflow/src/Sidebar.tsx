@@ -9,9 +9,9 @@ import {
 } from "@fibr/shared";
 
 export function Sidebar() {
-  const { add, blocks } = useCanvas(({ add, schema: blocks }) => ({
+  const { add, blocks } = useCanvas(({ add, schema }) => ({
     add,
-    blocks,
+    blocks: schema,
   }));
 
   return (
