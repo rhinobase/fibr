@@ -43,7 +43,7 @@ export function OverviewCard({
   id,
   type,
   groups,
-  hidden,
+  hidden = false,
   onToggle,
   parentNode,
   enableDragging = false,
@@ -74,8 +74,8 @@ export function OverviewCard({
       }
     : {};
 
-  const handleNodeSelect = eventHandler(() =>
-    select({ selectedBlockIds: { id, parentNode } }),
+  const handleNodeSelect = eventHandler(
+    () => !hidden && select({ selectedBlockIds: { id, parentNode } }),
   );
 
   const handleNodeDelete = eventHandler(() =>
