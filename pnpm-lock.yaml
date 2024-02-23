@@ -39,14 +39,14 @@ dependencies:
     specifier: ^14.1.0
     version: 14.1.0(@mdx-js/loader@3.0.1)(@mdx-js/react@3.0.1)
   '@rafty/icons':
-    specifier: ^0.1.0
-    version: 0.1.0(react@18.2.0)
+    specifier: ^0.1.1
+    version: 0.1.1(react@18.2.0)
   '@rafty/shared':
-    specifier: ^1.0.1
-    version: 1.0.1(react@18.2.0)
+    specifier: ^1.0.2
+    version: 1.0.2(react@18.2.0)
   '@rafty/ui':
-    specifier: ^1.4.8
-    version: 1.4.8(@types/react-dom@18.2.19)(@types/react@18.2.56)(date-fns@3.3.1)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^1.4.9
+    version: 1.4.9(@types/react-dom@18.2.19)(@types/react@18.2.56)(date-fns@3.3.1)(react-dom@18.2.0)(react@18.2.0)
   '@sindresorhus/slugify':
     specifier: ^2.2.1
     version: 2.2.1
@@ -4324,8 +4324,8 @@ packages:
       '@babel/runtime': 7.23.9
     dev: false
 
-  /@rafty/icons@0.1.0(react@18.2.0):
-    resolution: {integrity: sha512-tH1hu7LU7xGvPff5OnxhKqJwI1YXZocBADpki0Ld4NafNcS0YXx3Zzsi5wqig2ERsyZ6CJGB+HwPVQeGCQpMUQ==}
+  /@rafty/icons@0.1.1(react@18.2.0):
+    resolution: {integrity: sha512-j8UWRxNHP++1wqYmHzRurRZPpVK9fIIt2wya+V92YIVPuhaaClzyzKEuuJzJSwvUTFeWoeYhP3RWZrB6MWSOFw==}
     peerDependencies:
       react: ^18.2.0
     dependencies:
@@ -4343,16 +4343,16 @@ packages:
       tailwindcss-animate: 1.0.7(tailwindcss@3.4.1)
     dev: true
 
-  /@rafty/shared@1.0.1(react@18.2.0):
-    resolution: {integrity: sha512-pj2zEuJ4weXvMtVIe6xdYqnyi855rko/Kj/5YtXuOcTdbZ4YoE2Y5bPyswvfcgsHD2YifQP2sbowygl/eBMyDA==}
+  /@rafty/shared@1.0.2(react@18.2.0):
+    resolution: {integrity: sha512-VRevsuRhdTZsCNmjTSvjj0eltgBC0RJFzblNqupINbBnyZEmteJKUxnORnYNA9InikI3MsReCIso+zyQfLSOCw==}
     peerDependencies:
       react: ^18.2.0
     dependencies:
       react: 18.2.0
     dev: false
 
-  /@rafty/ui@1.4.8(@types/react-dom@18.2.19)(@types/react@18.2.56)(date-fns@3.3.1)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-yXzzzNz1w8DkiesyHa6W3qGdIH6L8nOqwHucDQDfPvvPq0hiNq3de7pNd068vJuu2f2dyHbliNi/dtj9+QZJOg==}
+  /@rafty/ui@1.4.9(@types/react-dom@18.2.19)(@types/react@18.2.56)(date-fns@3.3.1)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-KK/Z7cej7NGS8bRRwSF1+BYwRxJaDZwce8FA/ExXXdyETHzQWyac0a90d37zyfjzRdYkVvq84+ggT8X+SyJHjA==}
     peerDependencies:
       react: ^18.2.0
     dependencies:
@@ -4373,7 +4373,7 @@ packages:
       '@radix-ui/react-tabs': 1.0.4(@types/react-dom@18.2.19)(@types/react@18.2.56)(react-dom@18.2.0)(react@18.2.0)
       '@radix-ui/react-toggle-group': 1.0.4(@types/react-dom@18.2.19)(@types/react@18.2.56)(react-dom@18.2.0)(react@18.2.0)
       '@radix-ui/react-tooltip': 1.0.7(@types/react-dom@18.2.19)(@types/react@18.2.56)(react-dom@18.2.0)(react@18.2.0)
-      '@rafty/shared': 1.0.1(react@18.2.0)
+      '@rafty/shared': 1.0.2(react@18.2.0)
       '@swc/helpers': 0.5.6
       class-variance-authority: 0.7.0
       cmdk: 0.2.1(@types/react@18.2.56)(react-dom@18.2.0)(react@18.2.0)
@@ -5296,11 +5296,11 @@ packages:
   /@types/eslint-scope@3.7.7:
     resolution: {integrity: sha512-MzMFlSLBqNF2gcHWO0G1vP/YQyfvrxZ0bF+u7mzUdZ1/xK4A4sru+nraZz5i3iEIk1l1uyicaDVTB4QbbEkAYg==}
     dependencies:
-      '@types/eslint': 8.56.2
+      '@types/eslint': 8.56.3
       '@types/estree': 1.0.5
 
-  /@types/eslint@8.56.2:
-    resolution: {integrity: sha512-uQDwm1wFHmbBbCZCqAlq6Do9LYwByNZHWzXppSnay9SuwJ+VRbjkbLABer54kcPnMSlG6Fdiy2yaFXm/z9Z5gw==}
+  /@types/eslint@8.56.3:
+    resolution: {integrity: sha512-PvSf1wfv2wJpVIFUMSb+i4PvqNYkB9Rkp9ZDO3oaWzq4SKhsQk4mrMBr3ZH06I0hKrVGLBacmgl8JM4WVjb9dg==}
     dependencies:
       '@types/estree': 1.0.5
       '@types/json-schema': 7.0.15
