@@ -1,64 +1,26 @@
 import { useThread } from "@fibr/react";
 import { InputField } from "@rafty/ui";
 import { useFormContext } from "react-hook-form";
-import {
-  FieldWrapper,
-  type FieldWrapperProps,
-  InputWrapper,
-  type InputWrapperProps,
-} from "../../utils";
+import { FieldWrapper, InputWrapper } from "../../utils";
 
 export type NumberInput = {
-  data: FieldWrapperProps<
-    InputWrapperProps<{
-      placeholder?: string;
-      defaultValue?: string;
-    }>
-  >;
+  data: {
+    placeholder?: string;
+    defaultValue?: string;
+  };
 };
 
 export function NumberInput() {
   const {
     id,
-    data: {
-      defaultValue,
-      placeholder,
-      description,
-      disabled,
-      hidden,
-      label,
-      required,
-      tooltip,
-      size,
-      prefixIcon,
-      prefixText,
-      suffixIcon,
-      suffixText,
-    },
+    data: { defaultValue, placeholder },
   } = useThread<NumberInput>();
 
   const { register } = useFormContext();
 
-  const fieldWrapperProps = {
-    description,
-    disabled,
-    hidden,
-    label,
-    required,
-    tooltip,
-  };
-
-  const inputWrapperProps = {
-    size,
-    prefixIcon,
-    prefixText,
-    suffixIcon,
-    suffixText,
-  };
-
   return (
-    <FieldWrapper {...fieldWrapperProps}>
-      <InputWrapper {...inputWrapperProps}>
+    <FieldWrapper>
+      <InputWrapper>
         <InputField
           id={id}
           type="number"

@@ -1,15 +1,18 @@
 import { Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
 import { PropsWithChildren } from "react";
+import { useThread } from "@fibr/react";
 
-export type TooltipWrapperProps<
-  T extends Record<string, unknown> = Record<string, unknown>,
-> = {
-  tooltip?: string;
-} & T;
+export type TooltipWrapperProps = {
+  data: { tooltip?: string };
+};
 
-export type TooltipWrapper = PropsWithChildren<TooltipWrapperProps>;
+export type TooltipWrapper = PropsWithChildren;
 
-export function TooltipWrapper({ children, tooltip }: TooltipWrapper) {
+export function TooltipWrapper({ children }: TooltipWrapper) {
+  const {
+    data: { tooltip },
+  } = useThread<TooltipWrapperProps>();
+
   if (tooltip)
     return (
       <Tooltip>

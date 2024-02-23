@@ -2,42 +2,35 @@ import { useThread } from "@fibr/react";
 import { FieldControl, Label, Text, classNames } from "@rafty/ui";
 import { Fragment, PropsWithChildren } from "react";
 import { FieldErrorMessage } from "./FieldErrorMessage";
-import { TooltipWrapper, TooltipWrapperProps } from "./TooltipWrapper";
+import { TooltipWrapper } from "./TooltipWrapper";
 
-export type FieldWrapperProps<
-  T extends Record<string, unknown> = Record<string, unknown>,
-> = TooltipWrapperProps<
-  {
+export type FieldWrapperProps = {
+  data: {
     label?: string;
     description?: string;
     required?: boolean;
     disabled?: boolean;
     hidden?: boolean;
-  } & T
->;
+  };
+};
 
-export type FieldWrapper = PropsWithChildren<
-  FieldWrapperProps<{ className?: FieldControl["className"] }>
->;
+export type FieldWrapper = PropsWithChildren<{
+  className?: FieldControl["className"];
+}>;
 
-export function FieldWrapper({
-  label,
-  description,
-  disabled,
-  hidden,
-  required,
-  tooltip,
-  className,
-  children,
-}: FieldWrapper) {
-  const { id } = useThread<FieldWrapperProps>();
+export function FieldWrapper({ className, children }: FieldWrapper) {
+  const {
+    id,
+    data: { label, description, disabled, hidden, required },
+  } = useThread<FieldWrapperProps>();
+
   const LabelAndDescriptionWrapper =
     label && description
       ? ({ children }: PropsWithChildren) => <div>{children}</div>
       : Fragment;
 
   return (
-    <TooltipWrapper tooltip={tooltip}>
+    <TooltipWrapper>
       <FieldControl
         name={id}
         className={classNames(hidden && "opacity-40", "gap-2", className)}

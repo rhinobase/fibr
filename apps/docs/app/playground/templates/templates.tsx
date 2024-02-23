@@ -1,14 +1,11 @@
 "use client";
-import type { FieldType } from "@fibr/blocks";
-import type { BlockType } from "@fibr/providers";
 import type { IconType } from "react-icons";
 import { FiArrowRight } from "react-icons/fi";
 import { GoProjectTemplate } from "react-icons/go";
 import type { Node } from "reactflow";
 import { Container } from "./utils";
 
-export type TemplateType = (BlockType<FieldType | { title: string }> &
-  Partial<Node>)[];
+export type TemplateType = Partial<Node>[];
 
 export const TEMPLATES: Record<
   Container,

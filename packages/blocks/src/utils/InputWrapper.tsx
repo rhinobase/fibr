@@ -2,6 +2,7 @@ import { RaftyIcon } from "@rafty/icons";
 import { InputGroup, LeftAddon, Prefix, RightAddon, Suffix } from "@rafty/ui";
 import { cva } from "class-variance-authority";
 import { type PropsWithChildren } from "react";
+import { useThread } from "@fibr/react";
 
 const addonTextClasses = cva(
   "text-secondary-600 dark:text-secondary-400 font-medium",
@@ -16,26 +17,23 @@ const addonTextClasses = cva(
   },
 );
 
-export type InputWrapperProps<
-  T extends Record<string, unknown> = Record<string, unknown>,
-> = {
-  size?: "sm" | "md" | "lg";
-  prefixText?: string;
-  suffixText?: string;
-  prefixIcon?: string;
-  suffixIcon?: string;
-} & T;
+export type InputWrapperProps = {
+  data: {
+    size?: "sm" | "md" | "lg";
+    prefixText?: string;
+    suffixText?: string;
+    prefixIcon?: string;
+    suffixIcon?: string;
+  };
+};
 
-export type InputWrapper = PropsWithChildren<InputWrapperProps>;
+export type InputWrapper = PropsWithChildren;
 
-export function InputWrapper({
-  children,
-  prefixIcon,
-  prefixText,
-  suffixIcon,
-  size = "md",
-  suffixText,
-}: InputWrapper) {
+export function InputWrapper({ children }: InputWrapper) {
+  const {
+    data: { prefixIcon, prefixText, suffixIcon, size = "md", suffixText },
+  } = useThread<InputWrapperProps>();
+
   return (
     <InputGroup size={size} className="w-full">
       {prefixText && (

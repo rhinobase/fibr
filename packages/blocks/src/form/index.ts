@@ -52,9 +52,11 @@ export const formConfig: Record<
   },
 };
 
-export type FieldType = Partial<InputWrapperProps & FieldWrapperProps>;
+export type FieldType = Partial<
+  InputWrapperProps & FieldWrapperProps & StringInput
+>;
 
-export const formBlocks: Record<string, Block<{ data: FieldType }>[]> = {
+export const formBlocks: Record<string, Block<FieldType>[]> = {
   "Text Inputs": [
     {
       type: "string",
