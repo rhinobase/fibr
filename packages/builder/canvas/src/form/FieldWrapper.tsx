@@ -18,7 +18,10 @@ export function FieldWrapper({ children }: PropsWithChildren) {
   const { isOverlay, ...field } = useThread<
     BlockType & { isOverlay?: boolean }
   >();
-  const select = useCanvas(({ select }) => select);
+  const { select, noOfSelectedBlocks } = useCanvas(({ select, schema }) => ({
+    select,
+    noOfSelectedBlocks: schema.filter(({ selected }) => selected).length,
+  }));
 
   const isSelected = field.selected ?? false;
 
@@ -61,7 +64,8 @@ export function FieldWrapper({ children }: PropsWithChildren) {
     opacity: isDragging ? 0.4 : 1,
   };
 
-  const Component = isDragging ? Fragment : QuickActions;
+  const Component =
+    isDragging || noOfSelectedBlocks > 1 ? Fragment : QuickActions;
 
   return (
     <Component>

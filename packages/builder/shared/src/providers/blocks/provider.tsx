@@ -6,7 +6,11 @@ import {
   useRef,
 } from "react";
 import { useStore } from "zustand";
-import { type BlocksStore, createBlocksStore } from "./store";
+import {
+  type BlocksStoreProps,
+  type BlocksStore,
+  createBlocksStore,
+} from "./store";
 
 const BlocksContext = createContext<ReturnType<
   typeof createBlocksStore
@@ -15,7 +19,7 @@ const BlocksContext = createContext<ReturnType<
 export function BlocksProvider({
   children,
   ...props
-}: PropsWithChildren<BlocksStore>) {
+}: PropsWithChildren<BlocksStoreProps>) {
   const store = useRef(createBlocksStore(props)).current;
   return (
     <BlocksContext.Provider value={store}>{children}</BlocksContext.Provider>

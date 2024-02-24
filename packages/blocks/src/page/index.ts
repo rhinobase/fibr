@@ -1,5 +1,4 @@
-import { Block } from "@fibr/shared";
-import type { ReactNode } from "react";
+import { Block, Config } from "@fibr/shared";
 import { BsTextareaT } from "react-icons/bs";
 import { LuTextCursorInput } from "react-icons/lu";
 import { MdLink, MdOutlineKey, MdOutlineMailOutline } from "react-icons/md";
@@ -19,10 +18,7 @@ import {
   TextareaSettings,
 } from "./settings";
 
-export const pageConfig: Record<
-  string,
-  { builder: () => ReactNode; settings: () => ReactNode }
-> = {
+export const pageConfig: Record<string, Config> = {
   page: {
     builder: Page,
     settings: CanvasSettings,

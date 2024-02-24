@@ -1,5 +1,4 @@
-import type { Block } from "@fibr/shared";
-import type { ReactNode } from "react";
+import type { Block, Config } from "@fibr/shared";
 import { BsTextareaT } from "react-icons/bs";
 import { BsBraces } from "react-icons/bs";
 import { LuTextCursorInput } from "react-icons/lu";
@@ -22,10 +21,7 @@ import {
   TextareaSettings,
 } from "./settings";
 
-export const formConfig: Record<
-  string,
-  { builder: () => ReactNode; settings: () => ReactNode }
-> = {
+export const formConfig: Record<string, Config> = {
   canvas: {
     builder: Canvas,
     settings: CanvasSettings,

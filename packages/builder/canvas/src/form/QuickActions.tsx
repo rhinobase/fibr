@@ -1,5 +1,6 @@
 import { type BlockType, useCanvas } from "@fibr/providers";
 import { useThread } from "@fibr/react";
+import { DEFAULT_GROUP, groupByParentNode } from "@fibr/shared";
 import { eventHandler } from "@rafty/shared";
 import {
   Button,
@@ -124,10 +125,10 @@ enum Direction {
 }
 
 function QuickActionButtons() {
-  const { id } = useThread<BlockType>();
-  const { blocks, move, remove, duplicate, select, update } = useCanvas(
+  const { id, parentNode = DEFAULT_GROUP } = useThread<BlockType>();
+  const { schema, move, remove, duplicate, select, update } = useCanvas(
     ({ schema, move, remove, duplicate, select, update }) => ({
-      blocks: schema,
+      schema,
       move,
       remove,
       duplicate,
@@ -136,9 +137,11 @@ function QuickActionButtons() {
     }),
   );
 
+  const groups = groupByParentNode(schema);
+  const blocks = groups[parentNode] ?? [];
   const index = blocks.findIndex((block) => block.id === id);
 
-  if (index === -1) return;
+  if (index == null || index === -1) return;
 
   const onMove = (direction: Direction) => {
     select({ selectedBlockIds: id });

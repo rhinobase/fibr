@@ -26,6 +26,7 @@
   "sideEffects": false,
   "dependencies": {
     "@fibr/react": "^0.5.2",
+    "@fibr/shared": "^1.0.0",
     "@heroicons/react": "^2.1.1",
     "@hookform/error-message": "^2.0.1",
     "@rafty/icons": "^0.1.0",

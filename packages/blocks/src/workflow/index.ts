@@ -1,5 +1,4 @@
-import type { Block } from "@fibr/shared";
-import type { ReactNode } from "react";
+import type { Block, Config } from "@fibr/shared";
 import {
   LuGitCommit,
   LuGitFork,
@@ -11,10 +10,7 @@ import { Node, Position } from "reactflow";
 import { ConditionNode, EndNode, StartNode, TransitNode } from "./components";
 import { NodeSettings } from "./settings";
 
-export const workflowConfig: Record<
-  string,
-  { builder: () => ReactNode; settings: () => ReactNode }
-> = {
+export const workflowConfig: Record<string, Config> = {
   start: {
     builder: StartNode,
     settings: NodeSettings,

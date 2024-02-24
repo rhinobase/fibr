@@ -12,7 +12,7 @@ import {
   classNames,
 } from "@rafty/ui";
 import { cva } from "class-variance-authority";
-import { type CSSProperties, HTMLAttributes } from "react";
+import { type CSSProperties, HTMLAttributes, Fragment } from "react";
 import {
   HiChevronRight,
   HiOutlineEye,
@@ -20,14 +20,19 @@ import {
   HiX,
 } from "react-icons/hi";
 import { MdDragIndicator } from "react-icons/md";
+import { useBlocks } from "../../providers";
 
 const cardClasses = cva(
-  "dark:bg-secondary-950 border bg-white p-2 transition-none gap-1 cursor-pointer",
+  "dark:bg-secondary-950 bg-white hover:bg-secondary-100/50 p-0.5 gap-1 cursor-pointer",
   {
     variants: {
       selected: {
-        true: "border-primary-500 dark:border-primary-400",
-        false: "border-secondary-300 dark:border-secondary-700",
+        true: "bg-secondary-100",
+        // false: "border-secondary-300 dark:border-secondary-700",
+      },
+      valid: {
+        true: "",
+        false: "bg-red-100/70 text-red-600",
       },
     },
   },
@@ -37,6 +42,7 @@ export type OverviewCard = {
   groups?: Record<string, BlockType[] | undefined>;
   onToggle?: (value: string) => void;
   enableDragging?: boolean;
+  indent?: number;
 } & BlockType;
 
 export function OverviewCard({
@@ -47,7 +53,16 @@ export function OverviewCard({
   onToggle,
   enableDragging = false,
   selected: isSelected = false,
+  indent = 0,
 }: OverviewCard) {
+  const { validateSchema, Icon = Fragment } = useBlocks(
+    ({ validateSchema, blocks }) => ({
+      validateSchema,
+      Icon: Object.values(blocks)
+        .flat()
+        .find((item) => item.type === type)?.icon,
+    }),
+  );
   const { select, remove, update } = useCanvas(
     ({ select, remove, update }) => ({
       select,
@@ -57,13 +72,19 @@ export function OverviewCard({
   );
 
   const hasChildren = groups ? id in groups : false;
+  const isValidType = validateSchema({ type });
 
   const { setNodeRef, transform, transition, attributes, listeners } =
-    useSortable({ id, data: { type } });
+    useSortable({ id, data: { type, indent } });
+
+  const IndentationStyle: CSSProperties = {
+    paddingLeft: indent * 12,
+  };
 
   const nodeStyle: CSSProperties = {
     transform: CSS.Transform.toString(transform),
     transition,
+    ...IndentationStyle,
   };
 
   const draggableProps = enableDragging
@@ -81,12 +102,14 @@ export function OverviewCard({
 
   const handleToggleCollapse = eventHandler(() => onToggle?.(id));
 
-  const handleNodeHidden = eventHandler(() =>
+  const handleNodeHidden = eventHandler(() => {
     update({
       blockId: id,
-      updatedValues: { hidden: !hidden, selected: hidden },
-    }),
-  );
+      updatedValues: { hidden: !hidden },
+    });
+
+    if (hidden) select({ selectedBlockIds: id });
+  });
 
   // TODO: this is not working
   // if (isDragging) return <div className="bg-primary-500 h-1 w-full" />;
@@ -105,29 +128,21 @@ export function OverviewCard({
       <span
         className={classNames(
           hidden && "opacity-40",
-          "text-2xs flex gap-1 truncate font-medium",
+          "text-2xs flex items-center gap-1 truncate font-medium",
         )}
       >
+        <Icon className="size-4 opacity-70" />
         {id}
         <Text isMuted className="italic">
           ({type})
         </Text>
       </span>
       <div className="flex-1" />
-      <span
-        className={classNames(
-          buttonClasses({
-            size: "icon",
-            variant: "ghost",
-          }),
-          hidden && "text-secondary-400",
-          "cursor-pointer p-0.5",
-        )}
+      <HideButton
+        hidden={hidden}
         onClick={handleNodeHidden}
         onKeyDown={handleNodeHidden}
-      >
-        {hidden ? <HiOutlineEye /> : <HiOutlineEyeOff />}
-      </span>
+      />
       <DeleteButton
         onClick={handleNodeDelete}
         onKeyDown={handleNodeDelete}
@@ -140,7 +155,7 @@ export function OverviewCard({
     return (
       <AccordionItem value={id}>
         <AccordionTrigger
-          className={cardClasses({ selected: isSelected })}
+          className={cardClasses({ selected: isSelected, valid: isValidType })}
           showIcon={false}
           {...draggableProps}
           onClick={handleNodeSelect}
@@ -148,7 +163,7 @@ export function OverviewCard({
         >
           <CardRender />
         </AccordionTrigger>
-        <AccordionContent className="h-full overflow-visible px-0 pl-4">
+        <AccordionContent className="h-full px-0">
           {groups?.[id]?.map((block) => (
             <OverviewCard
               key={block.id}
@@ -156,6 +171,7 @@ export function OverviewCard({
               groups={groups}
               onToggle={onToggle}
               enableDragging={enableDragging}
+              indent={indent + 1}
             />
           ))}
         </AccordionContent>
@@ -167,7 +183,7 @@ export function OverviewCard({
       {...draggableProps}
       className={classNames(
         accordionTriggerClasses(),
-        cardClasses({ selected: isSelected }),
+        cardClasses({ selected: isSelected, valid: isValidType }),
       )}
       onClick={handleNodeSelect}
       onKeyDown={handleNodeSelect}
@@ -185,14 +201,11 @@ function CollapseButton({ className, ...props }: CollapseButton) {
       {...props}
       className={classNames(
         buttonClasses({ size: "icon", variant: "ghost" }),
-        "rounded px-0.5 py-1",
+        "rounded p-0.5",
         className,
       )}
     >
-      <HiChevronRight
-        size={18}
-        className="transition-transform group-data-[state=open]:rotate-90"
-      />
+      <HiChevronRight className="transition-transform group-data-[state=open]:rotate-90" />
     </span>
   );
 }
@@ -211,7 +224,34 @@ function DragHandler({ className, isDragging, ...props }: DragHandler) {
         isDragging ? "cursor-grabbing" : "cursor-grab",
       )}
     >
-      <MdDragIndicator className="dark:text-secondary-300 text-black" />
+      <MdDragIndicator
+        size={13}
+        className="dark:text-secondary-300 text-black"
+      />
+    </span>
+  );
+}
+
+type HideButton = Omit<HTMLAttributes<HTMLSpanElement>, "hidden"> & {
+  hidden: boolean;
+};
+
+function HideButton({ className, hidden, ...props }: HideButton) {
+  const Icon = hidden ? HiOutlineEye : HiOutlineEyeOff;
+
+  return (
+    <span
+      {...props}
+      className={classNames(
+        buttonClasses({
+          size: "icon",
+          variant: "ghost",
+        }),
+        hidden && "opacity-40",
+        "cursor-pointer p-0.5",
+      )}
+    >
+      <Icon size={14} />
     </span>
   );
 }
@@ -228,7 +268,7 @@ function DeleteButton({ className, ...props }: DeleteButton) {
         className,
       )}
     >
-      <HiX size={15} />
+      <HiX size={14} />
     </span>
   );
 }
