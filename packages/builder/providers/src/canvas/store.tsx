@@ -32,7 +32,7 @@ export type CanvasStore = {
   _unique: Record<string, number>;
   uniqueId: (type: string) => string;
   // ---
-  get: (props: { blockId: string }) => BlockType | undefined;
+  get: (props: { blockIds: string | string[] }) => BlockType[];
   add: <T = undefined>(props: AddBlockProps<T>) => void;
   update: <T = undefined>(props: UpdateBlockProps<T>) => void;
   set: <T = BlockType>(
@@ -78,7 +78,18 @@ export const createCanvasStore = ({
 
         return `${type}${typeCount}`;
       },
-      get: ({ blockId }) => get().schema.find((block) => block.id === blockId),
+      get: ({ blockIds }) => {
+        const ids = Array.isArray(blockIds) ? blockIds : [blockIds];
+        const blocks: BlockType[] = [];
+
+        const schema = get().schema;
+
+        for (const block of schema) {
+          if (ids.includes(block.id)) blocks.push(block);
+        }
+
+        return blocks;
+      },
       add: ({ blockData, blockId, shouldEmit = true, insertionIndex = -1 }) => {
         const generatedBlockId = blockId ?? get().uniqueId(blockData.type);
 
@@ -198,18 +209,20 @@ export const createCanvasStore = ({
             cur: blocks as BlockType[],
           });
       },
-      remove: ({ blockId, shouldEmit = true }) => {
-        let index = -1;
-        let blockContent: BlockType | undefined;
+      remove: ({ blockIds, shouldEmit = true }) => {
+        const changes: { index: number; block: BlockType }[] = [];
 
-        const blocks = get().schema.reduce<BlockType[]>((prev, block, i) => {
-          if (block.id === blockId) {
-            index = i;
-            blockContent = block;
-          } else prev.push(block);
+        const ids = Array.isArray(blockIds) ? blockIds : [blockIds];
 
-          return prev;
-        }, []);
+        const blocks = get().schema.reduce<BlockType[]>(
+          (prev, block, index) => {
+            if (ids.includes(block.id)) changes.push({ index, block });
+            else prev.push(block);
+
+            return prev;
+          },
+          [],
+        );
 
         set((state) => {
           state.schema = blocks;
@@ -218,9 +231,8 @@ export const createCanvasStore = ({
         // Firing the event
         if (shouldEmit)
           emitter(EditorEvent.BLOCK_DELETION, {
-            blockId,
-            block: blockContent as BlockType,
-            index,
+            blockIds,
+            changes,
           });
       },
       move: (params) => {
@@ -281,13 +293,19 @@ export const createCanvasStore = ({
         if (shouldEmit) emitter(EditorEvent.BLOCK_SELECTION, params);
       },
       duplicate: (params) => {
-        const { originalBlockId, shouldEmit = true } = params;
-        const blockData = get().get({ blockId: originalBlockId });
+        const { originalBlockIds, shouldEmit = true } = params;
+
+        const ids = Array.isArray(originalBlockIds)
+          ? originalBlockIds
+          : [originalBlockIds];
+        const blocks = get().get({ blockIds: ids });
+
+        const blockData = blocks[0];
 
         if (!blockData) {
           return toast.custom((t) => (
             <Toast
-              title={`Unable to find the block with Id "${originalBlockId}"`}
+              title={`Unable to find the block with Id "${originalBlockIds}"`}
               severity="error"
               visible={t.visible}
             />

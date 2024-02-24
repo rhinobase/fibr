@@ -98,7 +98,7 @@ export function OverviewCard({
     () => !hidden && select({ selectedBlockIds: id }),
   );
 
-  const handleNodeDelete = eventHandler(() => remove({ blockId: id }));
+  const handleNodeDelete = eventHandler(() => remove({ blockIds: id }));
 
   const handleToggleCollapse = eventHandler(() => onToggle?.(id));
 

@@ -6,10 +6,14 @@ import { ReactNode, useMemo } from "react";
 import { useBlocks } from "../providers";
 
 export function Settings() {
-  const { selectedBlocks, updateBlock } = useCanvas(({ schema, update }) => ({
-    selectedBlocks: schema.filter((block) => block.selected),
-    updateBlock: update,
-  }));
+  const { selectedBlocks, updateBlock, remove, duplicate } = useCanvas(
+    ({ schema, update, remove, duplicate }) => ({
+      selectedBlocks: schema.filter((block) => block.selected),
+      updateBlock: update,
+      remove,
+      duplicate,
+    }),
+  );
 
   const config = useBlocks((state) => state.config);
 
@@ -26,6 +30,9 @@ export function Settings() {
   );
 
   const selectedBlocksLength = selectedBlocks.length;
+  const isSettingsPanelActive = selectedBlocksLength > 0;
+
+  const ids = selectedBlocks.map(({ id }) => id);
 
   let component: JSX.Element;
 
@@ -62,15 +69,24 @@ export function Settings() {
           ))}
         </div>
         <div className="flex justify-between">
-          <Button colorScheme="error" size="sm">
+          <Button
+            onClick={() => remove({ blockIds: ids })}
+            colorScheme="error"
+            size="sm"
+          >
             Delete
           </Button>
-          <Button size="sm">Duplicate</Button>
+          <Button
+            onClick={() => duplicate({ originalBlockIds: ids })}
+            size="sm"
+          >
+            Duplicate
+          </Button>
         </div>
       </>
     );
 
-  if (selectedBlocksLength > 0)
+  if (isSettingsPanelActive)
     return (
       <BuilderSettings className="flex flex-col gap-3">
         {component}

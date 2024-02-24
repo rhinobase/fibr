@@ -182,12 +182,12 @@ function QuickActionButtons() {
       <ActionButton
         name="Duplicate file"
         icon={MdOutlineAddToPhotos}
-        action={() => duplicate({ originalBlockId: id })}
+        action={() => duplicate({ originalBlockIds: id })}
       />
       <ActionButton
         name="Delete visual field"
         icon={MdOutlineDelete}
-        action={() => remove({ blockId: id })}
+        action={() => remove({ blockIds: id })}
         className="hover:bg-red-200/40 hover:text-red-500 dark:hover:bg-red-300/10 dark:hover:text-red-300"
       />
     </div>

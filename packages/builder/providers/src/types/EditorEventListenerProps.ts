@@ -32,8 +32,7 @@ export type EditorEventListenerProps = {
   };
   [EditorEvent.BLOCK_ID_UPDATION]: UpdateIdBlockProps;
   [EditorEvent.BLOCK_DELETION]: RemoveBlockProps & {
-    block: BlockType;
-    index: number;
+    changes: { index: number; block: BlockType }[];
   };
   [EditorEvent.BLOCK_REPOSITION]: MoveBlockProps;
   [EditorEvent.BLOCK_SELECTION]: SelectBlockProps;

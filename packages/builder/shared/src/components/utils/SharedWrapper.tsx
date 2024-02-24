@@ -1,7 +1,7 @@
 import {
   CanvasProvider,
   CanvasStoreProps,
-  ShortcutsProvider,
+  WorkspaceShortcutsWrapper,
 } from "@fibr/providers";
 import { type PropsWithChildren } from "react";
 import { HotkeysProvider } from "react-hotkeys-hook";
@@ -20,7 +20,7 @@ export function SharedWrapper({
     <BlocksProvider blocks={blocks} config={config}>
       <CanvasProvider {...builderProps}>
         <HotkeysProvider>
-          <ShortcutsProvider>{children}</ShortcutsProvider>
+          <WorkspaceShortcutsWrapper>{children}</WorkspaceShortcutsWrapper>
           <ShortcutsDialog />
         </HotkeysProvider>
       </CanvasProvider>
