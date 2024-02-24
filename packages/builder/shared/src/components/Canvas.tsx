@@ -5,6 +5,7 @@ import { useBlocks } from "../providers";
 import { useCanvas } from "@fibr/providers";
 import toast from "react-hot-toast";
 import { Toast } from "@rafty/ui";
+import { DefaultComponent } from "./DefaultComponent";
 
 export const Canvas = forwardRef<HTMLDivElement, BuilderCanvas>(
   (props, forwardedRef) => {
@@ -36,7 +37,7 @@ export const Canvas = forwardRef<HTMLDivElement, BuilderCanvas>(
             prev[name] = builder;
             return prev;
           },
-          {},
+          {default: DefaultComponent},
         ),
       [config],
     );
