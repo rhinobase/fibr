@@ -12,7 +12,7 @@ import {
   classNames,
 } from "@rafty/ui";
 import { cva } from "class-variance-authority";
-import { type CSSProperties, HTMLAttributes, Fragment } from "react";
+import { type CSSProperties, HTMLAttributes } from "react";
 import {
   HiChevronRight,
   HiOutlineEye,
@@ -23,18 +23,36 @@ import { MdDragIndicator } from "react-icons/md";
 import { useBlocks } from "../../providers";
 
 const cardClasses = cva(
-  "dark:bg-secondary-950 bg-white hover:bg-secondary-100/50 p-0.5 gap-1 cursor-pointer",
+  "transition-all ease-in-out p-0.5 gap-1 cursor-pointer",
   {
     variants: {
       selected: {
-        true: "bg-secondary-100",
-        // false: "border-secondary-300 dark:border-secondary-700",
+        true: "",
+        false: "",
       },
       valid: {
         true: "",
-        false: "bg-red-100/70 text-red-600",
+        false: "",
       },
     },
+    compoundVariants: [
+      {
+        selected: true,
+        valid: true,
+        className: "bg-secondary-100 dark:bg-secondary-700",
+      },
+      {
+        selected: false,
+        valid: true,
+        className:
+          "bg-white dark:bg-secondary-950 hover:bg-secondary-100/50 dark:hover:bg-secondary-800",
+      },
+      {
+        valid: false,
+        className:
+          "bg-red-100/70 text-red-600 dark:bg-red-700/20 dark:text-red-300",
+      },
+    ],
   },
 );
 
@@ -55,14 +73,12 @@ export function OverviewCard({
   selected: isSelected = false,
   indent = 0,
 }: OverviewCard) {
-  const { validateSchema, Icon = Fragment } = useBlocks(
-    ({ validateSchema, blocks }) => ({
-      validateSchema,
-      Icon: Object.values(blocks)
-        .flat()
-        .find((item) => item.type === type)?.icon,
-    }),
-  );
+  const { validateSchema, Icon } = useBlocks(({ validateSchema, blocks }) => ({
+    validateSchema,
+    Icon: Object.values(blocks)
+      .flat()
+      .find((item) => item.type === type)?.icon,
+  }));
   const { select, remove, update } = useCanvas(
     ({ select, remove, update }) => ({
       select,
@@ -111,9 +127,6 @@ export function OverviewCard({
     if (hidden) select({ selectedBlockIds: id });
   });
 
-  // TODO: this is not working
-  // if (isDragging) return <div className="bg-primary-500 h-1 w-full" />;
-
   const CardRender = () => (
     <>
       <span className={classNames(hidden && "opacity-40", "flex items-center")}>
@@ -131,7 +144,7 @@ export function OverviewCard({
           "text-2xs flex items-center gap-1 truncate font-medium",
         )}
       >
-        <Icon className="size-4 opacity-70" />
+        {Icon && <Icon className="size-4 opacity-70" />}
         {id}
         <Text isMuted className="italic">
           ({type})
