@@ -5,10 +5,12 @@ import {
 } from "@fibr/providers";
 import { type PropsWithChildren } from "react";
 import { HotkeysProvider } from "react-hotkeys-hook";
-import { BlocksProvider, BlocksStore } from "../../providers";
+import { BlocksProvider, type BlocksStoreProps } from "../../providers";
 import { ShortcutsDialog } from "./ShortcutsDialog";
 
-export type SharedWrapper = PropsWithChildren<BlocksStore & CanvasStoreProps>;
+export type SharedWrapper = PropsWithChildren<
+  BlocksStoreProps & CanvasStoreProps
+>;
 
 export function SharedWrapper({
   children,
