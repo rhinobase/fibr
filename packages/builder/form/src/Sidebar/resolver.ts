@@ -1,10 +1,21 @@
 import type { BlockType } from "@fibr/providers";
-import type { ThreadType } from "@fibr/react";
 import { DEFAULT_GROUP, groupByParentNode } from "@fibr/shared";
 
-export function reactHookFormResolver(
-  blocks: BlockType<{ title?: string; defaultValue?: string }>[],
-) {
+export type FieldBlockType = BlockType<{
+  // Canvas
+  title?: string;
+  // Field
+  label?: string;
+  required?: boolean;
+  hidden?: boolean;
+  disabled?: boolean;
+  placeholder?: string;
+  tooltip?: string;
+  description?: string;
+  defaultValue?: string;
+}>;
+
+export function reactHookFormResolver(blocks: FieldBlockType[]) {
   const group = groupByParentNode(blocks);
   const form = group[DEFAULT_GROUP]?.[0];
 
@@ -75,17 +86,24 @@ export function ${capitalizedTitle}Form() {
 const formatTitle = (s: string) =>
   (s[0].toUpperCase() + s.slice(1)).replace(" ", "");
 
-const generateZodSchema = (name: string, field?: ThreadType) => {
+const generateZodSchema = (
+  name: string,
+  field?: Omit<FieldBlockType, "id">,
+) => {
   const validationType = field?.type === "number" ? "number" : "string";
 
   return `${name}: z.${validationType}(),`;
 };
 
-const generateFieldComponent = (name: string, field?: ThreadType) => {
+const generateFieldComponent = (
+  name: string,
+  field?: Omit<FieldBlockType, "id">,
+) => {
   if (!field) return "";
 
+  const { type, data = {} } = field;
+
   const {
-    type,
     label,
     required,
     hidden,
@@ -93,7 +111,7 @@ const generateFieldComponent = (name: string, field?: ThreadType) => {
     placeholder,
     tooltip,
     description,
-  } = field;
+  } = data;
 
   const props = [];
 
