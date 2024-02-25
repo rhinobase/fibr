@@ -36,9 +36,7 @@ export function ShortcutsDialog() {
     open: layout.shortcutsDialog,
     toggle: (value: boolean) =>
       setLayout({
-        values: {
-          shortcutsDialog: value,
-        },
+        shortcutsDialog: value,
       }),
   }));
 

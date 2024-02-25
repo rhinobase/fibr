@@ -31,13 +31,13 @@ export function Sidebar({ children }: PropsWithChildren) {
       setLayout,
       tabs: { get, active },
     }) => {
-      const currentTab = active != null ? get({ tabId: active }) : undefined;
+      const currentTab = active != null ? get(active) : undefined;
 
       return {
         isProduction: current === Env.PRODUCTION,
         isDisabled: !sidebar || currentTab?.isResizeable === false,
         defaultSize: currentTab?.defaultSize ?? DEFAULT_SIZE,
-        toggle: (value: boolean) => setLayout({ values: { sidebar: value } }),
+        toggle: (value: boolean) => setLayout({ sidebar: value }),
       };
     },
   );
@@ -120,10 +120,10 @@ function SidebarTray({ children, expandPanel, collapsePanel }: SidebarTray) {
                     event.stopPropagation();
 
                     if (active === name && isExpanded) {
-                      setActive({ tabId: null });
+                      setActive(null);
                       collapsePanel?.();
                     } else {
-                      setActive({ tabId: name });
+                      setActive(name);
                       if (!isExpanded) expandPanel?.();
                     }
                   }}

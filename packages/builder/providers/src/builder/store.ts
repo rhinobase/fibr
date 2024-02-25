@@ -2,14 +2,6 @@ import _ from "lodash";
 import { StoreApi, UseBoundStore, create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { Env } from "../utils";
-import {
-  ActiveTabProps,
-  AddTabProps,
-  EnvChangeProps,
-  GetTabProps,
-  Layout,
-  LayoutUpdateProps,
-} from "./types";
 
 export type TabPayload = {
   name: string;
@@ -17,6 +9,12 @@ export type TabPayload = {
   icon: React.ReactNode;
   isResizeable?: boolean;
   defaultSize?: number;
+};
+
+export type Layout = {
+  sidebar: boolean;
+  shortcutsDialog: boolean;
+  commandPalette: boolean;
 };
 
 export type CreateBuilderStoreProps = {
@@ -27,16 +25,16 @@ export type CreateBuilderStoreProps = {
 export type BuilderStore = {
   tabs: {
     all: Record<string, Omit<TabPayload, "name">>;
-    add: (props: AddTabProps) => void;
-    get: (props: GetTabProps) => Omit<TabPayload, "name"> | undefined;
+    add: (payload: TabPayload) => void;
+    get: (tabId: string) => Omit<TabPayload, "name"> | undefined;
     active: string | null;
-    setActive: (props: ActiveTabProps) => void;
+    setActive: (tabId: string | null) => void;
   };
   layout: Layout;
-  setLayout: (props: LayoutUpdateProps) => void;
+  setLayout: (values: Partial<Layout>) => void;
   env: {
     current: Env;
-    change: (props: EnvChangeProps) => void;
+    change: (env: Env) => void;
   };
 };
 
@@ -49,7 +47,7 @@ export const createBuilderStore = ({
       tabs: {
         all: tabs,
         active: null,
-        add: ({ payload }) =>
+        add: (payload) =>
           set((state) => {
             const { name, ...data } = payload;
 
@@ -59,15 +57,15 @@ export const createBuilderStore = ({
 
             if (noOfTabs === 1) state.tabs.active = name;
           }),
-        get: ({ tabId }) => get().tabs.all[tabId],
-        setActive: ({ tabId }) =>
+        get: (tabId) => get().tabs.all[tabId],
+        setActive: (tabId) =>
           set((state) => {
             state.tabs.active = tabId;
           }),
       },
       env: {
         current: env,
-        change: ({ env }) =>
+        change: (env) =>
           set((state) => {
             state.env.current = env;
           }),
@@ -77,7 +75,7 @@ export const createBuilderStore = ({
         shortcutsDialog: false,
         commandPalette: false,
       },
-      setLayout: ({ values }) =>
+      setLayout: (values) =>
         set((state) => {
           state.layout = _.merge(state.layout, values);
         }),

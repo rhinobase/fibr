@@ -19,9 +19,7 @@ export function WorkspaceShortcutsWrapper({ children }: PropsWithChildren) {
     "mod+k",
     () =>
       setLayout({
-        values: {
-          commandPalette: !layout.commandPalette,
-        },
+        commandPalette: !layout.commandPalette,
       }),
     {
       description: "Command palette",
@@ -32,11 +30,9 @@ export function WorkspaceShortcutsWrapper({ children }: PropsWithChildren) {
   useHotkeys(
     "mod+shift+a",
     () => {
-      setActive({ tabId: "palette" });
+      setActive("palette");
       setLayout({
-        values: {
-          sidebar: true,
-        },
+        sidebar: true,
       });
     },
     {
@@ -48,11 +44,9 @@ export function WorkspaceShortcutsWrapper({ children }: PropsWithChildren) {
   useHotkeys(
     "mod+shift+d",
     () => {
-      setActive({ tabId: "overview" });
+      setActive("overview");
       setLayout({
-        values: {
-          sidebar: true,
-        },
+        sidebar: true,
       });
     },
     {
@@ -64,11 +58,9 @@ export function WorkspaceShortcutsWrapper({ children }: PropsWithChildren) {
   useHotkeys(
     "mod+u",
     () => {
-      setActive({ tabId: "inspector" });
+      setActive("inspector");
       setLayout({
-        values: {
-          sidebar: true,
-        },
+        sidebar: true,
       });
     },
     {
@@ -80,9 +72,7 @@ export function WorkspaceShortcutsWrapper({ children }: PropsWithChildren) {
   useHotkeys(
     "mod+alt+enter",
     () =>
-      setEnv({
-        env: currentEnv === Env.DEVELOPMENT ? Env.PRODUCTION : Env.DEVELOPMENT,
-      }),
+      setEnv(currentEnv === Env.DEVELOPMENT ? Env.PRODUCTION : Env.DEVELOPMENT),
     {
       description: "Toggle preview mode",
     },
@@ -92,9 +82,7 @@ export function WorkspaceShortcutsWrapper({ children }: PropsWithChildren) {
     "shift+?",
     () =>
       setLayout({
-        values: {
-          shortcutsDialog: !layout.shortcutsDialog,
-        },
+        shortcutsDialog: !layout.shortcutsDialog,
       }),
     {
       description: "Shortcut dialog",
@@ -111,9 +99,7 @@ export function WorkspaceShortcutsWrapper({ children }: PropsWithChildren) {
     "mod+b",
     () =>
       setLayout({
-        values: {
-          sidebar: !layout.sidebar,
-        },
+        sidebar: !layout.sidebar,
       }),
     { description: "Toggle sidebar", preventDefault: true },
     [layout.sidebar],

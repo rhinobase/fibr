@@ -97,7 +97,7 @@ export function ShortcutsWrapper({ children }: PropsWithChildren) {
         selectedBlockIds: null,
       }),
     {
-      description: "Select All",
+      description: "Deselect All",
       preventDefault: true,
     },
   );
