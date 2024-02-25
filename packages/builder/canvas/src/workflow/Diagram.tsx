@@ -59,6 +59,7 @@ export function Diagram() {
     (changes) =>
       set({
         func: (nds) => applyNodeChanges(changes, nds as Node[]) as BlockType[],
+        shouldEmit: false,
       }),
     [set],
   );
@@ -68,6 +69,7 @@ export function Diagram() {
       set({
         func: (edgs) =>
           applyEdgeChanges(changes, edgs as Edge[]) as BlockType[],
+        shouldEmit: false,
       }),
     [set],
   );
@@ -77,6 +79,7 @@ export function Diagram() {
       set({
         func: (eds) =>
           addEdge({ ...params, type: "edge" }, eds as Edge[]) as BlockType[],
+        shouldEmit: false,
       }),
     [set],
   );
@@ -133,13 +136,18 @@ export function Diagram() {
         id: closeNodeIsSource
           ? `${closestNode.node.id}-${node.id}`
           : `${node.id}-${closestNode.node.id}`,
-        type: "default",
+        type: "edge",
         source: closeNodeIsSource ? closestNode.node.id : node.id,
         target: closeNodeIsSource ? node.id : closestNode.node.id,
         className: "",
       };
     },
     [store],
+  );
+
+  const onNodeDragStart: NodeDragHandler = useCallback(
+    () => set({ func: (value) => value }),
+    [set],
   );
 
   const onNodeDrag: NodeDragHandler = useCallback(
@@ -164,6 +172,7 @@ export function Diagram() {
           }
           return nextEdges;
         },
+        shouldEmit: false,
       });
     },
     [getClosestEdge, set],
@@ -203,6 +212,7 @@ export function Diagram() {
         nodesConnectable
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
+        onNodeDragStart={onNodeDragStart}
         onNodeDrag={onNodeDrag}
         onNodeDragStop={onNodeDragStop}
         onConnect={onConnect}

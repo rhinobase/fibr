@@ -2,7 +2,6 @@
 import { type BlockType, useCanvas } from "@fibr/providers";
 import { Thread } from "@fibr/react";
 import { useBlocks } from "@fibr/shared";
-import { useBoolean } from "@rafty/ui";
 import { useTheme } from "next-themes";
 import { useCallback, useMemo } from "react";
 import {
@@ -16,6 +15,7 @@ import {
   ReactFlow,
   SelectionMode,
   applyNodeChanges,
+  NodeDragHandler,
 } from "reactflow";
 import "reactflow/dist/style.css";
 
@@ -29,8 +29,6 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
 
 export function Diagram() {
   const { resolvedTheme } = useTheme();
-
-  const [shouldEmit, toggle] = useBoolean(true);
   const config = useBlocks((state) => state.config);
 
   const { nodes, set } = useCanvas(({ schema, set }) => ({
@@ -42,9 +40,9 @@ export function Diagram() {
     (changes) =>
       set({
         func: (nds) => applyNodeChanges(changes, nds as Node[]) as BlockType[],
-        shouldEmit,
+        shouldEmit: false,
       }),
-    [set, shouldEmit],
+    [set],
   );
 
   const nodeTypes = useMemo(
@@ -58,6 +56,11 @@ export function Diagram() {
 
   const backgroundLineColor = resolvedTheme === "light" ? "#d4d4d8" : "#52525b";
 
+  const onNodeDragHandler: NodeDragHandler = useCallback(
+    () => set({ func: (value) => value }),
+    [set],
+  );
+
   return (
     <div className="flex-1">
       <ReactFlow
@@ -66,8 +69,8 @@ export function Diagram() {
         snapGrid={[20, 20]}
         fitView
         onNodesChange={onNodesChange}
-        onNodeDragStart={() => toggle(false)}
-        onNodeDragStop={() => toggle(true)}
+        onNodeDragStart={onNodeDragHandler}
+        onNodeDragStop={onNodeDragHandler}
         fitViewOptions={fitViewOptions}
         defaultEdgeOptions={defaultEdgeOptions}
         nodeTypes={nodeTypes}
