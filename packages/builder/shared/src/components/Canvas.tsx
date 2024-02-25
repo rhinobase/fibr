@@ -2,10 +2,11 @@ import { Canvas as BuilderCanvas } from "@fibr/builder";
 import { FibrProvider } from "@fibr/react";
 import { type ReactNode, forwardRef, useMemo, useEffect } from "react";
 import { useBlocks } from "../providers";
-import { useCanvas } from "@fibr/providers";
+import { ShortcutsWrapper, useCanvas } from "@fibr/providers";
 import toast from "react-hot-toast";
 import { Toast } from "@rafty/ui";
 import { DefaultComponent } from "./DefaultComponent";
+import { HotkeysProvider } from "react-hotkeys-hook";
 
 export const Canvas = forwardRef<HTMLDivElement, BuilderCanvas>(
   (props, forwardedRef) => {
@@ -37,15 +38,17 @@ export const Canvas = forwardRef<HTMLDivElement, BuilderCanvas>(
             prev[name] = builder;
             return prev;
           },
-          {default: DefaultComponent},
+          { default: DefaultComponent },
         ),
       [config],
     );
 
     return (
-      <FibrProvider plugins={builders}>
-        <BuilderCanvas ref={forwardedRef} {...props} />
-      </FibrProvider>
+      <ShortcutsWrapper>
+        <FibrProvider plugins={builders}>
+          <BuilderCanvas ref={forwardedRef} {...props} />
+        </FibrProvider>
+      </ShortcutsWrapper>
     );
   },
 );

@@ -14,7 +14,6 @@ import {
   DuplicateBlockProps,
   MoveBlockProps,
   RemoveBlockProps,
-  SelectBlockProps,
   ShouldEmitEvent,
   UpdateBlockProps,
   UpdateIdBlockProps,
@@ -43,7 +42,7 @@ export type CanvasStore = {
   updateId: (props: UpdateIdBlockProps) => void;
   remove: (props: RemoveBlockProps) => void;
   move: (props: MoveBlockProps) => void;
-  select: (props: SelectBlockProps) => void;
+  select: (props: { selectedBlockIds: string | string[] | null }) => void;
   duplicate: (props: DuplicateBlockProps) => void;
 };
 
@@ -98,7 +97,8 @@ export const createCanvasStore = ({
           id: generatedBlockId,
         } as Draft<BlockType>;
 
-        const schema = [...get().schema];
+        const prevSchema = get().schema;
+        const schema = [...prevSchema];
 
         if (insertionIndex !== -1) schema.splice(insertionIndex, 0, payload);
         else schema.push(payload);
@@ -109,13 +109,12 @@ export const createCanvasStore = ({
 
         get().select({
           selectedBlockIds: generatedBlockId,
-          shouldEmit: false,
         });
 
         if (shouldEmit)
           emitter(EditorEvent.BLOCK_ADDITION, {
-            blockData: blockData as BlockType,
-            blockId: generatedBlockId,
+            prev: prevSchema,
+            cur: schema,
           });
       },
       update: ({ blockId, updatedValues, shouldEmit = true }) => {
@@ -150,9 +149,8 @@ export const createCanvasStore = ({
 
         if (shouldEmit)
           emitter(EditorEvent.BLOCK_UPDATION, {
-            id: blockId,
-            updatedValues: updatedValues as Partial<BlockType>,
-            oldValues,
+            prev: blocks,
+            cur: get().schema,
           });
       },
       updateId: ({ currentBlockId, newBlockId, shouldEmit = true }) => {
@@ -191,8 +189,8 @@ export const createCanvasStore = ({
         // Firing the event
         if (shouldEmit)
           emitter(EditorEvent.BLOCK_ID_UPDATION, {
-            currentBlockId,
-            newBlockId,
+            prev: schema,
+            cur: get().schema,
           });
       },
       set: ({ func, shouldEmit = true }) => {
@@ -214,15 +212,13 @@ export const createCanvasStore = ({
 
         const ids = Array.isArray(blockIds) ? blockIds : [blockIds];
 
-        const blocks = get().schema.reduce<BlockType[]>(
-          (prev, block, index) => {
-            if (ids.includes(block.id)) changes.push({ index, block });
-            else prev.push(block);
+        const prevSchema = get().schema;
+        const blocks = prevSchema.reduce<BlockType[]>((prev, block, index) => {
+          if (ids.includes(block.id)) changes.push({ index, block });
+          else prev.push(block);
 
-            return prev;
-          },
-          [],
-        );
+          return prev;
+        }, []);
 
         set((state) => {
           state.schema = blocks;
@@ -231,32 +227,33 @@ export const createCanvasStore = ({
         // Firing the event
         if (shouldEmit)
           emitter(EditorEvent.BLOCK_DELETION, {
-            blockIds,
-            changes,
+            prev: prevSchema,
+            cur: blocks,
           });
       },
-      move: (params) => {
-        const { sourceBlockId, targetBlockId, shouldEmit = true } = params;
+      move: ({ sourceBlockId, targetBlockId, shouldEmit = true }) => {
+        const prevSchema = get().schema;
+
+        // Getting the blocks index
+        const fromIndex = prevSchema.findIndex(
+          (block) => block.id === sourceBlockId,
+        );
+        const toIndex = prevSchema.findIndex(
+          (block) => block.id === targetBlockId,
+        );
+
+        if (fromIndex === -1 || toIndex === -1) {
+          return toast.custom((t) => (
+            <Toast
+              title="Unable to find the block!"
+              severity="error"
+              visible={t.visible}
+            />
+          ));
+        }
 
         set((state) => {
-          const tmp = [...state.schema];
-
-          // Getting the blocks index
-          const fromIndex = tmp.findIndex(
-            (block) => block.id === sourceBlockId,
-          );
-          const toIndex = tmp.findIndex((block) => block.id === targetBlockId);
-
-          if (fromIndex === -1 || toIndex === -1) {
-            return toast.custom((t) => (
-              <Toast
-                title="Unable to find the block!"
-                severity="error"
-                visible={t.visible}
-              />
-            ));
-          }
-
+          const tmp = state.schema;
           const fromParentNode = tmp[fromIndex].parentNode;
           tmp[fromIndex].parentNode = tmp[toIndex].parentNode;
           tmp[toIndex].parentNode = fromParentNode;
@@ -264,11 +261,13 @@ export const createCanvasStore = ({
           state.schema = arrayMove(tmp, fromIndex, toIndex);
         });
 
-        if (shouldEmit) emitter(EditorEvent.BLOCK_REPOSITION, params);
+        if (shouldEmit)
+          emitter(EditorEvent.BLOCK_REPOSITION, {
+            prev: prevSchema,
+            cur: get().schema,
+          });
       },
-      select: (params) => {
-        const { selectedBlockIds, shouldEmit = true } = params;
-
+      select: ({ selectedBlockIds }) => {
         const ids = (
           Array.isArray(selectedBlockIds)
             ? selectedBlockIds
@@ -289,8 +288,6 @@ export const createCanvasStore = ({
             return block;
           });
         });
-
-        if (shouldEmit) emitter(EditorEvent.BLOCK_SELECTION, params);
       },
       duplicate: (params) => {
         const { originalBlockIds, shouldEmit = true } = params;
@@ -299,6 +296,8 @@ export const createCanvasStore = ({
           ? originalBlockIds
           : [originalBlockIds];
         const blocks = get().get({ blockIds: ids });
+
+        const prevSchema = get().schema;
 
         const blockData = blocks[0];
 
@@ -318,8 +317,8 @@ export const createCanvasStore = ({
 
         if (shouldEmit)
           emitter(EditorEvent.BLOCK_DUPLICATION, {
-            newId: id,
-            block: blockData,
+            prev: prevSchema,
+            cur: get().schema,
           });
       },
     })),

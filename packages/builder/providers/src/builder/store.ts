@@ -1,8 +1,7 @@
 import _ from "lodash";
 import { StoreApi, UseBoundStore, create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { EditorEventBus } from "../events";
-import { EditorEvent, Env } from "../utils";
+import { Env } from "../utils";
 import {
   ActiveTabProps,
   AddTabProps,
@@ -23,7 +22,6 @@ export type TabPayload = {
 export type CreateBuilderStoreProps = {
   tabs?: Record<string, Omit<TabPayload, "name">>;
   env?: Env;
-  emitter?: EditorEventBus["broadcast"];
 };
 
 export type BuilderStore = {
@@ -43,7 +41,6 @@ export type BuilderStore = {
 };
 
 export const createBuilderStore = ({
-  emitter = () => undefined,
   tabs = {},
   env = Env.DEVELOPMENT,
 }: CreateBuilderStoreProps) =>
@@ -61,13 +58,11 @@ export const createBuilderStore = ({
             const noOfTabs = Object.keys(state.tabs.all).length;
 
             if (noOfTabs === 1) state.tabs.active = name;
-            emitter(EditorEvent.ADD_TAB, payload);
           }),
         get: ({ tabId }) => get().tabs.all[tabId],
         setActive: ({ tabId }) =>
           set((state) => {
             state.tabs.active = tabId;
-            emitter(EditorEvent.ACTIVE_TAB, { tabId });
           }),
       },
       env: {
@@ -75,7 +70,6 @@ export const createBuilderStore = ({
         change: ({ env }) =>
           set((state) => {
             state.env.current = env;
-            emitter(EditorEvent.ENV_CHANGE, { env });
           }),
       },
       layout: {
@@ -86,7 +80,6 @@ export const createBuilderStore = ({
       setLayout: ({ values }) =>
         set((state) => {
           state.layout = _.merge(state.layout, values);
-          emitter(EditorEvent.LAYOUT_UPDATE, { values });
         }),
     })),
   ) as UseBoundStore<StoreApi<BuilderStore>>;

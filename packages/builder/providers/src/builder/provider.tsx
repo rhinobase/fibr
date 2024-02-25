@@ -6,7 +6,6 @@ import {
   useRef,
 } from "react";
 import { useStore } from "zustand";
-import { useEventBus } from "../events";
 import {
   type BuilderStore,
   type CreateBuilderStoreProps,
@@ -21,8 +20,7 @@ export function BuilderProvider({
   children,
   ...props
 }: PropsWithChildren<CreateBuilderStoreProps>) {
-  const emitter = useEventBus((state) => state.broadcast);
-  const store = useRef(createBuilderStore({ ...props, emitter })).current;
+  const store = useRef(createBuilderStore({ ...props })).current;
   return (
     <BuilderContext.Provider value={store}>{children}</BuilderContext.Provider>
   );

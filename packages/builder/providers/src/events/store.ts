@@ -1,6 +1,15 @@
 import { create } from "zustand";
-import { EditorEventListener, EditorEventListenerProps } from "../types";
 import { EditorEvent } from "../utils";
+import type { BlockType } from "../canvas";
+
+export type EventContext = {
+  event_type: EditorEvent;
+  prev?: BlockType[];
+  cur?: BlockType[];
+};
+export type EditorEventListener = (
+  context: EventContext,
+) => Promise<void> | void;
 
 export type EditorEventBusProps = {
   initialEvents?: Partial<Record<EditorEvent, EditorEventListener[]>>;
@@ -8,18 +17,12 @@ export type EditorEventBusProps = {
 
 export type EditorEventBus = {
   events: Partial<Record<EditorEvent, EditorEventListener[]>>;
-  add: <T extends EditorEvent>(
-    type: T,
-    func: EditorEventListener<EditorEventListenerProps[T]>,
-  ) => void;
-  remove: <T extends EditorEvent>(
-    type: T,
-    func: EditorEventListener<EditorEventListenerProps[T]>,
-  ) => void;
+  add: (type: EditorEvent, func: EditorEventListener) => void;
+  remove: (type: EditorEvent, func: EditorEventListener) => void;
   clear: (type?: EditorEvent) => void;
-  broadcast: <T extends EditorEvent>(
-    type: T,
-    context?: EditorEventListenerProps[T],
+  broadcast: (
+    type: EditorEvent,
+    context?: Omit<EventContext, "event_type">,
   ) => void;
 };
 

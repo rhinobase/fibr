@@ -1,4 +1,4 @@
-import { EditorEvent, Env, useEventBus } from "@fibr/providers";
+import { Env, useBuilder } from "@fibr/providers";
 import { eventHandler } from "@rafty/shared";
 import { Button, classNames } from "@rafty/ui";
 import { useEffect } from "react";
@@ -42,21 +42,18 @@ export function CustomControls({
     }),
   );
   const { zoomIn, zoomOut, fitView } = useReactFlow();
-  const addEvent = useEventBus(({ add }) => add);
+  const env = useBuilder(({ env }) => env.current);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    addEvent(EditorEvent.ENV_CHANGE, ({ env }) => {
-      let interactive = true;
-      if (env === Env.PRODUCTION) interactive = false;
+    let interactive = true;
+    if (env === Env.PRODUCTION) interactive = false;
 
-      store.setState({
-        nodesDraggable: interactive,
-        nodesConnectable: interactive,
-        elementsSelectable: interactive,
-      });
+    store.setState({
+      nodesDraggable: interactive,
+      nodesConnectable: interactive,
+      elementsSelectable: interactive,
     });
-  }, [store]);
+  }, [env, store]);
 
   const onZoomInHandler = eventHandler(() => {
     zoomIn();

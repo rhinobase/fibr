@@ -1,10 +1,12 @@
 import { SidebarItem } from "@fibr/builder";
-import { BlockType } from "@fibr/providers";
+import { useCanvas } from "@fibr/providers";
 import { CursorArrowRippleIcon } from "@heroicons/react/24/outline";
 
-export type InspectorPanel = { block?: BlockType };
+export function InspectorPanel() {
+  const blocks = useCanvas(({ schema }) =>
+    schema.filter(({ selected }) => selected),
+  );
 
-export function InspectorPanel({ block }: InspectorPanel) {
   return (
     <SidebarItem
       name="inspector"
@@ -12,7 +14,7 @@ export function InspectorPanel({ block }: InspectorPanel) {
       icon={<CursorArrowRippleIcon className="size-5 stroke-2" />}
       className="h-full"
     >
-      Inspector
+      <pre>{JSON.stringify(blocks, null, 2)}</pre>
     </SidebarItem>
   );
 }

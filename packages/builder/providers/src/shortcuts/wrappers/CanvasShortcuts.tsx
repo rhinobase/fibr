@@ -4,146 +4,44 @@ import { useCallback, useEffect, type PropsWithChildren } from "react";
 import toast from "react-hot-toast";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useCanvas } from "../../canvas";
-import { useEventBus } from "../../events";
-import { EditorEventListenerProps } from "../../types";
+import { EventContext, useEventBus } from "../../events";
 import { EditorEvent } from "../../utils";
 import { ActionType, useStack } from "../useStack";
-
-const EDITOR_EVENT_STACK = [
-  EditorEvent.BLOCK_ADDITION,
-  EditorEvent.BLOCK_UPDATION,
-  EditorEvent.BLOCK_ID_UPDATION,
-  EditorEvent.BLOCK_DELETION,
-  EditorEvent.BLOCK_REPOSITION,
-  EditorEvent.BLOCK_DUPLICATION,
-  EditorEvent.SCHEMA_RESET,
-];
+import { useCopyToClipboard } from "@uidotdev/usehooks";
 
 export function ShortcutsWrapper({ children }: PropsWithChildren) {
-  // const [, copyToClipboard] = useCopyToClipboard();
-  const { schema, select, updateId, update, add, remove, move, set } =
-    useCanvas(
-      ({ schema, select, updateId, remove, add, update, move, set }) => ({
-        schema,
-        select,
-        update,
-        remove,
-        move,
-        add,
-        updateId,
-        set,
-      }),
-    );
+  const [, copyToClipboard] = useCopyToClipboard();
+  const { schema, select, remove, set } = useCanvas(
+    ({ schema, select, set, remove }) => ({
+      schema,
+      select,
+      set,
+      remove,
+    }),
+  );
 
   // Undo & Redo
   const resolveStackActions = useCallback(
-    ({ action, data }: { action: ActionType; data: unknown }) => {
-      const event_type = (data as { event_type: EditorEvent }).event_type;
-
-      if (event_type === EditorEvent.BLOCK_ID_UPDATION) {
-        const { currentBlockId, newBlockId } =
-          data as EditorEventListenerProps[EditorEvent.BLOCK_ID_UPDATION];
-
-        if (action === ActionType.UNDO)
-          updateId({
-            currentBlockId: newBlockId,
-            newBlockId: currentBlockId,
-            shouldEmit: false,
-          });
-        else
-          updateId({
-            currentBlockId,
-            newBlockId,
-            shouldEmit: false,
-          });
-      }
-
-      if (event_type === EditorEvent.BLOCK_ADDITION) {
-        const { blockData, blockId = "" } =
-          data as EditorEventListenerProps[EditorEvent.BLOCK_ADDITION];
-
-        if (action === ActionType.UNDO)
-          remove({
-            blockIds: blockId,
-            shouldEmit: false,
-          });
-        else add({ blockData, blockId, shouldEmit: false });
-      }
-
-      if (event_type === EditorEvent.BLOCK_UPDATION) {
-        const { id, updatedValues, oldValues } =
-          data as EditorEventListenerProps[EditorEvent.BLOCK_UPDATION];
-
-        if (action === ActionType.UNDO)
-          update({ blockId: id, updatedValues: oldValues, shouldEmit: false });
-        else update({ blockId: id, updatedValues, shouldEmit: false });
-      }
-
-      if (event_type === EditorEvent.BLOCK_DELETION) {
-        const { blockIds, changes } =
-          data as EditorEventListenerProps[EditorEvent.BLOCK_DELETION];
-
-        if (action === ActionType.UNDO)
-          changes.forEach((change, index) =>
-            add({
-              blockData: change.block,
-              blockId: blockIds[index],
-              shouldEmit: false,
-              insertionIndex: change.index,
-            }),
-          );
-        else remove({ blockIds, shouldEmit: false });
-      }
-
-      if (event_type === EditorEvent.BLOCK_REPOSITION) {
-        const { sourceBlockId, targetBlockId } =
-          data as EditorEventListenerProps[EditorEvent.BLOCK_REPOSITION];
-
-        if (action === ActionType.UNDO)
-          move({
-            sourceBlockId: targetBlockId,
-            targetBlockId: sourceBlockId,
-            shouldEmit: false,
-          });
-        else
-          move({
-            sourceBlockId,
-            targetBlockId,
-            shouldEmit: false,
-          });
-      }
-
-      if (event_type === EditorEvent.BLOCK_DUPLICATION) {
-        const { newId, block } =
-          data as EditorEventListenerProps[EditorEvent.BLOCK_DUPLICATION];
-
-        if (action === ActionType.UNDO)
-          remove({
-            blockIds: newId,
-            shouldEmit: false,
-          });
-        else add({ blockId: newId, blockData: block, shouldEmit: false });
-      }
-
-      if (event_type === EditorEvent.SCHEMA_RESET) {
-        const { prev, cur } =
-          data as EditorEventListenerProps[EditorEvent.SCHEMA_RESET];
-
-        if (action === ActionType.UNDO) set({ func: () => prev });
-        else set({ func: () => cur });
-      }
+    ({
+      action,
+      data: { prev, cur },
+    }: {
+      action: ActionType;
+      data: EventContext;
+    }) => {
+      if (action === ActionType.UNDO)
+        set({ func: () => prev ?? [], shouldEmit: false });
+      else set({ func: () => cur ?? [], shouldEmit: false });
     },
-    [add, remove, set, update, updateId, move],
+    [set],
   );
 
-  const stack = useStack<unknown>(resolveStackActions);
+  const stack = useStack<EventContext>(resolveStackActions);
   const addEvent = useEventBus((state) => state.add);
 
   useEffect(() => {
     // Actions
-    for (const event of EDITOR_EVENT_STACK) {
-      addEvent(event, stack.pushAction);
-    }
+    addEvent(EditorEvent.ALL, stack.pushAction);
   }, []);
 
   useHotkeys(
@@ -171,6 +69,7 @@ export function ShortcutsWrapper({ children }: PropsWithChildren) {
     },
     {
       description: "Redo",
+      preventDefault: true,
     },
   );
 
@@ -203,54 +102,47 @@ export function ShortcutsWrapper({ children }: PropsWithChildren) {
     },
   );
 
-  // useHotkeys(
-  //   "mod+c",
-  //   (event) => {
-  //     if (active.canvas && active.block) {
-  //       const block = get(active.canvas, active.block);
-  //       if (block) {
-  //         event.preventDefault();
-  //         copyToClipboard(JSON.stringify(block));
-  //       }
-  //     }
-  //   },
-  //   { description: "Copy" },
-  //   [active],
-  // );
+  useHotkeys(
+    "mod+c",
+    () => {
+      const selected = schema.filter(({ selected }) => selected);
+      if (selected.length > 0) copyToClipboard(JSON.stringify(selected));
+    },
+    { description: "Copy", preventDefault: true },
+    [schema],
+  );
 
-  // useHotkeys(
-  //   "mod+x",
-  //   (event) => {
-  //     if (active.canvas && active.block) {
-  //       const block = get(active.canvas, active.block);
-  //       if (block) {
-  //         event.preventDefault();
-  //         copyToClipboard(JSON.stringify(block));
-  //         remove(active.canvas, active.block);
-  //       }
-  //     }
-  //   },
-  //   { description: "Cut" },
-  //   [active],
-  // );
+  useHotkeys(
+    "mod+x",
+    () => {
+      const selected = schema.filter(({ selected }) => selected);
+      if (selected.length > 0) {
+        copyToClipboard(JSON.stringify(selected));
+        remove({ blockIds: selected.map(({ id }) => id) });
+      }
+    },
+    { description: "Cut" },
+    [schema],
+  );
 
-  // // Paste listener
-  // useEffect(() => {
-  //   const onPaste = (event: ClipboardEvent) => {
-  //     if (event.clipboardData) {
-  //       const data = JSON.parse(
-  //         event.clipboardData.getData("text/plain") ?? "",
-  //       );
-  //       if (data) add(active.canvas ?? "nodes", data);
-  //     }
-  //   };
+  // Paste listener
+  useEffect(() => {
+    const onPaste = (event: ClipboardEvent) => {
+      if (event.clipboardData) {
+        const data = JSON.parse(
+          event.clipboardData.getData("text/plain") ?? "",
+        );
+        console.log(data);
+        // if (data) add(active.canvas ?? "nodes", data);
+      }
+    };
 
-  //   window.addEventListener("paste", onPaste);
+    window.addEventListener("paste", onPaste);
 
-  //   return () => {
-  //     window.removeEventListener("paste", onPaste);
-  //   };
-  // }, [add, active]);
+    return () => {
+      window.removeEventListener("paste", onPaste);
+    };
+  }, []);
 
   return children;
 }

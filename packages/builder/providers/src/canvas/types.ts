@@ -41,10 +41,6 @@ export type MoveBlockProps = ShouldEmitEvent<{
   targetBlockId: string;
 }>;
 
-export type SelectBlockProps = ShouldEmitEvent<{
-  selectedBlockIds: string | string[] | null;
-}>;
-
 export type DuplicateBlockProps = ShouldEmitEvent<{
   originalBlockIds: string | string[];
 }>;
