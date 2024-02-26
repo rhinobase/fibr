@@ -26,7 +26,7 @@ export function Sidebar() {
           add({ blockData: { ...value, parentNode } });
         }}
       />
-      <Overview blocks={blocks} action={<AddFormDialog />} enableDragging />
+      <Overview action={<AddFormDialog />} enableDragging />
       <InspectorPanel />
       <CodeGenerator
         resolvers={[

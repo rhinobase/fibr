@@ -10,7 +10,7 @@ import {
 import { Footer, Header, PreviewButton, Workspace } from "@fibr/builder";
 import { FormBuilder } from "@fibr/form";
 import { PageBuilder } from "@fibr/page";
-import { type BlockType, EditorEvent } from "@fibr/providers";
+import { type BlockType } from "@fibr/providers";
 import { WorkflowBuilder } from "@fibr/workflow";
 import { Text } from "@rafty/ui";
 import Link from "next/link";
@@ -53,14 +53,7 @@ export default function Playground() {
 
   return (
     <>
-      <Workspace
-        initialEvents={{
-          [EditorEvent.ALL]: [
-            // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-            // ({ event_type, ...props }: any) => console.log(event_type, props),
-          ],
-        }}
-      >
+      <Workspace>
         <Header className="gap-1">
           <div className="flex-1" />
           <ThemeToggle />
@@ -119,46 +112,3 @@ function Socials() {
     </div>
   );
 }
-
-// const THEMES = {
-//   light: HiOutlineSun,
-//   dark: HiOutlineMoon,
-//   system: HiOutlineTv,
-// } as const;
-
-// function ThemeSelector() {
-//   const { theme, setTheme } = useTheme();
-
-//   // Current theme icon
-//   const TriggerIcon = THEMES[theme as keyof typeof THEMES];
-
-//   return (
-//     <Menu>
-//       <MenuTrigger
-//         size="icon"
-//         variant="ghost"
-//         aria-label="Change Theme"
-//         title="Change Theme"
-//         className="hidden md:block"
-//       >
-//         <TriggerIcon height={18} width={18} className="stroke-2" />
-//       </MenuTrigger>
-//       <MenuContent className="z-[60] gap-0.5">
-//         {Object.entries(THEMES).map(([name, Icon]) => (
-//           <MenuItem
-//             key={name}
-//             onClick={() => setTheme(name)}
-//             className={classNames(
-//               theme === name &&
-//                 "bg-secondary-200/70 text-primary-500 dark:bg-secondary-700/60 dark:text-primary-400",
-//               "capitalize",
-//             )}
-//           >
-//             <Icon height={18} width={18} className="stroke-2" />
-//             {name}
-//           </MenuItem>
-//         ))}
-//       </MenuContent>
-//     </Menu>
-//   );
-// }
