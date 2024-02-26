@@ -39,13 +39,13 @@ const cardClasses = cva(
       {
         selected: true,
         valid: true,
-        className: "bg-secondary-100 dark:bg-secondary-700",
+        className: "bg-primary-100 dark:bg-secondary-700",
       },
       {
         selected: false,
         valid: true,
         className:
-          "bg-white dark:bg-secondary-950 hover:bg-secondary-100/50 dark:hover:bg-secondary-800",
+          "bg-white dark:bg-secondary-950 hover:bg-secondary-100/70 dark:hover:bg-secondary-800/80",
       },
       {
         valid: false,
@@ -94,7 +94,7 @@ export function OverviewCard({
     useSortable({ id, data: { type, indent } });
 
   const IndentationStyle: CSSProperties = {
-    paddingLeft: indent * 12,
+    paddingLeft: indent === 0 ? 2 : indent * 12,
   };
 
   const nodeStyle: CSSProperties = {
