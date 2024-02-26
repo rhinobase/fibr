@@ -1,7 +1,7 @@
 import { useThread } from "@fibr/react";
 import { Textarea as TextareaField } from "@rafty/ui";
 import { useFormContext } from "react-hook-form";
-import { FieldWrapper } from "../../utils";
+import { FieldWrapper } from "../../utils/components";
 
 export type Textarea = {
   data: {

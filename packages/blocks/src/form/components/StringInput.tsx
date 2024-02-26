@@ -1,7 +1,7 @@
 import { useThread } from "@fibr/react";
 import { InputField } from "@rafty/ui";
 import { useFormContext } from "react-hook-form";
-import { FieldWrapper, InputWrapper } from "../../utils";
+import { FieldWrapper, InputWrapper } from "../../utils/components";
 
 export type StringInput = {
   data: {

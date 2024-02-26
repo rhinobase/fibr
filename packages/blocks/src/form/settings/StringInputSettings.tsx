@@ -2,7 +2,7 @@ import {
   CommonInputSettings,
   FieldWrapperSettings,
   SettingsPanelWrapper,
-} from "./utils";
+} from "../../utils/settings";
 
 export function StringInputSettings() {
   return (

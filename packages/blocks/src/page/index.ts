@@ -3,25 +3,25 @@ import { BsTextareaT } from "react-icons/bs";
 import { LuTextCursorInput } from "react-icons/lu";
 import { MdLink, MdOutlineKey, MdOutlineMailOutline } from "react-icons/md";
 import type { Node } from "reactflow";
+import { Page } from "./components";
+import { PageSettings } from "./settings";
 import {
   NumberInput,
-  Page,
   PasswordInput,
   StringInput,
   Textarea,
-} from "./components";
+} from "../form/components";
 import {
-  CanvasSettings,
   NumberInputSettings,
   PasswordInputSettings,
   StringInputSettings,
   TextareaSettings,
-} from "./settings";
+} from "../form/settings";
 
 export const pageConfig: Record<string, Config> = {
   page: {
     builder: Page,
-    settings: CanvasSettings,
+    settings: PageSettings,
   },
   string: {
     builder: StringInput,

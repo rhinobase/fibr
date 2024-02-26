@@ -1,5 +1,5 @@
 import { Label } from "@rafty/ui";
-import { SettingInput, SettingsPanelWrapper } from "./utils";
+import { SettingInput, SettingsPanelWrapper } from "../../utils/settings";
 
 export function ObjectSettings() {
   return (
