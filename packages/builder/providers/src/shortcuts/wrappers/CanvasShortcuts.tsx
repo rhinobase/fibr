@@ -7,18 +7,13 @@ import { useCanvas } from "../../canvas";
 import { EventContext, useEventBus } from "../../events";
 import { EditorEvent } from "../../utils";
 import { ActionType, useStack } from "../useStack";
-import { useCopyToClipboard } from "@uidotdev/usehooks";
 
 export function ShortcutsWrapper({ children }: PropsWithChildren) {
-  const [, copyToClipboard] = useCopyToClipboard();
-  const { schema, select, remove, set } = useCanvas(
-    ({ schema, select, set, remove }) => ({
-      schema,
-      select,
-      set,
-      remove,
-    }),
-  );
+  const { schema, select, set } = useCanvas(({ schema, select, set }) => ({
+    schema,
+    select,
+    set,
+  }));
 
   // Undo & Redo
   const resolveStackActions = useCallback(
@@ -102,47 +97,47 @@ export function ShortcutsWrapper({ children }: PropsWithChildren) {
     },
   );
 
-  useHotkeys(
-    "mod+c",
-    () => {
-      const selected = schema.filter(({ selected }) => selected);
-      if (selected.length > 0) copyToClipboard(JSON.stringify(selected));
-    },
-    { description: "Copy", preventDefault: true },
-    [schema],
-  );
+  // useHotkeys(
+  //   "mod+c",
+  //   () => {
+  //     const selected = schema.filter(({ selected }) => selected);
+  //     if (selected.length > 0) copyToClipboard(JSON.stringify(selected));
+  //   },
+  //   { description: "Copy", preventDefault: true },
+  //   [schema],
+  // );
 
-  useHotkeys(
-    "mod+x",
-    () => {
-      const selected = schema.filter(({ selected }) => selected);
-      if (selected.length > 0) {
-        copyToClipboard(JSON.stringify(selected));
-        remove({ blockIds: selected.map(({ id }) => id) });
-      }
-    },
-    { description: "Cut" },
-    [schema],
-  );
+  // useHotkeys(
+  //   "mod+x",
+  //   () => {
+  //     const selected = schema.filter(({ selected }) => selected);
+  //     if (selected.length > 0) {
+  //       copyToClipboard(JSON.stringify(selected));
+  //       remove({ blockIds: selected.map(({ id }) => id) });
+  //     }
+  //   },
+  //   { description: "Cut" },
+  //   [schema],
+  // );
 
   // Paste listener
-  useEffect(() => {
-    const onPaste = (event: ClipboardEvent) => {
-      if (event.clipboardData) {
-        const data = JSON.parse(
-          event.clipboardData.getData("text/plain") ?? "",
-        );
-        console.log(data);
-        // if (data) add(active.canvas ?? "nodes", data);
-      }
-    };
+  // useEffect(() => {
+  //   const onPaste = (event: ClipboardEvent) => {
+  //     if (event.clipboardData) {
+  //       const data = JSON.parse(
+  //         event.clipboardData.getData("text/plain") ?? "",
+  //       );
+  //       console.log(data);
+  //       // if (data) add(active.canvas ?? "nodes", data);
+  //     }
+  //   };
 
-    window.addEventListener("paste", onPaste);
+  //   window.addEventListener("paste", onPaste);
 
-    return () => {
-      window.removeEventListener("paste", onPaste);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("paste", onPaste);
+  //   };
+  // }, []);
 
   return children;
 }

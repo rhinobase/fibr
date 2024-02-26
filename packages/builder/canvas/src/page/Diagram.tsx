@@ -83,8 +83,8 @@ export function Diagram() {
         selectionMode={SelectionMode.Partial}
         selectionOnDrag
         translateExtent={[
-          [-100, -100],
-          [2020, 1180],
+          [-683, -384],
+          [2049, 1152],
         ]}
       >
         <Background
