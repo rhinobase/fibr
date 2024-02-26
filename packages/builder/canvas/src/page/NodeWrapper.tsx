@@ -2,24 +2,27 @@ import { useThread } from "@fibr/react";
 import { classNames, useBoolean } from "@rafty/ui";
 import { type PropsWithChildren } from "react";
 import {
-  ControlPosition,
-  Node,
+  type ControlPosition,
+  type Node,
   NodeResizeControl,
   ResizeControlVariant,
 } from "reactflow";
 
-const PANELS = ["page"];
+export const PANELS = ["page"];
 
 export function NodeWrapper({ children }: PropsWithChildren) {
   const { type, selected } = useThread<Node>();
+
   const isGroup = PANELS.includes(type);
 
   return (
     <div
       className={classNames(
         !isGroup && "p-2",
-        selected ? "border-primary-500" : "border-transparent",
-        "h-full w-full border bg-white",
+        selected
+          ? "border-primary-500 dark:border-primary-400"
+          : "border-transparent dark:border-transparent",
+        "dark:bg-secondary-950 h-full w-full border bg-white",
       )}
     >
       {!isGroup && selected && (
@@ -47,8 +50,10 @@ function ResizeNodeBorder({ position }: { position: ControlPosition }) {
       <div
         className={classNames(
           position === "left" ? "-left-px" : "-right-px",
-          resizing ? "bg-blue-500" : "bg-white",
-          "absolute top-1/2 h-8 w-1 -translate-y-1/2 rounded-md ring-1",
+          resizing
+            ? "bg-primary-500 dark:bg-primary-400"
+            : "dark:bg-secondary-950 bg-white",
+          "ring-primary-500 dark:ring-primary-400 absolute top-1/2 h-8 w-1 -translate-y-1/2 rounded-md ring-1",
         )}
       />
     </NodeResizeControl>
