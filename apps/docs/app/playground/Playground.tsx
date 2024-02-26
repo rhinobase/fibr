@@ -18,6 +18,8 @@ import { type ReactNode, useState } from "react";
 import { FaGithub, FaXTwitter } from "react-icons/fa6";
 import { ThemeToggle } from "../../components/ThemeToggle";
 import { Container, TemplateDialog } from "./templates";
+import { Switch } from "./templates/Switch";
+import { TEMPLATES } from "./templates/templates";
 
 type PanelProps = { template: BlockType[] };
 
@@ -60,7 +62,17 @@ export default function Playground() {
           ],
         }}
       >
-        <Header className="gap-1">
+        <Header className="gap-3">
+          <Switch
+            value={container}
+            onValueChange={(value) => {
+              setContainer(value);
+              setTemplate(
+                (TEMPLATES[value].find(({ id }) => id === "custom")?.template ??
+                  []) as BlockType[],
+              );
+            }}
+          />
           <div className="flex-1" />
           <ThemeToggle />
           <PreviewButton />
