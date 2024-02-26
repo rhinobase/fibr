@@ -3,7 +3,6 @@ import { type BlockType, useCanvas } from "@fibr/providers";
 import {
   CodeGenerator,
   DEFAULT_GROUP,
-  InspectorPanel,
   Overview,
   Palette,
   astResolver,
@@ -27,7 +26,6 @@ export function Sidebar() {
         }}
       />
       <Overview action={<AddFormDialog />} enableDragging />
-      <InspectorPanel />
       <CodeGenerator
         resolvers={[
           {

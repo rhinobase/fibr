@@ -1,12 +1,6 @@
 import { Sidebar as BuilderSidebar } from "@fibr/builder";
 import { useCanvas } from "@fibr/providers";
-import {
-  CodeGenerator,
-  InspectorPanel,
-  Overview,
-  Palette,
-  astResolver,
-} from "@fibr/shared";
+import { CodeGenerator, Overview, Palette, astResolver } from "@fibr/shared";
 
 export function Sidebar() {
   const add = useCanvas(({ add }) => add);
@@ -15,7 +9,6 @@ export function Sidebar() {
     <BuilderSidebar>
       <Palette enableDragging onSelect={(value) => add({ blockData: value })} />
       <Overview />
-      <InspectorPanel />
       <CodeGenerator
         resolvers={[
           {
