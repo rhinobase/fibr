@@ -8,7 +8,7 @@ import {
   ResizeControlVariant,
 } from "reactflow";
 
-export const PANELS = ["page"];
+export const PANELS = ["page", "group"];
 
 export function NodeWrapper({ children }: PropsWithChildren) {
   const { type, selected } = useThread<Node>();

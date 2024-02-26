@@ -21,6 +21,7 @@ import "reactflow/dist/style.css";
 
 const fitViewOptions: FitViewOptions = {
   padding: 0.5,
+  nodes: [{ id: "canvas" }],
 };
 
 const defaultEdgeOptions: DefaultEdgeOptions = {
@@ -83,7 +84,7 @@ export function Diagram() {
         selectionMode={SelectionMode.Partial}
         selectionOnDrag
         panOnScroll
-        panOnDrag={[1, 1]}
+        panOnDrag={false}
       >
         <Background
           variant={BackgroundVariant.Lines}

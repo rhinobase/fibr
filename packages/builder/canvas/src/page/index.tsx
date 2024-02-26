@@ -1,4 +1,3 @@
-import { useDroppable } from "@dnd-kit/core";
 import { Env, useBuilder } from "@fibr/providers";
 import { WeaverProvider } from "@fibr/react";
 import { Canvas, CustomControls } from "@fibr/shared";
@@ -15,15 +14,12 @@ const NODE_WRAPPERS: Record<Env, (props: PropsWithChildren) => ReactNode> = {
 
 export function PageCanvas() {
   const methods = useForm();
-  const { setNodeRef } = useDroppable({
-    id: "canvas",
-  });
 
   const currentEnv = useBuilder((state) => state.env.current);
 
   return (
     <FormProvider {...methods}>
-      <Canvas ref={setNodeRef}>
+      <Canvas>
         <div className="dark:bg-secondary-950 flex h-full w-full bg-white">
           <WeaverProvider wrapper={NODE_WRAPPERS[currentEnv]}>
             <Diagram />

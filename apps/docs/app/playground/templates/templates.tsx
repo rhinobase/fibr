@@ -180,10 +180,9 @@ export const TEMPLATES: Record<
         {
           id: "canvas",
           type: "page",
-          position: { x: 920, y: 440 },
-          width: 1920,
-          height: 1080,
+          position: { x: 0, y: 0 },
           draggable: false,
+          deletable: false,
         },
       ],
     },
