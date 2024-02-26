@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { EditorEvent } from "../utils";
 import type { BlockType } from "../canvas";
+import { EditorEvent } from "../utils";
 
 export type EventContext = {
   event_type: EditorEvent;

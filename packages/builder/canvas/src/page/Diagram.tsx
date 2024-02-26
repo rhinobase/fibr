@@ -10,12 +10,12 @@ import {
   DefaultEdgeOptions,
   FitViewOptions,
   Node,
+  NodeDragHandler,
   type NodeTypes,
   OnNodesChange,
   ReactFlow,
   SelectionMode,
   applyNodeChanges,
-  NodeDragHandler,
 } from "reactflow";
 import "reactflow/dist/style.css";
 

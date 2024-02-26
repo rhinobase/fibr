@@ -1,6 +1,6 @@
 "use client";
 import { Toast } from "@rafty/ui";
-import { useCallback, useEffect, type PropsWithChildren } from "react";
+import { type PropsWithChildren, useCallback, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useCanvas } from "../../canvas";

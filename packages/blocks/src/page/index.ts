@@ -3,8 +3,6 @@ import { BsBraces, BsTextareaT } from "react-icons/bs";
 import { LuTextCursorInput } from "react-icons/lu";
 import { MdLink, MdOutlineKey, MdOutlineMailOutline } from "react-icons/md";
 import type { Node } from "reactflow";
-import { Page } from "./components";
-import { PageSettings } from "./settings";
 import {
   NumberInput,
   ObjectField,
@@ -19,6 +17,8 @@ import {
   StringInputSettings,
   TextareaSettings,
 } from "../form/settings";
+import { Page } from "./components";
+import { PageSettings } from "./settings";
 
 export const pageConfig: Record<string, Config> = {
   page: {

@@ -7,8 +7,8 @@ import {
 } from "react";
 import { useStore } from "zustand";
 import {
-  type BlocksStoreProps,
   type BlocksStore,
+  type BlocksStoreProps,
   createBlocksStore,
 } from "./store";
 

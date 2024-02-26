@@ -1,8 +1,8 @@
 import { useThread } from "@fibr/react";
 import { classNames } from "@rafty/ui";
 import { PropsWithChildren } from "react";
-import { PANELS } from "./NodeWrapper";
 import type { Node } from "reactflow";
+import { PANELS } from "./NodeWrapper";
 
 export function NodePadding({ children }: PropsWithChildren) {
   const { type } = useThread<Node>();

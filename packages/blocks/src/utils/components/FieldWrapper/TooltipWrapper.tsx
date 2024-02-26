@@ -1,6 +1,6 @@
+import { useThread } from "@fibr/react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
 import { PropsWithChildren } from "react";
-import { useThread } from "@fibr/react";
 
 export type TooltipWrapperProps = {
   data: { tooltip?: string };

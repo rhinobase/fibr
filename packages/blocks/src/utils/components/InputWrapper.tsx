@@ -1,8 +1,8 @@
+import { useThread } from "@fibr/react";
 import { RaftyIcon } from "@rafty/icons";
 import { InputGroup, LeftAddon, Prefix, RightAddon, Suffix } from "@rafty/ui";
 import { cva } from "class-variance-authority";
 import { type PropsWithChildren } from "react";
-import { useThread } from "@fibr/react";
 
 const addonTextClasses = cva(
   "text-secondary-600 dark:text-secondary-400 font-medium",
