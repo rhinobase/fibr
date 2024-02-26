@@ -1,5 +1,5 @@
 import { Block, Config } from "@fibr/shared";
-import { BsTextareaT } from "react-icons/bs";
+import { BsBraces, BsTextareaT } from "react-icons/bs";
 import { LuTextCursorInput } from "react-icons/lu";
 import { MdLink, MdOutlineKey, MdOutlineMailOutline } from "react-icons/md";
 import type { Node } from "reactflow";
@@ -7,12 +7,14 @@ import { Page } from "./components";
 import { PageSettings } from "./settings";
 import {
   NumberInput,
+  ObjectField,
   PasswordInput,
   StringInput,
   Textarea,
 } from "../form/components";
 import {
   NumberInputSettings,
+  ObjectSettings,
   PasswordInputSettings,
   StringInputSettings,
   TextareaSettings,
@@ -38,6 +40,10 @@ export const pageConfig: Record<string, Config> = {
   number: {
     builder: NumberInput,
     settings: NumberInputSettings,
+  },
+  object: {
+    builder: ObjectField,
+    settings: ObjectSettings,
   },
 };
 
@@ -97,6 +103,19 @@ export const pageBlocks: Record<string, Block<Partial<Node>>[]> = {
       presets: {
         data: {
           inputType: "number",
+          label: "Label",
+          description: "Description",
+        },
+      },
+    },
+  ],
+  "Nested Object": [
+    {
+      type: "object",
+      label: "Object Group",
+      icon: BsBraces,
+      presets: {
+        data: {
           label: "Label",
           description: "Description",
         },

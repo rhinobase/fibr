@@ -25,6 +25,7 @@
   },
   "sideEffects": false,
   "dependencies": {
+    "@dnd-kit/core": "^6.1.0",
     "@fibr/react": "^0.5.2",
     "@fibr/shared": "^1.0.0",
     "@heroicons/react": "^2.1.1",
