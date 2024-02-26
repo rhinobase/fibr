@@ -108,7 +108,7 @@ export function OverviewCard({
         style: nodeStyle,
         ref: setNodeRef,
       }
-    : {};
+    : { style: IndentationStyle };
 
   const handleNodeSelect = eventHandler(
     () => !hidden && select({ selectedBlockIds: id }),

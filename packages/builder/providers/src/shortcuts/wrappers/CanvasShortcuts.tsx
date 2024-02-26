@@ -68,11 +68,6 @@ export function ShortcutsWrapper({ children }: PropsWithChildren) {
     },
   );
 
-  useHotkeys("mod+g", () => console.log("Group"), {
-    description: "Group",
-    preventDefault: true,
-  });
-
   useHotkeys(
     "mod+a",
     () =>

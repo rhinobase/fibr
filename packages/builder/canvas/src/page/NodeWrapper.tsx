@@ -50,7 +50,7 @@ function ResizeNodeBorder({ position }: { position: ControlPosition }) {
       <div
         className={classNames(
           position === "left" ? "-left-px" : "-right-px",
-          resizing ? "bg-primary-500 dark:bg-primary-400" : "bg-white",
+          resizing ? "bg-primary-500 dark:bg-primary-400" : "bg-secondary-100",
           "ring-primary-500 dark:ring-primary-400 absolute top-1/2 h-8 w-1 -translate-y-1/2 rounded-md ring-1",
         )}
       />
