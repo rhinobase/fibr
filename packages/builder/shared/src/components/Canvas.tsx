@@ -6,7 +6,6 @@ import { ShortcutsWrapper, useCanvas } from "@fibr/providers";
 import toast from "react-hot-toast";
 import { Toast } from "@rafty/ui";
 import { DefaultComponent } from "./DefaultComponent";
-import { HotkeysProvider } from "react-hotkeys-hook";
 
 export const Canvas = forwardRef<HTMLDivElement, BuilderCanvas>(
   (props, forwardedRef) => {

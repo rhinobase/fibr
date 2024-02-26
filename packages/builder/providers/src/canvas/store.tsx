@@ -3,7 +3,6 @@ import { Toast } from "@rafty/ui";
 import { type Draft } from "immer";
 import _ from "lodash";
 import toast from "react-hot-toast";
-import { isHotkeyPressed } from "react-hotkeys-hook";
 import { StoreApi, UseBoundStore, create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { EditorEventBus } from "../events";
@@ -268,8 +267,9 @@ export const createCanvasStore = ({
           });
       },
       select: ({ selectedBlockIds }) => {
+        const isMulti = Array.isArray(selectedBlockIds);
         const ids = (
-          Array.isArray(selectedBlockIds)
+          isMulti
             ? selectedBlockIds
             : selectedBlockIds
               ? [selectedBlockIds]
@@ -282,8 +282,7 @@ export const createCanvasStore = ({
         set((state) => {
           state.schema = state.schema.map((block) => {
             if (ids[block.id]) block.selected = true;
-            else if (!(enableMultiSelect && isHotkeyPressed("shift")))
-              block.selected = false;
+            else if (!(enableMultiSelect && isMulti)) block.selected = false;
 
             return block;
           });
