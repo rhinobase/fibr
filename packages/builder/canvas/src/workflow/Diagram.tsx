@@ -79,7 +79,6 @@ export function Diagram() {
       set({
         func: (eds) =>
           addEdge({ ...params, type: "edge" }, eds as Edge[]) as BlockType[],
-        shouldEmit: false,
       }),
     [set],
   );
@@ -199,6 +198,7 @@ export function Diagram() {
 
           return nextEdges;
         },
+        shouldEmit: false,
       });
     },
     [getClosestEdge, set],

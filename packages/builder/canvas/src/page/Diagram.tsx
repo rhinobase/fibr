@@ -56,8 +56,13 @@ export function Diagram() {
 
   const backgroundLineColor = resolvedTheme === "light" ? "#d4d4d8" : "#52525b";
 
-  const onNodeDragHandler: NodeDragHandler = useCallback(
+  const onNodeDragStart: NodeDragHandler = useCallback(
     () => set({ func: (value) => value }),
+    [set],
+  );
+
+  const onNodeDragStop: NodeDragHandler = useCallback(
+    () => set({ func: (value) => value, shouldEmit: false }),
     [set],
   );
 
@@ -69,8 +74,8 @@ export function Diagram() {
         snapGrid={[20, 20]}
         fitView
         onNodesChange={onNodesChange}
-        onNodeDragStart={onNodeDragHandler}
-        onNodeDragStop={onNodeDragHandler}
+        onNodeDragStart={onNodeDragStart}
+        onNodeDragStop={onNodeDragStop}
         fitViewOptions={fitViewOptions}
         defaultEdgeOptions={defaultEdgeOptions}
         nodeTypes={nodeTypes}

@@ -10,7 +10,7 @@ import {
 import { Footer, Header, PreviewButton, Workspace } from "@fibr/builder";
 import { FormBuilder } from "@fibr/form";
 import { PageBuilder } from "@fibr/page";
-import { type BlockType } from "@fibr/providers";
+import { type BlockType, EditorEvent } from "@fibr/providers";
 import { WorkflowBuilder } from "@fibr/workflow";
 import { Text } from "@rafty/ui";
 import Link from "next/link";
@@ -53,7 +53,13 @@ export default function Playground() {
 
   return (
     <>
-      <Workspace>
+      <Workspace
+        initialEvents={{
+          [EditorEvent.ALL]: [
+            ({ event_type, ...props }) => console.log(event_type, props),
+          ],
+        }}
+      >
         <Header className="gap-1">
           <div className="flex-1" />
           <ThemeToggle />
