@@ -22,11 +22,19 @@ export const TEMPLATES: Record<
       name: "Contact Us",
       icon: GoProjectTemplate,
       template: [
-        { id: "canvas", type: "canvas", data: { title: "Contact Us" } },
+        {
+          id: "canvas",
+          type: "canvas",
+          data: { title: "Contact Us" },
+        },
         {
           id: "name",
           type: "string",
-          data: { label: "Name", description: "Enter your full name" },
+          data: {
+            label: "Name",
+            description: "Enter your full name",
+            required: true,
+          },
           parentNode: "canvas",
         },
         {
@@ -37,6 +45,7 @@ export const TEMPLATES: Record<
             label: "Email",
             description: "Enter email id so we can respond to your query",
             prefixIcon: "envelope",
+            required: true,
           },
           parentNode: "canvas",
         },
@@ -46,6 +55,7 @@ export const TEMPLATES: Record<
           data: {
             label: "Phone Number",
             description: "Enter your 10 digit mobile number",
+            required: true,
           },
           parentNode: "canvas",
         },
