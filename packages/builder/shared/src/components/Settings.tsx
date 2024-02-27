@@ -1,11 +1,13 @@
 import { Settings as BuilderSettings } from "@fibr/builder";
 import { type BlockType, useCanvas } from "@fibr/providers";
 import { FibrProvider, Thread } from "@fibr/react";
-import { Button, Text } from "@rafty/ui";
+import { Button, Text, classNames } from "@rafty/ui";
 import { ReactNode, useMemo } from "react";
 import { useBlocks } from "../providers";
 
-export function Settings() {
+export type Settings = BuilderSettings;
+
+export function Settings({ className, ...props }: Settings) {
   const { selectedBlocks, updateBlock, remove, duplicate } = useCanvas(
     ({ schema, update, remove, duplicate }) => ({
       selectedBlocks: schema.filter((block) => block.selected),
@@ -89,8 +91,9 @@ export function Settings() {
   if (isSettingsPanelActive)
     return (
       <BuilderSettings
+        {...props}
         blockId={selectedBlocksLength === 1 ? selectedBlocks[0].id : undefined}
-        className="flex flex-col gap-3"
+        className={classNames("flex flex-col gap-3", className)}
       >
         {component}
       </BuilderSettings>

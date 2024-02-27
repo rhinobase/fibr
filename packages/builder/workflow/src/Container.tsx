@@ -10,7 +10,7 @@ export function Container() {
       <BuilderContainer>
         <Sidebar />
         <WorkflowCanvas />
-        <Settings />
+        <Settings className="right-2 top-2 h-[calc(100%-16px)] rounded-md border-l-0 shadow-md" />
       </BuilderContainer>
     </WorkflowDndWrapper>
   );
