@@ -84,9 +84,11 @@ function useClipboardManager() {
   const groupRef = useHotkeys<HTMLDivElement>(
     "shift+g",
     () => {
+      console.log("Grouping");
       const group: BlockType & { position?: XYPosition } = {
-        id: uniqueId("group"),
-        type: "group",
+        id: uniqueId("object"),
+        type: "object",
+        selected: true,
         data: undefined,
       };
       const blocks: (BlockType & { position?: XYPosition })[] = [];
@@ -117,7 +119,7 @@ function useClipboardManager() {
           }
 
           group.parentNode = block.parentNode;
-          blocks.push({ ...block, parentNode: group.id });
+          blocks.push({ ...block, selected: false, parentNode: group.id });
         } else blocks.push(block);
       }
 

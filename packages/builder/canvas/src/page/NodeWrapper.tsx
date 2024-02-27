@@ -8,7 +8,7 @@ import {
   type Node,
 } from "reactflow";
 
-export const PANELS = ["page", "group"];
+export const PANELS = ["page", "object"];
 
 export function NodeWrapper({ children }: PropsWithChildren) {
   const { type, selected } = useThread<Node>();
