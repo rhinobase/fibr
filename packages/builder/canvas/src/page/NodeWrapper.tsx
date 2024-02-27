@@ -7,7 +7,6 @@ import {
   type ControlPosition,
   type Node,
 } from "reactflow";
-import { CopyWrapper } from "../utils";
 
 export const PANELS = ["page", "group"];
 
@@ -17,7 +16,7 @@ export function NodeWrapper({ children }: PropsWithChildren) {
   const isGroup = PANELS.includes(type);
 
   return (
-    <CopyWrapper
+    <div
       className={classNames(
         !isGroup && "p-2",
         selected
@@ -33,7 +32,7 @@ export function NodeWrapper({ children }: PropsWithChildren) {
         </>
       )}
       {children}
-    </CopyWrapper>
+    </div>
   );
 }
 

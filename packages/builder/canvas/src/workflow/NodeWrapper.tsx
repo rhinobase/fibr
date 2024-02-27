@@ -2,13 +2,12 @@ import { useThread } from "@fibr/react";
 import { classNames } from "@rafty/ui";
 import { type PropsWithChildren } from "react";
 import type { Node } from "reactflow";
-import { CopyWrapper } from "../utils";
 
 export function NodeWrapper(props: PropsWithChildren) {
   const { selected } = useThread<Node>();
 
   return (
-    <CopyWrapper
+    <div
       className={classNames(
         selected
           ? "border-primary-500 dark:border-primary-400"
@@ -17,6 +16,6 @@ export function NodeWrapper(props: PropsWithChildren) {
       )}
     >
       {props.children}
-    </CopyWrapper>
+    </div>
   );
 }

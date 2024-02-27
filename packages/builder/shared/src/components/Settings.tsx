@@ -88,7 +88,10 @@ export function Settings() {
 
   if (isSettingsPanelActive)
     return (
-      <BuilderSettings className="flex flex-col gap-3">
+      <BuilderSettings
+        blockId={selectedBlocksLength === 1 ? selectedBlocks[0].id : undefined}
+        className="flex flex-col gap-3"
+      >
         {component}
       </BuilderSettings>
     );

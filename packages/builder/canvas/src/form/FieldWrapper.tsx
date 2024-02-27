@@ -13,7 +13,6 @@ import {
   forwardRef,
 } from "react";
 import { QuickActions } from "./QuickActions";
-import { CopyWrapper } from "../utils";
 
 export function FieldWrapper({ children }: PropsWithChildren) {
   const { isOverlay, ...field } = useThread<
@@ -108,7 +107,7 @@ type WrapperProps = HTMLAttributes<HTMLDivElement> & {
 
 const Wrapper = forwardRef<HTMLDivElement, WrapperProps>(
   ({ className, selected, ...props }, forwardedRef) => (
-    <CopyWrapper
+    <div
       {...props}
       className={classNames(wrapperClasses({ selected }), className)}
       ref={forwardedRef}

@@ -1,12 +1,12 @@
 "use client";
 import { useDroppable } from "@dnd-kit/core";
 import { Env, useBuilder } from "@fibr/providers";
-import { classNames } from "@rafty/ui";
+import { Text, classNames } from "@rafty/ui";
 import { type HTMLAttributes } from "react";
 
-export type Settings = HTMLAttributes<HTMLDivElement>;
+export type Settings = HTMLAttributes<HTMLDivElement> & { blockId?: string };
 
-export function Settings({ className, children, ...props }: Settings) {
+export function Settings({ className, blockId, children, ...props }: Settings) {
   const { setNodeRef } = useDroppable({ id: "settings" });
   const isProduction = useBuilder(
     (state) => state.env.current === Env.PRODUCTION,
@@ -23,7 +23,12 @@ export function Settings({ className, children, ...props }: Settings) {
       )}
       ref={setNodeRef}
     >
-      <h4 className="font-medium">Settings</h4>
+      <div className="flex w-full items-center justify-between">
+        <h4 className="font-medium">Settings</h4>
+        <Text className="text-sm font-medium italic" isMuted>
+          {blockId}
+        </Text>
+      </div>
       <hr className="dark:border-secondary-700" />
       {children}
     </div>
