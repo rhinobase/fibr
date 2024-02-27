@@ -12,8 +12,6 @@ export function CodeHighlighter({ content, language }: CodeHighlighter) {
   const highlightTheme =
     resolvedTheme === "light" ? themes.github : themes.dracula;
 
-  console.log(resolvedTheme);
-
   return (
     <Highlight theme={highlightTheme} code={content} language={language}>
       {({ className, style, tokens, getLineProps, getTokenProps }) => (

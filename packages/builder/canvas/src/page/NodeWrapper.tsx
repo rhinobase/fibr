@@ -1,41 +1,23 @@
-import { useCanvas } from "@fibr/providers";
 import { useThread } from "@fibr/react";
 import { classNames, useBoolean } from "@rafty/ui";
-import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { type PropsWithChildren } from "react";
-import { useHotkeys } from "react-hotkeys-hook";
 import {
-  type ControlPosition,
-  type Node,
   NodeResizeControl,
   ResizeControlVariant,
+  type ControlPosition,
+  type Node,
 } from "reactflow";
+import { CopyWrapper } from "../utils";
 
 export const PANELS = ["page", "group"];
 
 export function NodeWrapper({ children }: PropsWithChildren) {
-  const [, copyToClipboard] = useCopyToClipboard();
-  const remove = useCanvas(({ remove }) => remove);
-  const block = useThread<Node>();
-  const { type, selected } = block;
+  const { type, selected } = useThread<Node>();
 
   const isGroup = PANELS.includes(type);
 
-  const ref = useHotkeys<HTMLDivElement>(
-    "mod+c,mod+x",
-    (_, { keys = [] }) => {
-      copyToClipboard(JSON.stringify(block));
-      if (keys[0] === "x") remove({ blockIds: block.id });
-    },
-    {
-      enabled: selected,
-    },
-  );
-
   return (
-    <div
-      ref={ref}
-      tabIndex={-1}
+    <CopyWrapper
       className={classNames(
         !isGroup && "p-2",
         selected
@@ -51,7 +33,7 @@ export function NodeWrapper({ children }: PropsWithChildren) {
         </>
       )}
       {children}
-    </div>
+    </CopyWrapper>
   );
 }
 
