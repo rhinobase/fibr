@@ -2,6 +2,19 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.5.3](https://github.com/rhinobase/fibr/compare/react-0.5.3-rc.0...react-0.5.3) (2024-02-27)
+
+
+### Features
+
+* **form:** improved data api ([8ad70a5](https://github.com/rhinobase/fibr/commit/8ad70a58395db870a84255428593216a223081b7))
+* integrated form blocks in builder ([87a4a5f](https://github.com/rhinobase/fibr/commit/87a4a5fd31be969aaadb43f0f1ece223b546d68b))
+
+
+### Bug Fixes
+
+* **web:** improved template dialog and add loading ([98ffa71](https://github.com/rhinobase/fibr/commit/98ffa71367fb4d7579a2dd956bb2ec300de0ad8b))
+
 ## [0.5.3-rc.0](https://github.com/rhinobase/fibr/compare/react-0.5.2...react-0.5.3-rc.0) (2024-01-31)
 
 
