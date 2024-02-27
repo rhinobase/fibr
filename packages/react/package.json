@@ -1,6 +1,6 @@
 {
   "name": "@fibr/react",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "Extensible form builder for react",
   "license": "MIT",
   "keywords": [
@@ -30,5 +30,6 @@
   "peerDependencies": {
     "react": "^18.2.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "types": "./index.esm.d.ts"
 }
