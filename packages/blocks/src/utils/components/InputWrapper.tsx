@@ -1,5 +1,5 @@
 import { useThread } from "@fibr/react";
-import { RaftyIcon } from "@rafty/icons";
+import RaftyIcon from "@rafty/icons";
 import { InputGroup, LeftAddon, Prefix, RightAddon, Suffix } from "@rafty/ui";
 import { cva } from "class-variance-authority";
 import { type PropsWithChildren } from "react";
