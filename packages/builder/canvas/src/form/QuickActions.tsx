@@ -1,6 +1,10 @@
-import { type BlockType, useCanvas } from "@fibr/providers";
+import {
+  type BlockType,
+  useCanvas,
+  DEFAULT_GROUP,
+  groupByParentNode,
+} from "@fibr/providers";
 import { useThread } from "@fibr/react";
-import { DEFAULT_GROUP, groupByParentNode } from "@fibr/shared";
 import { eventHandler } from "@rafty/shared";
 import {
   Button,

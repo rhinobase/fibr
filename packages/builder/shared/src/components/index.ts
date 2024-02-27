@@ -4,8 +4,6 @@ export {
   SharedWrapper,
   highlightMatches,
   CustomControls,
-  groupByParentNode,
-  DEFAULT_GROUP,
   Portal,
 } from "./utils";
 export { Overview } from "./Overview";

@@ -7,6 +7,10 @@ import {
 } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { BlockType, useCanvas } from "../canvas";
+import { Toast, mergeRefs } from "@rafty/ui";
+import toast from "react-hot-toast";
+import type { XYPosition } from "reactflow";
+import { groupByParentNode } from "../utils";
 
 const ClipboardContext = createContext<ReturnType<
   typeof useClipboardManager
@@ -24,10 +28,10 @@ export function ClipboardProvider({ children, ...props }: PropsWithChildren) {
 
 function useClipboardManager() {
   const [clipboard, setClipboard] = useState<BlockType[]>();
-  const { blocks, remove, uniqueId, set } = useCanvas(
+  const { schema, remove, uniqueId, set } = useCanvas(
     ({ schema, remove, uniqueId, set }) => ({
       remove,
-      blocks: schema.filter(({ selected }) => selected),
+      schema,
       uniqueId,
       set,
     }),
@@ -36,42 +40,104 @@ function useClipboardManager() {
   const copyRef = useHotkeys<HTMLDivElement>(
     "mod+c,mod+x",
     (_, { keys = [] }) => {
-      console.log("Working");
+      // Getting all the selected blocks
+      const blocks = schema.filter(({ selected }) => selected);
+
+      // Storing then in the local clipboard
       setClipboard(blocks);
+
+      // If cut shortcut is activited, then removing them from the canvas
       if (keys[0] === "x") remove({ blockIds: blocks.map(({ id }) => id) });
     },
     { description: "Copy / Cut", preventDefault: true },
-    [blocks],
+    [schema],
   );
 
   const pasteRef = useHotkeys<HTMLDivElement>(
     "mod+v",
     () => {
+      if (clipboard == null) return;
+
       console.log("Pasting");
-      if (clipboard) {
-        const tmp: BlockType[] = [];
-        for (const block of clipboard) {
-          tmp.push({
-            ...block,
-            id: uniqueId(block.type),
-          });
-        }
-        set({
-          func: (components: BlockType[]) => [
-            ...components.map((item) => ({ ...item, selected: false })),
-            ...tmp,
-          ],
+
+      // Getting new id for the blocks
+      const tmp: BlockType[] = [];
+      for (const block of clipboard) {
+        tmp.push({
+          ...block,
+          id: uniqueId(block.type),
         });
       }
+
+      // Updating the canvas with the new blocks
+      set({
+        func: (components: BlockType[]) => [
+          ...components.map((item) => ({ ...item, selected: false })),
+          ...tmp,
+        ],
+      });
     },
     { description: "Paste", preventDefault: true },
     [clipboard],
   );
 
+  const groupRef = useHotkeys<HTMLDivElement>(
+    "shift+g",
+    () => {
+      const group: BlockType & { position?: XYPosition } = {
+        id: uniqueId("group"),
+        type: "group",
+        data: undefined,
+      };
+      const blocks: (BlockType & { position?: XYPosition })[] = [];
+
+      for (const block of schema) {
+        if (block.selected) {
+          if (group.parentNode && block.parentNode !== group.parentNode) {
+            toast.custom(({ visible }) => (
+              <Toast
+                visible={visible}
+                severity="error"
+                title="Parent group not matching"
+                message="All the nodes should be of the same group/parent node."
+              />
+            ));
+
+            return;
+          }
+
+          if ("position" in block && block.position) {
+            if (group.position == null)
+              group.position = { x: 10_000, y: 10_000 };
+
+            const { x, y } = block.position as XYPosition;
+
+            if (x < group.position.x) group.position.x = x;
+            if (y < group.position.y) group.position.y = y;
+          }
+
+          group.parentNode = block.parentNode;
+          blocks.push({ ...block, parentNode: group.id });
+        } else blocks.push(block);
+      }
+
+      // Adding the group
+      blocks.unshift(group);
+
+      // Updating the canvas with the new blocks
+      set({
+        func: () => Object.values(groupByParentNode(blocks)).flat(),
+      });
+    },
+    {
+      description: "Group",
+      preventDefault: true,
+    },
+  );
+
   return {
     clipboard,
-    copyRef,
-    pasteRef,
+    ref: mergeRefs(copyRef, pasteRef, groupRef),
     set,
   };
 }

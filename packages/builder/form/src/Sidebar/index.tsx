@@ -1,13 +1,11 @@
 import { Sidebar as BuilderSidebar } from "@fibr/builder";
-import { type BlockType, useCanvas } from "@fibr/providers";
 import {
-  CodeGenerator,
   DEFAULT_GROUP,
-  Overview,
-  Palette,
-  astResolver,
   groupByParentNode,
-} from "@fibr/shared";
+  useCanvas,
+  type BlockType,
+} from "@fibr/providers";
+import { CodeGenerator, Overview, Palette, astResolver } from "@fibr/shared";
 import { AddFormDialog } from "./AddFormDialog";
 import { reactHookFormResolver } from "./resolver";
 

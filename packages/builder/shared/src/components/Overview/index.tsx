@@ -1,9 +1,9 @@
 import { SidebarItem } from "@fibr/builder";
-import { useCanvas } from "@fibr/providers";
+import { DEFAULT_GROUP, groupByParentNode, useCanvas } from "@fibr/providers";
 import { ListBulletIcon } from "@heroicons/react/24/outline";
 import { Accordion } from "@rafty/ui";
 import { useEffect, useMemo, useState } from "react";
-import { DEFAULT_GROUP, DndWrapper, Empty, groupByParentNode } from "../utils";
+import { DndWrapper, Empty } from "../utils";
 import { OverviewCard } from "./OverviewCard";
 import { OverviewOverlay } from "./OverviewOverlay";
 

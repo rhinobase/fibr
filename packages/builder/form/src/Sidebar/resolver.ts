@@ -1,5 +1,8 @@
-import type { BlockType } from "@fibr/providers";
-import { DEFAULT_GROUP, groupByParentNode } from "@fibr/shared";
+import {
+  type BlockType,
+  DEFAULT_GROUP,
+  groupByParentNode,
+} from "@fibr/providers";
 
 export type FieldBlockType = BlockType<{
   // Canvas

@@ -4,11 +4,11 @@ import { FormDisplay } from "./FormDisplay";
 
 export function FormBuilderCanvas() {
   const select = useCanvas(({ select }) => select);
-  const { pasteRef } = useClipboard();
+  const { ref } = useClipboard();
 
   return (
     <Canvas
-      ref={pasteRef}
+      ref={ref}
       className="min-h-min py-10"
       onClick={() => select({ selectedBlockIds: null })}
     >

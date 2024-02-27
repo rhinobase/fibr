@@ -1,7 +1,7 @@
 import { type BlockType, Env, useBuilder } from "@fibr/providers";
-import { useCanvas } from "@fibr/providers";
+import { useCanvas, DEFAULT_GROUP, groupByParentNode } from "@fibr/providers";
 import { Loom, WeaverProvider } from "@fibr/react";
-import { DEFAULT_GROUP, DndWrapper, groupByParentNode } from "@fibr/shared";
+import { DndWrapper } from "@fibr/shared";
 import { Text } from "@rafty/ui";
 import type { PropsWithChildren, ReactNode } from "react";
 import { FieldOverlay } from "./FieldOverlay";

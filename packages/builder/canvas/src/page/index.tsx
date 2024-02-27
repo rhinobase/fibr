@@ -6,7 +6,6 @@ import { FormProvider, useForm } from "react-hook-form";
 import { Diagram } from "./Diagram";
 import { NodePadding } from "./NodePadding";
 import { NodeWrapper } from "./NodeWrapper";
-import { mergeRefs } from "@rafty/ui";
 
 const NODE_WRAPPERS: Record<Env, (props: PropsWithChildren) => ReactNode> = {
   [Env.DEVELOPMENT]: NodeWrapper,
@@ -16,11 +15,11 @@ const NODE_WRAPPERS: Record<Env, (props: PropsWithChildren) => ReactNode> = {
 export function PageCanvas() {
   const methods = useForm();
   const currentEnv = useBuilder((state) => state.env.current);
-  const { pasteRef, copyRef } = useClipboard();
+  const { ref } = useClipboard();
 
   return (
     <FormProvider {...methods}>
-      <Canvas ref={mergeRefs(copyRef, pasteRef)}>
+      <Canvas ref={ref}>
         <div className="dark:bg-secondary-950 flex h-full w-full bg-white">
           <WeaverProvider wrapper={NODE_WRAPPERS[currentEnv]}>
             <Diagram />

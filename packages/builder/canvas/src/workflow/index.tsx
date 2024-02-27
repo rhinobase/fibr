@@ -8,14 +8,14 @@ import { useClipboard } from "@fibr/providers";
 import { mergeRefs } from "@rafty/ui";
 
 export function WorkflowCanvas() {
-  const { pasteRef } = useClipboard();
+  const { ref } = useClipboard();
   const { setNodeRef } = useDroppable({
     id: "canvas",
   });
 
   return (
     <Canvas
-      ref={mergeRefs(pasteRef, setNodeRef)}
+      ref={mergeRefs(ref, setNodeRef)}
       className="items-stretch justify-normal"
     >
       <WeaverProvider wrapper={NodeWrapper}>

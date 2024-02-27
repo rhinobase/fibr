@@ -17,12 +17,16 @@ import {
   StringInputSettings,
   TextareaSettings,
 } from "../form/settings";
-import { Page } from "./components";
+import { Group, Page } from "./components";
 import { PageSettings } from "./settings";
 
 export const pageConfig: Record<string, Config> = {
   page: {
     builder: Page,
+    settings: PageSettings,
+  },
+  group: {
+    builder: Group,
     settings: PageSettings,
   },
   string: {
