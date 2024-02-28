@@ -1,5 +1,5 @@
 import { useThread } from "@fibr/react";
-import RaftyIcon from "@rafty/icons";
+import RaftyIcon, { type RaftyIconProps } from "@rafty/icons";
 import { InputGroup, LeftAddon, Prefix, RightAddon, Suffix } from "@rafty/ui";
 import { cva } from "class-variance-authority";
 import { type PropsWithChildren } from "react";
@@ -22,8 +22,8 @@ export type InputWrapperProps = {
     size?: "sm" | "md" | "lg";
     prefixText?: string;
     suffixText?: string;
-    prefixIcon?: string;
-    suffixIcon?: string;
+    prefixIcon?: RaftyIconProps["type"];
+    suffixIcon?: RaftyIconProps["type"];
   };
 };
 

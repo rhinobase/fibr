@@ -5,7 +5,6 @@
     "@fibr/builder": "^0.0.1",
     "@fibr/canvas": "^0.0.1",
     "@fibr/providers": "^1.0.0",
-    "@fibr/react": "^0.0.1",
     "@fibr/shared": "^1.0.0",
     "@heroicons/react": "^2.1.1",
     "@hookform/resolvers": "^3.3.4",
