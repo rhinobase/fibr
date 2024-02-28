@@ -14,5 +14,7 @@
   },
   "peerDependencies": {
     "react": "^18.2.0"
-  }
+  },
+  "sideEffects": false,
+  "types": "./index.esm.d.ts"
 }
