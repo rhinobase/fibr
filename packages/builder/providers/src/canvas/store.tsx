@@ -153,6 +153,8 @@ export const createCanvasStore = ({
           });
       },
       updateId: ({ currentBlockId, newBlockId, shouldEmit = true }) => {
+        if (currentBlockId === newBlockId) return;
+
         const schema = get().schema;
         const blockIndex = schema.findIndex(
           (block) => block.id === currentBlockId,

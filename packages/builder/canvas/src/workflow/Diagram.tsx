@@ -23,13 +23,16 @@ import {
   useStoreApi,
 } from "reactflow";
 import "reactflow/dist/style.css";
+import { CustomEdge } from "./CustomEdge";
+
+const edgeType = { edge: CustomEdge };
 
 const fitViewOptions: FitViewOptions = {
   padding: 0.5,
 };
 
 const defaultEdgeOptions: DefaultEdgeOptions = {
-  animated: true,
+  type: "edge",
 };
 
 const MIN_DISTANCE = 200;
@@ -222,6 +225,7 @@ export function Diagram() {
         proOptions={{ hideAttribution: true }}
         selectionMode={SelectionMode.Partial}
         selectionOnDrag
+        edgeTypes={edgeType}
         panOnScroll
         panOnDrag={[1, 2]}
       >
