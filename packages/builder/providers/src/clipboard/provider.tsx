@@ -85,11 +85,12 @@ function useClipboardManager() {
     "shift+g",
     () => {
       console.log("Grouping");
-      const group: BlockType & { position?: XYPosition } = {
+      const group: BlockType & { position?: XYPosition; extent: string } = {
         id: uniqueId("object"),
         type: "object",
         selected: true,
         data: undefined,
+        extent: "parent",
       };
       const blocks: (BlockType & { position?: XYPosition })[] = [];
 

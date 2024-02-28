@@ -9,8 +9,11 @@ import { MdCropFree, MdInput, MdOutput } from "react-icons/md";
 import { Node, Position } from "reactflow";
 import { ConditionNode, EndNode, StartNode, TransitNode } from "./components";
 import { NodeSettings } from "./settings";
+import { Group } from "../page/components";
+import { PageSettings } from "../page/settings";
 
 export const workflowConfig: Record<string, Config> = {
+  object: { builder: Group, settings: PageSettings },
   start: {
     builder: StartNode,
     settings: NodeSettings,

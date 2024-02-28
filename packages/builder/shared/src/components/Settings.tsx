@@ -23,7 +23,7 @@ export function Settings({ className, ...props }: Settings) {
     () =>
       Object.entries(config).reduce<Record<string, () => ReactNode>>(
         (prev, [name, { settings }]) => {
-          prev[name] = settings;
+          if (settings) prev[name] = settings;
           return prev;
         },
         {},
