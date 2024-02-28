@@ -1,10 +1,11 @@
 import type { RangeTuple } from "fuse.js";
+import type { ReactNode } from "react";
 
 export const highlightMatches = (
   inputText: string,
   regions: readonly RangeTuple[] = [],
 ) => {
-  const children: React.ReactNode[] = [];
+  const children: ReactNode[] = [];
   let nextUnhighlightedRegionStartingIndex = 0;
 
   regions.forEach((region, i) => {

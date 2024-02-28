@@ -1,9 +1,9 @@
 import {
   CanvasProvider,
-  CanvasStoreProps,
   WorkspaceShortcutsWrapper,
+  type CanvasStoreProps,
 } from "@fibr/providers";
-import { type PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { HotkeysProvider } from "react-hotkeys-hook";
 import { BlocksProvider, type BlocksStoreProps } from "../../providers";
 import { ShortcutsDialog } from "./ShortcutsDialog";

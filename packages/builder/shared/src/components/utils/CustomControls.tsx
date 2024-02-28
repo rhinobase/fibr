@@ -1,16 +1,16 @@
 import { Env, useBuilder } from "@fibr/providers";
 import { eventHandler } from "@rafty/shared";
-import { Button, classNames } from "@rafty/ui";
+import { Button as RaftyButton, classNames } from "@rafty/ui";
 import { useEffect } from "react";
 import { HiMinus, HiPlus } from "react-icons/hi";
 import { HiLockClosed, HiLockOpen } from "react-icons/hi2";
 import { PiCornersOut } from "react-icons/pi";
 import {
-  ControlProps,
   Panel,
   useReactFlow,
   useStore,
   useStoreApi,
+  type ControlProps,
 } from "reactflow";
 
 export type CustomControls = ControlProps;
@@ -92,7 +92,7 @@ export function CustomControls({
     >
       {showZoom && (
         <>
-          <CustomButton
+          <Button
             title="zoom in"
             aria-label="zoom in"
             isDisabled={maxZoomReached}
@@ -100,8 +100,8 @@ export function CustomControls({
             onKeyDown={onZoomInHandler}
           >
             <HiPlus />
-          </CustomButton>
-          <CustomButton
+          </Button>
+          <Button
             title="zoom out"
             aria-label="zoom out"
             isDisabled={minZoomReached}
@@ -109,43 +109,43 @@ export function CustomControls({
             onKeyDown={onZoomOutHandler}
           >
             <HiMinus />
-          </CustomButton>
+          </Button>
         </>
       )}
       {showFitView && (
-        <CustomButton
+        <Button
           title="fit view"
           aria-label="fit view"
           onClick={onFitViewHandler}
         >
           <PiCornersOut className="stroke-[3]" />
-        </CustomButton>
+        </Button>
       )}
       {showInteractive && (
-        <CustomButton
+        <Button
           title="toggle interactivity"
           aria-label="toggle interactivity"
           onClick={onToggleInteractivity}
         >
           {isInteractive ? <HiLockOpen /> : <HiLockClosed />}
-        </CustomButton>
+        </Button>
       )}
       {children}
     </Panel>
   );
 }
 
-function CustomButton({
+function Button({
   size = "icon",
   variant = "ghost",
   className,
   ...props
-}: Button) {
+}: RaftyButton) {
   return (
-    <Button
+    <RaftyButton
+      {...props}
       size={size}
       variant={variant}
-      {...props}
       className={classNames("rounded p-1", className)}
     />
   );
