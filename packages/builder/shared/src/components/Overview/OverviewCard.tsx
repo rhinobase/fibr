@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { type BlockType, useCanvas } from "@fibr/providers";
+import { useCanvas, type BlockType } from "@fibr/providers";
 import { eventHandler } from "@rafty/shared";
 import {
   AccordionContent,
@@ -12,7 +12,7 @@ import {
   classNames,
 } from "@rafty/ui";
 import { cva } from "class-variance-authority";
-import { type CSSProperties, HTMLAttributes } from "react";
+import { HTMLAttributes, type CSSProperties } from "react";
 import {
   HiChevronRight,
   HiOutlineEye,
@@ -23,7 +23,7 @@ import { MdDragIndicator } from "react-icons/md";
 import { useBlocks } from "../../providers";
 
 const cardClasses = cva(
-  "transition-all ease-in-out p-0.5 gap-1 cursor-pointer",
+  "transition-all ease-in-out p-0.5 gap-1 cursor-pointer group relative",
   {
     variants: {
       selected: {
@@ -155,11 +155,14 @@ export function OverviewCard({
         hidden={hidden}
         onClick={handleNodeHidden}
         onKeyDown={handleNodeHidden}
+        isSelected={isSelected}
       />
       <DeleteButton
         onClick={handleNodeDelete}
         onKeyDown={handleNodeDelete}
         className={hidden ? "opacity-40" : undefined}
+        isSelected={isSelected}
+        hidden={hidden}
       />
     </>
   );
@@ -247,9 +250,10 @@ function DragHandler({ className, isDragging, ...props }: DragHandler) {
 
 type HideButton = Omit<HTMLAttributes<HTMLSpanElement>, "hidden"> & {
   hidden: boolean;
+  isSelected: boolean;
 };
 
-function HideButton({ className, hidden, ...props }: HideButton) {
+function HideButton({ className, hidden, isSelected, ...props }: HideButton) {
   const Icon = hidden ? HiOutlineEye : HiOutlineEyeOff;
 
   return (
@@ -259,9 +263,11 @@ function HideButton({ className, hidden, ...props }: HideButton) {
         buttonClasses({
           size: "icon",
           variant: "ghost",
+          className: "transition-none",
         }),
         hidden && "opacity-40",
-        "cursor-pointer p-0.5",
+        isSelected || hidden ? "visible" : "invisible group-hover:visible",
+        "absolute right-6 top-1 cursor-pointer p-0.5",
       )}
     >
       <Icon size={14} />
@@ -269,15 +275,28 @@ function HideButton({ className, hidden, ...props }: HideButton) {
   );
 }
 
-type DeleteButton = HTMLAttributes<HTMLSpanElement>;
+type DeleteButton = HTMLAttributes<HTMLSpanElement> & {
+  hidden: boolean;
+  isSelected: boolean;
+};
 
-function DeleteButton({ className, ...props }: DeleteButton) {
+function DeleteButton({
+  className,
+  isSelected,
+  hidden,
+  ...props
+}: DeleteButton) {
   return (
     <span
       {...props}
       className={classNames(
-        buttonClasses({ size: "icon", variant: "ghost" }),
-        "cursor-pointer rounded p-0.5 hover:bg-red-200/40 hover:text-red-500 dark:hover:bg-red-300/10 dark:hover:text-red-300",
+        buttonClasses({
+          size: "icon",
+          variant: "ghost",
+          className: "transition-none",
+        }),
+        isSelected || hidden ? "visible" : "invisible group-hover:visible",
+        "absolute right-0.5 top-1 cursor-pointer rounded p-0.5 hover:bg-red-200/40 hover:text-red-500 dark:hover:bg-red-300/10 dark:hover:text-red-300",
         className,
       )}
     >
