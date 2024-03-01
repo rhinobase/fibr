@@ -52,7 +52,7 @@ export function FormDisplay() {
         }}
       >
         {Object.entries(blueprint).map(([id, canvas]) => (
-          <Loom key={id} id={id} blueprint={canvas} />
+          <Loom key={id} blueprint={canvas} />
         ))}
         <FieldOverlay />
       </DndWrapper>
