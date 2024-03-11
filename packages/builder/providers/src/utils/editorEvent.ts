@@ -9,11 +9,4 @@ export enum EditorEvent {
   BLOCK_DELETION = "block_deletion",
   BLOCK_REPOSITION = "block_reposition",
   BLOCK_DUPLICATION = "block_duplication",
-  // // Layout
-  // LAYOUT_UPDATE = "layout_update",
-  // // Env
-  // ENV_CHANGE = "env_change",
-  // // Tab
-  // ACTIVE_TAB = "active_tab",
-  // ADD_TAB = "add_tab",
 }

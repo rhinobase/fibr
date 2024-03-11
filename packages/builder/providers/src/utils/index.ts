@@ -1,3 +1,3 @@
-export { Env } from "./env";
 export { EditorEvent } from "./editorEvent";
-export { groupByParentNode, DEFAULT_GROUP } from "./groupByParentNode";
+export { Env } from "./env";
+export { DEFAULT_GROUP, groupByParentNode } from "./groupByParentNode";

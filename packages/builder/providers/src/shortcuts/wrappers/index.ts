@@ -1,2 +1,2 @@
-export * from "./CanvasShortcuts";
-export * from "./WorkspaceShortcuts";
+export { CanvasShortcutsWrapper } from "./CanvasShortcuts";
+export { EditorShortcutsWrapper } from "./EditorShortcuts";

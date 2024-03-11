@@ -1,5 +1,5 @@
 import { Canvas as BuilderCanvas } from "@fibr/builder";
-import { ShortcutsWrapper, useCanvas } from "@fibr/providers";
+import { CanvasShortcutsWrapper, useCanvas } from "@fibr/providers";
 import { FibrProvider } from "@fibr/react";
 import { Toast } from "@rafty/ui";
 import { type ReactNode, forwardRef, useEffect, useMemo } from "react";
@@ -43,11 +43,11 @@ export const Canvas = forwardRef<HTMLDivElement, BuilderCanvas>(
     );
 
     return (
-      <ShortcutsWrapper>
+      <CanvasShortcutsWrapper>
         <FibrProvider plugins={builders}>
           <BuilderCanvas ref={forwardedRef} {...props} />
         </FibrProvider>
-      </ShortcutsWrapper>
+      </CanvasShortcutsWrapper>
     );
   },
 );

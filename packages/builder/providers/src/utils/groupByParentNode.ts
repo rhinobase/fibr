@@ -1,6 +1,7 @@
 import { BlockType } from "../canvas";
 
 export const DEFAULT_GROUP = "__default";
+
 export function groupByParentNode<T = undefined>(arr: BlockType<T>[]) {
   return arr.reduce<Record<string, BlockType<T>[] | undefined>>(
     (prev, cur) => {

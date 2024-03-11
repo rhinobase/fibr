@@ -1,1 +1,1 @@
-export * from "./wrappers";
+export { CanvasShortcutsWrapper, EditorShortcutsWrapper } from "./wrappers";
