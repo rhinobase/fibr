@@ -10,16 +10,16 @@ import { AddFormDialog } from "./AddFormDialog";
 import { reactHookFormResolver } from "./resolver";
 
 export function Sidebar() {
-  const { add, blocks } = useCanvas(({ add, schema }) => ({
+  const { add, schema } = useCanvas(({ add, schema }) => ({
     add,
-    blocks: schema,
+    schema,
   }));
 
   return (
     <BuilderSidebar>
       <Palette
         onSelect={(value) => {
-          const parentNode = findParent(blocks);
+          const parentNode = findParent(schema);
           add({ blockData: { ...value, parentNode } });
         }}
       />
