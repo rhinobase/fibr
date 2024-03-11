@@ -28,7 +28,7 @@ export const Canvas = forwardRef<HTMLDivElement, BuilderCanvas>(
             message="One or more fields in schema are not available."
           />
         ));
-    }, [validateSchema]);
+    }, [validateSchema, schema]);
 
     const builders = useMemo(
       () =>

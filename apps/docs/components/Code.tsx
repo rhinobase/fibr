@@ -10,8 +10,8 @@ import {
 } from "@rafty/ui";
 import {
   Children,
-  HTMLAttributes,
-  PropsWithChildren,
+  type HTMLAttributes,
+  type PropsWithChildren,
   createContext,
   isValidElement,
   useContext,
@@ -70,11 +70,11 @@ function CopyButton({ code }: CopyButton) {
         variant="ghost"
         size="sm"
         className="text-secondary-100 invisible rounded-full group-hover:visible"
-        onClick={() => {
+        onClick={() =>
           window.navigator.clipboard.writeText(code).then(() => {
             setCopyCount((count) => count + 1);
-          });
-        }}
+          })
+        }
         leftIcon={
           copied ? (
             <CheckIcon

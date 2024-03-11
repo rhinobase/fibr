@@ -17,6 +17,7 @@ import {
   PanelGroup,
 } from "react-resizable-panels";
 import { ResizeHandle } from "./ResizeHandle";
+import { eventHandler } from "@rafty/shared";
 
 const DEFAULT_SIZE = 20;
 const MIN_WIDTH = 2.4;
@@ -98,6 +99,17 @@ function SidebarTray({ children, expandPanel, collapsePanel }: SidebarTray) {
     else collapsePanel?.();
   }, [isExpanded, expandPanel, collapsePanel]);
 
+  const setActiveTab = (name: string) =>
+    eventHandler(() => {
+      if (active === name && isExpanded) {
+        setActive(null);
+        collapsePanel?.();
+      } else {
+        setActive(name);
+        if (!isExpanded) expandPanel?.();
+      }
+    });
+
   return (
     <Tab
       value={isExpanded ? active ?? undefined : "None"}
@@ -112,21 +124,12 @@ function SidebarTray({ children, expandPanel, collapsePanel }: SidebarTray) {
         {Object.entries(all).map(([name, { icon, label }]) => (
           <Tooltip key={name}>
             <TooltipTrigger asChild>
+              {/* This extra div is placed to avoid passing tooltip data props to tab trigger */}
               <div>
                 <TabTrigger
                   value={name}
-                  onClick={(event) => {
-                    event.preventDefault();
-                    event.stopPropagation();
-
-                    if (active === name && isExpanded) {
-                      setActive(null);
-                      collapsePanel?.();
-                    } else {
-                      setActive(name);
-                      if (!isExpanded) expandPanel?.();
-                    }
-                  }}
+                  onClick={setActiveTab(name)}
+                  onKeyDown={setActiveTab(name)}
                   className="hover:text-secondary-700 dark:hover:text-secondary-300 p-2"
                 >
                   {icon}

@@ -17,6 +17,7 @@ import {
   PanelGroup,
 } from "react-resizable-panels";
 import { ResizeHandle } from "./ResizeHandle";
+import { eventHandler } from "@rafty/shared";
 
 const DEFAULT_SIZE = 20;
 
@@ -75,6 +76,17 @@ function SidebarTray({ children }: SidebarTray) {
     }),
   );
 
+  const setActiveTab = (name: string) =>
+    eventHandler(() => {
+      if (isExpanded && active === name) {
+        setActive(null);
+        toggle(false);
+      } else {
+        setActive(name);
+        toggle(true);
+      }
+    });
+
   return (
     <Tab
       value={isExpanded ? active ?? undefined : "None"}
@@ -92,18 +104,8 @@ function SidebarTray({ children }: SidebarTray) {
               <div className="focus:ring-1">
                 <TabTrigger
                   value={name}
-                  onClick={(event) => {
-                    event.preventDefault();
-                    event.stopPropagation();
-
-                    if (isExpanded && active === name) {
-                      setActive(null);
-                      toggle(false);
-                    } else {
-                      setActive(name);
-                      toggle(true);
-                    }
-                  }}
+                  onClick={setActiveTab(name)}
+                  onKeyDown={setActiveTab(name)}
                   className="hover:text-secondary-700 data-[state=active]:bg-primary-100 data-[state=active]:hover:bg-primary-100 rounded p-2 data-[orientation=vertical]:border-r-0"
                 >
                   {icon}

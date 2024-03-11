@@ -1,5 +1,5 @@
 import { SidebarItem } from "@fibr/builder";
-import { type BlockType, useCanvas } from "@fibr/providers";
+import { useCanvas, type BlockType } from "@fibr/providers";
 import {
   CheckIcon,
   CodeBracketSquareIcon,
@@ -15,7 +15,7 @@ import {
   useBoolean,
 } from "@rafty/ui";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
-import { ReactNode, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { CodeHighlighter } from "./Highlight";
 
 export type CodeGenerator = {
@@ -30,7 +30,7 @@ export type CodeGenerator = {
 
 export function CodeGenerator({ resolvers }: CodeGenerator) {
   const [, copyToClipboard] = useCopyToClipboard();
-  const [copied, toggle] = useBoolean();
+  const [isCopied, toggleCopied] = useBoolean();
   const [tabValue, setTabValue] = useState(0);
 
   // Schema code
@@ -43,20 +43,20 @@ export function CodeGenerator({ resolvers }: CodeGenerator) {
   );
 
   useEffect(() => {
-    if (!copied) return;
+    if (!isCopied) return;
 
     // Use setTimeout to update the message after 1500 milliseconds (1.5 seconds)
     const timeoutId = setTimeout(() => {
-      toggle(false);
+      toggleCopied(false);
     }, 1500);
 
     // Cleanup function to clear the timeout if the component unmounts
     return () => clearTimeout(timeoutId);
-  }, [copied, toggle]);
+  }, [isCopied, toggleCopied]);
 
   const handleCopy = () => {
     copyToClipboard(computedResolvers[tabValue].code);
-    toggle(true);
+    toggleCopied(true);
   };
 
   return (
@@ -71,9 +71,10 @@ export function CodeGenerator({ resolvers }: CodeGenerator) {
           variant="ghost"
           className="ml-auto rounded p-0.5"
           onClick={handleCopy}
+          onKeyDown={handleCopy}
           title="Copy code"
         >
-          {copied ? (
+          {isCopied ? (
             <CheckIcon className="size-4 stroke-2 text-green-500" />
           ) : (
             <DocumentDuplicateIcon className="size-4 stroke-2" />
@@ -92,10 +93,7 @@ export function CodeGenerator({ resolvers }: CodeGenerator) {
             <TabTrigger
               key={name}
               value={String(index)}
-              className={classNames(
-                icon && "flex items-center gap-1",
-                "group/code-tab-trigger",
-              )}
+              className={classNames(icon && "flex items-center gap-1")}
             >
               {icon}
               {label}
