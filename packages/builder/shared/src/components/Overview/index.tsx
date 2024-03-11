@@ -25,11 +25,14 @@ export function Overview({ action, ...props }: Overview) {
 
 function FieldsRender({ enableDragging }: Overview) {
   const [isOpen, setOpen] = useState<string[]>([]);
-  const { schema, select, move } = useCanvas(({ schema, move, select }) => ({
-    schema,
-    select,
-    move,
-  }));
+
+  const { schema, selectBlock, moveBlock } = useCanvas(
+    ({ schema, move, select }) => ({
+      schema,
+      selectBlock: select,
+      moveBlock: move,
+    }),
+  );
 
   const parents = useMemo(() => {
     const blocks = schema.filter(({ selected }) => selected);
@@ -78,13 +81,13 @@ function FieldsRender({ enableDragging }: Overview) {
     <DndWrapper
       items={schema.map(({ id }) => id)}
       onDragStart={({ active }) =>
-        select({
+        selectBlock({
           selectedBlockIds: String(active.id),
         })
       }
       onDragEnd={({ active, over }) => {
         if (over && active.id !== over.id)
-          move({
+          moveBlock({
             sourceBlockId: String(active.id),
             targetBlockId: String(over.id),
           });

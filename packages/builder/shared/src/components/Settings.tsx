@@ -8,14 +8,13 @@ import { useBlocks } from "../providers";
 export type Settings = BuilderSettings;
 
 export function Settings({ className, ...props }: Settings) {
-  const { selectedBlocks, updateBlock, remove, duplicate } = useCanvas(
-    ({ schema, update, remove, duplicate }) => ({
+  const { selectedBlocks, updateBlock, removeBlock, duplicateBlock } =
+    useCanvas(({ schema, update, remove, duplicate }) => ({
       selectedBlocks: schema.filter((block) => block.selected),
       updateBlock: update,
-      remove,
-      duplicate,
-    }),
-  );
+      removeBlock: remove,
+      duplicateBlock: duplicate,
+    }));
 
   const config = useBlocks((state) => state.config);
 
@@ -72,14 +71,14 @@ export function Settings({ className, ...props }: Settings) {
         </div>
         <div className="flex justify-between">
           <Button
-            onClick={() => remove({ blockIds: ids })}
+            onClick={() => removeBlock({ blockIds: ids })}
             colorScheme="error"
             size="sm"
           >
             Delete
           </Button>
           <Button
-            onClick={() => duplicate({ originalBlockIds: ids })}
+            onClick={() => duplicateBlock({ originalBlockIds: ids })}
             size="sm"
           >
             Duplicate
