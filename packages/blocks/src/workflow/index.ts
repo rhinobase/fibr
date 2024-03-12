@@ -6,7 +6,7 @@ import {
   LuGitPullRequestDraft,
 } from "react-icons/lu";
 import { MdCropFree, MdInput, MdOutput } from "react-icons/md";
-import { Node, Position } from "reactflow";
+import { type Node, Position } from "reactflow";
 import { ConditionNode, EndNode, StartNode, TransitNode } from "./components";
 import { NodeSettings } from "./settings";
 import { Group } from "../page/components";

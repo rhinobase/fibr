@@ -1,5 +1,5 @@
 "use client";
-import { type BlockType, useCanvas } from "@fibr/providers";
+import { useCanvas, type BlockType } from "@fibr/providers";
 import { Thread } from "@fibr/react";
 import { useBlocks } from "@fibr/shared";
 import { useTheme } from "next-themes";
@@ -7,29 +7,24 @@ import { useCallback, useMemo } from "react";
 import {
   Background,
   BackgroundVariant,
-  DefaultEdgeOptions,
-  FitViewOptions,
-  Node,
-  NodeDragHandler,
-  type NodeTypes,
-  OnNodesChange,
   ReactFlow,
   SelectionMode,
   applyNodeChanges,
+  type CoordinateExtent,
+  type DefaultEdgeOptions,
+  type FitViewOptions,
+  type Node,
+  type NodeDragHandler,
+  type NodeTypes,
+  type OnNodesChange,
+  type ProOptions,
 } from "reactflow";
 import "reactflow/dist/style.css";
 
-const fitViewOptions: FitViewOptions = {
-  padding: 0.5,
-};
-
-const defaultEdgeOptions: DefaultEdgeOptions = {
-  animated: true,
-};
-
 export function Diagram() {
   const { resolvedTheme } = useTheme();
-  const config = useBlocks((state) => state.config);
+
+  const config = useBlocks(({ config }) => config);
 
   const { nodes, set } = useCanvas(({ schema, set }) => ({
     nodes: schema as Node[],
@@ -45,7 +40,7 @@ export function Diagram() {
     [set],
   );
 
-  const nodeTypes = useMemo(
+  const nodeTypes: NodeTypes = useMemo(
     () =>
       Object.keys(config).reduce<NodeTypes>((prev, name) => {
         prev[name] = Thread;
@@ -66,6 +61,23 @@ export function Diagram() {
     [set],
   );
 
+  const fitViewOptions: FitViewOptions = {
+    padding: 0.5,
+  };
+
+  const defaultEdgeOptions: DefaultEdgeOptions = {
+    animated: true,
+  };
+
+  const proOptions: ProOptions = {
+    hideAttribution: true,
+  };
+
+  const translateExtent: CoordinateExtent = [
+    [-683, -384],
+    [2049, 1152],
+  ];
+
   return (
     <div className="flex-1">
       <ReactFlow
@@ -79,13 +91,10 @@ export function Diagram() {
         fitViewOptions={fitViewOptions}
         defaultEdgeOptions={defaultEdgeOptions}
         nodeTypes={nodeTypes}
-        proOptions={{ hideAttribution: true }}
+        proOptions={proOptions}
         selectionMode={SelectionMode.Partial}
         selectionOnDrag
-        translateExtent={[
-          [-683, -384],
-          [2049, 1152],
-        ]}
+        translateExtent={translateExtent}
       >
         <Background
           variant={BackgroundVariant.Lines}

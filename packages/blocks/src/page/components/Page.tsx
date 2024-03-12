@@ -1,7 +1,5 @@
 import { useDroppable } from "@dnd-kit/core";
 
-export type Page = { id: string };
-
 export function Page() {
   const { setNodeRef } = useDroppable({
     id: "canvas",
