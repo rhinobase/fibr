@@ -1,7 +1,7 @@
 import { DndContext, pointerWithin } from "@dnd-kit/core";
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 import { useCanvas } from "@fibr/providers";
-import { type PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { type Node, useReactFlow } from "reactflow";
 
 export function PageDndWrapper(props: PropsWithChildren) {

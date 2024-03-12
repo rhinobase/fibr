@@ -2,7 +2,7 @@ import { useThread } from "@fibr/react";
 import { classNames } from "@rafty/ui";
 import type { PropsWithChildren } from "react";
 
-export function FieldPadding({ children }: PropsWithChildren) {
+export function FieldPadding(props: PropsWithChildren) {
   const { type } = useThread();
 
   return (
@@ -12,7 +12,7 @@ export function FieldPadding({ children }: PropsWithChildren) {
         "w-full border border-transparent empty:hidden",
       )}
     >
-      {children}
+      {props.children}
     </div>
   );
 }

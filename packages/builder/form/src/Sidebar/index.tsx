@@ -10,9 +10,9 @@ import { AddFormDialog } from "./AddFormDialog";
 import { reactHookFormResolver } from "./resolver";
 
 export function Sidebar() {
-  const { add, schema } = useCanvas(({ add, schema }) => ({
-    add,
+  const { schema, addBlock } = useCanvas(({ add, schema }) => ({
     schema,
+    addBlock: add,
   }));
 
   return (
@@ -20,7 +20,7 @@ export function Sidebar() {
       <Palette
         onSelect={(value) => {
           const parentNode = findParent(schema);
-          add({ blockData: { ...value, parentNode } });
+          addBlock({ blockData: { ...value, parentNode } });
         }}
       />
       <Overview action={<AddFormDialog />} enableDragging />
@@ -45,6 +45,7 @@ export function Sidebar() {
 }
 
 const GROUP_TYPES = ["canvas", "object"];
+
 function findParent(context: BlockType[]) {
   const active = context.filter((block) => block.selected);
   const groups = groupByParentNode(context);

@@ -1,52 +1,43 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
-import { type BlockType, useCanvas } from "@fibr/providers";
+import { useCanvas, type BlockType } from "@fibr/providers";
 import { Thread } from "@fibr/react";
 import { useBlocks } from "@fibr/shared";
 import { useCallback, useMemo } from "react";
 import {
   Background,
-  Connection,
-  DefaultEdgeOptions,
-  Edge,
-  FitViewOptions,
-  Node,
-  NodeDragHandler,
-  type NodeTypes,
-  OnEdgesChange,
-  OnNodesChange,
   ReactFlow,
   SelectionMode,
   addEdge,
   applyEdgeChanges,
   applyNodeChanges,
   useStoreApi,
+  type DefaultEdgeOptions,
+  type Edge,
+  type EdgeTypes,
+  type FitViewOptions,
+  type Node,
+  type NodeDragHandler,
+  type NodeTypes,
+  type OnConnect,
+  type OnEdgesChange,
+  type OnNodesChange,
+  type ProOptions,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import { CustomEdge } from "./CustomEdge";
-
-const edgeType = { edge: CustomEdge };
-
-const fitViewOptions: FitViewOptions = {
-  padding: 0.5,
-};
-
-const defaultEdgeOptions: DefaultEdgeOptions = {
-  type: "edge",
-};
 
 const MIN_DISTANCE = 200;
 
 export function Diagram() {
   const store = useStoreApi();
 
-  const config = useBlocks((state) => state.config);
+  const config = useBlocks(({ config }) => config);
 
-  const { nodes, edges, set } = useCanvas(({ schema: blocks, set }) => {
+  const { nodes, edges, set } = useCanvas(({ schema, set }) => {
     const nodes: Node[] = [];
     const edges: Edge[] = [];
 
-    for (const block of blocks) {
+    for (const block of schema) {
       if (block.type === "edge") edges.push(block as Edge);
       else nodes.push(block as Node);
     }
@@ -57,6 +48,16 @@ export function Diagram() {
       set,
     };
   });
+
+  const customEdgeTypes: EdgeTypes = { edge: CustomEdge };
+
+  const fitViewOptions: FitViewOptions = {
+    padding: 0.5,
+  };
+
+  const defaultEdgeOptions: DefaultEdgeOptions = {
+    type: "edge",
+  };
 
   const onNodesChange: OnNodesChange = useCallback(
     (changes) =>
@@ -77,8 +78,8 @@ export function Diagram() {
     [set],
   );
 
-  const onConnect = useCallback(
-    (params: Connection) =>
+  const onConnect: OnConnect = useCallback(
+    (params) =>
       set({
         func: (eds) =>
           addEdge({ ...params, type: "edge" }, eds as Edge[]) as BlockType[],
@@ -86,7 +87,7 @@ export function Diagram() {
     [set],
   );
 
-  const nodeTypes = useMemo(
+  const customNodeTypes: NodeTypes = useMemo(
     () =>
       Object.keys(config).reduce<NodeTypes>((prev, name) => {
         prev[name] = Thread;
@@ -169,7 +170,6 @@ export function Diagram() {
             )
           ) {
             closeEdge.className = "temp";
-            // @ts-ignore
             nextEdges.push(closeEdge);
           }
           return nextEdges;
@@ -196,7 +196,6 @@ export function Diagram() {
                 ne.target === closeEdge.target,
             )
           )
-            // @ts-ignore
             nextEdges.push(closeEdge);
 
           return nextEdges;
@@ -207,12 +206,17 @@ export function Diagram() {
     [getClosestEdge, set],
   );
 
+  const proOptions: ProOptions = {
+    hideAttribution: true,
+  };
+
   return (
     <div className="flex-1">
       <ReactFlow
         nodes={nodes}
         edges={edges}
         nodesConnectable
+        nodeTypes={customNodeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onNodeDragStart={onNodeDragStart}
@@ -221,13 +225,12 @@ export function Diagram() {
         onConnect={onConnect}
         fitViewOptions={fitViewOptions}
         defaultEdgeOptions={defaultEdgeOptions}
-        nodeTypes={nodeTypes}
-        proOptions={{ hideAttribution: true }}
+        edgeTypes={customEdgeTypes}
         selectionMode={SelectionMode.Partial}
         selectionOnDrag
-        edgeTypes={edgeType}
         panOnScroll
         panOnDrag={[1, 2]}
+        proOptions={proOptions}
       >
         <Background />
       </ReactFlow>

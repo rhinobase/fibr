@@ -16,12 +16,12 @@ const ClipboardContext = createContext<ReturnType<
   typeof useClipboardManager
 > | null>(null);
 
-export function ClipboardProvider({ children, ...props }: PropsWithChildren) {
+export function ClipboardProvider(props: PropsWithChildren) {
   const value = useClipboardManager();
 
   return (
     <ClipboardContext.Provider value={value}>
-      {children}
+      {props.children}
     </ClipboardContext.Provider>
   );
 }

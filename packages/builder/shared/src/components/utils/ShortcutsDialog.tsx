@@ -16,13 +16,13 @@ import {
 import Fuse, { type RangeTuple } from "fuse.js";
 import {
   Fragment,
-  PropsWithChildren,
+  type PropsWithChildren,
   useEffect,
   useMemo,
   useState,
 } from "react";
 import { useHotkeysContext } from "react-hotkeys-hook";
-import { Hotkey } from "react-hotkeys-hook/dist/types";
+import type { Hotkey } from "react-hotkeys-hook/dist/types";
 import { Empty } from "./Empty";
 import { highlightMatches } from "./HightlightMatches";
 
@@ -146,7 +146,7 @@ export function ShortcutsDialog() {
   );
 }
 
-type KeyComponent = PropsWithChildren & Pick<Kbd, "className">;
+type KeyComponent = PropsWithChildren<Pick<Kbd, "className">>;
 
 function KeyComponent({ children, className }: KeyComponent) {
   return (

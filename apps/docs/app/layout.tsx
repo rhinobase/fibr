@@ -1,5 +1,5 @@
-import { type Metadata } from "next";
-import { PropsWithChildren } from "react";
+import type { Metadata } from "next";
+import type { PropsWithChildren } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -9,11 +9,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({ children }: PropsWithChildren) {
+export default async function RootLayout(props: PropsWithChildren) {
   return (
     <html lang="en" className="h-full" suppressHydrationWarning>
       <body className="dark:bg-secondary-950 flex min-h-full bg-white antialiased">
-        {children}
+        {props.children}
       </body>
     </html>
   );

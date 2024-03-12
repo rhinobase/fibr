@@ -1,6 +1,6 @@
 import { useThread } from "@fibr/react";
 import { classNames } from "@rafty/ui";
-import { type PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import type { Node } from "reactflow";
 
 export function NodeWrapper(props: PropsWithChildren) {

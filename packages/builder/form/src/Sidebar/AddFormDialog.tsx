@@ -33,12 +33,13 @@ export function AddFormDialog() {
 const schema = z.object({
   title: z
     .string()
-    .min(1, "Enter valid form name")
+    .min(4, "Enter valid form name")
     .max(50, "Form name is too long"),
 });
 
 function AddForm() {
   const add = useCanvas(({ add }) => add);
+
   const {
     handleSubmit,
     register,
@@ -49,17 +50,19 @@ function AddForm() {
 
   return (
     <form
-      onSubmit={handleSubmit(({ title }) =>
-        add({
-          blockData: {
-            data: { title },
-            type: "canvas",
-          },
-        }),
+      onSubmit={handleSubmit(
+        (data) =>
+          add({
+            blockData: {
+              data,
+              type: "canvas",
+            },
+          }),
+        console.error,
       )}
       className="space-y-3"
     >
-      <FieldControl name="title" isInvalid={errors.title !== null}>
+      <FieldControl name="title" isInvalid={errors.title !== null} isRequired>
         <InputField size="sm" {...register("title")} />
         <ErrorMessage>{errors.title?.message}</ErrorMessage>
       </FieldControl>

@@ -1,6 +1,6 @@
 import { useThread } from "@fibr/react";
 import { FieldControl, Label, Text, classNames } from "@rafty/ui";
-import { Fragment, PropsWithChildren } from "react";
+import { Fragment, type PropsWithChildren } from "react";
 import { FieldErrorMessage } from "./FieldErrorMessage";
 import { TooltipWrapper } from "./TooltipWrapper";
 
@@ -26,7 +26,7 @@ export function FieldWrapper({ className, children }: FieldWrapper) {
 
   const LabelAndDescriptionWrapper =
     label && description
-      ? ({ children }: PropsWithChildren) => <div>{children}</div>
+      ? (props: PropsWithChildren) => <div {...props} />
       : Fragment;
 
   return (

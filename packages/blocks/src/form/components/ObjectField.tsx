@@ -1,6 +1,6 @@
 import { Thread, type ThreadType, useThread } from "@fibr/react";
 import { Label, Text } from "@rafty/ui";
-import { Fragment, PropsWithChildren } from "react";
+import { Fragment, type PropsWithChildren } from "react";
 
 export type ObjectField = {
   blocks?: Record<string, ThreadType>;
@@ -15,7 +15,7 @@ export function ObjectField() {
 
   const LabelAndDescriptionWrapper =
     label && description
-      ? ({ children }: PropsWithChildren) => <div>{children}</div>
+      ? (props: PropsWithChildren) => <div {...props} />
       : Fragment;
 
   return (

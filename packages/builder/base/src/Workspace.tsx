@@ -1,16 +1,17 @@
-import { BuilderProvider, type CreateBuilderStoreProps } from "@fibr/providers";
 import {
-  type EditorEventBusProps,
+  BuilderProvider,
   EventManagerProvider,
+  type CreateBuilderStoreProps,
+  type EditorEventBusProps,
 } from "@fibr/providers";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { Toaster } from "react-hot-toast";
 
-export function Workspace({
-  children,
-  initialEvents,
-  ...props
-}: PropsWithChildren<CreateBuilderStoreProps & EditorEventBusProps>) {
+export type Workspace = PropsWithChildren<
+  CreateBuilderStoreProps & EditorEventBusProps
+>;
+
+export function Workspace({ children, initialEvents, ...props }: Workspace) {
   return (
     <EventManagerProvider initialEvents={initialEvents}>
       <BuilderProvider {...props}>

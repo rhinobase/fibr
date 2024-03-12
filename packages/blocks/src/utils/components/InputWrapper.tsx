@@ -2,7 +2,7 @@ import { useThread } from "@fibr/react";
 import RaftyIcon, { type RaftyIconProps } from "@rafty/icons";
 import { InputGroup, LeftAddon, Prefix, RightAddon, Suffix } from "@rafty/ui";
 import { cva } from "class-variance-authority";
-import { type PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 
 const addonTextClasses = cva(
   "text-secondary-600 dark:text-secondary-400 font-medium",
@@ -27,9 +27,7 @@ export type InputWrapperProps = {
   };
 };
 
-export type InputWrapper = PropsWithChildren;
-
-export function InputWrapper({ children }: InputWrapper) {
+export function InputWrapper(props: PropsWithChildren) {
   const {
     data: { prefixIcon, prefixText, suffixIcon, size = "md", suffixText },
   } = useThread<InputWrapperProps>();
@@ -46,7 +44,7 @@ export function InputWrapper({ children }: InputWrapper) {
           <RaftyIcon type={prefixIcon} className="opacity-60" />
         </Prefix>
       )}
-      {children}
+      {props.children}
       {suffixIcon && (
         <Suffix>
           <RaftyIcon type={suffixIcon} />

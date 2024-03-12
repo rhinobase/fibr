@@ -14,7 +14,7 @@ import {
 } from "react";
 import { QuickActions } from "./QuickActions";
 
-export function FieldWrapper({ children }: PropsWithChildren) {
+export function FieldWrapper(props: PropsWithChildren) {
   const { isOverlay, ...field } = useThread<
     BlockType & { isOverlay?: boolean }
   >();
@@ -34,12 +34,11 @@ export function FieldWrapper({ children }: PropsWithChildren) {
     isDragging,
   } = useSortable({ id: field.id, data: field });
 
-  const onSelect = eventHandler((event) => {
-    event.stopPropagation();
+  const onSelect = eventHandler(() =>
     select({
       selectedBlockIds: field.id,
-    });
-  });
+    }),
+  );
 
   if (field.type === "canvas")
     return (
@@ -49,7 +48,7 @@ export function FieldWrapper({ children }: PropsWithChildren) {
         onClick={onSelect}
         onKeyDown={onSelect}
       >
-        {children}
+        {props.children}
       </Wrapper>
     );
 
@@ -83,7 +82,7 @@ export function FieldWrapper({ children }: PropsWithChildren) {
             "dark:hover:border-secondary-900 hover:shadow-[0_1px_5px_1px_rgba(0,0,0,0.1)] dark:hover:shadow-none",
         )}
       >
-        {children}
+        {props.children}
       </Wrapper>
     </Component>
   );
@@ -101,11 +100,11 @@ const wrapperClasses = cva(
   },
 );
 
-type WrapperProps = HTMLAttributes<HTMLDivElement> & {
+type Wrapper = HTMLAttributes<HTMLDivElement> & {
   selected: boolean;
 };
 
-const Wrapper = forwardRef<HTMLDivElement, WrapperProps>(
+const Wrapper = forwardRef<HTMLDivElement, Wrapper>(
   ({ className, selected, ...props }, forwardedRef) => (
     <div
       {...props}

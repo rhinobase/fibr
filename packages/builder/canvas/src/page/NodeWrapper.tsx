@@ -1,6 +1,6 @@
 import { useThread } from "@fibr/react";
 import { classNames, useBoolean } from "@rafty/ui";
-import { type PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import {
   NodeResizeControl,
   ResizeControlVariant,
@@ -10,7 +10,7 @@ import {
 
 export const PANELS = ["page", "object"];
 
-export function NodeWrapper({ children }: PropsWithChildren) {
+export function NodeWrapper(props: PropsWithChildren) {
   const { type, selected } = useThread<Node>();
 
   const isGroup = PANELS.includes(type);
@@ -31,25 +31,27 @@ export function NodeWrapper({ children }: PropsWithChildren) {
           <ResizeNodeBorder position="right" />
         </>
       )}
-      {children}
+      {props.children}
     </div>
   );
 }
 
-function ResizeNodeBorder({ position }: { position: ControlPosition }) {
+type ResizeNodeBorder = { position: ControlPosition };
+
+function ResizeNodeBorder(props: ResizeNodeBorder) {
   const [resizing, toggle] = useBoolean();
 
   return (
     <NodeResizeControl
       variant={ResizeControlVariant.Line}
-      position={position}
+      position={props.position}
       style={{ border: "none" }}
       onResizeStart={() => toggle(true)}
       onResizeEnd={() => toggle(false)}
     >
       <div
         className={classNames(
-          position === "left" ? "-left-px" : "-right-px",
+          props.position === "left" ? "-left-px" : "-right-px",
           resizing ? "bg-primary-500 dark:bg-primary-400" : "bg-secondary-100",
           "ring-primary-500 dark:ring-primary-400 absolute top-1/2 h-8 w-1 -translate-y-1/2 rounded-md ring-1",
         )}

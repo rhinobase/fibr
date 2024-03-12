@@ -21,7 +21,7 @@ import { eventHandler } from "@rafty/shared";
 
 const DEFAULT_SIZE = 20;
 
-export function FloatingSidebar({ children }: PropsWithChildren) {
+export function FloatingSidebar(props: PropsWithChildren) {
   const sidebarRef = useRef<ImperativePanelHandle>(null);
 
   const { isProduction, defaultSize, isDisabled } = useBuilder(
@@ -49,7 +49,7 @@ export function FloatingSidebar({ children }: PropsWithChildren) {
           maxSize={40}
           defaultSize={defaultSize}
         >
-          <SidebarTray>{children}</SidebarTray>
+          <SidebarTray>{props.children}</SidebarTray>
         </Panel>
         <ResizeHandle
           disabled={isDisabled}
@@ -61,9 +61,7 @@ export function FloatingSidebar({ children }: PropsWithChildren) {
   );
 }
 
-type SidebarTray = PropsWithChildren;
-
-function SidebarTray({ children }: SidebarTray) {
+function SidebarTray(props: PropsWithChildren) {
   const { setNodeRef } = useDroppable({ id: "sidebar" });
 
   const { all, active, setActive, toggle, isExpanded } = useBuilder(
@@ -117,7 +115,7 @@ function SidebarTray({ children }: SidebarTray) {
         ))}
       </TabList>
       <div className="dark:bg-secondary-950 h-full w-full overflow-hidden rounded-md bg-white shadow-md">
-        {children}
+        {props.children}
       </div>
     </Tab>
   );

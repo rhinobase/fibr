@@ -1,10 +1,10 @@
 import glob from "fast-glob";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { Layout } from "../../components/Layout";
-import { type Section } from "../../components/SectionProvider";
+import type { Section } from "../../components/SectionProvider";
 import { Providers } from "./providers";
 
-export default async function RootLayout({ children }: PropsWithChildren) {
+export default async function RootLayout(props: PropsWithChildren) {
   const pages = await glob("**/*.mdx", { cwd: "./app/(docs)" });
   const allSectionsEntries = (await Promise.all(
     pages.map(async (filename) => [
@@ -17,7 +17,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
   return (
     <Providers>
       <div className="w-full">
-        <Layout allSections={allSections}>{children}</Layout>
+        <Layout allSections={allSections}>{props.children}</Layout>
       </div>
     </Providers>
   );

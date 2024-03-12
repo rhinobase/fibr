@@ -4,7 +4,7 @@ import { useHotkeys } from "react-hotkeys-hook";
 import { useBuilder } from "../../builder";
 import { Env } from "../../utils";
 
-export function EditorShortcutsWrapper({ children }: PropsWithChildren) {
+export function EditorShortcutsWrapper(props: PropsWithChildren) {
   const { layout, setLayout, setActive, currentEnv, setEnv } = useBuilder(
     ({ layout, setLayout, tabs: { setActive }, env: { current, change } }) => ({
       layout,
@@ -105,5 +105,5 @@ export function EditorShortcutsWrapper({ children }: PropsWithChildren) {
     [layout.sidebar],
   );
 
-  return children;
+  return props.children;
 }

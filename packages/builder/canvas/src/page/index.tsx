@@ -14,7 +14,7 @@ const NODE_WRAPPERS: Record<Env, (props: PropsWithChildren) => ReactNode> = {
 
 export function PageCanvas() {
   const methods = useForm();
-  const currentEnv = useBuilder((state) => state.env.current);
+  const currentEnv = useBuilder(({ env }) => env.current);
   const { ref } = useClipboard();
 
   return (

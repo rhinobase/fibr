@@ -5,9 +5,7 @@ import { useState, type PropsWithChildren } from "react";
 import { ActionButtons } from "./ActionButtons";
 import { EditIdField } from "./EditIdField";
 
-export type QuickActions = PropsWithChildren;
-
-export function QuickActions({ children }: QuickActions) {
+export function QuickActions(props: PropsWithChildren) {
   const { selected = false } = useThread<BlockType>();
   const [isHover, setHover] = useState(false);
 
@@ -18,7 +16,7 @@ export function QuickActions({ children }: QuickActions) {
       open={isHover || selected}
       onOpenChange={setHover}
     >
-      <HoverCardTrigger asChild>{children}</HoverCardTrigger>
+      <HoverCardTrigger asChild>{props.children}</HoverCardTrigger>
       <HoverCardContent
         side="right"
         sideOffset={10}

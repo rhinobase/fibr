@@ -22,7 +22,7 @@ import { eventHandler } from "@rafty/shared";
 const DEFAULT_SIZE = 20;
 const MIN_WIDTH = 2.4;
 
-export function Sidebar({ children }: PropsWithChildren) {
+export function Sidebar(props: PropsWithChildren) {
   const sidebarRef = useRef<ImperativePanelHandle>(null);
 
   const { isProduction, isDisabled, defaultSize, toggle } = useBuilder(
@@ -67,7 +67,7 @@ export function Sidebar({ children }: PropsWithChildren) {
             expandPanel={() => sidebarRef.current?.resize(defaultSize)}
             collapsePanel={sidebarRef.current?.collapse}
           >
-            {children}
+            {props.children}
           </SidebarTray>
         </Panel>
         <ResizeHandle disabled={isDisabled} />

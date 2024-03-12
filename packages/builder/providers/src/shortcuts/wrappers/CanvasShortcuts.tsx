@@ -8,7 +8,7 @@ import { EventContext, useEventBus } from "../../events";
 import { EditorEvent } from "../../utils";
 import { ActionType, useStack } from "../useStack";
 
-export function CanvasShortcutsWrapper({ children }: PropsWithChildren) {
+export function CanvasShortcutsWrapper(props: PropsWithChildren) {
   const { schema, select, set } = useCanvas(({ schema, select, set }) => ({
     schema,
     select,
@@ -134,5 +134,5 @@ export function CanvasShortcutsWrapper({ children }: PropsWithChildren) {
   //   };
   // }, []);
 
-  return children;
+  return props.children;
 }

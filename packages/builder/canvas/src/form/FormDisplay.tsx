@@ -34,6 +34,8 @@ export function FormDisplay() {
       </div>
     );
 
+  console.log(blueprint);
+
   return (
     <WeaverProvider wrapper={BLOCK_WRAPPERS[currentEnv]}>
       <DndWrapper

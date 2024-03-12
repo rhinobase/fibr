@@ -6,6 +6,6 @@ export const metadata: Metadata = {
   title: "Playground",
 };
 
-export default function PlaygroundLayout({ children }: PropsWithChildren) {
-  return <Providers>{children}</Providers>;
+export default function PlaygroundLayout(props: PropsWithChildren) {
+  return <Providers>{props.children}</Providers>;
 }

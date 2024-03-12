@@ -33,8 +33,8 @@ export function SidebarItem({
   }, []);
 
   const HeaderComponent = action
-    ? ({ children }: PropsWithChildren) => (
-        <div className="flex items-center justify-between">{children}</div>
+    ? (props: PropsWithChildren) => (
+        <div className="flex items-center justify-between" {...props} />
       )
     : Fragment;
 
