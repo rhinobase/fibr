@@ -1,6 +1,7 @@
 import nextMDX from "@next/mdx";
 import { composePlugins, withNx } from "@nx/next";
 
+import pk from "../../package.json" assert { type: "json" };
 import { recmaPlugins } from "./mdx/recma.mjs";
 import { rehypePlugins } from "./mdx/rehype.mjs";
 import { remarkPlugins } from "./mdx/remark.mjs";
@@ -28,6 +29,9 @@ const nextConfig = {
     optimizePackageImports: ["@rafty/ui"],
   },
   reactStrictMode: false,
+  env: {
+    NEXT_PUBLIC_VERSION: pk.version,
+  },
 };
 
 const plugins = [withSearch, withMDX, withNx];

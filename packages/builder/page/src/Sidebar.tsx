@@ -1,46 +1,24 @@
 import { Sidebar as BuilderSidebar } from "@fibr/builder";
 import { useCanvas } from "@fibr/providers";
-import { CodeGenerator, Overview, Palette } from "@fibr/shared";
+import { CodeGenerator, Overview, Palette, astResolver } from "@fibr/shared";
 
 export function Sidebar() {
-  const {
-    addBlock,
-    getAllBlocks,
-    active,
-    selectBlock,
-    removeBlock,
-    moveBlock,
-  } = useCanvas(({ block, active }) => ({
-    active,
-    addBlock: block.add,
-    getAllBlocks: block.all,
-    selectBlock: block.select,
-    removeBlock: block.remove,
-    moveBlock: block.move,
-  }));
-
-  const canvasId = "nodes";
-
-  const blocks = canvasId ? getAllBlocks(canvasId) : [];
+  const add = useCanvas(({ add }) => add);
 
   return (
     <BuilderSidebar>
-      <Palette
-        enableDragging
-        isDisabled={canvasId == null}
-        onBlockSelect={(props) => canvasId && addBlock(canvasId, props)}
+      <Palette enableDragging onSelect={(value) => add({ blockData: value })} />
+      <Overview />
+      <CodeGenerator
+        resolvers={[
+          {
+            name: "ast",
+            label: "Ast",
+            language: "js",
+            resolver: astResolver,
+          },
+        ]}
       />
-      <Overview
-        blocks={blocks}
-        active={{ ...active, canvas: canvasId }}
-        selectBlock={selectBlock}
-        removeBlock={(id) => canvasId && removeBlock(canvasId, id)}
-        moveBlock={(startBlockId, endblockId) =>
-          canvasId && moveBlock(canvasId, startBlockId, endblockId)
-        }
-      />
-      {/* <Canvases /> */}
-      <CodeGenerator />
     </BuilderSidebar>
   );
 }

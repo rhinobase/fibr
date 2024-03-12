@@ -1,32 +1,31 @@
-import { useCanvas } from "@fibr/providers";
-import { Canvas } from "@fibr/shared";
-import { Diagram } from "./Diagram";
-import { useDroppable } from "@dnd-kit/core";
-import { FormProvider, useForm } from "react-hook-form";
-import { Controls } from "reactflow";
+import { Env, useBuilder, useClipboard } from "@fibr/providers";
 import { WeaverProvider } from "@fibr/react";
+import { Canvas, CustomControls } from "@fibr/shared";
+import type { PropsWithChildren, ReactNode } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { Diagram } from "./Diagram";
+import { NodePadding } from "./NodePadding";
 import { NodeWrapper } from "./NodeWrapper";
+
+const NODE_WRAPPERS: Record<Env, (props: PropsWithChildren) => ReactNode> = {
+  [Env.DEVELOPMENT]: NodeWrapper,
+  [Env.PRODUCTION]: NodePadding,
+};
 
 export function PageCanvas() {
   const methods = useForm();
-  const select = useCanvas(({ block }) => block.select);
-  const { setNodeRef } = useDroppable({
-    id: "canvas",
-  });
+  const currentEnv = useBuilder(({ env }) => env.current);
+  const { ref } = useClipboard();
 
   return (
     <FormProvider {...methods}>
-      <Canvas
-        ref={setNodeRef}
-        className="relative py-10"
-        onClick={() => select(null)}
-      >
-        <div className="flex h-full w-[1080px] flex-col gap-3 rounded bg-white">
-          <WeaverProvider wrapper={NodeWrapper}>
+      <Canvas ref={ref}>
+        <div className="dark:bg-secondary-950 flex h-full w-full bg-white">
+          <WeaverProvider wrapper={NODE_WRAPPERS[currentEnv]}>
             <Diagram />
           </WeaverProvider>
         </div>
-        <Controls />
+        <CustomControls />
       </Canvas>
     </FormProvider>
   );

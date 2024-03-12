@@ -1,15 +1,18 @@
 import { useThread } from "@fibr/react";
 import { classNames } from "@rafty/ui";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 
-export function FieldPadding({ children }: PropsWithChildren) {
+export function FieldPadding(props: PropsWithChildren) {
   const { type } = useThread();
 
   return (
     <div
-      className={classNames(type === "form" ? "bg-white p-6" : "p-4", "w-full")}
+      className={classNames(
+        type === "canvas" ? "dark:bg-secondary-950 bg-white p-6" : "p-4",
+        "w-full border border-transparent empty:hidden",
+      )}
     >
-      {children}
+      {props.children}
     </div>
   );
 }

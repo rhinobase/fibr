@@ -1,10 +1,8 @@
-import type { CanvasType } from "@fibr/providers";
-import type { ThreadType } from "@fibr/react";
+import type { BlockType } from "@fibr/providers";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, ErrorMessage, FieldControl, Textarea } from "@rafty/ui";
 import { BaseSyntheticEvent } from "react";
 import { useForm } from "react-hook-form";
-import superjson from "superjson";
 import z from "zod";
 
 const schema = z.object({
@@ -18,9 +16,7 @@ const schema = z.object({
 });
 
 export type CustomTemplateForm = {
-  onSubmit: (
-    template: Map<string, ThreadType<CanvasType>>,
-  ) => (event: BaseSyntheticEvent) => void;
+  onSubmit: (template: BlockType[]) => (event: BaseSyntheticEvent) => void;
 };
 
 export function CustomTemplateForm(props: CustomTemplateForm) {
@@ -35,7 +31,7 @@ export function CustomTemplateForm(props: CustomTemplateForm) {
   return (
     <form
       onSubmit={handleSubmit(({ template }, event) => {
-        if (event) props.onSubmit(superjson.parse(template))(event);
+        if (event) props.onSubmit(JSON.parse(template))(event);
       }, console.error)}
       className="space-y-3"
     >

@@ -1,101 +1,105 @@
 "use client";
-import { useCanvas } from "@fibr/providers";
-import { Thread, type ThreadWithIdType } from "@fibr/react";
+import { useCanvas, type BlockType } from "@fibr/providers";
+import { Thread } from "@fibr/react";
 import { useBlocks } from "@fibr/shared";
+import { useTheme } from "next-themes";
 import { useCallback, useMemo } from "react";
 import {
   Background,
-  Connection,
-  DefaultEdgeOptions,
-  Edge,
-  FitViewOptions,
-  Node,
-  OnNodesChange,
+  BackgroundVariant,
   ReactFlow,
   SelectionMode,
-  addEdge,
   applyNodeChanges,
+  type CoordinateExtent,
+  type DefaultEdgeOptions,
+  type FitViewOptions,
+  type Node,
+  type NodeDragHandler,
   type NodeTypes,
-  OnEdgesChange,
-  applyEdgeChanges,
-  BackgroundVariant,
+  type OnNodesChange,
+  type ProOptions,
 } from "reactflow";
 import "reactflow/dist/style.css";
 
-const fitViewOptions: FitViewOptions = {
-  padding: 0.5,
-};
-
-const defaultEdgeOptions: DefaultEdgeOptions = {
-  animated: true,
-};
-
 export function Diagram() {
-  const config = useBlocks((state) => state.config);
+  const { resolvedTheme } = useTheme();
 
-  const { nodes, edges, set } = useCanvas(({ block: { all, set } }) => ({
-    nodes: all("nodes") as Node[],
-    edges: all("edges") as Edge[],
+  const config = useBlocks(({ config }) => config);
+
+  const { nodes, set } = useCanvas(({ schema, set }) => ({
+    nodes: schema as Node[],
     set,
   }));
 
   const onNodesChange: OnNodesChange = useCallback(
     (changes) =>
-      set(
-        "nodes",
-        (nds) => applyNodeChanges(changes, nds as Node[]) as ThreadWithIdType[],
-      ),
+      set({
+        func: (nds) => applyNodeChanges(changes, nds as Node[]) as BlockType[],
+        shouldEmit: false,
+      }),
     [set],
   );
 
-  const onEdgesChange: OnEdgesChange = useCallback(
-    (changes) =>
-      set(
-        "edges",
-        (edgs) =>
-          applyEdgeChanges(changes, edgs as Edge[]) as ThreadWithIdType[],
-      ),
-    [set],
-  );
-
-  const onConnect = useCallback(
-    (params: Connection) =>
-      set(
-        "edges",
-        (eds) => addEdge(params, eds as Edge[]) as ThreadWithIdType[],
-      ),
-    [set],
-  );
-
-  const builders = useMemo(
+  const nodeTypes: NodeTypes = useMemo(
     () =>
       Object.keys(config).reduce<NodeTypes>((prev, name) => {
-        prev[name] = (props) => <Thread {...props} {...props.data} />;
+        prev[name] = Thread;
         return prev;
       }, {}),
     [config],
   );
 
+  const backgroundLineColor = resolvedTheme === "light" ? "#d4d4d8" : "#52525b";
+
+  const onNodeDragStart: NodeDragHandler = useCallback(
+    () => set({ func: (value) => value }),
+    [set],
+  );
+
+  const onNodeDragStop: NodeDragHandler = useCallback(
+    () => set({ func: (value) => value, shouldEmit: false }),
+    [set],
+  );
+
+  const fitViewOptions: FitViewOptions = {
+    padding: 0.5,
+  };
+
+  const defaultEdgeOptions: DefaultEdgeOptions = {
+    animated: true,
+  };
+
+  const proOptions: ProOptions = {
+    hideAttribution: true,
+  };
+
+  const translateExtent: CoordinateExtent = [
+    [-683, -384],
+    [2049, 1152],
+  ];
+
   return (
     <div className="flex-1">
       <ReactFlow
         nodes={nodes}
-        edges={edges}
-        nodesConnectable
         snapToGrid
         snapGrid={[20, 20]}
+        fitView
         onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
+        onNodeDragStart={onNodeDragStart}
+        onNodeDragStop={onNodeDragStop}
         fitViewOptions={fitViewOptions}
         defaultEdgeOptions={defaultEdgeOptions}
-        nodeTypes={builders}
-        proOptions={{ hideAttribution: true }}
-        selectionOnDrag
-        minZoom={1}
+        nodeTypes={nodeTypes}
+        proOptions={proOptions}
         selectionMode={SelectionMode.Partial}
+        selectionOnDrag
+        translateExtent={translateExtent}
       >
-        <Background variant={BackgroundVariant.Lines} gap={18} />
+        <Background
+          variant={BackgroundVariant.Lines}
+          color={backgroundLineColor}
+        />
       </ReactFlow>
     </div>
   );

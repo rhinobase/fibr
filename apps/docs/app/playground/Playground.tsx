@@ -1,56 +1,50 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { Header, PreviewButton, Workspace } from "@fibr/builder";
+import {
+  formBlocks,
+  formConfig,
+  pageBlocks,
+  pageConfig,
+  workflowBlocks,
+  workflowConfig,
+} from "@fibr/blocks";
+import { Footer, Header, PreviewButton, Workspace } from "@fibr/builder";
 import { FormBuilder } from "@fibr/form";
 import { PageBuilder } from "@fibr/page";
-import { CanvasType } from "@fibr/providers";
-import type { ThreadType } from "@fibr/react";
+import { type BlockType, EditorEvent } from "@fibr/providers";
 import { WorkflowBuilder } from "@fibr/workflow";
+import { Text } from "@rafty/ui";
+import Link from "next/link";
 import { type ReactNode, useState } from "react";
-import { BLOCKS, CONFIG, WORKFLOW_BLOCKS, WORKFLOW_CONFIG } from "./config";
+import { FaGithub, FaXTwitter } from "react-icons/fa6";
+import { ThemeToggle } from "../../components/ThemeToggle";
 import { Container, TemplateDialog } from "./templates";
+import { Switch } from "./templates/Switch";
+import { TEMPLATES } from "./templates/templates";
 
-type PanelProps = { template: Map<string, ThreadType<CanvasType>> };
+type PanelProps = { template: BlockType[] };
 
 const PANELS: Record<Container, (props: PanelProps) => ReactNode> = {
-  [Container.FORM]: ({ template }) => {
-    const key = template.keys().next().value;
-
-    return (
-      <FormBuilder
-        initialSchema={template}
-        defaultActiveCanvas={key}
-        defaultActiveBlock={key}
-        blocks={BLOCKS}
-        config={CONFIG}
-      />
-    );
-  },
-  [Container.WORKFLOW]: ({ template }) => {
-    const key = template.keys().next().value;
-
-    return (
-      <WorkflowBuilder
-        initialSchema={template}
-        defaultActiveCanvas={key}
-        blocks={WORKFLOW_BLOCKS}
-        config={WORKFLOW_CONFIG}
-      />
-    );
-  },
-  [Container.PAGE]: ({ template }) => {
-    const key = template.keys().next().value;
-
-    return (
-      <PageBuilder
-        initialSchema={template}
-        defaultActiveCanvas={key}
-        defaultActiveBlock={key}
-        blocks={BLOCKS}
-        config={CONFIG}
-      />
-    );
-  },
+  [Container.FORM]: ({ template }) => (
+    <FormBuilder
+      initialSchema={template}
+      blocks={formBlocks}
+      config={formConfig}
+    />
+  ),
+  [Container.WORKFLOW]: ({ template }) => (
+    <WorkflowBuilder
+      initialSchema={template}
+      blocks={workflowBlocks}
+      config={workflowConfig}
+    />
+  ),
+  [Container.PAGE]: ({ template }) => (
+    <PageBuilder
+      initialSchema={template}
+      blocks={pageBlocks}
+      config={pageConfig}
+    />
+  ),
 };
 
 export default function Playground() {
@@ -60,17 +54,79 @@ export default function Playground() {
   const Component = PANELS[container];
 
   return (
-    <Workspace>
-      <Header className="gap-2 px-2 py-1.5">
-        <div className="flex-1" />
-        <PreviewButton />
-      </Header>
+    <>
+      <Workspace
+        initialEvents={{
+          [EditorEvent.ALL]: [
+            ({ event_type, ...props }) => console.log(event_type, props),
+          ],
+        }}
+      >
+        <Header className="gap-3">
+          <Switch
+            value={container}
+            onValueChange={(value) => {
+              setContainer(value);
+              setTemplate(
+                (TEMPLATES[value].find(({ id }) => id === "custom")?.template ??
+                  []) as BlockType[],
+              );
+            }}
+          />
+          <div className="flex-1" />
+          <ThemeToggle />
+          <PreviewButton />
+        </Header>
+        {template ? (
+          <Component template={template} />
+        ) : (
+          <div className="flex-1" />
+        )}
+        <Footer className="[&>p]:text-2xs [&>p]:select-none">
+          <Text isMuted>version {process.env.NEXT_PUBLIC_VERSION}</Text>
+          <div className="flex-1" />
+          <Text isMuted>
+            © {new Date().getFullYear()} rhinobase, Inc. All rights reserved.
+          </Text>
+          <div className="flex-1" />
+          <Socials />
+        </Footer>
+      </Workspace>
       <TemplateDialog
         container={container}
         onContainerChange={setContainer}
-        onSelect={setTemplate}
+        onSelect={(value) => setTemplate(value as PanelProps["template"])}
       />
-      {template && <Component template={template} />}
-    </Workspace>
+    </>
+  );
+}
+
+const SOCIALS = {
+  twitter: {
+    link: "https://twitter.com/rhinobaseio",
+    icon: FaXTwitter,
+  },
+  github: {
+    link: "https://github.com/rhinobase/fibr",
+    icon: FaGithub,
+  },
+};
+
+function Socials() {
+  return (
+    <div className="flex items-center gap-2 px-2">
+      {Object.entries(SOCIALS).map(([name, { link, icon: Icon }]) => (
+        <Link
+          key={name}
+          href={link}
+          title={name}
+          className="text-secondary-500 dark:text-secondary-400 dark:hover:text-secondary-50 transition-all ease-in-out hover:text-black"
+          target="_blank"
+          rel="noopener"
+        >
+          <Icon size={15} />
+        </Link>
+      ))}
+    </div>
   );
 }

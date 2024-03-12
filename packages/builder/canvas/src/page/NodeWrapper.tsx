@@ -1,22 +1,61 @@
-import { useCanvas } from "@fibr/providers";
 import { useThread } from "@fibr/react";
-import { eventHandler } from "@rafty/shared";
-import { type PropsWithChildren } from "react";
-import { NodeResizer } from "reactflow";
+import { classNames, useBoolean } from "@rafty/ui";
+import type { PropsWithChildren } from "react";
+import {
+  NodeResizeControl,
+  ResizeControlVariant,
+  type ControlPosition,
+  type Node,
+} from "reactflow";
+
+export const PANELS = ["page", "object"];
 
 export function NodeWrapper(props: PropsWithChildren) {
-  const { id } = useThread();
-  const { activeBlock, select } = useCanvas(({ block, active }) => ({
-    select: block.select,
-    activeBlock: active.block,
-  }));
+  const { type, selected } = useThread<Node>();
 
-  const onSelect = eventHandler(() => select(id));
+  const isGroup = PANELS.includes(type);
 
   return (
-    <div className="bg-white" onClick={onSelect} onKeyDown={onSelect}>
-      <NodeResizer isVisible={activeBlock === id} />
+    <div
+      className={classNames(
+        !isGroup && "p-2",
+        selected
+          ? "border-primary-500 dark:border-primary-400"
+          : "border-transparent dark:border-transparent",
+        "dark:bg-secondary-950 h-full w-full border bg-white",
+      )}
+    >
+      {!isGroup && selected && (
+        <>
+          <ResizeNodeBorder position="left" />
+          <ResizeNodeBorder position="right" />
+        </>
+      )}
       {props.children}
     </div>
+  );
+}
+
+type ResizeNodeBorder = { position: ControlPosition };
+
+function ResizeNodeBorder(props: ResizeNodeBorder) {
+  const [resizing, toggle] = useBoolean();
+
+  return (
+    <NodeResizeControl
+      variant={ResizeControlVariant.Line}
+      position={props.position}
+      style={{ border: "none" }}
+      onResizeStart={() => toggle(true)}
+      onResizeEnd={() => toggle(false)}
+    >
+      <div
+        className={classNames(
+          props.position === "left" ? "-left-px" : "-right-px",
+          resizing ? "bg-primary-500 dark:bg-primary-400" : "bg-secondary-100",
+          "ring-primary-500 dark:ring-primary-400 absolute top-1/2 h-8 w-1 -translate-y-1/2 rounded-md ring-1",
+        )}
+      />
+    </NodeResizeControl>
   );
 }

@@ -1,23 +1,28 @@
 import { Settings as BuilderSettings } from "@fibr/builder";
-import { FibrProvider, Thread, type ThreadWithIdType } from "@fibr/react";
+import { type BlockType, useCanvas } from "@fibr/providers";
+import { FibrProvider, Thread } from "@fibr/react";
+import { Button, Text, classNames } from "@rafty/ui";
 import { ReactNode, useMemo } from "react";
 import { useBlocks } from "../providers";
 
-export type Settings<T extends Record<string, unknown>> =
-  ThreadWithIdType<T> & {
-    _update: (values: Partial<T>) => void;
-  };
+export type Settings = BuilderSettings;
 
-export function Settings<T extends Record<string, unknown>>(
-  props: Settings<T>,
-) {
+export function Settings({ className, ...props }: Settings) {
+  const { selectedBlocks, updateBlock, removeBlock, duplicateBlock } =
+    useCanvas(({ schema, update, remove, duplicate }) => ({
+      selectedBlocks: schema.filter((block) => block.selected),
+      updateBlock: update,
+      removeBlock: remove,
+      duplicateBlock: duplicate,
+    }));
+
   const config = useBlocks((state) => state.config);
 
   const settingBuilders = useMemo(
     () =>
       Object.entries(config).reduce<Record<string, () => ReactNode>>(
         (prev, [name, { settings }]) => {
-          prev[name] = settings;
+          if (settings) prev[name] = settings;
           return prev;
         },
         {},
@@ -25,11 +30,71 @@ export function Settings<T extends Record<string, unknown>>(
     [config],
   );
 
-  return (
-    <FibrProvider plugins={settingBuilders}>
-      <BuilderSettings className="flex flex-col gap-3">
-        <Thread {...props} />
+  const selectedBlocksLength = selectedBlocks.length;
+  const isSettingsPanelActive = selectedBlocksLength > 0;
+
+  const ids = selectedBlocks.map(({ id }) => id);
+
+  let component: JSX.Element;
+
+  if (selectedBlocksLength === 1) {
+    const block = selectedBlocks[0];
+    component = (
+      <FibrProvider plugins={settingBuilders}>
+        <Thread
+          {...block}
+          _update={(values: Partial<BlockType>) =>
+            updateBlock({
+              blockId: block.id,
+              updatedValues: values,
+            })
+          }
+        />
+      </FibrProvider>
+    );
+  } else
+    component = (
+      <>
+        <Text
+          isMuted
+          className="text-right text-sm italic"
+        >{`${selectedBlocksLength} components selected`}</Text>
+        <div className="bg-secondary-50 dark:bg-secondary-900 dark:border-secondary-800 dark:divide-secondary-800 divide-y rounded border px-2">
+          {selectedBlocks.map(({ id }) => (
+            <Text
+              key={id}
+              className="text-secondary-600 dark:text-secondary-400 py-0.5 text-sm"
+            >
+              {id}
+            </Text>
+          ))}
+        </div>
+        <div className="flex justify-between">
+          <Button
+            onClick={() => removeBlock({ blockIds: ids })}
+            colorScheme="error"
+            size="sm"
+          >
+            Delete
+          </Button>
+          <Button
+            onClick={() => duplicateBlock({ originalBlockIds: ids })}
+            size="sm"
+          >
+            Duplicate
+          </Button>
+        </div>
+      </>
+    );
+
+  if (isSettingsPanelActive)
+    return (
+      <BuilderSettings
+        {...props}
+        blockId={selectedBlocksLength === 1 ? selectedBlocks[0].id : undefined}
+        className={classNames("flex flex-col gap-3", className)}
+      >
+        {component}
       </BuilderSettings>
-    </FibrProvider>
-  );
+    );
 }

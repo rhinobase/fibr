@@ -5,11 +5,17 @@
     "@fibr/builder": "^0.0.1",
     "@fibr/canvas": "^0.0.1",
     "@fibr/providers": "^1.0.0",
-    "@fibr/react": "^0.0.1",
     "@fibr/shared": "^1.0.0",
-    "@swc/helpers": "^0.5.3"
+    "@heroicons/react": "^2.1.1",
+    "@hookform/resolvers": "^3.3.4",
+    "@rafty/ui": "^1.4.7",
+    "@swc/helpers": "^0.5.3",
+    "react-hook-form": "^7.50.1",
+    "zod": "^3.22.4"
   },
   "peerDependencies": {
     "react": "^18.2.0"
-  }
+  },
+  "sideEffects": false,
+  "types": "./index.esm.d.ts"
 }

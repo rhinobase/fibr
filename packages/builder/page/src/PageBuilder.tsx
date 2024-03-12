@@ -1,24 +1,13 @@
-import {
-  type CanvasType,
-  FormBuilderProvider,
-  type FormBuilderStoreProps,
-} from "@fibr/providers";
-import { SourceProvider, type SourceStore } from "@fibr/shared";
-import { Container } from "./Container";
+import { SharedWrapper } from "@fibr/shared";
 import { ReactFlowProvider } from "reactflow";
+import { Container } from "./Container";
 
-export function PageBuilder<T extends CanvasType>({
-  blocks,
-  config,
-  ...builderProps
-}: SourceStore & FormBuilderStoreProps<T>) {
+export function PageBuilder(props: SharedWrapper) {
   return (
-    <SourceProvider blocks={blocks} config={config}>
-      <FormBuilderProvider {...builderProps}>
-        <ReactFlowProvider>
-          <Container />
-        </ReactFlowProvider>
-      </FormBuilderProvider>
-    </SourceProvider>
+    <SharedWrapper {...props}>
+      <ReactFlowProvider>
+        <Container />
+      </ReactFlowProvider>
+    </SharedWrapper>
   );
 }

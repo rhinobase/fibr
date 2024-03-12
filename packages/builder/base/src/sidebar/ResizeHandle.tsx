@@ -4,12 +4,17 @@ import {
   type PanelResizeHandleProps,
 } from "react-resizable-panels";
 
-export function ResizeHandle({ className, ...props }: PanelResizeHandleProps) {
+export function ResizeHandle({
+  className,
+  disabled,
+  ...props
+}: PanelResizeHandleProps) {
   return (
     <PanelResizeHandle
       {...props}
       className={classNames(
-        "group/handler border-secondary-200 relative w-1 border-r bg-transparent data-[panel-resize-handle-enabled=false]/handler:hidden",
+        "group/handler pointer-events-auto relative w-1 bg-transparent",
+        disabled && "hidden",
         className,
       )}
     >

@@ -10,18 +10,12 @@ import { PaletteCard } from "./PaletteCard";
 import { PaletteCardOverlay } from "./PaletteCardOverlay";
 
 export type Palette = {
-  isDisabled?: boolean;
-  enableDragging?: boolean;
-  onBlockSelect: PaletteCard["onSelect"];
-};
+  onSelect: PaletteCard["onSelect"];
+} & Pick<PaletteCard, "enableDragging">;
 
-export function Palette({
-  isDisabled = false,
-  enableDragging = false,
-  onBlockSelect,
-}: Palette) {
+export function Palette({ enableDragging = false, onSelect }: Palette) {
   const blocks = useBlocks((state) => state.blocks);
-  const [search, setSearch] = useState<string>();
+  const [search, setSearch] = useState("");
 
   const fuse = useMemo(() => {
     const data = Object.entries(blocks).flatMap(([category, blocks]) =>
@@ -75,46 +69,40 @@ export function Palette({
       label="Palette"
       icon={<Squares2X2Icon className="h-5 w-5 stroke-2" />}
     >
-      {isDisabled ? (
+      <div className="dark:bg-secondary-950 sticky top-0 z-10 bg-white">
+        <SearchField
+          search={search}
+          onSearch={setSearch}
+          size="sm"
+          autoComplete="off"
+        />
+      </div>
+      {isEmpty ? (
         <div className="flex flex-1 flex-col justify-center">
           <Empty
-            title="No canvas exists"
-            description="Please add a canvas in order to add fields in it"
+            title="Component Not Found"
+            description="Please check your spelling and try again, or explore our other available components."
           />
         </div>
       ) : (
-        <>
-          <div className="sticky top-0 z-10 bg-white">
-            <SearchField search={search} onSearch={setSearch} size="sm" />
-          </div>
-          {isEmpty ? (
-            <div className="flex flex-1 flex-col justify-center">
-              <Empty
-                title="Component Not Found"
-                description="Please check your spelling and try again, or explore our other available components."
-              />
-            </div>
-          ) : (
-            Object.entries(blockResults).map(
-              ([category, components]) =>
-                components.length > 0 && (
-                  <div key={category} className="space-y-2.5 pb-3">
-                    <h3 className="text-sm font-semibold">{category}</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {components.map((block, index) => (
-                        <PaletteCard
-                          key={`${index}-${block.type}`}
-                          {...block}
-                          enableDragging={enableDragging}
-                          onSelect={onBlockSelect}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                ),
-            )
-          )}
-        </>
+        Object.entries(blockResults).map(
+          ([category, components]) =>
+            components.length > 0 && (
+              <div key={category} className="space-y-2.5 pb-3">
+                <h3 className="text-sm font-semibold">{category}</h3>
+                <div className="flex flex-wrap gap-2.5">
+                  {components.map((block, index) => (
+                    <PaletteCard
+                      key={`${index}-${block.type}`}
+                      {...block}
+                      enableDragging={enableDragging}
+                      onSelect={onSelect}
+                    />
+                  ))}
+                </div>
+              </div>
+            ),
+        )
       )}
       {enableDragging && <PaletteCardOverlay />}
     </SidebarItem>

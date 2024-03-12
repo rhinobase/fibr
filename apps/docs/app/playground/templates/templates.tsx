@@ -1,11 +1,11 @@
 "use client";
-import { f } from "@fibr/blocks";
-import { CanvasType } from "@fibr/providers";
-import type { ThreadType } from "@fibr/react";
 import type { IconType } from "react-icons";
 import { FiArrowRight } from "react-icons/fi";
 import { GoProjectTemplate } from "react-icons/go";
+import type { Node } from "reactflow";
 import { Container } from "./utils";
+
+export type TemplateType = Partial<Node>[];
 
 export const TEMPLATES: Record<
   Container,
@@ -13,7 +13,7 @@ export const TEMPLATES: Record<
     id: string;
     name: string;
     icon: IconType;
-    template: Map<string, ThreadType<CanvasType>>;
+    template: TemplateType;
   }[]
 > = {
   [Container.FORM]: [
@@ -21,107 +21,156 @@ export const TEMPLATES: Record<
       id: "contact-us",
       name: "Contact Us",
       icon: GoProjectTemplate,
-      template: new Map(
-        Object.entries({
-          canvas: f.form({
-            title: "Contact Us",
-            blocks: new Map(
-              Object.entries({
-                name: f.string({
-                  label: "Name",
-                  description: "Enter your full name",
-                }),
-                email: f.string({
-                  inputType: "email",
-                  label: "Email",
-                  description: "Enter email id so we can respond to your query",
-                }),
-                phone: f.number({
-                  label: "Phone Number",
-                  description: "Enter your 10 digit mobile number",
-                }),
-                message: f.textarea({
-                  label: "Message",
-                  description: "Enter your message here",
-                }),
-              }),
-            ),
-          }),
-        }),
-      ),
-    },
-    {
-      id: "sign-in",
-      name: "Sign In",
-      icon: GoProjectTemplate,
-      template: new Map(
-        Object.entries({
-          canvas: f.form({
-            title: "Sign In",
-            blocks: new Map(
-              Object.entries({
-                email: f.string({
-                  inputType: "email",
-                  label: "Email",
-                  description: "Enter your email id",
-                  required: true,
-                }),
-                password: f.password({
-                  label: "Password",
-                  description: "Enter password",
-                  required: true,
-                }),
-              }),
-            ),
-          }),
-        }),
-      ),
+      template: [
+        {
+          id: "canvas",
+          type: "canvas",
+          data: { title: "Contact Us" },
+        },
+        {
+          id: "name",
+          type: "string",
+          data: {
+            label: "Name",
+            description: "Enter your full name",
+            required: true,
+          },
+          parentNode: "canvas",
+        },
+        {
+          id: "email",
+          type: "string",
+          data: {
+            inputType: "email",
+            label: "Email",
+            description: "Enter email id so we can respond to your query",
+            prefixIcon: "envelope",
+            required: true,
+          },
+          parentNode: "canvas",
+        },
+        {
+          id: "phone",
+          type: "number",
+          data: {
+            label: "Phone Number",
+            description: "Enter your 10 digit mobile number",
+            required: true,
+          },
+          parentNode: "canvas",
+        },
+        {
+          id: "message",
+          type: "textarea",
+          data: { label: "Message", description: "Enter your message here" },
+          parentNode: "canvas",
+        },
+      ],
     },
     {
       id: "sign-up",
       name: "Sign Up",
       icon: GoProjectTemplate,
-      template: new Map(
-        Object.entries({
-          canvas: f.form({
+      template: [
+        {
+          id: "canvas",
+          type: "canvas",
+          data: {
             title: "Sign Up",
-            blocks: new Map(
-              Object.entries({
-                name: f.string({
-                  label: "Name",
-                  required: true,
-                }),
-                email: f.string({
-                  inputType: "email",
-                  label: "Email",
-                  required: true,
-                }),
-                password: f.password({
-                  label: "Create a Password",
-                  required: true,
-                }),
-                confirm_password: f.password({
-                  label: "Confirm Password",
-                  required: true,
-                }),
-              }),
-            ),
-          }),
-        }),
-      ),
+          },
+        },
+        {
+          id: "name",
+          type: "string",
+          data: { label: "Name", required: true },
+          parentNode: "canvas",
+        },
+        {
+          id: "email",
+          type: "string",
+          data: {
+            inputType: "email",
+            label: "Email",
+            required: true,
+            prefixIcon: "envelope",
+          },
+          parentNode: "canvas",
+        },
+        {
+          id: "password",
+          type: "password",
+          data: { label: "Create a Password", required: true },
+          parentNode: "canvas",
+        },
+        {
+          id: "confirm_password",
+          type: "password",
+          data: { label: "Confirm Password", required: true },
+          parentNode: "canvas",
+        },
+      ],
+    },
+    {
+      id: "nested",
+      name: "Nested",
+      icon: GoProjectTemplate,
+      template: [
+        {
+          id: "canvas",
+          type: "canvas",
+          data: { title: "Nested" },
+        },
+        {
+          id: "name",
+          type: "string",
+          data: {
+            label: "Student's Name",
+            description: "Enter your full name",
+          },
+          parentNode: "canvas",
+        },
+        {
+          id: "father",
+          type: "object",
+          data: {
+            label: "Father",
+            description: "Enter father related information here",
+          },
+          parentNode: "canvas",
+        },
+        {
+          id: "father_name",
+          type: "string",
+          data: {
+            label: "Name",
+            description: "Enter father's name",
+          },
+          parentNode: "father",
+        },
+        {
+          id: "occupation",
+          type: "string",
+          data: {
+            label: "Occupation",
+            description: "Enter father's occupation",
+          },
+          parentNode: "father",
+        },
+      ],
     },
     {
       id: "custom",
       name: "Custom Form",
       icon: FiArrowRight,
-      template: new Map(
-        Object.entries({
-          canvas: f.form({
+      template: [
+        {
+          id: "canvas",
+          type: "canvas",
+          data: {
             title: "Custom",
-            blocks: new Map(Object.entries({})),
-          }),
-        }),
-      ),
+          },
+        },
+      ],
     },
   ],
   [Container.WORKFLOW]: [
@@ -129,20 +178,7 @@ export const TEMPLATES: Record<
       id: "custom",
       name: "Custom Flow",
       icon: FiArrowRight,
-      template: new Map(
-        Object.entries({
-          nodes: {
-            type: "nodes",
-            title: "Nodes",
-            blocks: new Map(Object.entries({})),
-          },
-          edges: {
-            type: "edges",
-            title: "Edges",
-            blocks: new Map(Object.entries({})),
-          },
-        }),
-      ),
+      template: [],
     },
   ],
   [Container.PAGE]: [
@@ -150,20 +186,15 @@ export const TEMPLATES: Record<
       id: "custom",
       name: "Custom Page",
       icon: FiArrowRight,
-      template: new Map(
-        Object.entries({
-          nodes: {
-            type: "nodes",
-            title: "Nodes",
-            blocks: new Map(Object.entries({})),
-          },
-          edges: {
-            type: "edges",
-            title: "Edges",
-            blocks: new Map(Object.entries({})),
-          },
-        }),
-      ),
+      template: [
+        {
+          id: "canvas",
+          type: "page",
+          position: { x: 0, y: 0 },
+          draggable: false,
+          deletable: false,
+        },
+      ],
     },
   ],
 };

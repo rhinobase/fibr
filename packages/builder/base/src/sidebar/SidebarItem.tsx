@@ -1,4 +1,5 @@
 "use client";
+import { TabPayload, useBuilder } from "@fibr/providers";
 import { TabContent, classNames } from "@rafty/ui";
 import {
   Fragment,
@@ -6,7 +7,6 @@ import {
   type ReactNode,
   useEffect,
 } from "react";
-import { TabPayload, useBuilder } from "../providers";
 
 export type SidebarItem = Omit<TabContent, "value"> &
   TabPayload & {
@@ -32,9 +32,9 @@ export function SidebarItem({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const Component = action
-    ? ({ children }: PropsWithChildren) => (
-        <div className="flex items-center justify-between">{children}</div>
+  const HeaderComponent = action
+    ? (props: PropsWithChildren) => (
+        <div className="flex items-center justify-between" {...props} />
       )
     : Fragment;
 
@@ -43,19 +43,19 @@ export function SidebarItem({
       {...props}
       value={name}
       className={classNames(
-        "flex-col overflow-hidden data-[state=active]:flex data-[orientation=vertical]:p-0",
+        "h-full flex-col data-[state=active]:flex data-[orientation=vertical]:p-0",
         className,
       )}
     >
       <div className="space-y-3 p-3">
-        <Component>
+        <HeaderComponent>
           <h4 className="font-medium">{label}</h4>
           {action}
-        </Component>
-        <hr />
+        </HeaderComponent>
+        <hr className="dark:border-secondary-700" />
       </div>
       <div className="h-full overflow-y-auto">
-        <div className="flex h-full flex-col gap-3 px-3 pb-3">{children}</div>
+        <div className="flex h-full flex-col px-3 pb-3">{children}</div>
       </div>
     </TabContent>
   );

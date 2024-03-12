@@ -1,33 +1,29 @@
 import { useSortable } from "@dnd-kit/sortable";
-import { CSS, Transform } from "@dnd-kit/utilities";
-import { useCanvas } from "@fibr/providers";
+import { CSS } from "@dnd-kit/utilities";
+import { BlockType, useCanvas } from "@fibr/providers";
 import { useThread } from "@fibr/react";
 import { eventHandler } from "@rafty/shared";
 import { classNames } from "@rafty/ui";
 import { cva } from "class-variance-authority";
 import {
   type CSSProperties,
+  Fragment,
   type HTMLAttributes,
   type PropsWithChildren,
   forwardRef,
 } from "react";
 import { QuickActions } from "./QuickActions";
 
-const wrapperClasses = cva("w-full cursor-pointer border bg-white rounded", {
-  variants: {
-    selected: {
-      true: "border-primary-500",
-      false: "border-transparent",
-    },
-  },
-});
-
-export function FieldWrapper({ children }: PropsWithChildren) {
-  const { id, type } = useThread();
-  const { activeBlock, select } = useCanvas(({ block, active }) => ({
-    select: block.select,
-    activeBlock: active.block,
+export function FieldWrapper(props: PropsWithChildren) {
+  const { isOverlay, ...field } = useThread<
+    BlockType & { isOverlay?: boolean }
+  >();
+  const { select, noOfSelectedBlocks } = useCanvas(({ select, schema }) => ({
+    select,
+    noOfSelectedBlocks: schema.filter(({ selected }) => selected).length,
   }));
+
+  const isSelected = field.selected ?? false;
 
   const {
     attributes,
@@ -36,58 +32,79 @@ export function FieldWrapper({ children }: PropsWithChildren) {
     transform,
     transition,
     isDragging,
-  } = useSortable({ id });
+  } = useSortable({ id: field.id, data: field });
 
-  const onSelect = eventHandler(() => select(id));
+  const onSelect = eventHandler(() =>
+    select({
+      selectedBlockIds: field.id,
+    }),
+  );
 
-  if (type === "canvas")
+  if (field.type === "canvas")
     return (
       <Wrapper
-        selected={activeBlock === id}
+        selected={isSelected}
         className="p-6"
         onClick={onSelect}
         onKeyDown={onSelect}
       >
-        {children}
+        {props.children}
       </Wrapper>
     );
 
-  const _transform: Transform = {
-    x: transform?.x ?? 0,
-    y: transform?.y ?? 0,
-    scaleX: 1,
-    scaleY: 1,
+  const nodeStyle: CSSProperties = {
+    transform: CSS.Transform.toString({
+      x: transform?.x ?? 0,
+      y: transform?.y ?? 0,
+      scaleX: 1,
+      scaleY: 1,
+    }),
+    transition,
+    opacity: isDragging ? 0.4 : 1,
   };
 
-  const nodeStyle: CSSProperties = {
-    transform: CSS.Transform.toString(_transform),
-    transition,
-  };
+  const Component =
+    isDragging || noOfSelectedBlocks > 1 ? Fragment : QuickActions;
 
   return (
-    <QuickActions>
+    <Component>
       <Wrapper
-        selected={activeBlock === id}
+        selected={isSelected}
         ref={setNodeRef}
         style={nodeStyle}
         {...attributes}
         {...listeners}
         className={classNames(
-          "select-none p-4 hover:shadow-md",
-          !isDragging && "transition-all ease-in-out",
+          "select-none p-4",
+          !isDragging && "transition-shadow",
+          isDragging && "z-50",
+          !isSelected &&
+            "dark:hover:border-secondary-900 hover:shadow-[0_1px_5px_1px_rgba(0,0,0,0.1)] dark:hover:shadow-none",
         )}
       >
-        {children}
+        {props.children}
       </Wrapper>
-    </QuickActions>
+    </Component>
   );
 }
 
-type WrapperProps = HTMLAttributes<HTMLDivElement> & {
+const wrapperClasses = cva(
+  "w-full cursor-pointer border bg-white dark:bg-secondary-950 rounded",
+  {
+    variants: {
+      selected: {
+        true: "border-primary-500 dark:border-primary-400",
+        false: "border-transparent",
+      },
+    },
+  },
+);
+
+type Wrapper = HTMLAttributes<HTMLDivElement> & {
   selected: boolean;
 };
 
-const Wrapper = forwardRef<HTMLDivElement, WrapperProps>(
+const Wrapper = forwardRef<HTMLDivElement, Wrapper>(
   ({ className, selected, ...props }, forwardedRef) => (
     <div
       {...props}
