@@ -13,10 +13,9 @@ type WeaverContextType = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const WeaverContext = createContext<WeaverContextType>({});
 
-export function WeaverProvider({
-  children,
-  ...values
-}: PropsWithChildren<WeaverContextType>) {
+export type WeaverProvider = PropsWithChildren<WeaverContextType>;
+
+export function WeaverProvider({ children, ...values }: WeaverProvider) {
   return (
     <WeaverContext.Provider value={values}>{children}</WeaverContext.Provider>
   );
