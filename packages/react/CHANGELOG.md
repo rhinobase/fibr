@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.5.6](https://github.com/rhinobase/fiber/compare/react-0.5.5...react-0.5.6) (2024-03-17)
+
+
+### Bug Fixes
+
+* **react:** added providers type ([c9366f5](https://github.com/rhinobase/fiber/commit/c9366f502225d0e645dc30a1ec861702cd17770f))
+
 ## [0.5.5](https://github.com/rhinobase/fibr/compare/react-0.5.4...react-0.5.5) (2024-02-27)
 
 ## [0.5.4](https://github.com/rhinobase/fibr/compare/react-0.5.3...react-0.5.4) (2024-02-27)
