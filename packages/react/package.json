@@ -24,9 +24,6 @@
   "bugs": {
     "url": "https://github.com/rhinobase/fibr/issues"
   },
-  "dependencies": {
-    "@swc/helpers": "^0.5.3"
-  },
   "peerDependencies": {
     "react": "^18.2.0"
   },
