@@ -27,7 +27,6 @@
   "peerDependencies": {
     "react": "^18.2.0"
   },
-  "type": "module",
   "sideEffects": false,
-  "types": "./index.esm.d.ts"
+  "types": "./index.cjs.d.ts"
 }

@@ -7,7 +7,9 @@
   "targets": {
     "lint": {
       "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
         "lintFilePatterns": [
           "packages/react/**/*.{ts,tsx,js,jsx}",
@@ -17,7 +19,9 @@
     },
     "build": {
       "executor": "@nx/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/packages/react",
         "tsConfig": "packages/react/tsconfig.lib.json",
@@ -25,6 +29,10 @@
         "entryFile": "packages/react/src/index.ts",
         "rollupConfig": "rollup.config.js",
         "compiler": "swc",
+        "format": [
+          "cjs",
+          "esm"
+        ],
         "assets": [
           {
             "glob": "packages/react/README.md",
@@ -46,7 +54,9 @@
         "access": "public",
         "distFolderPath": "dist/packages/react"
       },
-      "dependsOn": ["build"]
+      "dependsOn": [
+        "build"
+      ]
     }
   }
 }
