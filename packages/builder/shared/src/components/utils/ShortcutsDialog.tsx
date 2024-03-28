@@ -44,18 +44,14 @@ export function ShortcutsDialog() {
     if (navigator) toggleOs(navigator.userAgent.toLowerCase().includes("mac"));
   }, [toggleOs]);
 
-  const [data, fuse] = useMemo(() => {
-    const data = Object.values(hotkeys);
-    return [
-      data,
-      new Fuse(data, {
-        keys: ["description"],
-        includeMatches: true,
-      }),
-    ];
+  const fuse = useMemo(() => {
+    return new Fuse(hotkeys, {
+      keys: ["description"],
+      includeMatches: true,
+    });
   }, [hotkeys]);
 
-  let searchResults: (Hotkey & { matches?: RangeTuple[] })[] = data;
+  let searchResults: (Hotkey & { matches?: RangeTuple[] })[] = [...hotkeys];
   let isEmpty = false;
 
   if (search) {
