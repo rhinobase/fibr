@@ -17,6 +17,7 @@ import {
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { CodeHighlighter } from "./Highlight";
+import { ShikiProvider } from "../../providers";
 
 export type CodeGenerator = {
   resolvers?: {
@@ -82,34 +83,36 @@ export function CodeGenerator({ resolvers }: CodeGenerator) {
         </Button>
       }
     >
-      <Tab
-        className="flex h-full w-full flex-col"
-        size="sm"
-        value={String(tabValue)}
-        onValueChange={(value) => setTabValue(Number(value))}
-      >
-        <TabList>
-          {computedResolvers.map(({ name, label, icon }, index) => (
-            <TabTrigger
+      <ShikiProvider>
+        <Tab
+          className="flex h-full w-full flex-col"
+          size="sm"
+          value={String(tabValue)}
+          onValueChange={(value) => setTabValue(Number(value))}
+        >
+          <TabList>
+            {computedResolvers.map(({ name, label, icon }, index) => (
+              <TabTrigger
+                key={name}
+                value={String(index)}
+                className={classNames(icon && "flex items-center gap-1")}
+              >
+                {icon}
+                {label}
+              </TabTrigger>
+            ))}
+          </TabList>
+          {computedResolvers.map(({ name, language = "js", code }, index) => (
+            <TabContent
               key={name}
               value={String(index)}
-              className={classNames(icon && "flex items-center gap-1")}
+              className="flex-1 overflow-hidden overflow-y-auto"
             >
-              {icon}
-              {label}
-            </TabTrigger>
+              <CodeHighlighter language={language} content={code} />
+            </TabContent>
           ))}
-        </TabList>
-        {computedResolvers.map(({ name, language = "js", code }, index) => (
-          <TabContent
-            key={name}
-            value={String(index)}
-            className="flex-1 overflow-hidden overflow-y-auto"
-          >
-            <CodeHighlighter language={language} content={code} />
-          </TabContent>
-        ))}
-      </Tab>
+        </Tab>
+      </ShikiProvider>
     </SidebarItem>
   );
 }
