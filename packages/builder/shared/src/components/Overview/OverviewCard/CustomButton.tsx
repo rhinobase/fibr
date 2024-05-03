@@ -9,7 +9,7 @@ export function CustomButton({ className, ...props }: CustomButton) {
       {...props}
       className={classNames(
         buttonClasses({ size: "icon", variant: "ghost" }),
-        "cursor-pointer rounded p-0.5",
+        "cursor-pointer rounded p-0.5 transition-none",
         className,
       )}
     />

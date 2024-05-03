@@ -10,7 +10,7 @@
     "@fibr/providers": "^1.0.0",
     "@fibr/react": "^1.0.0",
     "@heroicons/react": "^2.1.1",
-    "@rafty/shared": "^1.0.0",
+    "@rafty/shared": "^1.0.3",
     "@rafty/ui": "^1.4.5",
     "@swc/helpers": "^0.5.3",
     "@uidotdev/usehooks": "^2.4.1",
