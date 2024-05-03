@@ -1,37 +1,41 @@
-import { classNames } from "@rafty/ui";
 import { useTheme } from "next-themes";
-import { Highlight, themes } from "prism-react-renderer";
-import { useId } from "react";
+import { useEffect, useState } from "react";
+import { codeToHtml } from "shiki";
 
 export type CodeHighlighter = { content: string; language: string };
 
 export function CodeHighlighter({ content, language }: CodeHighlighter) {
-  const id = useId();
+  const [html, setHtml] = useState<string>();
   const { resolvedTheme } = useTheme();
 
-  const highlightTheme =
-    resolvedTheme === "light" ? themes.github : themes.dracula;
+  useEffect(() => {
+    const controller = new AbortController();
+    try {
+      new Promise((resolve, reject) => {
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        const abortListener = ({ target }: any) => {
+          controller.signal.removeEventListener("abort", abortListener);
+          reject(target.reason);
+        };
+        controller.signal.addEventListener("abort", abortListener);
 
-  return (
-    <Highlight theme={highlightTheme} code={content} language={language}>
-      {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <pre
-          style={style}
-          className={classNames(
-            "h-full overflow-x-auto overflow-y-auto px-3",
-            className,
-          )}
-        >
-          {tokens.map((line, i) => (
-            <div key={`${i}-${id}`} {...getLineProps({ line })}>
-              <span className="mr-4">{i + 1}</span>
-              {line.map((token, key) => (
-                <span key={`${key}-${i}-${id}`} {...getTokenProps({ token })} />
-              ))}
-            </div>
-          ))}
-        </pre>
-      )}
-    </Highlight>
-  );
+        codeToHtml(content, {
+          lang: language,
+          theme: resolvedTheme === "light" ? "github-light" : "dracula",
+        }).then((code) => {
+          setHtml(code);
+          resolve(code);
+        });
+      });
+    } catch {}
+
+    return () => {
+      controller.abort();
+    };
+  }, [resolvedTheme, language, content]);
+
+  if (!html) return <>Loading...</>;
+
+  // biome-ignore lint/security/noDangerouslySetInnerHtml: Need this to show the highlighting
+  return <div dangerouslySetInnerHTML={{ __html: html }} />;
 }
