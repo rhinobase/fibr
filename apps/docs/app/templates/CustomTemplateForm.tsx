@@ -1,7 +1,7 @@
 import type { BlockType } from "@fibr/providers";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, ErrorMessage, FieldControl, Textarea } from "@rafty/ui";
-import { BaseSyntheticEvent } from "react";
+import type { BaseSyntheticEvent } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 

@@ -16,7 +16,7 @@ import { Text } from "@rafty/ui";
 import Link from "next/link";
 import { type ReactNode, useState } from "react";
 import { FaGithub, FaXTwitter } from "react-icons/fa6";
-import { ThemeToggle } from "../../components/ThemeToggle";
+import { ThemeToggle } from "../components/ThemeToggle";
 import { Container, TemplateDialog } from "./templates";
 import { Switch } from "./templates/Switch";
 import { TEMPLATES } from "./templates/templates";

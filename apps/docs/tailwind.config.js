@@ -1,7 +1,6 @@
-const { typographyStyles } = require("./typography");
 const colors = require("tailwindcss/colors");
 const { createGlobPatternsForDependencies } = require("@nx/react/tailwind");
-const { join } = require("path");
+const { join } = require("node:path");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -31,7 +30,6 @@ module.exports = {
       "8xl": ["6rem", { lineHeight: "1" }],
       "9xl": ["8rem", { lineHeight: "1" }],
     },
-    typography: typographyStyles,
     extend: {
       colors: {
         primary: colors.sky,
