@@ -1,4 +1,4 @@
-import { BlockType } from "../canvas";
+import type { BlockType } from "../canvas";
 
 export const DEFAULT_GROUP = "__default";
 

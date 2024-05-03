@@ -4,7 +4,7 @@ import { SearchField } from "@rafty/ui";
 import Fuse, { type RangeTuple } from "fuse.js";
 import { useMemo, useState } from "react";
 import { useBlocks } from "../../providers";
-import { Block } from "../../types";
+import type { Block } from "../../types";
 import { Empty } from "../utils";
 import { PaletteCard } from "./PaletteCard";
 import { PaletteCardOverlay } from "./PaletteCardOverlay";

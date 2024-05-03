@@ -1,1 +1,1 @@
-export * from "./PageBuilder";
+export { PageBuilder } from "./PageBuilder";

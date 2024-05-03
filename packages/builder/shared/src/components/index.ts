@@ -1,13 +1,6 @@
-export {
-  DndWrapper,
-  Empty,
-  SharedWrapper,
-  highlightMatches,
-  CustomControls,
-  Portal,
-} from "./utils";
+export { Canvas } from "./Canvas";
+export { CodeGenerator } from "./Code";
 export { Overview } from "./Overview";
 export { Palette } from "./Palette";
 export { Settings } from "./Settings";
-export { Canvas } from "./Canvas";
-export { CodeGenerator } from "./Code";
+export * from "./utils";

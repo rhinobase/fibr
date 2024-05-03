@@ -1,5 +1,5 @@
 import { classNames } from "@rafty/ui";
-import { HTMLAttributes } from "react";
+import type { HTMLAttributes } from "react";
 
 export type Empty = {
   title: string;

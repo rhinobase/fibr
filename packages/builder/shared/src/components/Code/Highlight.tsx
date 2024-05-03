@@ -29,7 +29,7 @@ export function CodeHighlighter({ content, language }: CodeHighlighter) {
 
   return (
     <div
-      className="h-max w-max"
+      className="h-max min-h-full w-max min-w-full"
       // biome-ignore lint/security/noDangerouslySetInnerHtml: Need this to show the highlighting
       dangerouslySetInnerHTML={{ __html: html }}
     />
