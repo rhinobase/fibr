@@ -157,19 +157,16 @@ export function OverviewCard({
           </CustomButton>
         )}
       </span>
-      <span
+      {Icon && <Icon className="size-4 opacity-70" />}
+      <Text
         className={classNames(
           hidden && "opacity-40",
-          "text-2xs flex items-center gap-1 truncate font-medium",
+          "text-2xs w-full truncate text-left font-medium",
         )}
       >
-        {Icon && <Icon className="size-4 opacity-70" />}
         {id}
-        <Text isMuted className="italic">
-          ({type})
-        </Text>
-      </span>
-      <div className="flex-1" />
+        <span className="italic opacity-50">({type})</span>
+      </Text>
       <CustomButton
         hidden={hidden}
         onClick={handleNodeHidden}
@@ -177,7 +174,6 @@ export function OverviewCard({
         className={classNames(
           hidden && "opacity-40",
           isSelected || hidden ? "visible" : "invisible group-hover:visible",
-          "absolute right-6 top-1",
         )}
       >
         {hidden ? <HiOutlineEye size={14} /> : <HiOutlineEyeOff size={14} />}
@@ -188,7 +184,7 @@ export function OverviewCard({
         className={classNames(
           hidden && "opacity-40",
           isSelected || hidden ? "visible" : "invisible group-hover:visible",
-          "absolute right-0.5 top-1 hover:bg-red-200/40 hover:text-red-500 dark:hover:bg-red-300/10 dark:hover:text-red-300",
+          "hover:bg-red-200/40 hover:text-red-500 dark:hover:bg-red-300/10 dark:hover:text-red-300",
         )}
         hidden={hidden}
       >

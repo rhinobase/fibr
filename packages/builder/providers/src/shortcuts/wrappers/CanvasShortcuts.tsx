@@ -4,7 +4,7 @@ import { type PropsWithChildren, useCallback, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useCanvas } from "../../canvas";
-import { EventContext, useEventBus } from "../../events";
+import { type EventContext, useEventBus } from "../../events";
 import { EditorEvent } from "../../utils";
 import { ActionType, useStack } from "../useStack";
 
@@ -34,6 +34,7 @@ export function CanvasShortcutsWrapper(props: PropsWithChildren) {
   const stack = useStack<EventContext>(resolveStackActions);
   const addEvent = useEventBus((state) => state.add);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     // Actions
     addEvent(EditorEvent.ALL, stack.pushAction);
@@ -91,6 +92,8 @@ export function CanvasShortcutsWrapper(props: PropsWithChildren) {
       preventDefault: true,
     },
   );
+
+  //TODO: complete this
 
   // useHotkeys(
   //   "mod+c",

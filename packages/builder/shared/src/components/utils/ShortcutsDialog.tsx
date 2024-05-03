@@ -1,4 +1,3 @@
-"use client";
 import { useBuilder } from "@fibr/providers";
 import {
   Button,

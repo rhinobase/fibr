@@ -106,7 +106,7 @@ export function CodeGenerator({ resolvers }: CodeGenerator) {
             <TabContent
               key={name}
               value={String(index)}
-              className="flex-1 overflow-hidden overflow-y-auto"
+              className="flex-1 overflow-auto"
             >
               <CodeHighlighter language={language} content={code} />
             </TabContent>

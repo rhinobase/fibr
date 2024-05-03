@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
 import { type PropsWithChildren, createContext, useContext } from "react";
 import type { ThreadWithIdType } from "../types";
 

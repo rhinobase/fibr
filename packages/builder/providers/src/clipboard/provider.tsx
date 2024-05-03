@@ -6,7 +6,7 @@ import {
   type PropsWithChildren,
 } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
-import { BlockType, useCanvas } from "../canvas";
+import { type BlockType, useCanvas } from "../canvas";
 import { Toast, mergeRefs } from "@rafty/ui";
 import toast from "react-hot-toast";
 import type { XYPosition } from "reactflow";

@@ -1,4 +1,3 @@
-"use client";
 import { Fragment } from "react";
 import { ThreadProvider, useFibr, useWeaver } from "../providers";
 import type { ThreadWithIdType } from "../types";

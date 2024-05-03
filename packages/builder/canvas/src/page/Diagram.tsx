@@ -1,4 +1,3 @@
-"use client";
 import { useCanvas, type BlockType } from "@fibr/providers";
 import { Thread } from "@fibr/react";
 import { useBlocks } from "@fibr/shared";

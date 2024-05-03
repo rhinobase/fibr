@@ -1,4 +1,3 @@
-"use client";
 import { useThread } from "../providers/Thread";
 
 export function ComponentNotFound() {
