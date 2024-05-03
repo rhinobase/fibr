@@ -1,7 +1,6 @@
 import { useDraggable } from "@dnd-kit/core";
 import type { BlockType } from "@fibr/providers";
-import { eventHandler } from "@rafty/shared";
-import { classNames } from "@rafty/ui";
+import { classNames, eventHandler } from "@rafty/ui";
 import type { RangeTuple } from "fuse.js";
 import type { Block } from "../../types";
 import { highlightMatches } from "../utils";

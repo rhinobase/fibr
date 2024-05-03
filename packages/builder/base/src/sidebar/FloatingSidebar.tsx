@@ -9,15 +9,15 @@ import {
   TooltipContent,
   TooltipTrigger,
   classNames,
+  eventHandler,
 } from "@rafty/ui";
 import { type PropsWithChildren, useRef } from "react";
 import {
-  ImperativePanelHandle,
+  type ImperativePanelHandle,
   Panel,
   PanelGroup,
 } from "react-resizable-panels";
 import { ResizeHandle } from "./ResizeHandle";
-import { eventHandler } from "@rafty/shared";
 
 const DEFAULT_SIZE = 20;
 

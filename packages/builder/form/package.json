@@ -8,7 +8,7 @@
     "@fibr/shared": "^1.0.0",
     "@heroicons/react": "^2.1.1",
     "@hookform/resolvers": "^3.3.4",
-    "@rafty/ui": "^1.4.7",
+    "@rafty/ui": "^1.5.2",
     "@swc/helpers": "^0.5.3",
     "react-hook-form": "^7.50.1",
     "zod": "^3.22.4"

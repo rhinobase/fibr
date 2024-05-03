@@ -1,11 +1,11 @@
 "use client";
-import { eventHandler } from "@rafty/shared";
 import {
   Button,
   Dialog,
   DialogContent,
   DialogOverlay,
   Text,
+  eventHandler,
   useBoolean,
 } from "@rafty/ui";
 import { useEffect } from "react";

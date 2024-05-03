@@ -1,9 +1,8 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { BlockType, useCanvas } from "@fibr/providers";
+import { type BlockType, useCanvas } from "@fibr/providers";
 import { useThread } from "@fibr/react";
-import { eventHandler } from "@rafty/shared";
-import { classNames } from "@rafty/ui";
+import { classNames, eventHandler } from "@rafty/ui";
 import { cva } from "class-variance-authority";
 import {
   type CSSProperties,

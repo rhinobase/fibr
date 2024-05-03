@@ -9,6 +9,7 @@ import {
   TooltipContent,
   TooltipTrigger,
   classNames,
+  eventHandler,
 } from "@rafty/ui";
 import { type PropsWithChildren, useEffect, useRef } from "react";
 import {
@@ -17,7 +18,6 @@ import {
   PanelGroup,
 } from "react-resizable-panels";
 import { ResizeHandle } from "./ResizeHandle";
-import { eventHandler } from "@rafty/shared";
 
 const DEFAULT_SIZE = 20;
 const MIN_WIDTH = 2.4;

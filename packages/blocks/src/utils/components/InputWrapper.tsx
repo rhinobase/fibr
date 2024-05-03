@@ -17,6 +17,16 @@ const addonTextClasses = cva(
   },
 );
 
+const iconClasses = cva("opacity-55", {
+  variants: {
+    size: {
+      sm: "size-[18px] stroke-2",
+      md: "size-5",
+      lg: "size-[22px]",
+    },
+  },
+});
+
 export type InputWrapperProps = {
   data: {
     size?: "sm" | "md" | "lg";
@@ -41,13 +51,13 @@ export function InputWrapper(props: PropsWithChildren) {
       )}
       {prefixIcon && (
         <Prefix>
-          <RaftyIcon type={prefixIcon} className="opacity-60" />
+          <RaftyIcon type={prefixIcon} className={iconClasses({ size })} />
         </Prefix>
       )}
       {props.children}
       {suffixIcon && (
         <Suffix>
-          <RaftyIcon type={suffixIcon} />
+          <RaftyIcon type={suffixIcon} className={iconClasses({ size })} />
         </Suffix>
       )}
       {suffixText && (

@@ -1,7 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useCanvas, type BlockType } from "@fibr/providers";
-import { eventHandler } from "@rafty/shared";
 import {
   AccordionContent,
   AccordionItem,
@@ -9,6 +8,7 @@ import {
   Text,
   accordionTriggerClasses,
   classNames,
+  eventHandler,
 } from "@rafty/ui";
 import { cva } from "class-variance-authority";
 import type { CSSProperties } from "react";

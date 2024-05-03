@@ -27,8 +27,7 @@
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",
     "@fibr/providers": "^1.0.0",
-    "@rafty/ui": "^1.4.2",
-    "@rafty/shared": "^1.0.3",
+    "@rafty/ui": "^1.5.2",
     "@swc/helpers": "^0.5.3",
     "react-icons": "^5.0.1",
     "react-hot-toast": "^2.4.1",

@@ -5,13 +5,13 @@ import {
   useCanvas,
 } from "@fibr/providers";
 import { useThread } from "@fibr/react";
-import { eventHandler } from "@rafty/shared";
 import {
   Button,
   Tooltip,
   TooltipContent,
   TooltipTrigger,
   classNames,
+  eventHandler,
 } from "@rafty/ui";
 import type { IconType } from "react-icons";
 import { HiOutlineEyeOff } from "react-icons/hi";
