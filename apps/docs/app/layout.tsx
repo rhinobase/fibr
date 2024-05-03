@@ -6,7 +6,7 @@ import { Providers } from "./Providers";
 export const metadata: Metadata = {
   title: {
     template: "%s - Fibr Playground",
-    default: "Fibr docs",
+    default: "Fibr Playground",
   },
 };
 
