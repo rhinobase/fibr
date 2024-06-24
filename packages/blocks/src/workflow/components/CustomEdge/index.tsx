@@ -2,9 +2,11 @@ import { BezierEdge, type BezierEdgeProps } from "reactflow";
 import { useHover } from "@uidotdev/usehooks";
 import { classNames } from "@rafty/ui";
 import "./style.css";
+import { useThread } from "@fibr/react";
 
-export function CustomEdge(props: BezierEdgeProps) {
+export function CustomEdge() {
   const [ref, hovering] = useHover();
+  const props = useThread<BezierEdgeProps>();
 
   return (
     <g

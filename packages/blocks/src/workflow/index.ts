@@ -7,7 +7,13 @@ import {
 } from "react-icons/lu";
 import { MdCropFree, MdInput, MdOutput } from "react-icons/md";
 import { type Node, Position } from "reactflow";
-import { ConditionNode, EndNode, StartNode, TransitNode } from "./components";
+import {
+  ConditionNode,
+  CustomEdge,
+  EndNode,
+  StartNode,
+  TransitNode,
+} from "./components";
 import { NodeSettings } from "./settings";
 import { Group } from "../page/components";
 import { PageSettings } from "../page/settings";
@@ -29,6 +35,12 @@ export const workflowConfig: Record<string, Config> = {
   end: {
     builder: EndNode,
     settings: NodeSettings,
+  },
+  edge: {
+    builder: CustomEdge,
+    metadata: {
+      node_type: "edge",
+    },
   },
 };
 

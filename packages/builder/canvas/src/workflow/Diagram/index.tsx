@@ -23,7 +23,6 @@ import {
   type ProOptions,
 } from "reactflow";
 import "reactflow/dist/style.css";
-import { CustomEdge } from "./CustomEdge";
 
 const MIN_DISTANCE = 200;
 
@@ -31,13 +30,21 @@ export function Diagram() {
   const store = useStoreApi();
 
   const config = useBlocks(({ config }) => config);
+  const allowedEdgesType = useMemo(
+    () =>
+      Object.entries(config).reduce<string[]>((prev, [name, block]) => {
+        if (block.metadata?.node_type === "edge") prev.push(name);
+        return prev;
+      }, []),
+    [config],
+  );
 
   const { nodes, edges, set } = useCanvas(({ schema, set }) => {
     const nodes: Node[] = [];
     const edges: Edge[] = [];
 
     for (const block of schema) {
-      if (block.type === "edge") edges.push(block as Edge);
+      if (allowedEdgesType.includes(block.type)) edges.push(block as Edge);
       else nodes.push(block as Node);
     }
 
@@ -47,8 +54,6 @@ export function Diagram() {
       set,
     };
   });
-
-  const customEdgeTypes: EdgeTypes = { edge: CustomEdge };
 
   const fitViewOptions: FitViewOptions = {
     padding: 0.5,
@@ -86,13 +91,23 @@ export function Diagram() {
     [set],
   );
 
-  const customNodeTypes: NodeTypes = useMemo(
+  const customNodeTypes = useMemo(
     () =>
       Object.keys(config).reduce<NodeTypes>((prev, name) => {
-        prev[name] = Thread;
+        if (!allowedEdgesType.includes(name)) prev[name] = Thread;
         return prev;
       }, {}),
-    [config],
+    [allowedEdgesType, config],
+  );
+
+  const customEdgeTypes = useMemo(
+    () =>
+      Object.keys(config).reduce<EdgeTypes>((prev, name) => {
+        if (allowedEdgesType.includes(name))
+          prev[name] = (props) => <Thread type={name} {...props} />;
+        return prev;
+      }, {}),
+    [allowedEdgesType, config],
   );
 
   const getClosestEdge = useCallback(
