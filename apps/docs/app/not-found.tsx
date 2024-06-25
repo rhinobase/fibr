@@ -7,13 +7,13 @@ export default function NotFound() {
     <>
       <HeroPattern />
       <div className="mx-auto flex h-full max-w-xl flex-col items-center justify-center py-16 text-center">
-        <p className="text-secondary-900 text-sm font-semibold dark:text-white">
+        <p className="text-secondary-900  text-[0.875rem] font-semibold leading-[1.5rem] dark:text-white">
           404
         </p>
-        <h1 className="text-secondary-900 mt-2 text-2xl font-bold dark:text-white">
+        <h1 className="text-secondary-900 mt-2 text-[1.5rem] font-bold leading-[2rem]  dark:text-white">
           Page not found
         </h1>
-        <p className="text-secondary-600 dark:text-secondary-400 mt-2 text-base">
+        <p className="text-secondary-600 dark:text-secondary-400 mt-2 text-[1rem] leading-[1.75rem]">
           Sorry, we couldn&apos;t find the page you&apos;re looking for.
         </p>
         <Link

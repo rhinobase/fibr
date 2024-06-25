@@ -71,8 +71,8 @@ export function Palette({ enableDragging = false, onSelect }: Palette) {
     >
       <div className="dark:bg-secondary-950 sticky top-0 z-10 bg-white">
         <SearchField
-          search={search}
-          onSearch={setSearch}
+          value={search}
+          onValueChange={setSearch}
           size="sm"
           autoComplete="off"
         />
