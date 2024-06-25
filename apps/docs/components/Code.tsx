@@ -66,10 +66,9 @@ function CopyButton({ code }: CopyButton) {
   return (
     <div className="invisible absolute right-4 top-3.5 rounded-full bg-black/20 backdrop-blur transition-all group-hover:visible">
       <Button
-        type="button"
         variant="ghost"
         size="sm"
-        className="text-secondary-100 invisible rounded-full group-hover:visible"
+        className="text-secondary-100 rounded-full"
         onClick={() =>
           window.navigator.clipboard.writeText(code).then(() => {
             setCopyCount((count) => count + 1);
@@ -148,7 +147,7 @@ function CodePanel({ children, tag, label, code }: CodePanel) {
     <div className="dark:bg-white/2.5 group">
       <CodePanelHeader tag={tag} label={label} />
       <div className="relative">
-        <pre className="overflow-x-auto p-4 text-[0.8125rem] leading-[1.5rem] text-white">
+        <pre className="text-[0.8125rem] leading-[1.5rem] text-white [&>code>pre]:overflow-x-auto [&>code>pre]:p-4">
           {children}
         </pre>
         <CopyButton code={code} />
@@ -185,7 +184,7 @@ function CodeGroupHeader({ title, children }: CodeGroupHeader) {
           {Children.map(children, (child) => (
             <TabTrigger
               value={getPanelTitle(isValidElement(child) ? child.props : {})}
-              className="hover:text-secondary-400 data-[state='active']:text-primary-400 data-[state='active']:dark:border-b-primary-500 py-3"
+              className="hover:text-secondary-400 data-[orientation=horizontal]:data-[state=active]:text-primary-400 dark:data-[orientation=horizontal]:data-[state=active]:border-primary-600 dark:data-[orientation=horizontal]:data-[state=active]:text-primary-600 py-3"
             >
               {isValidElement(child)
                 ? getPanelTitle(child.props || {})
@@ -208,6 +207,7 @@ function CodeGroupPanels({ children, ...props }: CodeGroupPanels) {
       <>
         {Children.map(children, (child) => (
           <TabContent
+            className="data-[orientation=horizontal]:py-0"
             value={getPanelTitle(isValidElement(child) ? child.props : {})}
           >
             <CodePanel {...props}>{child}</CodePanel>

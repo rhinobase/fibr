@@ -59,7 +59,7 @@ export function PaletteCard({
         <p
           className={classNames(
             enableDragging && "select-none",
-            "text-secondary-500 dark:text-secondary-400 text-2xs text-center capitalize",
+            "text-secondary-500 dark:text-secondary-400 text-center text-[0.75rem] capitalize",
           )}
         >
           {matches ? highlightMatches(label, matches) : label}

@@ -72,7 +72,7 @@ export const Header = forwardRef<HTMLDivElement, Header>(function Header(
         <MobileNavigation />
         <Link href="/" aria-label="Home" className="flex items-center gap-1">
           <Logo className="w-7" />
-          <span className="text-[1.5rem] font-semibold italic leading-[2rem] leading-none">
+          <span className="text-[1.5rem] font-semibold italic leading-[2rem]">
             Fibr
           </span>
         </Link>
@@ -80,7 +80,6 @@ export const Header = forwardRef<HTMLDivElement, Header>(function Header(
       <div className="flex items-center gap-5">
         <nav className="hidden md:block">
           <ul className="flex items-center gap-8">
-            <TopLevelNavItem href="/">Documentation</TopLevelNavItem>
             <TopLevelNavItem href="/playground">Playground</TopLevelNavItem>
           </ul>
         </nav>

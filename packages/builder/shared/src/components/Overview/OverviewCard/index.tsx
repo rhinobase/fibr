@@ -161,7 +161,7 @@ export function OverviewCard({
       <Text
         className={classNames(
           hidden && "opacity-40",
-          "text-2xs w-full truncate text-left font-medium",
+          "w-full truncate text-left text-[0.75rem] font-medium",
         )}
       >
         {id}

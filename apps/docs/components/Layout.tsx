@@ -33,7 +33,7 @@ export function Layout({ children, allSections }: Layout) {
                 className="flex items-center gap-1"
               >
                 <Logo className="w-7" />
-                <span className="text-[1.5rem] font-semibold italic leading-[2rem] leading-none">
+                <span className="text-[1.5rem] font-semibold italic leading-[2rem]">
                   Fibr
                 </span>
               </Link>

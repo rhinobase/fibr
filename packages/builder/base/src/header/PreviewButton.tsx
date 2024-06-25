@@ -37,7 +37,7 @@ export function PreviewButton() {
       </TooltipTrigger>
       <TooltipContent
         isArrow={false}
-        className="text-2xs rounded px-1.5 py-1.5 leading-none"
+        className="rounded px-1.5 py-1.5 text-[0.75rem] leading-none"
       >
         Toggle preview mode
       </TooltipContent>

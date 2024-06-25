@@ -1,6 +1,6 @@
-import * as fs from "fs";
-import * as path from "path";
-import * as url from "url";
+import * as fs from "node:fs";
+import * as path from "node:path";
+import * as url from "node:url";
 import { slugifyWithCounter } from "@sindresorhus/slugify";
 import glob from "fast-glob";
 import { toString as _toString } from "mdast-util-to-string";
@@ -53,7 +53,7 @@ export default function A(nextConfig = {}) {
         test: __filename,
         use: [
           createLoader(function () {
-            const appDir = path.resolve("./app");
+            const appDir = path.resolve("./app/(docs)");
             this.addContextDependency(appDir);
 
             const files = glob.sync("**/*.mdx", { cwd: appDir });
