@@ -1,8 +1,8 @@
-import { Logo } from "@fibr/builder";
 import { classNames } from "@rafty/ui";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { type HTMLAttributes, type PropsWithChildren, forwardRef } from "react";
+import { Logo } from "./Logo";
 import {
   MobileNavigation,
   useIsInsideMobileNavigation,

@@ -1,6 +1,6 @@
-import { Logo } from "@fibr/builder";
 import { Spinner } from "@rafty/ui";
 import dynamic from "next/dynamic";
+import { Logo } from "../../components/Logo";
 
 const Playground = dynamic(() => import("./Playground"), {
   ssr: false,
