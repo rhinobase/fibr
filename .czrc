@@ -29,10 +29,6 @@
       "name": "canvas:               anything canvas resources specific"
     },
     {
-      "value": "providers",
-      "name": "providers:            anything providers resources specific"
-    },
-    {
       "value": "workflow",
       "name": "workflow:             anything workflow resources specific"
     },
