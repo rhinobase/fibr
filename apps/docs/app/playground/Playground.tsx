@@ -7,10 +7,15 @@ import {
   workflowBlocks,
   workflowConfig,
 } from "@fibr/blocks";
-import { Workspace } from "@fibr/builder";
+import {
+  type BlockType,
+  EditorEvent,
+  Env,
+  Workspace,
+  useBuilder,
+} from "@fibr/builder";
 import { FormBuilder } from "@fibr/form";
 import { PageBuilder } from "@fibr/page";
-import { type BlockType, EditorEvent, Env, useBuilder } from "@fibr/providers";
 import { WorkflowBuilder } from "@fibr/workflow";
 import {
   Button,

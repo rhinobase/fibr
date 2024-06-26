@@ -1,4 +1,4 @@
-import { Env, useBuilder, useClipboard } from "@fibr/providers";
+import { Env, useBuilder, useClipboard } from "@fibr/builder";
 import { WeaverProvider } from "@fibr/react";
 import { Canvas, CustomControls } from "@fibr/shared";
 import type { PropsWithChildren, ReactNode } from "react";

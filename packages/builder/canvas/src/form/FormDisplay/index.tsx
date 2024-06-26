@@ -1,8 +1,13 @@
-import { type BlockType, Env, useBuilder } from "@fibr/providers";
-import { useCanvas, DEFAULT_GROUP, groupByParentNode } from "@fibr/providers";
+import {
+  type BlockType,
+  Env,
+  useBuilder,
+  useCanvas,
+  DEFAULT_GROUP,
+  groupByParentNode,
+} from "@fibr/builder";
 import { Loom, WeaverProvider } from "@fibr/react";
 import { DndWrapper } from "@fibr/shared";
-import { Text } from "@rafty/ui";
 import type { PropsWithChildren, ReactNode } from "react";
 import { FieldOverlay } from "./FieldOverlay";
 import { FieldPadding } from "./FieldPadding";
@@ -28,9 +33,7 @@ export function FormDisplay() {
   if (!groups[DEFAULT_GROUP])
     return (
       <div className="m-2 rounded-lg border-2 border-dashed p-6 text-center">
-        <Text isMuted className="select-none font-medium">
-          No Active Canvas
-        </Text>
+        <p className="select-none font-medium opacity-60">No Active Canvas</p>
       </div>
     );
 

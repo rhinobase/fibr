@@ -1,5 +1,9 @@
-import { SidebarItem } from "@fibr/builder";
-import { DEFAULT_GROUP, groupByParentNode, useCanvas } from "@fibr/providers";
+import {
+  DEFAULT_GROUP,
+  groupByParentNode,
+  useCanvas,
+  SidebarItem,
+} from "@fibr/builder";
 import { ListBulletIcon } from "@heroicons/react/24/outline";
 import { Accordion } from "@rafty/ui";
 import { useEffect, useMemo, useState } from "react";

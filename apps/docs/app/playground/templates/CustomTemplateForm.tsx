@@ -1,4 +1,4 @@
-import type { BlockType } from "@fibr/providers";
+import type { BlockType } from "@fibr/builder";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, ErrorMessage, FieldControl, Textarea } from "@rafty/ui";
 import type { BaseSyntheticEvent } from "react";

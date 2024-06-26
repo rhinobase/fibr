@@ -1,7 +1,11 @@
-import { Settings as BuilderSettings } from "@fibr/builder";
-import { type BlockType, useCanvas } from "@fibr/providers";
+import {
+  Settings as BuilderSettings,
+  classNames,
+  type BlockType,
+  useCanvas,
+} from "@fibr/builder";
 import { FibrProvider, Thread } from "@fibr/react";
-import { Button, Text, classNames } from "@rafty/ui";
+import { Button, Text } from "@rafty/ui";
 import { type ReactNode, useMemo } from "react";
 import { useBlocks } from "../providers";
 
@@ -87,13 +91,28 @@ export function Settings({ className, ...props }: Settings) {
       </>
     );
 
+  const selectedBlockId =
+    selectedBlocksLength === 1 ? selectedBlocks[0].id : undefined;
+
   if (isSettingsPanelActive)
     return (
       <BuilderSettings
         {...props}
-        blockId={selectedBlocksLength === 1 ? selectedBlocks[0].id : undefined}
-        className={classNames("flex flex-col gap-3", className)}
+        className={classNames(
+          "border-secondary-200 dark:border-secondary-800 dark:bg-secondary-950 flex flex-col gap-3 border-l bg-white",
+          className,
+        )}
       >
+        <div className="flex w-full items-center justify-between">
+          <h4 className="font-medium">Settings</h4>
+          <p
+            title={selectedBlockId}
+            className="max-w-60 truncate text-sm font-medium italic opacity-60"
+          >
+            {selectedBlockId}
+          </p>
+        </div>
+        <hr className="dark:border-secondary-700 border-secondary-200" />
         {component}
       </BuilderSettings>
     );

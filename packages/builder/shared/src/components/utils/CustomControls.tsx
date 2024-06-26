@@ -1,5 +1,5 @@
-import { Env, useBuilder } from "@fibr/providers";
-import { Button as RaftyButton, classNames, eventHandler } from "@rafty/ui";
+import { Env, useBuilder, classNames, eventHandler } from "@fibr/builder";
+import { Button as RaftyButton } from "@rafty/ui";
 import { useEffect } from "react";
 import { HiMinus, HiPlus } from "react-icons/hi";
 import { HiLockClosed, HiLockOpen } from "react-icons/hi2";

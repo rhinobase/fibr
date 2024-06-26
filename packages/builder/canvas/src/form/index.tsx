@@ -1,4 +1,4 @@
-import { useCanvas, useClipboard } from "@fibr/providers";
+import { useCanvas, useClipboard } from "@fibr/builder";
 import { Canvas } from "@fibr/shared";
 import { FormDisplay } from "./FormDisplay";
 

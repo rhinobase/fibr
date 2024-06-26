@@ -1,13 +1,13 @@
 import { arrayMove } from "@dnd-kit/sortable";
 import { Toast } from "@rafty/ui";
-import { type Draft } from "immer";
+import type { Draft } from "immer";
 import _ from "lodash";
 import toast from "react-hot-toast";
-import { StoreApi, UseBoundStore, create } from "zustand";
+import { type StoreApi, type UseBoundStore, create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { EditorEventBus } from "../events";
+import type { EditorEventBus } from "../events";
 import { EditorEvent } from "../utils";
-import {
+import type {
   AddBlockProps,
   BlockType,
   DuplicateBlockProps,
@@ -195,6 +195,7 @@ export const createCanvasStore = ({
           });
       },
       set: ({ func, shouldEmit = true }) => {
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         const currentBlocks = get().schema as any[];
         const blocks = func(currentBlocks);
 

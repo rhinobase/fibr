@@ -1,6 +1,6 @@
 "use client";
 import { useDroppable } from "@dnd-kit/core";
-import { Env, useBuilder } from "@fibr/providers";
+import { Env, useBuilder } from "../providers";
 import {
   Tab,
   TabList,
@@ -8,9 +8,8 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-  classNames,
-  eventHandler,
 } from "@rafty/ui";
+import { classNames, eventHandler } from "../utils";
 import { type PropsWithChildren, useRef } from "react";
 import {
   type ImperativePanelHandle,
@@ -99,6 +98,7 @@ function SidebarTray(props: PropsWithChildren) {
         {Object.entries(all).map(([name, { icon, label }]) => (
           <Tooltip key={name}>
             <TooltipTrigger asChild>
+              {/* This extra div is placed to avoid passing tooltip data props to tab trigger */}
               <div className="focus:ring-1">
                 <TabTrigger
                   value={name}

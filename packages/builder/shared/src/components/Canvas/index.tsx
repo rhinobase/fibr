@@ -1,8 +1,11 @@
-import { Canvas as BuilderCanvas } from "@fibr/builder";
-import { CanvasShortcutsWrapper, useCanvas } from "@fibr/providers";
+import {
+  Canvas as BuilderCanvas,
+  CanvasShortcutsWrapper,
+  useCanvas,
+} from "@fibr/builder";
 import { FibrProvider } from "@fibr/react";
 import { Toast } from "@rafty/ui";
-import { type ReactNode, forwardRef, useEffect, useMemo } from "react";
+import { forwardRef, useEffect, useMemo, type ReactNode } from "react";
 import toast from "react-hot-toast";
 import { useBlocks } from "../../providers";
 import { DefaultComponent } from "./DefaultComponent";

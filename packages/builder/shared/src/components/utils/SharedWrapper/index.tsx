@@ -2,7 +2,7 @@ import {
   CanvasProvider,
   EditorShortcutsWrapper,
   type CanvasStoreProps,
-} from "@fibr/providers";
+} from "@fibr/builder";
 import type { PropsWithChildren } from "react";
 import { HotkeysProvider } from "react-hotkeys-hook";
 import { BlocksProvider, type BlocksStoreProps } from "../../../providers";

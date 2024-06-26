@@ -1,5 +1,5 @@
 import { useThread } from "@fibr/react";
-import { classNames, useBoolean } from "@rafty/ui";
+import { classNames, useBoolean } from "@fibr/builder";
 import type { PropsWithChildren } from "react";
 import {
   NodeResizeControl,

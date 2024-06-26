@@ -2,7 +2,7 @@ import {
   type BlockType,
   DEFAULT_GROUP,
   groupByParentNode,
-} from "@fibr/providers";
+} from "@fibr/builder";
 
 export type FieldBlockType = BlockType<{
   // Canvas

@@ -1,6 +1,7 @@
 "use client";
-import { type TabPayload, useBuilder } from "@fibr/providers";
-import { TabContent, classNames } from "@rafty/ui";
+import { type TabPayload, useBuilder } from "../providers";
+import { TabContent } from "@rafty/ui";
+import { classNames } from "../utils";
 import {
   Fragment,
   type PropsWithChildren,

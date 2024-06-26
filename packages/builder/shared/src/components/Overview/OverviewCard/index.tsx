@@ -1,14 +1,17 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useCanvas, type BlockType } from "@fibr/providers";
+import {
+  useCanvas,
+  type BlockType,
+  classNames,
+  eventHandler,
+} from "@fibr/builder";
 import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
   Text,
   accordionTriggerClasses,
-  classNames,
-  eventHandler,
 } from "@rafty/ui";
 import { cva } from "class-variance-authority";
 import type { CSSProperties } from "react";

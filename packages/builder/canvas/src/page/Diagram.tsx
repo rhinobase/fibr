@@ -1,4 +1,4 @@
-import { useCanvas, type BlockType } from "@fibr/providers";
+import { useCanvas, type BlockType } from "@fibr/builder";
 import { Thread } from "@fibr/react";
 import { useBlocks } from "@fibr/shared";
 import { useTheme } from "next-themes";

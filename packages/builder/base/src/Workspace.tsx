@@ -3,8 +3,8 @@ import {
   EventManagerProvider,
   type CreateBuilderStoreProps,
   type EditorEventBusProps,
-} from "@fibr/providers";
-import { classNames } from "@rafty/ui";
+} from "./providers";
+import { classNames } from "./utils";
 import { forwardRef, type HTMLAttributes } from "react";
 import { Toaster } from "react-hot-toast";
 
