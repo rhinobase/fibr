@@ -1,14 +1,7 @@
 "use client";
 import { useDroppable } from "@dnd-kit/core";
 import { Env, useBuilder } from "../providers";
-import {
-  Tab,
-  TabList,
-  TabTrigger,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@rafty/ui";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
 import { classNames, eventHandler } from "../utils";
 import { type PropsWithChildren, useEffect, useRef } from "react";
 import {
@@ -17,6 +10,7 @@ import {
   PanelGroup,
 } from "react-resizable-panels";
 import { ResizeHandle } from "./ResizeHandle";
+import * as Tabs from "@radix-ui/react-tabs";
 
 const DEFAULT_SIZE = 20;
 const MIN_WIDTH = 2.4;
@@ -110,38 +104,38 @@ function SidebarTray({ children, expandPanel, collapsePanel }: SidebarTray) {
     });
 
   return (
-    <Tab
+    <Tabs.Root
       value={isExpanded ? active ?? undefined : "None"}
       orientation="vertical"
       className={classNames(
         (active === null || !isExpanded) && "w-max",
-        "dark:bg-secondary-950 pointer-events-auto h-full bg-white",
+        "dark:bg-secondary-950 pointer-events-auto flex h-full bg-white",
       )}
       ref={setNodeRef}
     >
-      <TabList className="dark:border-secondary-800">
+      <Tabs.List className="dark:border-secondary-800 border-secondary-300 flex flex-col border-r">
         {Object.entries(all).map(([name, { icon, label }]) => (
           <Tooltip key={name}>
             <TooltipTrigger asChild>
               {/* This extra div is placed to avoid passing tooltip data props to tab trigger */}
               <div>
-                <TabTrigger
+                <Tabs.Trigger
                   value={name}
                   onClick={setActiveTab(name)}
                   onKeyDown={setActiveTab(name)}
-                  className="hover:text-secondary-700 dark:hover:text-secondary-300 p-2"
+                  className="dark:hover:text-secondary-100 text-secondary-600 dark:text-secondary-400 dark:data-[state=active]:text-secondary-100 data-[disabled]:text-secondary-400 dark:data-[disabled]:text-secondary-600 data-[state=active]:border-primary-500 dark:data-[state=active]:border-primary-300 data-[state=active]:bg-secondary-100 dark:data-[state=active]:bg-secondary-800 -mr-px rounded-l-md border-r-2 border-transparent p-2 font-medium transition-colors ease-in-out hover:text-black data-[disabled]:cursor-not-allowed data-[state=active]:text-black"
                 >
                   {icon}
-                </TabTrigger>
+                </Tabs.Trigger>
               </div>
             </TooltipTrigger>
             <TooltipContent side="right">{label}</TooltipContent>
           </Tooltip>
         ))}
-      </TabList>
+      </Tabs.List>
       <div className="border-secondary-200 dark:border-secondary-800 w-full overflow-hidden border-r">
         {children}
       </div>
-    </Tab>
+    </Tabs.Root>
   );
 }

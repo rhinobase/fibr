@@ -38,6 +38,9 @@ dependencies:
   '@next/mdx':
     specifier: ^14.2.4
     version: 14.2.4(@mdx-js/loader@3.0.1)
+  '@radix-ui/react-tabs':
+    specifier: ^1.1.0
+    version: 1.1.0(@types/react-dom@18.2.19)(@types/react@18.2.60)(react-dom@18.2.0)(react@18.2.0)
   '@rafty/icons':
     specifier: ^0.1.6
     version: 0.1.6(react@18.2.0)
@@ -3958,23 +3961,6 @@ packages:
       - verdaccio
     dev: true
 
-  /@nrwl/js@18.0.5(@swc-node/register@1.8.0)(@swc/core@1.4.17)(@types/node@20.14.9)(nx@18.0.5)(typescript@5.3.3)(verdaccio@5.31.1):
-    resolution: {integrity: sha512-EhdflJ1K7+MUnRHbj+v88SrhmEOjFBsdgNxzkmx0cxnRDFqH9B8dzUiRGLJmdW7cK4r0TY0C8U+1VHldSnm4FA==}
-    dependencies:
-      '@nx/js': 18.0.5(@swc-node/register@1.8.0)(@swc/core@1.4.17)(@types/node@20.14.9)(nx@18.0.5)(typescript@5.3.3)(verdaccio@5.31.1)
-    transitivePeerDependencies:
-      - '@babel/traverse'
-      - '@swc-node/register'
-      - '@swc/core'
-      - '@swc/wasm'
-      - '@types/node'
-      - debug
-      - nx
-      - supports-color
-      - typescript
-      - verdaccio
-    dev: true
-
   /@nrwl/js@18.0.5(@swc-node/register@1.8.0)(@swc/core@1.4.17)(@types/node@20.14.9)(nx@18.0.5)(typescript@5.4.5)(verdaccio@5.31.1):
     resolution: {integrity: sha512-EhdflJ1K7+MUnRHbj+v88SrhmEOjFBsdgNxzkmx0cxnRDFqH9B8dzUiRGLJmdW7cK4r0TY0C8U+1VHldSnm4FA==}
     dependencies:
@@ -4247,7 +4233,7 @@ packages:
       '@babel/preset-env': 7.24.7(@babel/core@7.24.7)
       '@babel/preset-typescript': 7.24.7(@babel/core@7.24.7)
       '@babel/runtime': 7.24.7
-      '@nrwl/js': 18.0.5(@swc-node/register@1.8.0)(@swc/core@1.4.17)(@types/node@20.14.9)(nx@18.0.5)(typescript@5.3.3)(verdaccio@5.31.1)
+      '@nrwl/js': 18.0.5(@swc-node/register@1.8.0)(@swc/core@1.4.17)(@types/node@20.14.9)(nx@18.0.5)(typescript@5.4.5)(verdaccio@5.31.1)
       '@nx/devkit': 18.0.5(nx@18.0.5)
       '@nx/workspace': 18.0.5(@swc-node/register@1.8.0)(@swc/core@1.4.17)
       '@phenomnomnominal/tsquery': 5.0.1(typescript@5.3.3)
