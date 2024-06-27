@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 
-export default function ChakraLogo(props: SVGProps<SVGSVGElement>) {
+export function ChakraLogo(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
