@@ -1,5 +1,5 @@
+import { type ButtonProps, Button as ChakraButton } from "@chakra-ui/react";
 import { Env, classNames, eventHandler, useBuilder } from "@fibr/builder";
-import { Button as RaftyButton } from "@rafty/ui";
 import { useEffect } from "react";
 import { HiMinus, HiPlus } from "react-icons/hi";
 import { HiLockClosed, HiLockOpen } from "react-icons/hi2";
@@ -23,10 +23,10 @@ export function Controls({
   onZoomOut,
   onFitView,
   onInteractiveChange,
-  className,
   children,
   position = "bottom-center",
   "aria-label": ariaLabel = "React Flow controls",
+  style,
   ...props
 }: Controls) {
   const store = useStoreApi();
@@ -84,10 +84,15 @@ export function Controls({
       {...props}
       position={position}
       aria-label={ariaLabel}
-      className={classNames(
-        "dark:bg-secondary-950 flex gap-0.5 rounded-md bg-white p-1 shadow-md",
-        className,
-      )}
+      style={{
+        display: "flex",
+        gap: 2,
+        borderRadius: 8,
+        padding: 4,
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+        background: "white",
+        ...style,
+      }}
     >
       {showZoom && (
         <>
@@ -117,7 +122,7 @@ export function Controls({
           aria-label="fit view"
           onClick={onFitViewHandler}
         >
-          <PiCornersOut className="stroke-[3]" />
+          <PiCornersOut strokeWidth={3} />
         </Button>
       )}
       {showInteractive && (
@@ -134,18 +139,6 @@ export function Controls({
   );
 }
 
-function Button({
-  size = "icon",
-  variant = "ghost",
-  className,
-  ...props
-}: RaftyButton) {
-  return (
-    <RaftyButton
-      {...props}
-      size={size}
-      variant={variant}
-      className={classNames("rounded p-1", className)}
-    />
-  );
+function Button({ size = "sm", variant = "ghost", ...props }: ButtonProps) {
+  return <ChakraButton {...props} p={1} size={size} variant={variant} />;
 }

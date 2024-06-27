@@ -1,3 +1,4 @@
+import { Kbd, Text, Toast } from "@chakra-ui/react";
 import { useDroppable } from "@dnd-kit/core";
 import {
   Canvas as BuilderCanvas,
@@ -7,7 +8,6 @@ import {
   useClipboard,
 } from "@fibr/builder";
 import { FibrProvider, WeaverProvider, useThread } from "@fibr/react";
-import { Kbd, Text, Toast } from "@rafty/ui";
 import { type ReactNode, useEffect, useMemo } from "react";
 import toast from "react-hot-toast";
 import { Diagram } from "./Diagram";
@@ -33,10 +33,10 @@ export function Canvas() {
     if (!validateSchema(schema))
       toast.custom(({ visible }) => (
         <Toast
-          visible={visible}
-          severity="error"
+          // visible={visible}
+          status="error"
           title="Schema is not valid!"
-          message="One or more fields in schema are not available."
+          description="One or more fields in schema are not available."
         />
       ));
   }, [validateSchema, schema]);
@@ -57,7 +57,11 @@ export function Canvas() {
     <FibrProvider plugins={builders}>
       <BuilderCanvas
         ref={mergeRefs(ref, setNodeRef)}
-        className="bg-secondary-100 dark:bg-secondary-900 items-stretch justify-normal"
+        style={{
+          background: "#f4f4f5",
+          alignItems: "stretch",
+          justifyContent: "normal",
+        }}
       >
         <WeaverProvider wrapper={NodeWrapper}>
           <Diagram />
@@ -72,7 +76,7 @@ function DefaultComponent() {
   const { type } = useThread();
 
   return (
-    <Text isMuted className="text-center text-sm">
+    <Text opacity={0.6} textAlign="center" fontSize="sm">
       Component of type <Kbd>{type}</Kbd> doesn't exist!
     </Text>
   );

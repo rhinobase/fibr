@@ -22,7 +22,16 @@ export function Builder({ blocks, config, ...builderProps }: Builder) {
             <Container>
               <Sidebar />
               <Canvas />
-              <Settings className="right-2 top-2 h-[calc(100%-16px)] rounded-md border-l-0 shadow-md" />
+              <Settings
+                style={{
+                  right: 8,
+                  top: 8,
+                  borderRadius: 6,
+                  borderLeft: 0,
+                  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                  height: "calc(100% - 16px)",
+                }}
+              />
             </Container>
           </WorkflowDndWrapper>
         </ReactFlowProvider>

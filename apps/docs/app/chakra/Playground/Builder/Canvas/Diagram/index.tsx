@@ -1,3 +1,4 @@
+import { Spacer } from "@chakra-ui/react";
 import { type BlockType, useBlocks, useCanvas } from "@fibr/builder";
 import { Thread } from "@fibr/react";
 import { useCallback, useMemo } from "react";
@@ -224,7 +225,7 @@ export function Diagram() {
   };
 
   return (
-    <div className="flex-1">
+    <Spacer>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -247,6 +248,6 @@ export function Diagram() {
       >
         <Background />
       </ReactFlow>
-    </div>
+    </Spacer>
   );
 }

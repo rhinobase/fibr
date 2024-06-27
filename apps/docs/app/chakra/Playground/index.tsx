@@ -1,5 +1,5 @@
 "use client";
-import { Flex, Link, Spacer, Text } from "@chakra-ui/react";
+import { Box, Flex, Link, Spacer, Text } from "@chakra-ui/react";
 import { workflowBlocks, workflowConfig } from "@fibr/blocks";
 import { Workspace } from "@fibr/builder";
 import { XMarkIcon } from "@heroicons/react/24/outline";
@@ -21,35 +21,37 @@ export default function Playground() {
 
 function Header() {
   return (
-    <Link
-      title="Fibr Logo"
-      _hover={{ textDecoration: "none" }}
-      href="https://www.rhinobase.io/"
+    <Box
+      px={2}
+      py={0.5}
+      w="100%"
+      borderBottomWidth="1px"
+      borderColor="gray.200"
     >
-      <Flex
-        gap={2}
-        align="center"
-        px={2}
-        py={0.5}
-        w="100%"
-        borderBottomWidth="1px"
-        borderColor="gray.200"
-      >
-        <Flex align="baseline" gap={0.5} userSelect="none">
-          <Logo style={{ height: 16, width: "auto" }} />
-          <Text fontSize="xl" fontWeight={700} fontStyle="italic">
-            Fibr
-          </Text>
-        </Flex>
-        <XMarkIcon height={14} width={14} strokeWidth={3} opacity={0.7} />
-        <Flex align="center" gap={0.5} userSelect="none">
-          <ChakraLogo style={{ height: 20, width: "auto" }} />
-          <Text fontSize="xl" fontWeight={700}>
-            chakra
-          </Text>
-        </Flex>
-      </Flex>
-    </Link>
+      <Box w="max-content">
+        <Link
+          title="Fibr Logo"
+          _hover={{ textDecoration: "none" }}
+          href="https://www.rhinobase.io/"
+        >
+          <Flex gap={2} align="center">
+            <Flex align="baseline" gap={0.5} userSelect="none">
+              <Logo style={{ height: 16, width: "auto" }} />
+              <Text fontSize="xl" fontWeight={700} fontStyle="italic">
+                Fibr
+              </Text>
+            </Flex>
+            <XMarkIcon height={14} width={14} strokeWidth={3} opacity={0.7} />
+            <Flex align="center" gap={0.5} userSelect="none">
+              <ChakraLogo style={{ height: 20, width: "auto" }} />
+              <Text fontSize="xl" fontWeight={700}>
+                chakra
+              </Text>
+            </Flex>
+          </Flex>
+        </Link>
+      </Box>
+    </Box>
   );
 }
 

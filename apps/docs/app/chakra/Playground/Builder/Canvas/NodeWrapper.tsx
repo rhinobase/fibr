@@ -1,4 +1,5 @@
-import { classNames, useBlocks } from "@fibr/builder";
+import { Box } from "@chakra-ui/react";
+import { useBlocks } from "@fibr/builder";
 import { useThread } from "@fibr/react";
 import type { PropsWithChildren } from "react";
 import type { Node } from "reactflow";
@@ -16,15 +17,15 @@ export function NodeWrapper(props: PropsWithChildren) {
   if (allowedEdgesType.includes(type)) return props.children;
 
   return (
-    <div
-      className={classNames(
-        selected
-          ? "border-primary-500 dark:border-primary-400"
-          : "border-transparent",
-        "dark:bg-secondary-950 h-full w-full border bg-white p-2",
-      )}
+    <Box
+      p={2}
+      borderWidth="1px"
+      h="100%"
+      w="100%"
+      bg="white"
+      borderColor={selected ? "primary.500" : "transparent"}
     >
       {props.children}
-    </div>
+    </Box>
   );
 }
