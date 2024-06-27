@@ -7,5 +7,5 @@ const Playground = dynamic(() => import("./Playground"), {
 });
 
 export default function ChakraExamplePage() {
-  return <Playground />;
+  return <LoadingScreen />;
 }

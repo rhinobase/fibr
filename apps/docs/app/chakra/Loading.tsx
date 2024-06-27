@@ -1,17 +1,21 @@
-import { Spinner } from "@rafty/ui";
+import { Box, Center, Flex, Spinner, Text } from "@chakra-ui/react";
 import { Logo } from "../../components/Logo";
 
 export function LoadingScreen() {
   return (
-    <div className="flex h-screen w-full items-center justify-center">
-      <div className="flex items-baseline gap-1">
-        <Logo className="h-8 w-auto" />
-        <span className="text-[40px] font-bold italic">Fibr</span>
-      </div>
-      <div className="fixed bottom-10 left-10 flex items-center gap-2">
-        <Spinner size="sm" />
-        <p className="font-medium opacity-60">Initializing Editor</p>
-      </div>
-    </div>
+    <Center h="100vh" w="100%">
+      <Flex align="baseline" gap={1}>
+        <Logo style={{ height: 32, width: "auto" }} />
+        <Box as="span" fontSize={40} fontWeight={700} fontStyle="italic">
+          Fibr
+        </Box>
+      </Flex>
+      <Flex position="fixed" bottom={10} left={10} align="center" gap={2}>
+        <Spinner size="sm" thickness="1px" />
+        <Text fontWeight={500} opacity={0.6}>
+          Initializing Editor
+        </Text>
+      </Flex>
+    </Center>
   );
 }
