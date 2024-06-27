@@ -1,7 +1,7 @@
 import { Box, Center, Flex, Spinner, Text } from "@chakra-ui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Logo } from "../../components/Logo";
-import ChakraLogo from "./ChakraLogo";
+import { ChakraLogo } from "./ChakraLogo";
 
 export function LoadingScreen() {
   return (
