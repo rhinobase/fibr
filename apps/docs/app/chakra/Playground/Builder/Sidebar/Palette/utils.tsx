@@ -1,3 +1,4 @@
+import { chakra } from "@chakra-ui/react";
 import type { RangeTuple } from "fuse.js";
 import type { ReactNode } from "react";
 
@@ -16,11 +17,11 @@ export const highlightMatches = (
         inputText
           .substring(nextUnhighlightedRegionStartingIndex, region[0])
           .replace(" ", "\u00A0"),
-        <span key={`${i}-${region}`} className="bg-yellow-200/80">
+        <chakra.span key={`${i}-${region}`} bgColor="yellow.200">
           {inputText
             .substring(region[0], lastRegionNextIndex)
             .replace(" ", "\u00A0")}
-        </span>,
+        </chakra.span>,
       ],
     );
 

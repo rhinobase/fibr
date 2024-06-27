@@ -1,10 +1,6 @@
+import { Box, Flex, Text } from "@chakra-ui/react";
 import { useDraggable } from "@dnd-kit/core";
-import {
-  type Block,
-  type BlockType,
-  classNames,
-  eventHandler,
-} from "@fibr/builder";
+import { type Block, type BlockType, eventHandler } from "@fibr/builder";
 import type { RangeTuple } from "fuse.js";
 import { highlightMatches } from "./utils";
 
@@ -40,34 +36,45 @@ export function PaletteCard({
   const handleSelect = eventHandler(() => onSelect?.({ type, ...presets }));
 
   return (
-    <div
-      className={classNames("w-[72px]", !isOverlay && "space-y-1")}
+    <Box
+      w="72px"
       onClick={handleSelect}
       onKeyDown={handleSelect}
       {...draggableProps}
     >
-      <div
-        className={classNames(
+      <Flex
+        cursor={
           isOverlay || isDragging
-            ? "cursor-grabbing"
+            ? "grabbing"
             : enableDragging
-              ? "cursor-grab"
-              : "cursor-pointer",
-          "border-secondary-300 dark:border-secondary-700 dark:hover:bg-secondary-800/70 hover:border-secondary-500/80 dark:bg-secondary-950 flex h-[69px] items-center justify-center rounded border bg-white transition-all ease-in-out",
-        )}
+              ? "grab"
+              : "pointer"
+        }
+        h="69px"
+        alignItems="center"
+        justifyContent="center"
+        rounded={4}
+        bgColor="white"
+        borderWidth={1}
+        borderColor="gray.300"
+        _hover={{ borderColor: "gray.500" }}
+        transition="all"
+        transitionDuration="150ms"
       >
-        <Icon className="size-6 opacity-50" />
-      </div>
+        <Icon height={25} width={25} opacity={0.6} />
+      </Flex>
       {!isOverlay && (
-        <p
-          className={classNames(
-            enableDragging && "select-none",
-            "text-secondary-500 dark:text-secondary-400 text-center text-[0.75rem] capitalize",
-          )}
+        <Text
+          mt={1}
+          userSelect={enableDragging ? "none" : "auto"}
+          textColor="GrayText"
+          textAlign="center"
+          fontSize="0.75rem"
+          textTransform="capitalize"
         >
           {matches ? highlightMatches(label, matches) : label}
-        </p>
+        </Text>
       )}
-    </div>
+    </Box>
   );
 }

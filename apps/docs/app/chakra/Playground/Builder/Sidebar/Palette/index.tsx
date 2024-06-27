@@ -1,8 +1,19 @@
-import { type Block, SidebarItem, classNames, useBlocks } from "@fibr/builder";
-import { Squares2X2Icon } from "@heroicons/react/24/outline";
-import { SearchField } from "@rafty/ui";
+import {
+  Flex,
+  Heading,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Text,
+  chakra,
+} from "@chakra-ui/react";
+import { type Block, SidebarItem, useBlocks } from "@fibr/builder";
+import {
+  MagnifyingGlassIcon,
+  Squares2X2Icon,
+} from "@heroicons/react/24/outline";
 import Fuse, { type RangeTuple } from "fuse.js";
-import { type HTMLAttributes, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { PaletteCard } from "./PaletteCard";
 import { PaletteCardOverlay } from "./PaletteCardOverlay";
 
@@ -64,30 +75,43 @@ export function Palette({ enableDragging = false, onSelect }: Palette) {
     <SidebarItem
       name="palette"
       label="Palette"
-      icon={<Squares2X2Icon className="h-5 w-5 stroke-2" />}
+      icon={<Squares2X2Icon strokeWidth={2} width={20} height={20} />}
     >
-      <div className="dark:bg-secondary-950 sticky top-0 z-10 bg-white">
-        <SearchField
-          value={search}
-          onValueChange={setSearch}
-          size="sm"
-          autoComplete="off"
-        />
-      </div>
+      <chakra.div backgroundColor="white" position="sticky" top={0} zIndex={10}>
+        <InputGroup size="sm">
+          <InputLeftElement pointerEvents="none" p={2}>
+            <MagnifyingGlassIcon
+              height="100%"
+              width="100%"
+              strokeWidth={2}
+              strokeOpacity={0.6}
+            />
+          </InputLeftElement>
+          <Input
+            type="search"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            autoComplete="off"
+            rounded={6}
+          />
+        </InputGroup>
+      </chakra.div>
       {isEmpty ? (
-        <div className="flex flex-1 flex-col justify-center">
+        <Flex direction="column" flex={1} justifyContent="center">
           <Empty
             title="Component Not Found"
             description="Please check your spelling and try again, or explore our other available components."
           />
-        </div>
+        </Flex>
       ) : (
         Object.entries(blockResults).map(
           ([category, components]) =>
             components.length > 0 && (
-              <div key={category} className="space-y-2.5 pb-3">
-                <h3 className="text-sm font-semibold">{category}</h3>
-                <div className="flex flex-wrap gap-2.5">
+              <chakra.div key={category} pb={3}>
+                <Heading as="h3" fontSize="sm" fontWeight={600}>
+                  {category}
+                </Heading>
+                <Flex mt={2.5} flexWrap="wrap" gap={2.5}>
                   {components.map((block, index) => (
                     <PaletteCard
                       key={`${index}-${block.type}`}
@@ -96,8 +120,8 @@ export function Palette({ enableDragging = false, onSelect }: Palette) {
                       onSelect={onSelect}
                     />
                   ))}
-                </div>
-              </div>
+                </Flex>
+              </chakra.div>
             ),
         )
       )}
@@ -109,18 +133,26 @@ export function Palette({ enableDragging = false, onSelect }: Palette) {
 type Empty = {
   title: string;
   description: string;
-} & Pick<HTMLAttributes<HTMLDivElement>, "className">;
+};
 
-function Empty({ title, description, className }: Empty) {
+function Empty({ title, description }: Empty) {
   return (
-    <div
-      className={classNames(
-        "text-secondary-500 dark:text-secondary-400 flex w-full select-none flex-col items-center justify-center gap-1 p-3 text-center font-medium",
-        className,
-      )}
+    <Flex
+      width="100%"
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+      gap={1}
+      userSelect="none"
+      p={3}
+      textAlign="center"
+      fontWeight={500}
+      textColor="GrayText"
     >
-      <p className="text-lg">{title}</p>
-      <p className="text-sm leading-tight">{description}</p>
-    </div>
+      <Text fontSize="lg">{title}</Text>
+      <Text fontSize="sm" lineHeight={1.25}>
+        {description}
+      </Text>
+    </Flex>
   );
 }
