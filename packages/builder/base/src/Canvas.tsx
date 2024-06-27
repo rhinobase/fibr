@@ -9,7 +9,7 @@ export const Canvas = forwardRef<HTMLDivElement, Canvas>(
       <div
         {...props}
         className={classNames(
-          "bg-secondary-100 dark:bg-secondary-900 flex h-full items-start justify-center overflow-y-auto",
+          "flex h-full items-start justify-center overflow-y-auto",
           className,
         )}
         ref={forwardedRef}

@@ -5,7 +5,7 @@ import { WorkflowBuilder } from "@fibr/workflow";
 import { Text } from "@rafty/ui";
 import Link from "next/link";
 import { FaGithub, FaXTwitter } from "react-icons/fa6";
-import { Logo } from "../../components/Logo";
+import { Logo } from "../../../components/Logo";
 
 export default function Playground() {
   return (
