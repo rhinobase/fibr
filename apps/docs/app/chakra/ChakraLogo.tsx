@@ -25,8 +25,8 @@ export default function ChakraLogo(props: SVGProps<SVGSVGElement>) {
           y2="582"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#7BCBD4" />
-          <stop offset="1" stop-color="#29C6B7" />
+          <stop stopColor="#7BCBD4" />
+          <stop offset="1" stopColor="#29C6B7" />
         </linearGradient>
       </defs>
     </svg>
