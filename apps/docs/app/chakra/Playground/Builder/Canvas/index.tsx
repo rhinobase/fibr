@@ -31,9 +31,8 @@ export function Canvas() {
 
   useEffect(() => {
     if (!validateSchema(schema))
-      toast.custom(({ visible }) => (
+      toast.custom(() => (
         <Toast
-          // visible={visible}
           status="error"
           title="Schema is not valid!"
           description="One or more fields in schema are not available."

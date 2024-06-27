@@ -19,7 +19,7 @@ import { Group } from "../page/components";
 import { PageSettings } from "../page/settings";
 
 export const workflowConfig: Record<string, Config> = {
-  object: { builder: Group, settings: PageSettings },
+  // object: { builder: Group, settings: PageSettings },
   start: {
     builder: StartNode,
     settings: NodeSettings,

@@ -1,12 +1,12 @@
 "use client";
 import { Box, Flex, Link, Spacer, Text } from "@chakra-ui/react";
-import { workflowBlocks, workflowConfig } from "@fibr/blocks";
 import { Workspace } from "@fibr/builder";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import NextLink from "next/link";
 import { FaGithub, FaXTwitter } from "react-icons/fa6";
 import { Logo } from "../../../components/Logo";
 import { ChakraLogo } from "../ChakraLogo";
+import { workflowBlocks, workflowConfig } from "./Blocks";
 import { Builder } from "./Builder";
 
 export default function Playground() {
