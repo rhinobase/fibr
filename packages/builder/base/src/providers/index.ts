@@ -1,3 +1,4 @@
+export * from "./blocks";
 export * from "./builder";
 export * from "./canvas";
 export * from "./clipboard";

@@ -1,6 +1,7 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import {
+  useBlocks,
   useCanvas,
   type BlockType,
   classNames,
@@ -15,7 +16,6 @@ import {
 } from "@rafty/ui";
 import { cva } from "class-variance-authority";
 import type { CSSProperties } from "react";
-import { useBlocks } from "../../../providers";
 import { CustomButton } from "./CustomButton";
 import {
   HiChevronRight,

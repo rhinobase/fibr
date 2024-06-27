@@ -1,4 +1,5 @@
 import {
+  useBlocks,
   Canvas as BuilderCanvas,
   CanvasShortcutsWrapper,
   classNames,
@@ -8,7 +9,6 @@ import { FibrProvider } from "@fibr/react";
 import { Toast } from "@rafty/ui";
 import { forwardRef, useEffect, useMemo, type ReactNode } from "react";
 import toast from "react-hot-toast";
-import { useBlocks } from "../../providers";
 import { DefaultComponent } from "./DefaultComponent";
 
 export const Canvas = forwardRef<HTMLDivElement, BuilderCanvas>(

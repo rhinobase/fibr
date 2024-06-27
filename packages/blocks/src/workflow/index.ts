@@ -1,4 +1,4 @@
-import type { Block, Config } from "@fibr/shared";
+import type { Block, Config } from "@fibr/builder";
 import {
   LuGitCommit,
   LuGitFork,

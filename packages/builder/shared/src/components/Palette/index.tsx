@@ -1,10 +1,8 @@
-import { SidebarItem } from "@fibr/builder";
+import { useBlocks, SidebarItem, type Block } from "@fibr/builder";
 import { Squares2X2Icon } from "@heroicons/react/24/outline";
 import { SearchField } from "@rafty/ui";
 import Fuse, { type RangeTuple } from "fuse.js";
 import { useMemo, useState } from "react";
-import { useBlocks } from "../../providers";
-import type { Block } from "../../types";
 import { Empty } from "../utils";
 import { PaletteCard } from "./PaletteCard";
 import { PaletteCardOverlay } from "./PaletteCardOverlay";

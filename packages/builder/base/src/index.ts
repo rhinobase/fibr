@@ -4,4 +4,5 @@ export { Settings } from "./Settings";
 export { Workspace } from "./Workspace";
 export * from "./providers";
 export { FloatingSidebar, Sidebar, SidebarItem } from "./sidebar";
+export * from "./types";
 export * from "./utils";

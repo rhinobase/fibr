@@ -1,11 +1,12 @@
 import {
+  BlocksProvider,
   CanvasProvider,
   EditorShortcutsWrapper,
+  type BlocksStoreProps,
   type CanvasStoreProps,
 } from "@fibr/builder";
 import type { PropsWithChildren } from "react";
 import { HotkeysProvider } from "react-hotkeys-hook";
-import { BlocksProvider, type BlocksStoreProps } from "../../../providers";
 import { ShortcutsDialog } from "./ShortcutsDialog";
 
 export type SharedWrapper = PropsWithChildren<

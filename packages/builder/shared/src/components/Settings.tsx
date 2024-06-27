@@ -1,4 +1,5 @@
 import {
+  useBlocks,
   Settings as BuilderSettings,
   classNames,
   type BlockType,
@@ -7,7 +8,6 @@ import {
 import { FibrProvider, Thread } from "@fibr/react";
 import { Button, Text } from "@rafty/ui";
 import { type ReactNode, useMemo } from "react";
-import { useBlocks } from "../providers";
 
 export type Settings = BuilderSettings;
 

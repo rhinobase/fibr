@@ -1,6 +1,5 @@
-import { useCanvas, type BlockType } from "@fibr/builder";
+import { useBlocks, useCanvas, type BlockType } from "@fibr/builder";
 import { Thread } from "@fibr/react";
-import { useBlocks } from "@fibr/shared";
 import { useCallback, useMemo } from "react";
 import {
   Background,

@@ -1,8 +1,7 @@
 import { useDroppable } from "@dnd-kit/core";
-import { useClipboard } from "@fibr/builder";
+import { useClipboard, mergeRefs } from "@fibr/builder";
 import { WeaverProvider } from "@fibr/react";
 import { Canvas, CustomControls } from "@fibr/shared";
-import { mergeRefs } from "@fibr/builder";
 import "reactflow/dist/base.css";
 import { Diagram } from "./Diagram";
 import { NodeWrapper } from "./NodeWrapper";
