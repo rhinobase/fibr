@@ -7,7 +7,8 @@ import {
 } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { type BlockType, useCanvas } from "../canvas";
-import { Toast, mergeRefs } from "@rafty/ui";
+import { Toast } from "@rafty/ui";
+import { mergeRefs } from "../../utils";
 import toast from "react-hot-toast";
 import type { XYPosition } from "reactflow";
 import { groupByParentNode } from "../utils";
