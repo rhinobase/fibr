@@ -77,39 +77,7 @@ export default function Playground() {
             ({ event_type, ...props }) => console.log(event_type, props),
           ],
         }}
-        onError={({ type, data }) =>
-          toast.custom(({ visible }) => {
-            let toastProps: { title: string; message?: string } = {
-              title: "Error",
-            };
-
-            if (type === WorkspaceErrorType.BLOCK_NOT_FOUND)
-              toastProps = {
-                title: "Unable to find the block",
-              };
-            if (type === WorkspaceErrorType.GROUP_NOT_VALID)
-              toastProps = {
-                title: "Parent group not matching",
-                message:
-                  "All the nodes should be of the same group/parent node.",
-              };
-            if (type === WorkspaceErrorType.ID_ALREADY_EXIST)
-              toastProps = {
-                title: `"${data?.id}" is a component that already exists`,
-              };
-            if (type === WorkspaceErrorType.ID_NOT_FOUND)
-              toastProps = {
-                title: `Unable to find the block with Id "${data?.id}"`,
-              };
-            if (type === WorkspaceErrorType.SCHEMA_NOT_VALID)
-              toastProps = {
-                title: "Schema is not valid",
-                message: "One or more fields in schema are not available.",
-              };
-
-            return <Toast severity="error" visible={visible} {...toastProps} />;
-          })
-        }
+        onError={onErrorHandle}
       >
         <Header />
         {template ? (
@@ -212,4 +180,43 @@ function Footer() {
       </div>
     </footer>
   );
+}
+
+function onErrorHandle({
+  type,
+  data,
+}: {
+  type: WorkspaceErrorType;
+  data?: { id: string | string[] } | null;
+}) {
+  return toast.custom(({ visible }) => {
+    let toastProps: { title: string; message?: string } = {
+      title: "Error",
+    };
+
+    if (type === WorkspaceErrorType.BLOCK_NOT_FOUND)
+      toastProps = {
+        title: "Unable to find the block",
+      };
+    if (type === WorkspaceErrorType.GROUP_NOT_VALID)
+      toastProps = {
+        title: "Parent group not matching",
+        message: "All the nodes should be of the same group/parent node.",
+      };
+    if (type === WorkspaceErrorType.ID_ALREADY_EXIST)
+      toastProps = {
+        title: `"${data?.id}" is a component that already exists`,
+      };
+    if (type === WorkspaceErrorType.ID_NOT_FOUND)
+      toastProps = {
+        title: `Unable to find the block with Id "${data?.id}"`,
+      };
+    if (type === WorkspaceErrorType.SCHEMA_NOT_VALID)
+      toastProps = {
+        title: "Schema is not valid",
+        message: "One or more fields in schema are not available.",
+      };
+
+    return <Toast severity="error" visible={visible} {...toastProps} />;
+  });
 }
