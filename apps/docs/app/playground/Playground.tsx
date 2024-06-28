@@ -212,7 +212,9 @@ function onErrorHandle({
     },
   };
 
-  toast.custom(({ visible }) => (
-    <Toast id={type} severity="error" visible={visible} {...ErrorsData[type]} />
-  ));
+  const temp = ErrorsData[type];
+
+  toast.custom(() => <Toast severity="error" title={temp.title} message="" />, {
+    id: type,
+  });
 }
