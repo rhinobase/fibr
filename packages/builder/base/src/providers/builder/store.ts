@@ -38,7 +38,7 @@ type ErrorOptionsType = { cause?: Error } & (
         | WorkspaceErrorType.ID_ALREADY_EXIST
         | WorkspaceErrorType.ID_NOT_FOUND;
       data?: {
-        id: string;
+        id: string | string[];
       };
     }
 );

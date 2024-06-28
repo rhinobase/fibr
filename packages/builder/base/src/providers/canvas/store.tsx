@@ -291,19 +291,10 @@ export const createCanvasStore = ({
         const blockData = blocks[0];
 
         if (!blockData) {
-          if (typeof originalBlockIds === "string")
-            onError?.({
-              type: WorkspaceErrorType.ID_NOT_FOUND,
-              data: { id: originalBlockIds },
-            });
-          else {
-            originalBlockIds.map((id) =>
-              onError?.({
-                type: WorkspaceErrorType.ID_NOT_FOUND,
-                data: { id },
-              }),
-            );
-          }
+          onError?.({
+            type: WorkspaceErrorType.ID_NOT_FOUND,
+            data: { id: originalBlockIds },
+          });
 
           return;
         }

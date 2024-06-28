@@ -10,19 +10,14 @@ import { type BlockType, useCanvas } from "../canvas";
 import { mergeRefs } from "../../utils";
 import type { XYPosition } from "reactflow";
 import { groupByParentNode } from "../utils";
-import {
-  WorkspaceErrorType,
-  useBuilder,
-  type BuilderStoreProps,
-} from "../builder";
+import { WorkspaceErrorType, useBuilder } from "../builder";
 
 const ClipboardContext = createContext<ReturnType<
   typeof useClipboardManager
 > | null>(null);
 
 export function ClipboardProvider({ children }: PropsWithChildren) {
-  const onError = useBuilder((state) => state.onError);
-  const value = useClipboardManager({ onError });
+  const value = useClipboardManager();
 
   return (
     <ClipboardContext.Provider value={value}>
@@ -31,7 +26,8 @@ export function ClipboardProvider({ children }: PropsWithChildren) {
   );
 }
 
-function useClipboardManager({ onError }: Pick<BuilderStoreProps, "onError">) {
+function useClipboardManager() {
+  const onError = useBuilder((state) => state.onError);
   const [clipboard, setClipboard] = useState<BlockType[]>();
   const { schema, remove, uniqueId, set } = useCanvas(
     ({ schema, remove, uniqueId, set }) => ({
