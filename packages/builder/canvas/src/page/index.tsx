@@ -12,7 +12,9 @@ const NODE_WRAPPERS: Record<Env, (props: PropsWithChildren) => ReactNode> = {
   [Env.PRODUCTION]: NodePadding,
 };
 
-export function PageCanvas() {
+export type PageCanvas = { componentWrapper?: WeaverProvider["wrapper"] };
+
+export function PageCanvas({ componentWrapper }: PageCanvas) {
   const methods = useForm();
   const currentEnv = useBuilder(({ env }) => env.current);
   const { ref } = useClipboard();
@@ -21,7 +23,9 @@ export function PageCanvas() {
     <FormProvider {...methods}>
       <Canvas ref={ref}>
         <div className="dark:bg-secondary-950 flex h-full w-full bg-white">
-          <WeaverProvider wrapper={NODE_WRAPPERS[currentEnv]}>
+          <WeaverProvider
+            wrapper={componentWrapper ?? NODE_WRAPPERS[currentEnv]}
+          >
             <Diagram />
           </WeaverProvider>
         </div>

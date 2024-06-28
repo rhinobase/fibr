@@ -1,12 +1,14 @@
 import { useDroppable } from "@dnd-kit/core";
-import { useClipboard, mergeRefs } from "@fibr/builder";
+import { mergeRefs, useClipboard } from "@fibr/builder";
 import { WeaverProvider } from "@fibr/react";
 import { Canvas, CustomControls } from "@fibr/shared";
 import "reactflow/dist/base.css";
 import { Diagram } from "./Diagram";
 import { NodeWrapper } from "./NodeWrapper";
 
-export function WorkflowCanvas() {
+export type WorkflowCanvas = { nodeWrapper?: WeaverProvider["wrapper"] };
+
+export function WorkflowCanvas({ nodeWrapper }: WorkflowCanvas) {
   const { ref } = useClipboard();
   const { setNodeRef } = useDroppable({
     id: "canvas",
@@ -17,7 +19,7 @@ export function WorkflowCanvas() {
       ref={mergeRefs(ref, setNodeRef)}
       className="items-stretch justify-normal"
     >
-      <WeaverProvider wrapper={NodeWrapper}>
+      <WeaverProvider wrapper={nodeWrapper ?? NodeWrapper}>
         <Diagram />
       </WeaverProvider>
       <CustomControls />

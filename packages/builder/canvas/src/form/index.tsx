@@ -2,11 +2,9 @@ import { useCanvas, useClipboard } from "@fibr/builder";
 import { Canvas } from "@fibr/shared";
 import { FormDisplay } from "./FormDisplay";
 
-export type FormBuilderCanvas = {
-  fieldWrapper?: FormDisplay["fieldWrapper"];
-};
+export type FormBuilderCanvas = FormDisplay;
 
-export function FormBuilderCanvas({ fieldWrapper }: FormBuilderCanvas) {
+export function FormBuilderCanvas(props: FormBuilderCanvas) {
   const select = useCanvas(({ select }) => select);
   const { ref } = useClipboard();
 
@@ -20,7 +18,7 @@ export function FormBuilderCanvas({ fieldWrapper }: FormBuilderCanvas) {
       onKeyDown={handleSelect}
     >
       <div className="w-[500px] space-y-2 rounded">
-        <FormDisplay fieldWrapper={fieldWrapper} />
+        <FormDisplay {...props} />
       </div>
     </Canvas>
   );
