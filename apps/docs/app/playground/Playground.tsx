@@ -12,6 +12,7 @@ import {
   EditorEvent,
   Env,
   Workspace,
+  WorkspaceErrorType,
   useBuilder,
 } from "@fibr/builder";
 import { FormBuilder } from "@fibr/form";
@@ -20,6 +21,7 @@ import { WorkflowBuilder } from "@fibr/workflow";
 import {
   Button,
   Text,
+  Toast,
   Tooltip,
   TooltipContent,
   TooltipTrigger,
@@ -27,6 +29,7 @@ import {
 } from "@rafty/ui";
 import Link from "next/link";
 import { type ReactNode, useState } from "react";
+import toast from "react-hot-toast";
 import { FaGithub, FaXTwitter } from "react-icons/fa6";
 import { HiOutlineCodeBracketSquare } from "react-icons/hi2";
 import { VscDebugStart } from "react-icons/vsc";
@@ -74,6 +77,39 @@ export default function Playground() {
             ({ event_type, ...props }) => console.log(event_type, props),
           ],
         }}
+        onError={({ type, data }) =>
+          toast.custom(({ visible }) => {
+            let toastProps: { title: string; message?: string } = {
+              title: "Error",
+            };
+
+            if (type === WorkspaceErrorType.BLOCK_NOT_FOUND)
+              toastProps = {
+                title: "Unable to find the block",
+              };
+            if (type === WorkspaceErrorType.GROUP_NOT_VALID)
+              toastProps = {
+                title: "Parent group not matching",
+                message:
+                  "All the nodes should be of the same group/parent node.",
+              };
+            if (type === WorkspaceErrorType.ID_ALREADY_EXIST)
+              toastProps = {
+                title: `"${data?.id}" is a component that already exists`,
+              };
+            if (type === WorkspaceErrorType.ID_NOT_FOUND)
+              toastProps = {
+                title: `Unable to find the block with Id "${data?.id}"`,
+              };
+            if (type === WorkspaceErrorType.SCHEMA_NOT_VALID)
+              toastProps = {
+                title: "Schema is not valid",
+                message: "One or more fields in schema are not available.",
+              };
+
+            return <Toast severity="error" visible={visible} {...toastProps} />;
+          })
+        }
       >
         <Header />
         {template ? (

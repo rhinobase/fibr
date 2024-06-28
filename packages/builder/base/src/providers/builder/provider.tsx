@@ -8,7 +8,7 @@ import {
 import { useStore } from "zustand";
 import {
   type BuilderStore,
-  type CreateBuilderStoreProps,
+  type BuilderStoreProps,
   createBuilderStore,
 } from "./store";
 
@@ -19,14 +19,16 @@ const BuilderContext = createContext<ReturnType<
 export function BuilderProvider({
   children,
   ...props
-}: PropsWithChildren<CreateBuilderStoreProps>) {
+}: PropsWithChildren<BuilderStoreProps>) {
   const store = useRef(createBuilderStore({ ...props })).current;
   return (
     <BuilderContext.Provider value={store}>{children}</BuilderContext.Provider>
   );
 }
 
-export function useBuilder<T>(selector: (state: BuilderStore) => T): T {
+export function useBuilder<T>(
+  selector: (state: BuilderStore & Pick<BuilderStoreProps, "onError">) => T,
+): T {
   const store = useContext(BuilderContext);
 
   if (!store) throw new Error("Missing BuilderContext.Provider in the tree");

@@ -1,8 +1,6 @@
 import { arrayMove } from "@dnd-kit/sortable";
-import { Toast } from "@rafty/ui";
 import type { Draft } from "immer";
 import _ from "lodash";
-import toast from "react-hot-toast";
 import { type StoreApi, type UseBoundStore, create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import type { EditorEventBus } from "../events";
@@ -17,12 +15,13 @@ import type {
   UpdateBlockProps,
   UpdateIdBlockProps,
 } from "./types";
+import { WorkspaceErrorType, type BuilderStoreProps } from "../builder";
 
 export type CanvasStoreProps = {
   initialSchema?: BlockType[];
   enableMultiSelect?: boolean;
   emitter?: EditorEventBus["broadcast"];
-};
+} & Pick<BuilderStoreProps, "onError">;
 
 export type CanvasStore = {
   schema: BlockType[];
@@ -49,6 +48,7 @@ export const createCanvasStore = ({
   initialSchema = [],
   enableMultiSelect = true,
   emitter = () => undefined,
+  onError,
 }: CanvasStoreProps) => {
   return create(
     immer<CanvasStore>((set, get) => ({
@@ -121,14 +121,7 @@ export const createCanvasStore = ({
         const index = blocks.findIndex((block) => block.id === blockId);
 
         if (index === -1) {
-          toast.custom((t) => (
-            <Toast
-              title="Unable to find the block!"
-              severity="error"
-              visible={t.visible}
-            />
-          ));
-
+          onError?.({ type: WorkspaceErrorType.BLOCK_NOT_FOUND });
           return;
         }
 
@@ -165,13 +158,11 @@ export const createCanvasStore = ({
         const index = schema.findIndex((item) => item.id === newBlockId);
 
         if (index !== -1) {
-          toast.custom((t) => (
-            <Toast
-              title={`"${newBlockId}" is a component that already exists!`}
-              severity="error"
-              visible={t.visible}
-            />
-          ));
+          onError?.({
+            type: WorkspaceErrorType.ID_ALREADY_EXIST,
+            data: { id: newBlockId },
+          });
+
           return;
         }
 
@@ -245,13 +236,9 @@ export const createCanvasStore = ({
         );
 
         if (fromIndex === -1 || toIndex === -1) {
-          return toast.custom((t) => (
-            <Toast
-              title="Unable to find the block!"
-              severity="error"
-              visible={t.visible}
-            />
-          ));
+          onError?.({ type: WorkspaceErrorType.BLOCK_NOT_FOUND });
+
+          return;
         }
 
         set((state) => {
@@ -304,13 +291,21 @@ export const createCanvasStore = ({
         const blockData = blocks[0];
 
         if (!blockData) {
-          return toast.custom((t) => (
-            <Toast
-              title={`Unable to find the block with Id "${originalBlockIds}"`}
-              severity="error"
-              visible={t.visible}
-            />
-          ));
+          if (typeof originalBlockIds === "string")
+            onError?.({
+              type: WorkspaceErrorType.ID_NOT_FOUND,
+              data: { id: originalBlockIds },
+            });
+          else {
+            originalBlockIds.map((id) =>
+              onError?.({
+                type: WorkspaceErrorType.ID_NOT_FOUND,
+                data: { id },
+              }),
+            );
+          }
+
+          return;
         }
 
         const id = get().uniqueId(blockData.type);

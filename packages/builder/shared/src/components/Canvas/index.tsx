@@ -4,15 +4,16 @@ import {
   CanvasShortcutsWrapper,
   classNames,
   useCanvas,
+  useBuilder,
+  WorkspaceErrorType,
 } from "@fibr/builder";
 import { FibrProvider } from "@fibr/react";
-import { Toast } from "@rafty/ui";
 import { forwardRef, useEffect, useMemo, type ReactNode } from "react";
-import toast from "react-hot-toast";
 import { DefaultComponent } from "./DefaultComponent";
 
 export const Canvas = forwardRef<HTMLDivElement, BuilderCanvas>(
   ({ className, ...props }, forwardedRef) => {
+    const onError = useBuilder((state) => state.onError);
     const { config, validateSchema } = useBlocks(
       ({ config, validateSchema }) => ({
         config,
@@ -24,15 +25,8 @@ export const Canvas = forwardRef<HTMLDivElement, BuilderCanvas>(
 
     useEffect(() => {
       if (!validateSchema(schema))
-        toast.custom(({ visible }) => (
-          <Toast
-            visible={visible}
-            severity="error"
-            title="Schema is not valid!"
-            message="One or more fields in schema are not available."
-          />
-        ));
-    }, [validateSchema, schema]);
+        onError?.({ type: WorkspaceErrorType.SCHEMA_NOT_VALID });
+    }, [validateSchema, schema, onError]);
 
     const builders = useMemo(
       () =>
