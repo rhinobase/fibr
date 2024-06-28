@@ -1,10 +1,10 @@
 import {
-  type BlockType,
+  DEFAULT_GROUP,
   Env,
+  groupByParentNode,
   useBuilder,
   useCanvas,
-  DEFAULT_GROUP,
-  groupByParentNode,
+  type BlockType,
 } from "@fibr/builder";
 import { Loom, WeaverProvider } from "@fibr/react";
 import { DndWrapper } from "@fibr/shared";
@@ -18,7 +18,11 @@ const BLOCK_WRAPPERS: Record<Env, (props: PropsWithChildren) => ReactNode> = {
   [Env.PRODUCTION]: FieldPadding,
 };
 
-export function FormDisplay() {
+export type FormDisplay = {
+  fieldWrapper?: WeaverProvider["wrapper"];
+};
+
+export function FormDisplay({ fieldWrapper }: FormDisplay) {
   const { blocks, select, move } = useCanvas(({ schema, select, move }) => ({
     blocks: schema.filter((block) => !block.hidden),
     select,
@@ -38,7 +42,7 @@ export function FormDisplay() {
     );
 
   return (
-    <WeaverProvider wrapper={BLOCK_WRAPPERS[currentEnv]}>
+    <WeaverProvider wrapper={fieldWrapper ?? BLOCK_WRAPPERS[currentEnv]}>
       <DndWrapper
         items={blocks.map(({ id }) => id)}
         onDragStart={({ active }) => {
