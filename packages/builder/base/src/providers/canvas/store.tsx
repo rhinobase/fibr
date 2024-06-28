@@ -1,8 +1,9 @@
 import { arrayMove } from "@dnd-kit/sortable";
 import type { Draft } from "immer";
 import _ from "lodash";
-import { type StoreApi, type UseBoundStore, create } from "zustand";
+import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
+import { type BuilderStore, WorkspaceErrorType } from "../builder";
 import type { EditorEventBus } from "../events";
 import { EditorEvent } from "../utils";
 import type {
@@ -15,13 +16,12 @@ import type {
   UpdateBlockProps,
   UpdateIdBlockProps,
 } from "./types";
-import { WorkspaceErrorType, type BuilderStoreProps } from "../builder";
 
 export type CanvasStoreProps = {
   initialSchema?: BlockType[];
   enableMultiSelect?: boolean;
   emitter?: EditorEventBus["broadcast"];
-} & Pick<BuilderStoreProps, "onError">;
+} & Pick<BuilderStore, "onError">;
 
 export type CanvasStore = {
   schema: BlockType[];
@@ -121,7 +121,8 @@ export const createCanvasStore = ({
         const index = blocks.findIndex((block) => block.id === blockId);
 
         if (index === -1) {
-          onError?.({ type: WorkspaceErrorType.BLOCK_NOT_FOUND });
+          onError({ type: WorkspaceErrorType.BLOCK_NOT_FOUND });
+
           return;
         }
 
@@ -158,7 +159,7 @@ export const createCanvasStore = ({
         const index = schema.findIndex((item) => item.id === newBlockId);
 
         if (index !== -1) {
-          onError?.({
+          onError({
             type: WorkspaceErrorType.ID_ALREADY_EXIST,
             data: { id: newBlockId },
           });
@@ -236,7 +237,7 @@ export const createCanvasStore = ({
         );
 
         if (fromIndex === -1 || toIndex === -1) {
-          onError?.({ type: WorkspaceErrorType.BLOCK_NOT_FOUND });
+          onError({ type: WorkspaceErrorType.BLOCK_NOT_FOUND });
 
           return;
         }
@@ -291,7 +292,7 @@ export const createCanvasStore = ({
         const blockData = blocks[0];
 
         if (!blockData) {
-          onError?.({
+          onError({
             type: WorkspaceErrorType.ID_NOT_FOUND,
             data: { id: originalBlockIds },
           });
@@ -309,8 +310,9 @@ export const createCanvasStore = ({
             cur: get().schema,
           });
       },
+      onError: onError,
     })),
-  ) as UseBoundStore<StoreApi<CanvasStore>>;
+  );
 };
 
 function revalidateCache(schema: BlockType[]) {

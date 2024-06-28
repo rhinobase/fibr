@@ -189,34 +189,30 @@ function onErrorHandle({
   type: WorkspaceErrorType;
   data?: { id: string | string[] } | null;
 }) {
-  return toast.custom(({ visible }) => {
-    let toastProps: { title: string; message?: string } = {
-      title: "Error",
-    };
+  const ErrorsData: Record<
+    WorkspaceErrorType,
+    { title: string; message?: string }
+  > = {
+    [WorkspaceErrorType.BLOCK_NOT_FOUND]: {
+      title: "Unable to find the block",
+    },
+    [WorkspaceErrorType.GROUP_NOT_VALID]: {
+      title: "Parent group not matching",
+      message: "All the nodes should be of the same group/parent node.",
+    },
+    [WorkspaceErrorType.ID_ALREADY_EXIST]: {
+      title: `"${data?.id}" is a component that already exists`,
+    },
+    [WorkspaceErrorType.ID_NOT_FOUND]: {
+      title: `Unable to find the block with Id "${data?.id}"`,
+    },
+    [WorkspaceErrorType.SCHEMA_NOT_VALID]: {
+      title: "Schema is not valid",
+      message: "One or more fields in schema are not available.",
+    },
+  };
 
-    if (type === WorkspaceErrorType.BLOCK_NOT_FOUND)
-      toastProps = {
-        title: "Unable to find the block",
-      };
-    if (type === WorkspaceErrorType.GROUP_NOT_VALID)
-      toastProps = {
-        title: "Parent group not matching",
-        message: "All the nodes should be of the same group/parent node.",
-      };
-    if (type === WorkspaceErrorType.ID_ALREADY_EXIST)
-      toastProps = {
-        title: `"${data?.id}" is a component that already exists`,
-      };
-    if (type === WorkspaceErrorType.ID_NOT_FOUND)
-      toastProps = {
-        title: `Unable to find the block with Id "${data?.id}"`,
-      };
-    if (type === WorkspaceErrorType.SCHEMA_NOT_VALID)
-      toastProps = {
-        title: "Schema is not valid",
-        message: "One or more fields in schema are not available.",
-      };
-
-    return <Toast severity="error" visible={visible} {...toastProps} />;
-  });
+  toast.custom(({ visible }) => (
+    <Toast id={type} severity="error" visible={visible} {...ErrorsData[type]} />
+  ));
 }

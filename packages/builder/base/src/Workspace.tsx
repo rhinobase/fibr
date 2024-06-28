@@ -6,7 +6,6 @@ import {
 } from "./providers";
 import { classNames } from "./utils";
 import { forwardRef, type HTMLAttributes } from "react";
-import { Toaster } from "react-hot-toast";
 
 export type Workspace = Omit<HTMLAttributes<HTMLElement>, "onError"> &
   BuilderStoreProps &
@@ -27,7 +26,6 @@ export const Workspace = forwardRef<HTMLElement, Workspace>(function Workspace(
           className={classNames("flex h-screen w-full flex-col", className)}
           ref={forwardedRef}
         />
-        <Toaster />
       </BuilderProvider>
     </EventManagerProvider>
   );

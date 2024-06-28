@@ -13,7 +13,6 @@ import { Workspace, WorkspaceErrorType } from "@fibr/builder";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import NextLink from "next/link";
 import { FaGithub, FaXTwitter } from "react-icons/fa6";
-import { MdCropFree, MdInput, MdOutput } from "react-icons/md";
 import { Logo } from "../../../components/Logo";
 import { ChakraLogo } from "../ChakraLogo";
 import { Builder } from "./Builder";

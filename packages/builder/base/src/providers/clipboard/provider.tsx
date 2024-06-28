@@ -98,7 +98,7 @@ function useClipboardManager() {
       for (const block of schema) {
         if (block.selected) {
           if (group.parentNode && block.parentNode !== group.parentNode) {
-            onError?.({ type: WorkspaceErrorType.GROUP_NOT_VALID });
+            onError({ type: WorkspaceErrorType.GROUP_NOT_VALID });
 
             return;
           }

@@ -63,11 +63,13 @@ export type BuilderStore = {
     current: Env;
     change: (env: Env) => void;
   };
+  onError: (options: ErrorOptionsType) => void;
 };
 
 export const createBuilderStore = ({
   tabs = {},
   env = Env.DEVELOPMENT,
+  onError = console.error,
 }: BuilderStoreProps) =>
   create(
     immer<BuilderStore>((set, get) => ({
@@ -106,5 +108,6 @@ export const createBuilderStore = ({
         set((state) => {
           state.layout = _.merge(state.layout, values);
         }),
+      onError,
     })),
   ) as UseBoundStore<StoreApi<BuilderStore>>;

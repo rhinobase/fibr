@@ -4,8 +4,8 @@ import {
   CanvasShortcutsWrapper,
   classNames,
   useCanvas,
-  useBuilder,
   WorkspaceErrorType,
+  useBuilder,
 } from "@fibr/builder";
 import { FibrProvider } from "@fibr/react";
 import { forwardRef, useEffect, useMemo, type ReactNode } from "react";
@@ -23,10 +23,11 @@ export const Canvas = forwardRef<HTMLDivElement, BuilderCanvas>(
 
     const schema = useCanvas(({ schema }) => schema);
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
     useEffect(() => {
       if (!validateSchema(schema))
-        onError?.({ type: WorkspaceErrorType.SCHEMA_NOT_VALID });
-    }, [validateSchema, schema, onError]);
+        onError({ type: WorkspaceErrorType.SCHEMA_NOT_VALID });
+    }, [schema]);
 
     const builders = useMemo(
       () =>
