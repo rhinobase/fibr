@@ -2,7 +2,6 @@ import {
   useBlocks,
   Canvas as BuilderCanvas,
   CanvasShortcutsWrapper,
-  classNames,
   useCanvas,
   WorkspaceErrorType,
   useBuilder,
@@ -10,6 +9,7 @@ import {
 import { FibrProvider } from "@fibr/react";
 import { forwardRef, useEffect, useMemo, type ReactNode } from "react";
 import { DefaultComponent } from "./DefaultComponent";
+import { classNames } from "@rafty/ui";
 
 export const Canvas = forwardRef<HTMLDivElement, BuilderCanvas>(
   ({ className, ...props }, forwardedRef) => {

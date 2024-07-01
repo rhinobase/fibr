@@ -1,12 +1,11 @@
 import {
   useBlocks,
   Settings as BuilderSettings,
-  classNames,
   type BlockType,
   useCanvas,
 } from "@fibr/builder";
 import { FibrProvider, Thread } from "@fibr/react";
-import { Button, Text } from "@rafty/ui";
+import { Button, Text, classNames } from "@rafty/ui";
 import { type ReactNode, useMemo } from "react";
 
 export type Settings = BuilderSettings;

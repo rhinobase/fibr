@@ -1,0 +1,32 @@
+import {
+  BuilderProvider,
+  EventManagerProvider,
+  type BuilderStoreProps,
+  type EditorEventBusProps,
+} from "../providers";
+import { classNames } from "@rafty/ui";
+import { forwardRef, type HTMLAttributes } from "react";
+
+export type Workspace = Omit<HTMLAttributes<HTMLElement>, "onError"> &
+  BuilderStoreProps &
+  EditorEventBusProps;
+
+export const Workspace = forwardRef<HTMLElement, Workspace>(function Workspace(
+  { initialEvents, env, tabs, className, onError, ...props },
+  forwardedRef,
+) {
+  const eventManagerProviderProps: EditorEventBusProps = { initialEvents };
+  const builderProviderProps: BuilderStoreProps = { tabs, env, onError };
+
+  return (
+    <EventManagerProvider {...eventManagerProviderProps}>
+      <BuilderProvider {...builderProviderProps}>
+        <main
+          {...props}
+          className={classNames("flex h-screen w-full flex-col", className)}
+          ref={forwardedRef}
+        />
+      </BuilderProvider>
+    </EventManagerProvider>
+  );
+});

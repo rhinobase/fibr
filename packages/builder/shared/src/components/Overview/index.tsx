@@ -3,31 +3,53 @@ import {
   groupByParentNode,
   useCanvas,
   SidebarItem,
+  SidebarTrigger,
 } from "@fibr/builder";
 import { ListBulletIcon } from "@heroicons/react/24/outline";
-import { Accordion } from "@rafty/ui";
-import { useEffect, useMemo, useState } from "react";
+import { Accordion, Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { DndWrapper, Empty } from "../utils";
 import { OverviewCard } from "./OverviewCard";
 import { OverviewOverlay } from "./OverviewOverlay";
 
-export type Overview = Pick<SidebarItem, "action"> &
-  Pick<OverviewCard, "enableDragging">;
+export type Overview = Pick<OverviewCard, "enableDragging"> & {
+  headerAction?: ReactNode;
+};
 
-export function Overview({ action, ...props }: Overview) {
+export function Overview({ headerAction, ...props }: Overview) {
   return (
     <SidebarItem
       name="overview"
-      label="Overview"
-      icon={<ListBulletIcon className="h-5 w-5 stroke-2" />}
-      action={action}
+      trigger={
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <div>
+              <SidebarTrigger value="overview">
+                <ListBulletIcon className="h-5 w-5 stroke-2" />
+              </SidebarTrigger>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>Overview</TooltipContent>
+        </Tooltip>
+      }
     >
-      <FieldsRender {...props} />
+      <div className="space-y-3 p-3">
+        <div className="flex items-center justify-between">
+          <h4 className="font-medium">Overview</h4>
+          {headerAction}
+        </div>
+        <hr className="dark:border-secondary-700" />
+      </div>
+      <div className="h-full overflow-y-auto">
+        <div className="flex h-full flex-col px-3 pb-3">
+          <FieldsRender {...props} />
+        </div>
+      </div>
     </SidebarItem>
   );
 }
 
-function FieldsRender({ enableDragging }: Overview) {
+function FieldsRender({ enableDragging }: Omit<Overview, "headerAction">) {
   const [isOpen, setOpen] = useState<string[]>([]);
 
   const { schema, selectBlock, moveBlock } = useCanvas(

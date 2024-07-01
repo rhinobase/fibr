@@ -13,8 +13,7 @@ export enum WorkspaceErrorType {
 
 export type TabPayload = {
   name: string;
-  label: React.ReactNode;
-  icon: React.ReactNode;
+  trigger: React.ReactNode;
   isResizeable?: boolean;
   defaultSize?: number;
 };

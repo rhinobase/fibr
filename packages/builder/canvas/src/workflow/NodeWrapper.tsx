@@ -1,7 +1,8 @@
 import { useThread } from "@fibr/react";
-import { useBlocks, classNames } from "@fibr/builder";
+import { useBlocks } from "@fibr/builder";
 import type { PropsWithChildren } from "react";
 import type { Node } from "reactflow";
+import { classNames } from "@rafty/ui";
 
 export function NodeWrapper(props: PropsWithChildren) {
   const { selected, type } = useThread<Node>();

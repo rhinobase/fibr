@@ -1,5 +1,7 @@
 import {
   Sidebar as BuilderSidebar,
+  BuilderPanel,
+  SidebarList,
   DEFAULT_GROUP,
   groupByParentNode,
   useCanvas,
@@ -16,31 +18,37 @@ export function Sidebar() {
   }));
 
   return (
-    <BuilderSidebar>
-      <Palette
-        onSelect={(value) => {
-          const parentNode = findParent(schema);
-          addBlock({ blockData: { ...value, parentNode } });
-        }}
-      />
-      <Overview action={<AddFormDialog />} enableDragging />
-      <CodeGenerator
-        resolvers={[
-          {
-            name: "ast",
-            label: "Ast",
-            language: "js",
-            resolver: astResolver,
-          },
-          {
-            name: "react",
-            label: "React",
-            language: "tsx",
-            resolver: reactHookFormResolver,
-          },
-        ]}
-      />
-    </BuilderSidebar>
+    <BuilderPanel side="left" isResizable>
+      <BuilderSidebar>
+        <SidebarList>
+          <div className="border-secondary-200 dark:border-secondary-800 w-full overflow-hidden border-r">
+            <Palette
+              onSelect={(value) => {
+                const parentNode = findParent(schema);
+                addBlock({ blockData: { ...value, parentNode } });
+              }}
+            />
+            <Overview headerAction={<AddFormDialog />} enableDragging />
+            <CodeGenerator
+              resolvers={[
+                {
+                  name: "ast",
+                  label: "Ast",
+                  language: "js",
+                  resolver: astResolver,
+                },
+                {
+                  name: "react",
+                  label: "React",
+                  language: "tsx",
+                  resolver: reactHookFormResolver,
+                },
+              ]}
+            />
+          </div>
+        </SidebarList>
+      </BuilderSidebar>
+    </BuilderPanel>
   );
 }
 

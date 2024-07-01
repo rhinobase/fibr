@@ -1,7 +1,5 @@
 "use client";
-import { Toast } from "@rafty/ui";
 import { type PropsWithChildren, useCallback, useEffect } from "react";
-import toast from "react-hot-toast";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useCanvas } from "../../../canvas";
 import { type EventContext, useEventBus } from "../../../events";
@@ -43,9 +41,9 @@ export function CanvasShortcutsWrapper(props: PropsWithChildren) {
   useHotkeys(
     "mod+z",
     () => {
-      toast.custom((t) => (
-        <Toast title="Undo!" severity="success" visible={t.visible} />
-      ));
+      // toast.custom((t) => (
+      //   <Toast title="Undo!" severity="success" visible={t.visible} />
+      // ));
 
       stack.undo();
     },
@@ -57,9 +55,9 @@ export function CanvasShortcutsWrapper(props: PropsWithChildren) {
   useHotkeys(
     "mod+y",
     () => {
-      toast.custom((t) => (
-        <Toast title="Redo!" severity="success" visible={t.visible} />
-      ));
+      // toast.custom((t) => (
+      //   <Toast title="Redo!" severity="success" visible={t.visible} />
+      // ));
 
       stack.redo();
     },
