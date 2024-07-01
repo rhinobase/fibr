@@ -103,7 +103,7 @@ export type Sidebar = ComponentPropsWithoutRef<typeof Tabs.Root>;
 
 export const Sidebar = forwardRef<ElementRef<typeof Tabs.Root>, Sidebar>(
   function Sidebar(
-    { children, orientation = "vertical", className, ...props },
+    { orientation = "vertical", className, ...props },
     forwardedRef,
   ) {
     const { collapsePanel, expandPanel } = useSidebar();
@@ -146,16 +146,19 @@ export const SidebarList = forwardRef<
   const sidebarItems = useBuilder(({ tabs: { all } }) => all);
 
   return (
-    <Tabs.List
-      {...props}
-      className={classNames(
-        "dark:border-secondary-800 border-secondary-300 flex flex-col border-r",
-        className,
-      )}
-      ref={forwardedRef}
-    >
-      {Object.values(sidebarItems).map(({ trigger }) => trigger)}
-    </Tabs.List>
+    <>
+      <Tabs.List
+        {...props}
+        className={classNames(
+          "dark:border-secondary-800 border-secondary-300 flex flex-col border-r",
+          className,
+        )}
+        ref={forwardedRef}
+      >
+        {Object.values(sidebarItems).map(({ trigger }) => trigger)}
+      </Tabs.List>
+      {children}
+    </>
   );
 });
 

@@ -1,38 +1,23 @@
 import {
   DEFAULT_GROUP,
+  SidebarItem,
   groupByParentNode,
   useCanvas,
-  SidebarItem,
-  SidebarTrigger,
 } from "@fibr/builder";
-import { ListBulletIcon } from "@heroicons/react/24/outline";
-import { Accordion, Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { Accordion } from "@rafty/ui";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { DndWrapper, Empty } from "../utils";
 import { OverviewCard } from "./OverviewCard";
 import { OverviewOverlay } from "./OverviewOverlay";
 
 export type Overview = Pick<OverviewCard, "enableDragging"> & {
   headerAction?: ReactNode;
+  trigger: ReactNode;
 };
 
-export function Overview({ headerAction, ...props }: Overview) {
+export function Overview({ headerAction, trigger, ...props }: Overview) {
   return (
-    <SidebarItem
-      name="overview"
-      trigger={
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <div>
-              <SidebarTrigger value="overview">
-                <ListBulletIcon className="h-5 w-5 stroke-2" />
-              </SidebarTrigger>
-            </div>
-          </TooltipTrigger>
-          <TooltipContent>Overview</TooltipContent>
-        </Tooltip>
-      }
-    >
+    <SidebarItem name="overview" trigger={trigger}>
       <div className="space-y-3 p-3">
         <div className="flex items-center justify-between">
           <h4 className="font-medium">Overview</h4>
@@ -49,7 +34,9 @@ export function Overview({ headerAction, ...props }: Overview) {
   );
 }
 
-function FieldsRender({ enableDragging }: Omit<Overview, "headerAction">) {
+function FieldsRender({
+  enableDragging,
+}: Omit<Overview, "headerAction" | "trigger">) {
   const [isOpen, setOpen] = useState<string[]>([]);
 
   const { schema, selectBlock, moveBlock } = useCanvas(

@@ -1,23 +1,11 @@
-import {
-  SidebarItem,
-  SidebarTrigger,
-  useCanvas,
-  type BlockType,
-} from "@fibr/builder";
-import {
-  CheckIcon,
-  CodeBracketSquareIcon,
-  DocumentDuplicateIcon,
-} from "@heroicons/react/24/outline";
+import { SidebarItem, useCanvas, type BlockType } from "@fibr/builder";
+import { CheckIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import {
   Button,
   Tab,
   TabContent,
   TabList,
   TabTrigger,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
   classNames,
   useBoolean,
 } from "@rafty/ui";
@@ -34,9 +22,10 @@ export type CodeGenerator = {
     language?: string;
     resolver: (schema: BlockType[]) => string;
   }[];
+  trigger: ReactNode;
 };
 
-export function CodeGenerator({ resolvers }: CodeGenerator) {
+export function CodeGenerator({ resolvers, trigger }: CodeGenerator) {
   const [, copyToClipboard] = useCopyToClipboard();
   const [isCopied, toggleCopied] = useBoolean();
   const [tabValue, setTabValue] = useState(0);
@@ -68,22 +57,7 @@ export function CodeGenerator({ resolvers }: CodeGenerator) {
   };
 
   return (
-    <SidebarItem
-      name="code"
-      trigger={
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <div>
-              <SidebarTrigger value="code">
-                <CodeBracketSquareIcon className="size-5 stroke-2" />
-              </SidebarTrigger>
-            </div>
-          </TooltipTrigger>
-          <TooltipContent>Code</TooltipContent>
-        </Tooltip>
-      }
-      className="h-full"
-    >
+    <SidebarItem name="code" trigger={trigger} className="h-full">
       <div className="space-y-3 p-3">
         <div className="flex items-center justify-between">
           <h4 className="font-medium">Code</h4>

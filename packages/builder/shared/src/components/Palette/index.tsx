@@ -1,27 +1,21 @@
-import {
-  useBlocks,
-  SidebarItem,
-  type Block,
-  SidebarTrigger,
-} from "@fibr/builder";
-import { Squares2X2Icon } from "@heroicons/react/24/outline";
-import {
-  SearchField,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@rafty/ui";
+import { SidebarItem, useBlocks, type Block } from "@fibr/builder";
+import { SearchField } from "@rafty/ui";
 import Fuse, { type RangeTuple } from "fuse.js";
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import { Empty } from "../utils";
 import { PaletteCard } from "./PaletteCard";
 import { PaletteCardOverlay } from "./PaletteCardOverlay";
 
 export type Palette = {
   onSelect: PaletteCard["onSelect"];
+  trigger: ReactNode;
 } & Pick<PaletteCard, "enableDragging">;
 
-export function Palette({ enableDragging = false, onSelect }: Palette) {
+export function Palette({
+  enableDragging = false,
+  onSelect,
+  trigger,
+}: Palette) {
   const blocks = useBlocks((state) => state.blocks);
   const [search, setSearch] = useState("");
 
@@ -72,21 +66,7 @@ export function Palette({ enableDragging = false, onSelect }: Palette) {
   }
 
   return (
-    <SidebarItem
-      name="palette"
-      trigger={
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <div>
-              <SidebarTrigger value="palette">
-                <Squares2X2Icon className="h-5 w-5 stroke-2" />
-              </SidebarTrigger>
-            </div>
-          </TooltipTrigger>
-          <TooltipContent>Palette</TooltipContent>
-        </Tooltip>
-      }
-    >
+    <SidebarItem name="palette" trigger={trigger}>
       <div className="space-y-3 p-3">
         <h4 className="font-medium">Palette</h4>
         <hr className="dark:border-secondary-700" />
