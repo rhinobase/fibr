@@ -8,7 +8,7 @@ import { NodeWrapper } from "./NodeWrapper";
 export function Container() {
   return (
     <WorkflowDndWrapper>
-      <BuilderContainer>
+      <BuilderContainer className="relative flex-1 overflow-y-auto">
         <Sidebar />
         <WorkflowCanvas nodeWrapper={NodeWrapper} />
         <Settings className="right-2 top-2 h-[calc(100%-16px)] rounded-md border-l-0 shadow-md" />

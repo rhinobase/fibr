@@ -6,11 +6,12 @@ import {
   useCanvas,
 } from "@fibr/builder";
 import { FibrProvider, Thread } from "@fibr/react";
+import { classNames } from "@rafty/ui";
 import { type ReactNode, useMemo } from "react";
 
 export type Settings = BuilderSettings;
 
-export function Settings({ style, ...props }: Settings) {
+export function Settings({ style, className, ...props }: Settings) {
   const { selectedBlocks, updateBlock, removeBlock, duplicateBlock } =
     useCanvas(({ schema, update, remove, duplicate }) => ({
       selectedBlocks: schema.filter((block) => block.selected),
@@ -104,6 +105,7 @@ export function Settings({ style, ...props }: Settings) {
     return (
       <BuilderSettings
         {...props}
+        className={classNames("absolute w-96 p-3", className)}
         style={{
           display: "flex",
           flexDirection: "column",

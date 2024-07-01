@@ -2,7 +2,6 @@
 import * as Tabs from "@radix-ui/react-tabs";
 import { useEffect, type ComponentPropsWithoutRef } from "react";
 import { useBuilder, type TabPayload } from "../../providers";
-import { classNames } from "@rafty/ui";
 
 export type SidebarItem = Omit<
   ComponentPropsWithoutRef<typeof Tabs.Content>,
@@ -15,7 +14,6 @@ export function SidebarItem({
   trigger,
   isResizeable = true,
   defaultSize,
-  className,
   ...props
 }: SidebarItem) {
   const add = useBuilder((state) => state.tabs.add);
@@ -25,14 +23,5 @@ export function SidebarItem({
     add({ name, trigger, isResizeable, defaultSize });
   }, []);
 
-  return (
-    <Tabs.Content
-      {...props}
-      value={name}
-      className={classNames(
-        "h-full w-full flex-col text-black data-[state=active]:flex dark:text-white",
-        className,
-      )}
-    />
-  );
+  return <Tabs.Content {...props} value={name} />;
 }

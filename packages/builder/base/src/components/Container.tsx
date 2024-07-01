@@ -1,10 +1,14 @@
+import { forwardRef, type HTMLAttributes } from "react";
 import { ClipboardProvider } from "../providers";
-import type { PropsWithChildren } from "react";
 
-export function Container(props: PropsWithChildren) {
-  return (
-    <ClipboardProvider>
-      <div className="relative flex-1 overflow-y-auto">{props.children}</div>
-    </ClipboardProvider>
-  );
-}
+export type Container = HTMLAttributes<HTMLDivElement>;
+
+export const Container = forwardRef<HTMLDivElement, Container>(
+  function Container(props, forwardedRef) {
+    return (
+      <ClipboardProvider>
+        <div {...props} ref={forwardedRef} />
+      </ClipboardProvider>
+    );
+  },
+);

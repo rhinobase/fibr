@@ -1,9 +1,9 @@
-import { Thread, ThreadType, useThread } from "@fibr/react";
+import { Thread, type ThreadType, useThread } from "@fibr/react";
 import {
-  FieldValues,
+  type FieldValues,
   FormProvider,
-  SubmitErrorHandler,
-  SubmitHandler,
+  type SubmitErrorHandler,
+  type SubmitHandler,
   useForm,
 } from "react-hook-form";
 

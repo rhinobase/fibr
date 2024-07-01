@@ -8,4 +8,5 @@ export {
   SidebarItem,
   SidebarList,
   SidebarTrigger,
+  ResizeHandle,
 } from "./sidebar";

@@ -85,14 +85,18 @@ export function Palette({ enableDragging = false, onSelect }: Palette) {
         <Tooltip>
           <TooltipTrigger asChild>
             <div>
-              <SidebarTrigger value="palette">
+              <SidebarTrigger
+                value="palette"
+                className="dark:hover:text-secondary-100 text-secondary-600 dark:text-secondary-400 dark:data-[state=active]:text-secondary-100 data-[disabled]:text-secondary-400 dark:data-[disabled]:text-secondary-600 data-[state=active]:border-primary-500 dark:data-[state=active]:border-primary-300 data-[state=active]:bg-secondary-100 dark:data-[state=active]:bg-secondary-800 -mr-px rounded-l-md border-r-2 border-transparent p-2 font-medium transition-colors ease-in-out hover:text-black data-[disabled]:cursor-not-allowed data-[state=active]:text-black"
+              >
                 <Squares2X2Icon strokeWidth={2} width={20} height={20} />
               </SidebarTrigger>
             </div>
           </TooltipTrigger>
-          <TooltipContent>Palette</TooltipContent>
+          <TooltipContent side="right">Palette</TooltipContent>
         </Tooltip>
       }
+      className="h-full w-full flex-col text-black data-[state=active]:flex dark:text-white"
     >
       <chakra.div p={3}>
         <Heading as="h4" mb={3}>

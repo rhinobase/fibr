@@ -17,7 +17,7 @@ export function Container() {
 
   return (
     <PageDndWrapper>
-      <BuilderContainer>
+      <BuilderContainer className="relative flex-1 overflow-y-auto">
         <Sidebar />
         <PageCanvas componentWrapper={NODE_WRAPPERS[currentEnv]} />
         <Settings />

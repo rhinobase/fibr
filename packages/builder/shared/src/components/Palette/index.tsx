@@ -66,7 +66,11 @@ export function Palette({
   }
 
   return (
-    <SidebarItem name="palette" trigger={trigger}>
+    <SidebarItem
+      name="palette"
+      trigger={trigger}
+      className="h-full w-full flex-col text-black data-[state=active]:flex dark:text-white"
+    >
       <div className="space-y-3 p-3">
         <h4 className="font-medium">Palette</h4>
         <hr className="dark:border-secondary-700" />

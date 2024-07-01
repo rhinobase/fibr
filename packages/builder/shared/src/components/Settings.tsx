@@ -1,12 +1,12 @@
 import {
-  useBlocks,
   Settings as BuilderSettings,
-  type BlockType,
+  useBlocks,
   useCanvas,
+  type BlockType,
 } from "@fibr/builder";
 import { FibrProvider, Thread } from "@fibr/react";
 import { Button, Text, classNames } from "@rafty/ui";
-import { type ReactNode, useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 
 export type Settings = BuilderSettings;
 
@@ -98,7 +98,7 @@ export function Settings({ className, ...props }: Settings) {
       <BuilderSettings
         {...props}
         className={classNames(
-          "border-secondary-200 dark:border-secondary-800 dark:bg-secondary-950 flex flex-col gap-3 border-l bg-white",
+          "border-secondary-200 dark:border-secondary-800 dark:bg-secondary-950 absolute right-0 top-0 flex h-full w-96 flex-col gap-3 border-l bg-white p-3",
           className,
         )}
       >

@@ -57,7 +57,11 @@ export function CodeGenerator({ resolvers, trigger }: CodeGenerator) {
   };
 
   return (
-    <SidebarItem name="code" trigger={trigger} className="h-full">
+    <SidebarItem
+      name="code"
+      trigger={trigger}
+      className="h-full w-full flex-col text-black data-[state=active]:flex dark:text-white"
+    >
       <div className="space-y-3 p-3">
         <div className="flex items-center justify-between">
           <h4 className="font-medium">Code</h4>

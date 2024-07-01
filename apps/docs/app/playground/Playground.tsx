@@ -72,6 +72,7 @@ export default function Playground() {
   return (
     <>
       <Workspace
+        className="flex h-screen w-full flex-col"
         initialEvents={{
           [EditorEvent.ALL]: [
             ({ event_type, ...props }) => console.log(event_type, props),

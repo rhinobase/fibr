@@ -17,7 +17,11 @@ export type Overview = Pick<OverviewCard, "enableDragging"> & {
 
 export function Overview({ headerAction, trigger, ...props }: Overview) {
   return (
-    <SidebarItem name="overview" trigger={trigger}>
+    <SidebarItem
+      name="overview"
+      trigger={trigger}
+      className="h-full w-full flex-col text-black data-[state=active]:flex dark:text-white"
+    >
       <div className="space-y-3 p-3">
         <div className="flex items-center justify-between">
           <h4 className="font-medium">Overview</h4>

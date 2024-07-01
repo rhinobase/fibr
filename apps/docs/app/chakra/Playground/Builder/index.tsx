@@ -19,7 +19,7 @@ export function Builder({ blocks, config, ...builderProps }: Builder) {
       <CanvasProvider {...builderProps}>
         <ReactFlowProvider>
           <WorkflowDndWrapper>
-            <Container>
+            <Container className="relative flex-1 overflow-y-auto">
               <Sidebar />
               <Canvas />
               <Settings

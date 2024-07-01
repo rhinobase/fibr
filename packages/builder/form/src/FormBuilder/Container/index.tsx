@@ -5,7 +5,7 @@ import { Sidebar } from "./Sidebar";
 
 export function Container() {
   return (
-    <BuilderContainer>
+    <BuilderContainer className="relative flex-1 overflow-y-auto">
       <Sidebar />
       <Canvas />
       <Settings />

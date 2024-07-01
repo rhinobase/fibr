@@ -21,7 +21,7 @@ export default function Playground() {
   const toast = useToast();
 
   return (
-    <Workspace>
+    <Workspace className="flex h-screen w-full flex-col">
       <Header />
       <Builder
         blocks={workflowBlocks}
