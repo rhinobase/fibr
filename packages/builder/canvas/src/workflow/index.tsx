@@ -4,9 +4,8 @@ import { WeaverProvider } from "@fibr/react";
 import { Canvas, CustomControls } from "@fibr/shared";
 import "reactflow/dist/base.css";
 import { Diagram } from "./Diagram";
-import { NodeWrapper } from "./NodeWrapper";
 
-export type WorkflowCanvas = { nodeWrapper?: WeaverProvider["wrapper"] };
+export type WorkflowCanvas = { nodeWrapper: WeaverProvider["wrapper"] };
 
 export function WorkflowCanvas({ nodeWrapper }: WorkflowCanvas) {
   const { ref } = useClipboard();
@@ -19,7 +18,7 @@ export function WorkflowCanvas({ nodeWrapper }: WorkflowCanvas) {
       ref={mergeRefs(ref, setNodeRef)}
       className="items-stretch justify-normal"
     >
-      <WeaverProvider wrapper={nodeWrapper ?? NodeWrapper}>
+      <WeaverProvider wrapper={nodeWrapper}>
         <Diagram />
       </WeaverProvider>
       <CustomControls />

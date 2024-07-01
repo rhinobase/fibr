@@ -1,13 +1,13 @@
 import { Container as BuilderContainer } from "@fibr/builder";
-import { FormBuilderCanvas } from "@fibr/canvas";
 import { Settings } from "@fibr/shared";
+import { Canvas } from "./Canvas";
 import { Sidebar } from "./Sidebar";
 
 export function Container() {
   return (
     <BuilderContainer>
       <Sidebar />
-      <FormBuilderCanvas />
+      <Canvas />
       <Settings />
     </BuilderContainer>
   );

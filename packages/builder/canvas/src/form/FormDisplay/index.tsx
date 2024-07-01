@@ -1,25 +1,15 @@
 import {
   DEFAULT_GROUP,
-  Env,
   groupByParentNode,
-  useBuilder,
   useCanvas,
   type BlockType,
 } from "@fibr/builder";
 import { Loom, WeaverProvider } from "@fibr/react";
 import { DndWrapper } from "@fibr/shared";
-import type { PropsWithChildren, ReactNode } from "react";
 import { FieldOverlay } from "./FieldOverlay";
-import { FieldPadding } from "./FieldPadding";
-import { FieldWrapper } from "./FieldWrapper";
-
-const BLOCK_WRAPPERS: Record<Env, (props: PropsWithChildren) => ReactNode> = {
-  [Env.DEVELOPMENT]: FieldWrapper,
-  [Env.PRODUCTION]: FieldPadding,
-};
 
 export type FormDisplay = {
-  fieldWrapper?: WeaverProvider["wrapper"];
+  fieldWrapper: WeaverProvider["wrapper"];
 };
 
 export function FormDisplay({ fieldWrapper }: FormDisplay) {
@@ -28,8 +18,6 @@ export function FormDisplay({ fieldWrapper }: FormDisplay) {
     select,
     move,
   }));
-
-  const currentEnv = useBuilder((state) => state.env.current);
 
   const groups = groupByParentNode(blocks);
   const blueprint = createBlueprint(DEFAULT_GROUP, groups);
@@ -42,7 +30,7 @@ export function FormDisplay({ fieldWrapper }: FormDisplay) {
     );
 
   return (
-    <WeaverProvider wrapper={fieldWrapper ?? BLOCK_WRAPPERS[currentEnv]}>
+    <WeaverProvider wrapper={fieldWrapper}>
       <DndWrapper
         items={blocks.map(({ id }) => id)}
         onDragStart={({ active }) => {
