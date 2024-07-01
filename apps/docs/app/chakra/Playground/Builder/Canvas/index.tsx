@@ -76,7 +76,7 @@ function DefaultComponent() {
 
   return (
     <Text opacity={0.6} textAlign="center" fontSize="sm">
-      Component of type <Kbd>{type}</Kbd> doesn't exist!
+      Component of type <Kbd>{type}</Kbd> doesn&apos;t exist!
     </Text>
   );
 }

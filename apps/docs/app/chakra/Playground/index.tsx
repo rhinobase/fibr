@@ -154,5 +154,11 @@ function onErrorHandle({
       description: "One or more fields in schema are not available.",
     };
 
-  return toast({ position: "top", status: "error", ...toastProps });
+  if (!toast.isActive(type))
+    toast({
+      ...toastProps,
+      status: "error",
+      position: "top",
+      id: type,
+    });
 }

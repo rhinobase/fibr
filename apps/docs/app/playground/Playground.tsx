@@ -1,5 +1,5 @@
 "use client";
-import { type CreateToastFnReturn, useToast } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import {
   formBlocks,
   formConfig,
@@ -22,6 +22,7 @@ import { WorkflowBuilder } from "@fibr/workflow";
 import {
   Button,
   Text,
+  Toast,
   Tooltip,
   TooltipContent,
   TooltipTrigger,
@@ -29,6 +30,7 @@ import {
 } from "@rafty/ui";
 import Link from "next/link";
 import { type ReactNode, useState } from "react";
+import toast from "react-hot-toast";
 import { FaGithub, FaXTwitter } from "react-icons/fa6";
 import { HiOutlineCodeBracketSquare } from "react-icons/hi2";
 import { VscDebugStart } from "react-icons/vsc";
@@ -78,7 +80,7 @@ export default function Playground() {
             ({ event_type, ...props }) => console.log(event_type, props),
           ],
         }}
-        onError={(options) => onErrorHandle({ ...options, toast })}
+        onError={onErrorHandle}
       >
         <Header />
         {template ? (
@@ -186,22 +188,20 @@ function Footer() {
 function onErrorHandle({
   type,
   data,
-  toast,
 }: {
   type: WorkspaceErrorType;
   data?: { id: string | string[] } | null;
-  toast: CreateToastFnReturn;
 }) {
   const ErrorsData: Record<
     WorkspaceErrorType,
-    { title: string; description?: string }
+    { title: string; message?: string }
   > = {
     [WorkspaceErrorType.BLOCK_NOT_FOUND]: {
       title: "Unable to find the block",
     },
     [WorkspaceErrorType.GROUP_NOT_VALID]: {
       title: "Parent group not matching",
-      description: "All the nodes should be of the same group/parent node.",
+      message: "All the nodes should be of the same group/parent node.",
     },
     [WorkspaceErrorType.ID_ALREADY_EXIST]: {
       title: `"${data?.id}" is a component that already exists`,
@@ -211,17 +211,14 @@ function onErrorHandle({
     },
     [WorkspaceErrorType.SCHEMA_NOT_VALID]: {
       title: "Schema is not valid",
-      description: "One or more fields in schema are not available.",
+      message: "One or more fields in schema are not available.",
     },
   };
 
   const temp = ErrorsData[type];
 
-  if (!toast.isActive(type))
-    toast({
-      ...temp,
-      status: "error",
-      position: "top",
-      id: type,
-    });
+  toast.custom(
+    (t) => <Toast severity="error" title={temp.title} visible={t.visible} />,
+    { id: type },
+  );
 }

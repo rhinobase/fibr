@@ -1,5 +1,4 @@
 "use client";
-import { ChakraProvider } from "@chakra-ui/react";
 import { ThemeProvider, useTheme } from "next-themes";
 import { useEffect } from "react";
 
@@ -31,7 +30,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider attribute="class" disableTransitionOnChange>
       <ThemeWatcher />
-      <ChakraProvider>{children}</ChakraProvider>
+      {children}
     </ThemeProvider>
   );
 }
