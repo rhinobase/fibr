@@ -2,8 +2,10 @@ import { Kbd, Text, Toast } from "@chakra-ui/react";
 import { useDroppable } from "@dnd-kit/core";
 import {
   Canvas as BuilderCanvas,
+  WorkspaceErrorType,
   mergeRefs,
   useBlocks,
+  useBuilder,
   useCanvas,
   useClipboard,
 } from "@fibr/builder";
@@ -19,6 +21,8 @@ export function Canvas() {
   const { setNodeRef } = useDroppable({
     id: "canvas",
   });
+
+  const onError = useBuilder((state) => state.onError);
 
   const { config, validateSchema } = useBlocks(
     ({ config, validateSchema }) => ({
@@ -51,6 +55,11 @@ export function Canvas() {
       ),
     [config],
   );
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (!validateSchema(schema))
+      onError({ type: WorkspaceErrorType.SCHEMA_NOT_VALID });
+  }, [schema]);
 
   return (
     <FibrProvider plugins={builders}>
