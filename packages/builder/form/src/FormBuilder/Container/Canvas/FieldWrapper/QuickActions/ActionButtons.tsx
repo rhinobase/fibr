@@ -3,11 +3,16 @@ import {
   DEFAULT_GROUP,
   groupByParentNode,
   useCanvas,
-  classNames,
   eventHandler,
 } from "@fibr/builder";
 import { useThread } from "@fibr/react";
-import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
+import {
+  Button,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  classNames,
+} from "@rafty/ui";
 import type { IconType } from "react-icons";
 import { HiOutlineEyeOff } from "react-icons/hi";
 import {

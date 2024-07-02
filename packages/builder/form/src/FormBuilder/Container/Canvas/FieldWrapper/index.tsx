@@ -1,11 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import {
-  type BlockType,
-  useCanvas,
-  classNames,
-  eventHandler,
-} from "@fibr/builder";
+import { type BlockType, useCanvas, eventHandler } from "@fibr/builder";
 import { useThread } from "@fibr/react";
 import { cva } from "class-variance-authority";
 import {
@@ -16,6 +11,7 @@ import {
   forwardRef,
 } from "react";
 import { QuickActions } from "./QuickActions";
+import { classNames } from "@rafty/ui";
 
 export function FieldWrapper(props: PropsWithChildren) {
   const { isOverlay, ...field } = useThread<

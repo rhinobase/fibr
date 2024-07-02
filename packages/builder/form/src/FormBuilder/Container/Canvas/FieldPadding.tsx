@@ -1,5 +1,5 @@
 import { useThread } from "@fibr/react";
-import { classNames } from "@fibr/builder";
+import { classNames } from "@rafty/ui";
 import type { PropsWithChildren } from "react";
 
 export function FieldPadding(props: PropsWithChildren) {

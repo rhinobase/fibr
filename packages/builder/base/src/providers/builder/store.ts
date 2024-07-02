@@ -3,10 +3,17 @@ import { type StoreApi, type UseBoundStore, create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { Env } from "../utils";
 
+export enum WorkspaceErrorType {
+  BLOCK_NOT_FOUND = "blockNotFound",
+  ID_ALREADY_EXIST = "idAlreadyExist",
+  ID_NOT_FOUND = "idNotFound",
+  GROUP_NOT_VALID = "groupNotValid",
+  SCHEMA_NOT_VALID = "schemaNotValid",
+}
+
 export type TabPayload = {
   name: string;
-  label: React.ReactNode;
-  icon: React.ReactNode;
+  trigger: React.ReactNode;
   isResizeable?: boolean;
   defaultSize?: number;
 };
@@ -17,9 +24,28 @@ export type Layout = {
   commandPalette: boolean;
 };
 
-export type CreateBuilderStoreProps = {
+type ErrorOptionsType = { cause?: Error } & (
+  | {
+      type:
+        | WorkspaceErrorType.BLOCK_NOT_FOUND
+        | WorkspaceErrorType.GROUP_NOT_VALID
+        | WorkspaceErrorType.SCHEMA_NOT_VALID;
+      data?: null;
+    }
+  | {
+      type:
+        | WorkspaceErrorType.ID_ALREADY_EXIST
+        | WorkspaceErrorType.ID_NOT_FOUND;
+      data?: {
+        id: string | string[];
+      };
+    }
+);
+
+export type BuilderStoreProps = {
   tabs?: Record<string, Omit<TabPayload, "name">>;
   env?: Env;
+  onError?: (options: ErrorOptionsType) => void;
 };
 
 export type BuilderStore = {
@@ -36,12 +62,14 @@ export type BuilderStore = {
     current: Env;
     change: (env: Env) => void;
   };
+  onError: (options: ErrorOptionsType) => void;
 };
 
 export const createBuilderStore = ({
   tabs = {},
   env = Env.DEVELOPMENT,
-}: CreateBuilderStoreProps) =>
+  onError = console.error,
+}: BuilderStoreProps) =>
   create(
     immer<BuilderStore>((set, get) => ({
       tabs: {
@@ -79,5 +107,6 @@ export const createBuilderStore = ({
         set((state) => {
           state.layout = _.merge(state.layout, values);
         }),
+      onError,
     })),
   ) as UseBoundStore<StoreApi<BuilderStore>>;

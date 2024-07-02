@@ -8,7 +8,7 @@ import {
 import { useStore } from "zustand";
 import {
   type BuilderStore,
-  type CreateBuilderStoreProps,
+  type BuilderStoreProps,
   createBuilderStore,
 } from "./store";
 
@@ -19,7 +19,7 @@ const BuilderContext = createContext<ReturnType<
 export function BuilderProvider({
   children,
   ...props
-}: PropsWithChildren<CreateBuilderStoreProps>) {
+}: PropsWithChildren<BuilderStoreProps>) {
   const store = useRef(createBuilderStore({ ...props })).current;
   return (
     <BuilderContext.Provider value={store}>{children}</BuilderContext.Provider>
