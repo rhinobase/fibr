@@ -4,6 +4,7 @@ import {
   CanvasProvider,
   type CanvasStoreProps,
   Container,
+  useBuilder,
 } from "@fibr/builder";
 import { ReactFlowProvider } from "reactflow";
 import { Canvas } from "./Canvas";
@@ -11,12 +12,14 @@ import { Settings } from "./Settings";
 import { Sidebar } from "./Sidebar";
 import { WorkflowDndWrapper } from "./WorkflowDndWrapper";
 
-export type Builder = BlocksStoreProps & CanvasStoreProps;
+export type Builder = BlocksStoreProps & Omit<CanvasStoreProps, "onError">;
 
 export function Builder({ blocks, config, ...builderProps }: Builder) {
+  const onError = useBuilder((state) => state.onError);
+
   return (
     <BlocksProvider blocks={blocks} config={config}>
-      <CanvasProvider {...builderProps}>
+      <CanvasProvider {...builderProps} onError={onError}>
         <ReactFlowProvider>
           <WorkflowDndWrapper>
             <Container className="relative flex-1 overflow-y-auto">

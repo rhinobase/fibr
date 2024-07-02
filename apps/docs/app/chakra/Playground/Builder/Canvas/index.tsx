@@ -61,6 +61,7 @@ export function Canvas() {
           alignItems: "stretch",
           justifyContent: "normal",
         }}
+        className="bg-secondary-100 dark:bg-secondary-900 flex h-full items-start justify-center overflow-y-auto"
       >
         <WeaverProvider wrapper={NodeWrapper}>
           <Diagram />

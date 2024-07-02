@@ -1,5 +1,4 @@
 "use client";
-import { useToast } from "@chakra-ui/react";
 import {
   formBlocks,
   formConfig,
@@ -69,7 +68,6 @@ export default function Playground() {
   const [template, setTemplate] = useState<PanelProps["template"]>();
 
   const Component = PANELS[container];
-  const toast = useToast();
 
   return (
     <>

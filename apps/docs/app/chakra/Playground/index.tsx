@@ -21,13 +21,12 @@ export default function Playground() {
   const toast = useToast();
 
   return (
-    <Workspace className="flex h-screen w-full flex-col">
+    <Workspace
+      className="flex h-screen w-full flex-col"
+      onError={(options) => onErrorHandle({ ...options, toast })}
+    >
       <Header />
-      <Builder
-        blocks={workflowBlocks}
-        config={workflowConfig}
-        onError={(options) => onErrorHandle({ ...options, toast })}
-      />
+      <Builder blocks={workflowBlocks} config={workflowConfig} />
       <Footer />
     </Workspace>
   );

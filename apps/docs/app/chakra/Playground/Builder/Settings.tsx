@@ -116,7 +116,9 @@ export function Settings({ style, className, ...props }: Settings) {
         }}
       >
         <Flex w="100%" align="center" justify="space-between">
-          <Heading as="h4">Settings</Heading>
+          <Heading as="h4" size="md" fontWeight={500}>
+            Settings
+          </Heading>
           <Text
             title={selectedBlockId}
             overflow="hidden"
