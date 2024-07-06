@@ -7,3 +7,11 @@
     display: none;
   }
 }
+
+*[data-selected="true"] {
+  @apply border-primary-500 border;
+}
+
+*[data-selected="false"] {
+  @apply ring-primary-500 hover:ring-1;
+}
