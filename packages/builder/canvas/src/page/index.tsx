@@ -4,7 +4,7 @@ import { Canvas, CustomControls } from "@fibr/shared";
 import { FormProvider, useForm } from "react-hook-form";
 import { Diagram } from "./Diagram";
 
-export type PageCanvas = { componentWrapper: WeaverProvider["wrapper"] };
+export type PageCanvas = { componentWrapper?: WeaverProvider["wrapper"] };
 
 export function PageCanvas({ componentWrapper }: PageCanvas) {
   const methods = useForm();

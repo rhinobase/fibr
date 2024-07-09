@@ -1,6 +1,6 @@
 import type { BlockType } from "@fibr/builder";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, ErrorMessage, FieldControl, Textarea } from "@rafty/ui";
+import { Button, FieldWrapper, Textarea } from "@rafty/ui";
 import type { BaseSyntheticEvent } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -23,7 +23,7 @@ export function CustomTemplateForm(props: CustomTemplateForm) {
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
@@ -35,14 +35,13 @@ export function CustomTemplateForm(props: CustomTemplateForm) {
       }, console.error)}
       className="space-y-3"
     >
-      <FieldControl name="template">
+      <FieldWrapper name="template">
         <Textarea
           className="h-[186px]"
           placeholder="Paste your schema here..."
           {...register("template")}
         />
-        <ErrorMessage>{errors.template?.message as string}</ErrorMessage>
-      </FieldControl>
+      </FieldWrapper>
       <div className="flex flex-row-reverse">
         <Button isLoading={isSubmitting} type="submit" colorScheme="primary">
           Get Started

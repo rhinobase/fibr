@@ -1,6 +1,6 @@
 # builder
 
-The barebone builder UI made with `@rafty/ui`
+The barebone builder UI made with `tailwindcss`
 
 ## Layout
 

@@ -1,9 +1,9 @@
 "use client";
 import { useDroppable } from "@dnd-kit/core";
 import * as Tabs from "@radix-ui/react-tabs";
-import { mergeRefs } from "@rafty/ui";
 import {
   forwardRef,
+  Fragment,
   useEffect,
   useRef,
   type ComponentPropsWithoutRef,
@@ -17,6 +17,7 @@ import {
   type ImperativePanelHandle,
 } from "react-resizable-panels";
 import { Env, useBuilder } from "../../providers";
+import { mergeRefs } from "../../utils";
 import { SidebarProvider, useSidebar } from "./provider";
 
 const DEFAULT_SIZE = 20;
@@ -39,12 +40,7 @@ export const BuilderPanel = forwardRef<HTMLDivElement, BuilderPanel>(
     const panelRef = useRef<ImperativePanelHandle>(null);
 
     const { isProduction, defaultSize, toggle } = useBuilder(
-      ({
-        env: { current },
-        layout: { sidebar },
-        setLayout,
-        tabs: { get, active },
-      }) => {
+      ({ env: { current }, setLayout, tabs: { get, active } }) => {
         const currentTab = active != null ? get(active) : undefined;
 
         return {
@@ -135,8 +131,9 @@ export const SidebarList = forwardRef<
   return (
     <>
       <Tabs.List {...props} ref={forwardedRef}>
-        {/* TODO: resolve key error */}
-        {Object.values(sidebarItems).map(({ trigger }) => trigger)}
+        {Object.values(sidebarItems).map(({ trigger }, index) => (
+          <Fragment key={`${index}-${"sidebar"}`}>{trigger}</Fragment>
+        ))}
       </Tabs.List>
       {children}
     </>

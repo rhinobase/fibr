@@ -5,7 +5,7 @@ import { Canvas, CustomControls } from "@fibr/shared";
 import "reactflow/dist/base.css";
 import { Diagram } from "./Diagram";
 
-export type WorkflowCanvas = { nodeWrapper: WeaverProvider["wrapper"] };
+export type WorkflowCanvas = { nodeWrapper?: WeaverProvider["wrapper"] };
 
 export function WorkflowCanvas({ nodeWrapper }: WorkflowCanvas) {
   const { ref } = useClipboard();

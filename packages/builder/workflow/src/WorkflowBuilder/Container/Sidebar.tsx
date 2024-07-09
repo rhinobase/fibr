@@ -14,6 +14,7 @@ import {
   Squares2X2Icon,
 } from "@heroicons/react/24/outline";
 import { Tooltip, TooltipContent, TooltipTrigger, classNames } from "@rafty/ui";
+import type { PropsWithChildren } from "react";
 
 export function Sidebar() {
   const add = useCanvas(({ add }) => add);
@@ -55,55 +56,25 @@ export function Sidebar() {
           <div className="dark:bg-secondary-950 h-full w-full overflow-hidden rounded-md bg-white shadow-md">
             <Palette
               trigger={
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div>
-                      <SidebarTrigger
-                        value="palette"
-                        className="hover:text-secondary-700 data-[state=active]:bg-primary-100 data-[state=active]:hover:bg-primary-100 dark:hover:text-secondary-100 text-secondary-600 dark:text-secondary-400 dark:data-[state=active]:text-secondary-100 data-[disabled]:text-secondary-400 dark:data-[disabled]:text-secondary-600 data-[state=active]:border-primary-500 dark:data-[state=active]:border-primary-300 dark:data-[state=active]:bg-secondary-800 -mr-px rounded border-r-2 border-transparent p-2 font-medium transition-colors ease-in-out data-[disabled]:cursor-not-allowed data-[orientation=vertical]:border-r-0 data-[state=active]:text-black"
-                      >
-                        <Squares2X2Icon className="h-5 w-5 stroke-2" />
-                      </SidebarTrigger>
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent side="right">Palette</TooltipContent>
-                </Tooltip>
+                <Wrapper value="palette" icon={Squares2X2Icon}>
+                  Palette
+                </Wrapper>
               }
               enableDragging
               onSelect={(value) => add({ blockData: value })}
             />
             <Overview
               trigger={
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div>
-                      <SidebarTrigger
-                        value="overview"
-                        className="hover:text-secondary-700 data-[state=active]:bg-primary-100 data-[state=active]:hover:bg-primary-100 dark:hover:text-secondary-100 text-secondary-600 dark:text-secondary-400 dark:data-[state=active]:text-secondary-100 data-[disabled]:text-secondary-400 dark:data-[disabled]:text-secondary-600 data-[state=active]:border-primary-500 dark:data-[state=active]:border-primary-300 dark:data-[state=active]:bg-secondary-800 -mr-px rounded border-r-2 border-transparent p-2 font-medium  transition-colors ease-in-out data-[disabled]:cursor-not-allowed  data-[orientation=vertical]:border-r-0 data-[state=active]:text-black"
-                      >
-                        <ListBulletIcon className="h-5 w-5 stroke-2" />
-                      </SidebarTrigger>
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent side="right">Overview</TooltipContent>
-                </Tooltip>
+                <Wrapper value="overview" icon={ListBulletIcon}>
+                  Overview
+                </Wrapper>
               }
             />
             <CodeGenerator
               trigger={
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div>
-                      <SidebarTrigger
-                        value="code"
-                        className="hover:text-secondary-700 data-[state=active]:bg-primary-100 data-[state=active]:hover:bg-primary-100 dark:hover:text-secondary-100 text-secondary-600 dark:text-secondary-400 dark:data-[state=active]:text-secondary-100 data-[disabled]:text-secondary-400 dark:data-[disabled]:text-secondary-600 data-[state=active]:border-primary-500 dark:data-[state=active]:border-primary-300 dark:data-[state=active]:bg-secondary-800 -mr-px rounded border-r-2 border-transparent p-2 font-medium transition-colors ease-in-out data-[disabled]:cursor-not-allowed data-[orientation=vertical]:border-r-0 data-[state=active]:text-black"
-                      >
-                        <CodeBracketSquareIcon className="size-5 stroke-2" />
-                      </SidebarTrigger>
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent side="right">Code</TooltipContent>
-                </Tooltip>
+                <Wrapper value="code" icon={CodeBracketSquareIcon}>
+                  Code
+                </Wrapper>
               }
               resolvers={[
                 {
@@ -118,5 +89,35 @@ export function Sidebar() {
         </SidebarList>
       </BuilderSidebar>
     </BuilderPanel>
+  );
+}
+
+function Wrapper({
+  children,
+  icon: Icon,
+  value,
+}: PropsWithChildren<{
+  value: string;
+  icon: React.ForwardRefExoticComponent<
+    Omit<React.SVGProps<SVGSVGElement>, "ref"> & {
+      title?: string;
+      titleId?: string;
+    } & React.RefAttributes<SVGSVGElement>
+  >;
+}>) {
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <div>
+          <SidebarTrigger
+            value={value}
+            className="hover:text-secondary-700 data-[state=active]:bg-primary-100 data-[state=active]:hover:bg-primary-100 dark:hover:text-secondary-100 text-secondary-600 dark:text-secondary-400 dark:data-[state=active]:text-secondary-100 data-[disabled]:text-secondary-400 dark:data-[disabled]:text-secondary-600 data-[state=active]:border-primary-500 dark:data-[state=active]:border-primary-300 dark:data-[state=active]:bg-secondary-800 -mr-px rounded border-r-2 border-transparent p-2 font-medium  transition-colors ease-in-out data-[disabled]:cursor-not-allowed  data-[orientation=vertical]:border-r-0 data-[state=active]:text-black"
+          >
+            <Icon className="h-5 w-5 stroke-2" />
+          </SidebarTrigger>
+        </div>
+      </TooltipTrigger>
+      <TooltipContent side="right">{children}</TooltipContent>
+    </Tooltip>
   );
 }

@@ -1,7 +1,6 @@
 import { useThread } from "@fibr/react";
-import { FieldControl, Label, Text, classNames } from "@rafty/ui";
-import { Fragment, type PropsWithChildren } from "react";
-import { FieldErrorMessage } from "./FieldErrorMessage";
+import { FieldWrapper as RaftyFieldWrapper, classNames } from "@rafty/ui";
+import { type PropsWithChildren } from "react";
 import { TooltipWrapper } from "./TooltipWrapper";
 
 export type FieldWrapperProps = {
@@ -15,7 +14,7 @@ export type FieldWrapperProps = {
 };
 
 export type FieldWrapper = PropsWithChildren<{
-  className?: FieldControl["className"];
+  className?: RaftyFieldWrapper["className"];
 }>;
 
 export function FieldWrapper({ className, children }: FieldWrapper) {
@@ -24,30 +23,18 @@ export function FieldWrapper({ className, children }: FieldWrapper) {
     data: { label, description, disabled, hidden, required },
   } = useThread<FieldWrapperProps>();
 
-  const LabelAndDescriptionWrapper =
-    label && description
-      ? (props: PropsWithChildren) => <div {...props} />
-      : Fragment;
-
   return (
     <TooltipWrapper>
-      <FieldControl
+      <RaftyFieldWrapper
         name={id}
+        label={label}
+        description={description}
         className={classNames(hidden && "opacity-40", "gap-2", className)}
         isRequired={required}
         isDisabled={disabled}
       >
-        <LabelAndDescriptionWrapper>
-          {label && <Label className="leading-3">{label}</Label>}
-          {description && (
-            <Text className="text-secondary-600 dark:text-secondary-400 text-xs font-medium leading-[10px]">
-              {description}
-            </Text>
-          )}
-        </LabelAndDescriptionWrapper>
         {children}
-        <FieldErrorMessage name={id} />
-      </FieldControl>
+      </RaftyFieldWrapper>
     </TooltipWrapper>
   );
 }

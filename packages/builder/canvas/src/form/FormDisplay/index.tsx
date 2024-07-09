@@ -9,7 +9,7 @@ import { DndWrapper } from "@fibr/shared";
 import { FieldOverlay } from "./FieldOverlay";
 
 export type FormDisplay = {
-  fieldWrapper: WeaverProvider["wrapper"];
+  fieldWrapper?: WeaverProvider["wrapper"];
 };
 
 export function FormDisplay({ fieldWrapper }: FormDisplay) {

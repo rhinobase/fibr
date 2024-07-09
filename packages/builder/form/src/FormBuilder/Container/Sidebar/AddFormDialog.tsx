@@ -8,8 +8,7 @@ import {
   DialogHeader,
   DialogOverlay,
   DialogTrigger,
-  ErrorMessage,
-  FieldControl,
+  FieldWrapper,
   InputField,
 } from "@rafty/ui";
 import { useForm } from "react-hook-form";
@@ -62,10 +61,9 @@ function AddForm() {
       )}
       className="space-y-3"
     >
-      <FieldControl name="title" isInvalid={errors.title !== null} isRequired>
+      <FieldWrapper name="title" isInvalid={errors.title !== null} isRequired>
         <InputField size="sm" {...register("title")} />
-        <ErrorMessage>{errors.title?.message}</ErrorMessage>
-      </FieldControl>
+      </FieldWrapper>
       <div className="flex items-center justify-end">
         <Button colorScheme="primary" size="sm" type="submit">
           Add
