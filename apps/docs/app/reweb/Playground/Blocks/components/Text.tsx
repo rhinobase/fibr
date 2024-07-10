@@ -2,6 +2,7 @@ import { useCanvas } from "@fibr/builder";
 import { useThread } from "@fibr/react";
 import { eventHandler } from "@rafty/ui";
 import { useState } from "react";
+import { Wrapper } from "./Wrapper";
 
 export type Text = {
   data: { content?: string };
@@ -13,23 +14,26 @@ export function Text() {
     data: { content },
   } = useThread<Text>();
   const [edit, setEdit] = useState(false);
-  const { select, update } = useCanvas(({ select, update, schema }) => ({
-    select,
-    update,
-    selectedBlock: schema.find((block) => block.id === id),
-  }));
 
-  const onSelect = eventHandler(() =>
+  const { select, update, selectedBlock } = useCanvas(
+    ({ select, update, schema }) => ({
+      select,
+      update,
+      selectedBlock: schema.find((block) => block.id === id),
+    }),
+  );
+
+  const handleSelect = eventHandler(() =>
     select({
       selectedBlockIds: id,
     }),
   );
 
   return (
-    <span
+    <Wrapper
       id={id}
-      data-id={id}
-      className="outline-none"
+      as="span"
+      isSelected={selectedBlock?.selected ?? false}
       contentEditable={edit}
       onBlur={(e) => {
         e.stopPropagation();
@@ -39,17 +43,17 @@ export function Text() {
         });
         setEdit(false);
       }}
-      onClick={onSelect}
+      onClick={handleSelect}
       onKeyDown={(e) => {
         if (e.key === "Enter") {
           setEdit((prev) => !prev);
         }
 
-        onSelect(e);
+        handleSelect(e);
       }}
       onDoubleClick={() => setEdit(true)}
     >
       {content}
-    </span>
+    </Wrapper>
   );
 }

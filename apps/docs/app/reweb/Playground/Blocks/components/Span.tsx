@@ -2,6 +2,7 @@ import { useCanvas } from "@fibr/builder";
 import { Thread, type ThreadType, useThread } from "@fibr/react";
 import { eventHandler } from "@rafty/ui";
 import type { HTMLAttributes } from "react";
+import { Wrapper } from "./Wrapper";
 
 export type Span = {
   blocks?: Record<string, ThreadType>;
@@ -19,28 +20,25 @@ export function Span() {
     selectedBlock: schema.find((block) => block.id === id),
   }));
 
-  const isSelected = selectedBlock?.selected ?? false;
-
-  const props = className ? { className: className.join(" ") } : {};
-  const onSelect = eventHandler(() =>
+  const handleSelect = eventHandler(() =>
     select({
       selectedBlockIds: id,
     }),
   );
 
   return (
-    <span
+    <Wrapper
+      as="span"
       id={id}
-      {...props}
-      data-id={id}
-      data-selected={isSelected}
-      onClick={onSelect}
-      onKeyDown={onSelect}
+      isSelected={selectedBlock?.selected ?? false}
+      className={className?.join(" ")}
+      onClick={handleSelect}
+      onKeyDown={handleSelect}
     >
       {blocks &&
         Object.entries(blocks).map(([id, field]) => (
           <Thread key={id} id={id} {...field} />
         ))}
-    </span>
+    </Wrapper>
   );
 }

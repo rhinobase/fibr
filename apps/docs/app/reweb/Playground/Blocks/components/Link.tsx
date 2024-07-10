@@ -2,6 +2,7 @@ import { useCanvas } from "@fibr/builder";
 import { Thread, type ThreadType, useThread } from "@fibr/react";
 import { eventHandler } from "@rafty/ui";
 import type { HTMLAttributes } from "react";
+import { Wrapper } from "./Wrapper";
 
 export type Link = {
   blocks?: Record<string, ThreadType>;
@@ -22,29 +23,26 @@ export function Link() {
     selectedBlock: schema.find((block) => block.id === id),
   }));
 
-  const isSelected = selectedBlock?.selected ?? false;
-
-  const props = className ? { className: className.join(" ") } : {};
-  const onSelect = eventHandler(() =>
+  const handleSelect = eventHandler(() =>
     select({
       selectedBlockIds: id,
     }),
   );
 
   return (
-    <a
+    <Wrapper
+      as="a"
+      isSelected={selectedBlock?.selected ?? false}
       id={id}
       href={link}
-      data-id={id}
-      data-selected={isSelected}
-      {...props}
-      onClick={onSelect}
-      onKeyDown={onSelect}
+      className={className?.join(" ")}
+      onClick={handleSelect}
+      onKeyDown={handleSelect}
     >
       {blocks &&
         Object.entries(blocks).map(([id, field]) => (
           <Thread key={id} id={id} {...field} />
         ))}
-    </a>
+    </Wrapper>
   );
 }
