@@ -15,10 +15,9 @@ const BlocksContext = createContext<ReturnType<
   typeof createBlocksStore
 > | null>(null);
 
-export function BlocksProvider({
-  children,
-  ...props
-}: PropsWithChildren<BlocksStoreProps>) {
+export type BlocksProvider = PropsWithChildren<BlocksStoreProps>;
+
+export function BlocksProvider({ children, ...props }: BlocksProvider) {
   const store = useRef(createBlocksStore(props)).current;
   return (
     <BlocksContext.Provider value={store}>{children}</BlocksContext.Provider>
