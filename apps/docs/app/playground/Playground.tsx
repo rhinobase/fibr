@@ -41,25 +41,17 @@ type PanelProps = { template: BlockType[] };
 
 const PANELS: Record<Container, (props: PanelProps) => ReactNode> = {
   [Container.FORM]: ({ template }) => (
-    <FormBuilder
-      initialSchema={template}
-      blocks={formBlocks}
-      config={formConfig}
-    />
+    <FormBuilder schema={template} blocks={formBlocks} config={formConfig} />
   ),
   [Container.WORKFLOW]: ({ template }) => (
     <WorkflowBuilder
-      initialSchema={template}
+      schema={template}
       blocks={workflowBlocks}
       config={workflowConfig}
     />
   ),
   [Container.PAGE]: ({ template }) => (
-    <PageBuilder
-      initialSchema={template}
-      blocks={pageBlocks}
-      config={pageConfig}
-    />
+    <PageBuilder schema={template} blocks={pageBlocks} config={pageConfig} />
   ),
 };
 

@@ -42,39 +42,50 @@ type ErrorOptionsType = { cause?: Error } & (
     }
 );
 
-export type BuilderStoreProps = {
-  tabs?: Record<string, Omit<TabPayload, "name">>;
-  env?: Env;
-  onError?: (options: ErrorOptionsType) => void;
+export type BuilderStoreProps = Partial<Omit<BuilderStore, "tabs" | "env">> & {
+  tabs?: Partial<BuilderStoreTabs>;
+  env?: Partial<BuilderStoreEnv>;
 };
 
 export type BuilderStore = {
-  tabs: {
-    all: Record<string, Omit<TabPayload, "name">>;
-    add: (payload: TabPayload) => void;
-    get: (tabId: string) => Omit<TabPayload, "name"> | undefined;
-    active: string | null;
-    setActive: (tabId: string | null) => void;
-  };
+  tabs: BuilderStoreTabs;
   layout: Layout;
   setLayout: (values: Partial<Layout>) => void;
-  env: {
-    current: Env;
-    change: (env: Env) => void;
-  };
+  env: BuilderStoreEnv;
   onError: (options: ErrorOptionsType) => void;
 };
 
-export const createBuilderStore = ({
-  tabs = {},
-  env = Env.DEVELOPMENT,
-  onError = console.error,
-}: BuilderStoreProps) =>
-  create(
+export type BuilderStoreTabs = {
+  all: Record<string, Omit<TabPayload, "name">>;
+  add: (payload: TabPayload) => void;
+  get: (tabId: string) => Omit<TabPayload, "name"> | undefined;
+  active: string | null;
+  setActive: (tabId: string | null) => void;
+};
+
+export type BuilderStoreEnv = {
+  current: Env;
+  change: (env: Env) => void;
+};
+
+export const createBuilderStore = (props: BuilderStoreProps) => {
+  const {
+    tabs,
+    env,
+    onError = console.error,
+    layout = {
+      sidebar: false,
+      shortcutsDialog: false,
+      commandPalette: false,
+    },
+    setLayout,
+  } = props;
+
+  return create(
     immer<BuilderStore>((set, get) => ({
       tabs: {
-        all: tabs,
-        active: null,
+        all: tabs?.all ?? {},
+        active: tabs?.active ?? null,
         add: (payload) =>
           set((state) => {
             const { name, ...data } = payload;
@@ -92,17 +103,13 @@ export const createBuilderStore = ({
           }),
       },
       env: {
-        current: env,
-        change: (env) =>
+        current: env?.current ?? Env.DEVELOPMENT,
+        change: (e) =>
           set((state) => {
-            state.env.current = env;
+            state.env.current = e;
           }),
       },
-      layout: {
-        sidebar: false,
-        shortcutsDialog: false,
-        commandPalette: false,
-      },
+      layout,
       setLayout: (values) =>
         set((state) => {
           state.layout = _.merge(state.layout, values);
@@ -110,3 +117,4 @@ export const createBuilderStore = ({
       onError,
     })),
   ) as UseBoundStore<StoreApi<BuilderStore>>;
+};

@@ -18,10 +18,10 @@ import type {
 } from "./types";
 
 export type CanvasStoreProps = {
-  initialSchema?: BlockType[];
   enableMultiSelect?: boolean;
   emitter?: EditorEventBus["broadcast"];
-} & Pick<BuilderStore, "onError">;
+} & Partial<CanvasStore> &
+  Pick<BuilderStore, "onError">;
 
 export type CanvasStore = {
   schema: BlockType[];
@@ -45,15 +45,26 @@ export type CanvasStore = {
 };
 
 export const createCanvasStore = ({
-  initialSchema = [],
+  schema = [],
   enableMultiSelect = true,
   emitter = () => undefined,
   onError,
+  _unique,
+  add,
+  duplicate,
+  get,
+  move,
+  remove,
+  select,
+  set,
+  uniqueId,
+  update,
+  updateId,
 }: CanvasStoreProps) => {
   return create(
     immer<CanvasStore>((set, get) => ({
-      schema: initialSchema,
-      _unique: revalidateCache(initialSchema),
+      schema: schema,
+      _unique: _unique ?? revalidateCache(schema),
       uniqueId: (type) => {
         let typeCount = 1;
 
@@ -310,7 +321,7 @@ export const createCanvasStore = ({
             cur: get().schema,
           });
       },
-      onError: onError,
+      onError,
     })),
   );
 };

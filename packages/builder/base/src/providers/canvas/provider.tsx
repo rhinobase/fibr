@@ -18,7 +18,9 @@ const CanvasContext = createContext<ReturnType<
   typeof createCanvasStore
 > | null>(null);
 
-export type CanvasProvider = PropsWithChildren<CanvasStoreProps>;
+export type CanvasProvider = PropsWithChildren<
+  Omit<CanvasStoreProps, "emitter">
+>;
 
 export function CanvasProvider({ children, ...props }: CanvasProvider) {
   const emitter = useEventBus((state) => state.broadcast);

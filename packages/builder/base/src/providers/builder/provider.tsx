@@ -16,10 +16,9 @@ const BuilderContext = createContext<ReturnType<
   typeof createBuilderStore
 > | null>(null);
 
-export function BuilderProvider({
-  children,
-  ...props
-}: PropsWithChildren<BuilderStoreProps>) {
+export type BuilderProvider = PropsWithChildren<BuilderStoreProps>;
+
+export function BuilderProvider({ children, ...props }: BuilderProvider) {
   const store = useRef(createBuilderStore({ ...props })).current;
   return (
     <BuilderContext.Provider value={store}>{children}</BuilderContext.Provider>
