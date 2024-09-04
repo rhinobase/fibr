@@ -63,7 +63,7 @@ export const createCanvasStore = ({
 }: CanvasStoreProps) => {
   return create(
     immer<CanvasStore>((set, get) => ({
-      schema: schema,
+      schema,
       _unique: _unique ?? revalidateCache(schema),
       uniqueId: (type) => {
         let typeCount = 1;
