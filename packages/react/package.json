@@ -1,6 +1,6 @@
 {
   "name": "@fibr/react",
-  "version": "0.6.3",
+  "version": "0.7.0",
   "description": "Extensible form builder for react",
   "license": "MIT",
   "keywords": [

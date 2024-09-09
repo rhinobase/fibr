@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.7.0](https://github.com/rhinobase/fibr/compare/react-0.6.3...react-0.7.0) (2024-09-09)
+
+
+### Features
+
+* **react:** major changes ([ac22efa](https://github.com/rhinobase/fibr/commit/ac22efa432390ed38852fa188e8b983431c68f40))
+
 ## [0.6.3](https://github.com/rhinobase/fiber/compare/react-0.6.2...react-0.6.3) (2024-04-20)
 
 ## [0.6.2](https://github.com/rhinobase/fiber/compare/react-0.6.1...react-0.6.2) (2024-03-25)
