@@ -12,17 +12,13 @@ type FibrContextType = {
 
 const FibrContext = createContext<FibrContextType | null>(null);
 
-type PluginType = FibrContextType["components"];
-
-export type FibrProvider = PropsWithChildren<{
-  components: PluginType;
-}>;
+export type FibrProvider = PropsWithChildren<FibrContextType>;
 
 export function FibrProvider({ children, components }: FibrProvider) {
+  components.default ??= ComponentNotFound;
+
   return (
-    <FibrContext.Provider
-      value={{ components: { default: ComponentNotFound, ...components } }}
-    >
+    <FibrContext.Provider value={{ components }}>
       {children}
     </FibrContext.Provider>
   );
