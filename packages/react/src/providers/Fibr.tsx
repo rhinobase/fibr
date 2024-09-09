@@ -15,17 +15,14 @@ const FibrContext = createContext<FibrContextType | null>(null);
 type PluginType = FibrContextType["components"];
 
 export type FibrProvider = PropsWithChildren<{
-  plugins: PluginType | PluginType[];
+  components: PluginType;
 }>;
 
-export function FibrProvider({ children, plugins }: FibrProvider) {
-  // Merging all the components
-  const components = Array.isArray(plugins)
-    ? Object.assign({ default: ComponentNotFound }, ...plugins)
-    : { default: ComponentNotFound, ...plugins };
-
+export function FibrProvider({ children, components }: FibrProvider) {
   return (
-    <FibrContext.Provider value={{ components }}>
+    <FibrContext.Provider
+      value={{ components: { default: ComponentNotFound, ...components } }}
+    >
       {children}
     </FibrContext.Provider>
   );

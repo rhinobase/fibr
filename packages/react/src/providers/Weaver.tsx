@@ -5,12 +5,11 @@ import {
   useContext,
 } from "react";
 
-type WeaverContextType = {
-  readonly wrapper?: (props: PropsWithChildren) => ReactNode;
+export type WeaverContextType = {
+  readonly wrapper: (props: PropsWithChildren) => ReactNode;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const WeaverContext = createContext<WeaverContextType>({});
+const WeaverContext = createContext<WeaverContextType | null>(null);
 
 export type WeaverProvider = PropsWithChildren<WeaverContextType>;
 
