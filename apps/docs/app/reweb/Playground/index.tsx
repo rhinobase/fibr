@@ -20,7 +20,7 @@ export default function Playground() {
     >
       <Header />
       <FormBuilder
-        initialSchema={[
+        schema={[
           {
             id: "canvas",
             type: "div",
