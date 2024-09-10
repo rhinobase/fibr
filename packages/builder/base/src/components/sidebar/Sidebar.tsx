@@ -17,9 +17,8 @@ import {
   type ImperativePanelHandle,
 } from "react-resizable-panels";
 import { Env, useBuilder } from "../../providers";
-import { mergeRefs } from "../../utils";
+import { mergeRefs, classNames } from "../../utils";
 import { SidebarProvider, useSidebar } from "./provider";
-import { classNames } from "@rafty/ui";
 
 const DEFAULT_SIZE = 20;
 const MIN_WIDTH = 3;
@@ -102,7 +101,7 @@ export const SidebarContent = forwardRef<
   ElementRef<typeof Tabs.Root>,
   SidebarContent
 >(function SidebarContent(
-  { orientation = "vertical", ...props },
+  { orientation = "vertical", className, ...props },
   forwardedRef,
 ) {
   const { collapsePanel, expandPanel } = useSidebar();
@@ -123,8 +122,13 @@ export const SidebarContent = forwardRef<
   return (
     <Tabs.Root
       {...props}
-      value={isSidebarOpen ? active ?? undefined : "None"}
+      value={isSidebarOpen ? (active ?? undefined) : "None"}
       orientation={orientation}
+      className={classNames(
+        "pointer-events-auto flex h-full",
+        (active === null || !isSidebarOpen) && "w-max",
+        className,
+      )}
       ref={mergeRefs(setNodeRef, forwardedRef)}
     />
   );
@@ -135,12 +139,19 @@ export type SidebarList = ComponentPropsWithoutRef<typeof Tabs.List>;
 export const SidebarList = forwardRef<
   ElementRef<typeof Tabs.List>,
   SidebarList
->(function SidebarList({ children, ...props }, forwardedRef) {
+>(function SidebarList({ children, className, ...props }, forwardedRef) {
   const sidebarItems = useBuilder(({ tabs: { all } }) => all);
 
   return (
     <>
-      <Tabs.List {...props} ref={forwardedRef}>
+      <Tabs.List
+        {...props}
+        className={classNames(
+          "dark:border-secondary-800 border-secondary-300 flex flex-col border-r",
+          className,
+        )}
+        ref={forwardedRef}
+      >
         {Object.values(sidebarItems).map(({ trigger }, index) => (
           <Fragment key={`${index}-${"sidebar"}`}>{trigger}</Fragment>
         ))}

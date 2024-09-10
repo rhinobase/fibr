@@ -4,7 +4,6 @@ import {
   SidebarContent,
   SidebarList,
   SidebarTrigger,
-  useBuilder,
   useCanvas,
 } from "@fibr/builder";
 import { CodeGenerator, Overview, Palette, astResolver } from "@fibr/shared";
@@ -13,43 +12,15 @@ import {
   ListBulletIcon,
   Squares2X2Icon,
 } from "@heroicons/react/24/outline";
-import { Tooltip, TooltipContent, TooltipTrigger, classNames } from "@rafty/ui";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
 
 export function Sidebar() {
   const add = useCanvas(({ add }) => add);
-  const { isDisabled, active, isSidebarOpen } = useBuilder(
-    ({ layout: { sidebar }, tabs: { get, active } }) => {
-      const currentTab = active != null ? get(active) : undefined;
-
-      return {
-        isDisabled: !sidebar || currentTab?.isResizeable === false,
-        active,
-        isSidebarOpen: sidebar,
-      };
-    },
-  );
 
   return (
-    <BuilderSidebar
-      isResizable
-      resizeHandler={
-        <ResizeHandle
-          className={classNames(
-            "group/handler pointer-events-auto relative w-1 bg-transparent",
-            isDisabled && "hidden",
-          )}
-        >
-          <div className="absolute left-0 h-full w-full transition-all ease-in-out group-hover/handler:bg-blue-500 group-data-[resize-handle-active]/handler:bg-blue-500" />
-        </ResizeHandle>
-      }
-    >
-      <SidebarContent
-        className={classNames(
-          "dark:bg-secondary-950 pointer-events-auto flex h-full bg-white",
-          (active === null || !isSidebarOpen) && "w-max",
-        )}
-      >
-        <SidebarList className="dark:border-secondary-800 border-secondary-300 flex flex-col border-r">
+    <BuilderSidebar isResizable resizeHandler={<ResizeHandle />}>
+      <SidebarContent className="dark:bg-secondary-950 bg-white">
+        <SidebarList>
           <div className="border-secondary-200 dark:border-secondary-800 w-full overflow-hidden border-r">
             <Palette
               trigger={

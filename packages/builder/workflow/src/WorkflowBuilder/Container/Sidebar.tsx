@@ -4,7 +4,6 @@ import {
   SidebarContent,
   SidebarList,
   SidebarTrigger,
-  useBuilder,
   useCanvas,
 } from "@fibr/builder";
 import { CodeGenerator, Overview, Palette, astResolver } from "@fibr/shared";
@@ -13,46 +12,17 @@ import {
   ListBulletIcon,
   Squares2X2Icon,
 } from "@heroicons/react/24/outline";
-import { Tooltip, TooltipContent, TooltipTrigger, classNames } from "@rafty/ui";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
 import type { PropsWithChildren } from "react";
 
 export function Sidebar() {
   const add = useCanvas(({ add }) => add);
 
-  const { isDisabled, active, isSidebarOpen } = useBuilder(
-    ({ layout: { sidebar }, tabs: { get, active } }) => {
-      const currentTab = active != null ? get(active) : undefined;
-
-      return {
-        isDisabled: !sidebar || currentTab?.isResizeable === false,
-        active,
-        isSidebarOpen: sidebar,
-      };
-    },
-  );
-
   return (
-    <BuilderSidebar
-      isResizable
-      resizeHandler={
-        <ResizeHandle
-          className={classNames(
-            "group/handler pointer-events-auto relative w-1 bg-transparent",
-            isDisabled && "hidden",
-          )}
-        >
-          <div className="absolute left-0 h-full w-full transition-all ease-in-out group-hover/handler:bg-blue-500 group-data-[resize-handle-active]/handler:bg-blue-500" />
-        </ResizeHandle>
-      }
-    >
-      <SidebarContent
-        className={classNames(
-          "pointer-events-auto flex h-full items-center gap-2 bg-transparent py-2 pl-2 dark:bg-transparent",
-          (active === null || !isSidebarOpen) && "w-max",
-        )}
-      >
-        <SidebarList className="dark:bg-secondary-950 dark:border-secondary-800 border-secondary-300 pointer-events-auto flex h-max flex-col gap-1 rounded-md border-r-0 bg-white p-1 shadow-md">
-          <div className="dark:bg-secondary-950 pointer-events-auto h-full w-full overflow-hidden rounded-md bg-white shadow-md">
+    <BuilderSidebar isResizable resizeHandler={<ResizeHandle />}>
+      <SidebarContent className="items-center gap-2 py-2 pl-2">
+        <SidebarList className="dark:bg-secondary-950 h-max gap-1 rounded-md border-r-0 bg-white p-1 shadow-md">
+          <div className="dark:bg-secondary-950 pointer-events-auto h-full w-full overflow-hidden rounded-[inherit] bg-white shadow-[inherit]">
             <Palette
               trigger={
                 <Wrapper value="palette" icon={Squares2X2Icon}>
