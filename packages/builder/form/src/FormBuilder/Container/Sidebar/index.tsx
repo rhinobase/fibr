@@ -1,10 +1,10 @@
-import { Sidebar as BuilderSidebar } from "@fibr/builder";
 import {
+  Sidebar as BuilderSidebar,
   DEFAULT_GROUP,
   groupByParentNode,
   useCanvas,
   type BlockType,
-} from "@fibr/providers";
+} from "@fibr/builder";
 import { CodeGenerator, Overview, Palette, astResolver } from "@fibr/shared";
 import { AddFormDialog } from "./AddFormDialog";
 import { reactHookFormResolver } from "./resolver";

@@ -1,5 +1,4 @@
-import { FloatingSidebar } from "@fibr/builder";
-import { useCanvas } from "@fibr/providers";
+import { useCanvas, FloatingSidebar } from "@fibr/builder";
 import { CodeGenerator, Overview, Palette, astResolver } from "@fibr/shared";
 
 export function Sidebar() {

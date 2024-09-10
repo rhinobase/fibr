@@ -6,7 +6,6 @@
     "@dnd-kit/modifiers": "^7.0.0",
     "@fibr/builder": "^0.0.1",
     "@fibr/canvas": "^0.0.1",
-    "@fibr/providers": "^1.0.0",
     "@fibr/shared": "^1.0.0",
     "@swc/helpers": "^0.5.3",
     "reactflow": "^11.10.3"

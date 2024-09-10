@@ -1,23 +1,20 @@
-import { SidebarItem } from "@fibr/builder";
-import { useCanvas, type BlockType } from "@fibr/providers";
+import {
+  SidebarItem,
+  classNames,
+  useBoolean,
+  useCanvas,
+  type BlockType,
+} from "@fibr/builder";
 import {
   CheckIcon,
   CodeBracketSquareIcon,
   DocumentDuplicateIcon,
 } from "@heroicons/react/24/outline";
-import {
-  Button,
-  Tab,
-  TabContent,
-  TabList,
-  TabTrigger,
-  classNames,
-  useBoolean,
-} from "@rafty/ui";
+import { Button, Tab, TabContent, TabList, TabTrigger } from "@rafty/ui";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
-import { CodeHighlighter } from "./Highlight";
 import { ShikiProvider } from "../../providers";
+import { CodeHighlighter } from "./Highlight";
 
 export type CodeGenerator = {
   resolvers?: {

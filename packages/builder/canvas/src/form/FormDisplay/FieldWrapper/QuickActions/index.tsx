@@ -1,4 +1,4 @@
-import type { BlockType } from "@fibr/providers";
+import type { BlockType } from "@fibr/builder";
 import { useThread } from "@fibr/react";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@rafty/ui";
 import { useState, type PropsWithChildren } from "react";

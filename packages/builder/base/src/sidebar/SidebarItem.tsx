@@ -1,14 +1,19 @@
 "use client";
-import { type TabPayload, useBuilder } from "@fibr/providers";
-import { TabContent, classNames } from "@rafty/ui";
+import * as Tabs from "@radix-ui/react-tabs";
 import {
   Fragment,
+  useEffect,
+  type ComponentPropsWithoutRef,
   type PropsWithChildren,
   type ReactNode,
-  useEffect,
 } from "react";
+import { useBuilder, type TabPayload } from "../providers";
+import { classNames } from "../utils";
 
-export type SidebarItem = Omit<TabContent, "value"> &
+export type SidebarItem = Omit<
+  ComponentPropsWithoutRef<typeof Tabs.Content>,
+  "value"
+> &
   TabPayload & {
     action?: ReactNode;
   };
@@ -38,11 +43,11 @@ export function SidebarItem({
     : Fragment;
 
   return (
-    <TabContent
+    <Tabs.Content
       {...props}
       value={name}
       className={classNames(
-        "h-full flex-col data-[state=active]:flex data-[orientation=vertical]:p-0",
+        "h-full w-full flex-col text-black data-[state=active]:flex dark:text-white",
         className,
       )}
     >
@@ -56,6 +61,6 @@ export function SidebarItem({
       <div className="h-full overflow-y-auto">
         <div className="flex h-full flex-col px-3 pb-3">{children}</div>
       </div>
-    </TabContent>
+    </Tabs.Content>
   );
 }

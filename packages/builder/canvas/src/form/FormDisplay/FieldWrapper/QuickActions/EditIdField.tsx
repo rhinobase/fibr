@@ -1,6 +1,6 @@
-import { useCanvas } from "@fibr/providers";
+import { useCanvas, classNames, useBoolean, eventHandler } from "@fibr/builder";
 import { useThread } from "@fibr/react";
-import { InputField, classNames, useBoolean, eventHandler } from "@rafty/ui";
+import { InputField } from "@rafty/ui";
 import { useEffect, useRef, type FocusEvent, type KeyboardEvent } from "react";
 import { HiPencil } from "react-icons/hi";
 import type { Node } from "reactflow";

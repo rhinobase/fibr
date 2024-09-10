@@ -3,16 +3,11 @@ import {
   DEFAULT_GROUP,
   groupByParentNode,
   useCanvas,
-} from "@fibr/providers";
-import { useThread } from "@fibr/react";
-import {
-  Button,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
   classNames,
   eventHandler,
-} from "@rafty/ui";
+} from "@fibr/builder";
+import { useThread } from "@fibr/react";
+import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
 import type { IconType } from "react-icons";
 import { HiOutlineEyeOff } from "react-icons/hi";
 import {
@@ -122,7 +117,7 @@ function CustomButton({ name, icon: Icon, action, className }: CustomButton) {
       <TooltipContent
         isArrow={false}
         sideOffset={7}
-        className="text-2xs rounded px-1.5 py-1.5 leading-none"
+        className="rounded px-1.5 py-1.5 text-[0.75rem] leading-none"
       >
         {name}
       </TooltipContent>

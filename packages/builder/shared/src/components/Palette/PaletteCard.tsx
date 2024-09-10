@@ -1,8 +1,11 @@
 import { useDraggable } from "@dnd-kit/core";
-import type { BlockType } from "@fibr/providers";
-import { classNames, eventHandler } from "@rafty/ui";
+import {
+  classNames,
+  eventHandler,
+  type Block,
+  type BlockType,
+} from "@fibr/builder";
 import type { RangeTuple } from "fuse.js";
-import type { Block } from "../../types";
 import { highlightMatches } from "../utils";
 
 export type PaletteCard = Block & {
@@ -59,7 +62,7 @@ export function PaletteCard({
         <p
           className={classNames(
             enableDragging && "select-none",
-            "text-secondary-500 dark:text-secondary-400 text-2xs text-center capitalize",
+            "text-secondary-500 dark:text-secondary-400 text-center text-[0.75rem] capitalize",
           )}
         >
           {matches ? highlightMatches(label, matches) : label}

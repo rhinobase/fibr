@@ -1,14 +1,18 @@
-import { Canvas as BuilderCanvas } from "@fibr/builder";
-import { CanvasShortcutsWrapper, useCanvas } from "@fibr/providers";
+import {
+  useBlocks,
+  Canvas as BuilderCanvas,
+  CanvasShortcutsWrapper,
+  classNames,
+  useCanvas,
+} from "@fibr/builder";
 import { FibrProvider } from "@fibr/react";
 import { Toast } from "@rafty/ui";
-import { type ReactNode, forwardRef, useEffect, useMemo } from "react";
+import { forwardRef, useEffect, useMemo, type ReactNode } from "react";
 import toast from "react-hot-toast";
-import { useBlocks } from "../../providers";
 import { DefaultComponent } from "./DefaultComponent";
 
 export const Canvas = forwardRef<HTMLDivElement, BuilderCanvas>(
-  (props, forwardedRef) => {
+  ({ className, ...props }, forwardedRef) => {
     const { config, validateSchema } = useBlocks(
       ({ config, validateSchema }) => ({
         config,
@@ -45,7 +49,14 @@ export const Canvas = forwardRef<HTMLDivElement, BuilderCanvas>(
     return (
       <CanvasShortcutsWrapper>
         <FibrProvider plugins={builders}>
-          <BuilderCanvas ref={forwardedRef} {...props} />
+          <BuilderCanvas
+            {...props}
+            className={classNames(
+              "bg-secondary-100 dark:bg-secondary-900",
+              className,
+            )}
+            ref={forwardedRef}
+          />
         </FibrProvider>
       </CanvasShortcutsWrapper>
     );

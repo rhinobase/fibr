@@ -1,10 +1,8 @@
-import { SidebarItem } from "@fibr/builder";
+import { useBlocks, SidebarItem, type Block } from "@fibr/builder";
 import { Squares2X2Icon } from "@heroicons/react/24/outline";
 import { SearchField } from "@rafty/ui";
 import Fuse, { type RangeTuple } from "fuse.js";
 import { useMemo, useState } from "react";
-import { useBlocks } from "../../providers";
-import type { Block } from "../../types";
 import { Empty } from "../utils";
 import { PaletteCard } from "./PaletteCard";
 import { PaletteCardOverlay } from "./PaletteCardOverlay";
@@ -71,8 +69,8 @@ export function Palette({ enableDragging = false, onSelect }: Palette) {
     >
       <div className="dark:bg-secondary-950 sticky top-0 z-10 bg-white">
         <SearchField
-          search={search}
-          onSearch={setSearch}
+          value={search}
+          onValueChange={setSearch}
           size="sm"
           autoComplete="off"
         />

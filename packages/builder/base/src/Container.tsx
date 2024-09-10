@@ -1,4 +1,4 @@
-import { ClipboardProvider } from "@fibr/providers";
+import { ClipboardProvider } from "./providers";
 import type { PropsWithChildren } from "react";
 
 export function Container(props: PropsWithChildren) {

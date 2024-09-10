@@ -1,7 +1,8 @@
 export { Canvas } from "./Canvas";
 export { Container } from "./Container";
-export { Footer } from "./Footer";
-export { Header, PreviewButton, Logo } from "./header";
 export { Settings } from "./Settings";
 export { Workspace } from "./Workspace";
-export { Sidebar, FloatingSidebar, SidebarItem } from "./sidebar";
+export * from "./providers";
+export { FloatingSidebar, Sidebar, SidebarItem } from "./sidebar";
+export * from "./types";
+export * from "./utils";

@@ -1,4 +1,4 @@
-import { useCanvas } from "@fibr/providers";
+import { useCanvas } from "@fibr/builder";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {

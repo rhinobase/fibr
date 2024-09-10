@@ -20,7 +20,6 @@
       "@fibr/canvas": ["packages/builder/canvas/src/index.ts"],
       "@fibr/form": ["packages/builder/form/src/index.ts"],
       "@fibr/page": ["packages/builder/page/src/index.ts"],
-      "@fibr/providers": ["packages/builder/providers/src/index.ts"],
       "@fibr/react": ["packages/react/src/index.ts"],
       "@fibr/shared": ["packages/builder/shared/src/index.ts"],
       "@fibr/workflow": ["packages/builder/workflow/src/index.ts"]

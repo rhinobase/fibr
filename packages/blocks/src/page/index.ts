@@ -1,4 +1,4 @@
-import { Block, Config } from "@fibr/shared";
+import type { Block, Config } from "@fibr/builder";
 import { BsTextareaT } from "react-icons/bs";
 import { LuTextCursorInput } from "react-icons/lu";
 import { MdLink, MdOutlineKey, MdOutlineMailOutline } from "react-icons/md";

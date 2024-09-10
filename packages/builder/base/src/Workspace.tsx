@@ -3,23 +3,29 @@ import {
   EventManagerProvider,
   type CreateBuilderStoreProps,
   type EditorEventBusProps,
-} from "@fibr/providers";
-import type { PropsWithChildren } from "react";
+} from "./providers";
+import { classNames } from "./utils";
+import { forwardRef, type HTMLAttributes } from "react";
 import { Toaster } from "react-hot-toast";
 
-export type Workspace = PropsWithChildren<
-  CreateBuilderStoreProps & EditorEventBusProps
->;
+export type Workspace = HTMLAttributes<HTMLElement> &
+  CreateBuilderStoreProps &
+  EditorEventBusProps;
 
-export function Workspace({ children, initialEvents, ...props }: Workspace) {
+export const Workspace = forwardRef<HTMLElement, Workspace>(function Workspace(
+  { initialEvents, env, tabs, className, ...props },
+  forwardedRef,
+) {
   return (
     <EventManagerProvider initialEvents={initialEvents}>
-      <BuilderProvider {...props}>
-        <div className="divide-secondary-200 dark:divide-secondary-800 flex h-screen w-full flex-col divide-y">
-          {children}
-        </div>
+      <BuilderProvider tabs={tabs} env={env}>
+        <main
+          {...props}
+          className={classNames("flex h-screen w-full flex-col", className)}
+          ref={forwardedRef}
+        />
         <Toaster />
       </BuilderProvider>
     </EventManagerProvider>
   );
-}
+});

@@ -1,5 +1,5 @@
 import { useThread } from "@fibr/react";
-import { classNames } from "@rafty/ui";
+import { classNames } from "@fibr/builder";
 import type { PropsWithChildren } from "react";
 import type { Node } from "reactflow";
 import { PANELS } from "./NodeWrapper";
