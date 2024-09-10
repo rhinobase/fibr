@@ -41,6 +41,7 @@ export function CanvasShortcutsWrapper(props: PropsWithChildren) {
   useHotkeys(
     "mod+z",
     () => {
+      // TODO: resolve this
       // toast.custom((t) => (
       //   <Toast title="Undo!" severity="success" visible={t.visible} />
       // ));
@@ -55,6 +56,7 @@ export function CanvasShortcutsWrapper(props: PropsWithChildren) {
   useHotkeys(
     "mod+y",
     () => {
+      // TODO: resolve this
       // toast.custom((t) => (
       //   <Toast title="Redo!" severity="success" visible={t.visible} />
       // ));

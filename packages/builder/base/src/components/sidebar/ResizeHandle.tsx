@@ -1,9 +1,9 @@
-import { classNames } from "@rafty/ui";
 import {
   PanelResizeHandle,
   type PanelResizeHandleProps,
 } from "react-resizable-panels";
 import { useBuilder } from "../../providers";
+import { classNames } from "../../utils";
 
 export function ResizeHandle({
   className,

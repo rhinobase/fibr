@@ -24,6 +24,7 @@ export function useStack<T>(
       callback?.({ action: ActionType.UNDO, data: lastAction });
       setUndoStack((prev) => [...prev, lastAction]);
     } else {
+      // TODO: resolve this
       // toast.custom((t) => (
       //   <Toast
       //     title="No more action to Undo"
@@ -42,6 +43,7 @@ export function useStack<T>(
       callback?.({ action: ActionType.REDO, data: lastUndoneAction });
       setMainStack((prev) => [...prev, lastUndoneAction]);
     } else {
+      // TODO: resolve this
       // toast.custom((t) => (
       //   <Toast
       //     title="No more action to Redo"
