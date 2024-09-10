@@ -75,23 +75,23 @@ export const workflowBlocks: Record<string, Block<Partial<Node>>[]> = {
       },
     },
   ],
-  // Default: [
-  //   {
-  //     type: "default",
-  //     label: "Default",
-  //     icon: MdCropFree,
-  //   },
-  //   {
-  //     type: "input",
-  //     label: "Input",
-  //     icon: MdInput,
-  //   },
-  //   {
-  //     type: "output",
-  //     label: "Output",
-  //     icon: MdOutput,
-  //   },
-  // ],
+  Default: [
+    {
+      type: "default",
+      label: "Default",
+      icon: MdCropFree,
+    },
+    {
+      type: "input",
+      label: "Input",
+      icon: MdInput,
+    },
+    {
+      type: "output",
+      label: "Output",
+      icon: MdOutput,
+    },
+  ],
   Operator: [
     {
       type: "condition",

@@ -12,16 +12,23 @@ import {
   type CanvasStoreProps,
   createCanvasStore,
 } from "./store";
+import { useBuilder } from "../builder";
 
 const CanvasContext = createContext<ReturnType<
   typeof createCanvasStore
 > | null>(null);
 
-export type CanvasProvider = PropsWithChildren<CanvasStoreProps>;
+export type CanvasProvider = PropsWithChildren<
+  Omit<CanvasStoreProps, "emitter">
+>;
 
 export function CanvasProvider({ children, ...props }: CanvasProvider) {
   const emitter = useEventBus((state) => state.broadcast);
-  const store = useRef(createCanvasStore({ ...props, emitter })).current;
+  const onError = useBuilder((state) => state.onError);
+
+  const store = useRef(
+    createCanvasStore({ ...props, emitter, onError }),
+  ).current;
   return (
     <CanvasContext.Provider value={store}>{children}</CanvasContext.Provider>
   );

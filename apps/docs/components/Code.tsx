@@ -168,7 +168,7 @@ function CodeGroupHeader({ title, children }: CodeGroupHeader) {
   }
 
   return (
-    <div className="border-secondary-700 bg-secondary-800 dark:border-secondary-800 flex border-b px-4 dark:bg-transparent">
+    <div className="border-secondary-700 bg-secondary-800 dark:border-secondary-800 flex border-b px-4">
       {title && (
         <h3
           className={classNames(

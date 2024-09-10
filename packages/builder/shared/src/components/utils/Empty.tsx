@@ -1,4 +1,4 @@
-import { classNames } from "@fibr/builder";
+import { classNames } from "@rafty/ui";
 import type { HTMLAttributes } from "react";
 
 export type Empty = {

@@ -1,5 +1,4 @@
-import { buttonClasses } from "@rafty/ui";
-import { classNames } from "@fibr/builder";
+import { buttonClasses, classNames } from "@rafty/ui";
 import type { HTMLAttributes } from "react";
 
 export type CustomButton = HTMLAttributes<HTMLSpanElement>;

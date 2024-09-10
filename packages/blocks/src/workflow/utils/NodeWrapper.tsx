@@ -9,7 +9,7 @@ export type NodeWrapper = PropsWithChildren<
 
 export function NodeWrapper({ id, children, handles }: NodeWrapper) {
   return (
-    <div>
+    <>
       {children}
       {handles.map((handle, index) => {
         const uniqueId = `${index}-${id}-${handle.type}-${handle.position}`;
@@ -22,6 +22,6 @@ export function NodeWrapper({ id, children, handles }: NodeWrapper) {
           />
         );
       })}
-    </div>
+    </>
   );
 }

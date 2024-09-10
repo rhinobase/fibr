@@ -1,4 +1,4 @@
-import { useBuilder, classNames, useBoolean } from "@fibr/builder";
+import { useBuilder } from "@fibr/builder";
 import {
   Button,
   Dialog,
@@ -9,6 +9,8 @@ import {
   DialogTitle,
   Kbd,
   SearchField,
+  classNames,
+  useBoolean,
 } from "@rafty/ui";
 import Fuse, { type RangeTuple } from "fuse.js";
 import {
