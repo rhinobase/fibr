@@ -1,7 +1,7 @@
 import {
-  BuilderPanel,
   Sidebar as BuilderSidebar,
   ResizeHandle,
+  SidebarContent,
   SidebarList,
   useBuilder,
   useCanvas,
@@ -24,7 +24,7 @@ export function Sidebar() {
   );
 
   return (
-    <BuilderPanel
+    <BuilderSidebar
       isResizable
       resizeHandler={
         <ResizeHandle
@@ -36,11 +36,10 @@ export function Sidebar() {
           <div className="absolute left-0 h-full w-full transition-all ease-in-out group-hover/handler:bg-blue-500 group-data-[resize-handle-active]/handler:bg-blue-500" />
         </ResizeHandle>
       }
-      className="pointer-events-none absolute left-0 top-0 z-50 h-full w-full"
     >
-      <BuilderSidebar
+      <SidebarContent
         className={classNames(
-          "dark:bg-secondary-950 pointer-events-auto flex h-full items-center gap-2 bg-transparent bg-white py-2 pl-2 dark:bg-transparent",
+          "pointer-events-auto flex h-full items-center gap-2 bg-transparent py-2 pl-2 dark:bg-transparent",
           (active === null || !isSidebarOpen) && "w-max",
         )}
       >
@@ -52,7 +51,7 @@ export function Sidebar() {
             />
           </div>
         </SidebarList>
-      </BuilderSidebar>
-    </BuilderPanel>
+      </SidebarContent>
+    </BuilderSidebar>
   );
 }

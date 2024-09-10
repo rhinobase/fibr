@@ -19,11 +19,12 @@ import {
 import { Env, useBuilder } from "../../providers";
 import { mergeRefs } from "../../utils";
 import { SidebarProvider, useSidebar } from "./provider";
+import { classNames } from "@rafty/ui";
 
 const DEFAULT_SIZE = 20;
-const MIN_WIDTH = 2.4;
+const MIN_WIDTH = 3;
 
-export type BuilderPanel = HTMLAttributes<HTMLDivElement> &
+export type Sidebar = HTMLAttributes<HTMLDivElement> &
   (
     | {
         isResizable: true;
@@ -32,93 +33,102 @@ export type BuilderPanel = HTMLAttributes<HTMLDivElement> &
     | { isResizable: false; resizeHandler: null }
   );
 
-export const BuilderPanel = forwardRef<HTMLDivElement, BuilderPanel>(
-  function BuilderPanel(
-    { children, isResizable, resizeHandler, ...props },
-    forwardedRef,
-  ) {
-    const panelRef = useRef<ImperativePanelHandle>(null);
+export const Sidebar = forwardRef<HTMLDivElement, Sidebar>(function Sidebar(
+  { children, isResizable, resizeHandler, className, ...props },
+  forwardedRef,
+) {
+  const panelRef = useRef<ImperativePanelHandle>(null);
 
-    const { isProduction, defaultSize, toggle } = useBuilder(
-      ({ env: { current }, setLayout, tabs: { get, active } }) => {
-        const currentTab = active != null ? get(active) : undefined;
+  const { isProduction, defaultSize, toggle } = useBuilder(
+    ({ env: { current }, setLayout, tabs: { get, active } }) => {
+      const currentTab = active != null ? get(active) : undefined;
 
-        return {
-          isProduction: current === Env.PRODUCTION,
-          defaultSize: currentTab?.defaultSize ?? DEFAULT_SIZE,
-          toggle: (value: boolean) => setLayout({ sidebar: value }),
-        };
-      },
-    );
+      return {
+        isProduction: current === Env.PRODUCTION,
+        defaultSize: currentTab?.defaultSize ?? DEFAULT_SIZE,
+        toggle: (value: boolean) => setLayout({ sidebar: value }),
+      };
+    },
+  );
 
-    if (isProduction) return;
+  if (isProduction) return;
 
-    return (
-      <SidebarProvider
-        collapsePanel={panelRef.current?.collapse}
-        expandPanel={() => panelRef.current?.resize(defaultSize)}
-      >
-        <div {...props} ref={forwardedRef}>
-          {isResizable ? (
-            <PanelGroup direction="horizontal">
-              <Panel
-                id="sidebar"
-                ref={panelRef}
-                order={1}
-                minSize={15}
-                maxSize={40}
-                defaultSize={defaultSize}
-                collapsible
-                collapsedSize={MIN_WIDTH}
-                onResize={(size) => {
-                  if (size <= MIN_WIDTH) toggle(false);
-                  else toggle(true);
-                }}
-                style={{ pointerEvents: "auto" }}
-              >
-                {children}
-              </Panel>
-              {resizeHandler}
-              <Panel order={2} defaultSize={80} />
-            </PanelGroup>
-          ) : (
-            children
-          )}
-        </div>
-      </SidebarProvider>
-    );
-  },
-);
-
-export type Sidebar = ComponentPropsWithoutRef<typeof Tabs.Root>;
-
-export const Sidebar = forwardRef<ElementRef<typeof Tabs.Root>, Sidebar>(
-  function Sidebar({ orientation = "vertical", ...props }, forwardedRef) {
-    const { collapsePanel, expandPanel } = useSidebar();
-    const { setNodeRef } = useDroppable({ id: "sidebar" });
-
-    const { active, isSidebarOpen } = useBuilder(
-      ({ tabs: { active }, layout }) => ({
-        active,
-        isSidebarOpen: layout.sidebar,
-      }),
-    );
-
-    useEffect(() => {
-      if (isSidebarOpen) expandPanel?.();
-      else collapsePanel?.();
-    }, [isSidebarOpen, expandPanel, collapsePanel]);
-
-    return (
-      <Tabs.Root
+  return (
+    <SidebarProvider
+      collapsePanel={panelRef.current?.collapse}
+      expandPanel={() => panelRef.current?.resize(defaultSize)}
+    >
+      <div
         {...props}
-        value={isSidebarOpen ? active ?? undefined : "None"}
-        orientation={orientation}
-        ref={mergeRefs(setNodeRef, forwardedRef)}
-      />
-    );
-  },
-);
+        className={classNames(
+          "pointer-events-none absolute left-0 top-0 z-50 h-full w-full",
+          className,
+        )}
+        ref={forwardedRef}
+      >
+        {isResizable ? (
+          <PanelGroup direction="horizontal">
+            <Panel
+              id="sidebar"
+              ref={panelRef}
+              order={1}
+              minSize={15}
+              maxSize={40}
+              defaultSize={defaultSize}
+              collapsible
+              collapsedSize={MIN_WIDTH}
+              onResize={(size) => {
+                if (size <= MIN_WIDTH) toggle(false);
+                else toggle(true);
+              }}
+              style={{ pointerEvents: "auto" }}
+            >
+              {children}
+            </Panel>
+            {resizeHandler}
+            <Panel order={2} defaultSize={80} />
+          </PanelGroup>
+        ) : (
+          children
+        )}
+      </div>
+    </SidebarProvider>
+  );
+});
+
+export type SidebarContent = ComponentPropsWithoutRef<typeof Tabs.Root>;
+
+export const SidebarContent = forwardRef<
+  ElementRef<typeof Tabs.Root>,
+  SidebarContent
+>(function SidebarContent(
+  { orientation = "vertical", ...props },
+  forwardedRef,
+) {
+  const { collapsePanel, expandPanel } = useSidebar();
+  const { setNodeRef } = useDroppable({ id: "sidebar" });
+
+  const { active, isSidebarOpen } = useBuilder(
+    ({ tabs: { active }, layout }) => ({
+      active,
+      isSidebarOpen: layout.sidebar,
+    }),
+  );
+
+  useEffect(() => {
+    if (isSidebarOpen) expandPanel?.();
+    else collapsePanel?.();
+  }, [isSidebarOpen, expandPanel, collapsePanel]);
+
+  return (
+    <Tabs.Root
+      {...props}
+      value={isSidebarOpen ? active ?? undefined : "None"}
+      orientation={orientation}
+      ref={mergeRefs(setNodeRef, forwardedRef)}
+    />
+  );
+});
 
 export type SidebarList = ComponentPropsWithoutRef<typeof Tabs.List>;
 

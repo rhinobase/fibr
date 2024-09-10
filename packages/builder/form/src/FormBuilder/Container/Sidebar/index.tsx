@@ -1,14 +1,14 @@
 import {
-  BuilderPanel,
+  type BlockType,
   Sidebar as BuilderSidebar,
   DEFAULT_GROUP,
   ResizeHandle,
+  SidebarContent,
   SidebarList,
   SidebarTrigger,
   groupByParentNode,
   useBuilder,
   useCanvas,
-  type BlockType,
 } from "@fibr/builder";
 import { CodeGenerator, Overview, Palette, astResolver } from "@fibr/shared";
 import {
@@ -39,7 +39,7 @@ export function Sidebar() {
   );
 
   return (
-    <BuilderPanel
+    <BuilderSidebar
       isResizable
       resizeHandler={
         <ResizeHandle
@@ -51,9 +51,8 @@ export function Sidebar() {
           <div className="absolute left-0 h-full w-full transition-all ease-in-out group-hover/handler:bg-blue-500 group-data-[resize-handle-active]/handler:bg-blue-500" />
         </ResizeHandle>
       }
-      className="pointer-events-none absolute left-0 top-0 z-50 h-full w-full"
     >
-      <BuilderSidebar
+      <SidebarContent
         className={classNames(
           "dark:bg-secondary-950 pointer-events-auto flex h-full bg-white",
           (active === null || !isSidebarOpen) && "w-max",
@@ -134,8 +133,8 @@ export function Sidebar() {
             />
           </div>
         </SidebarList>
-      </BuilderSidebar>
-    </BuilderPanel>
+      </SidebarContent>
+    </BuilderSidebar>
   );
 }
 

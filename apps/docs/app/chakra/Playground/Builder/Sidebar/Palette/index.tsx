@@ -89,7 +89,7 @@ export function Palette({ enableDragging = false, onSelect }: Palette) {
                 value="palette"
                 className="hover:text-secondary-700 data-[state=active]:bg-primary-100 data-[state=active]:hover:bg-primary-100 dark:hover:text-secondary-100 text-secondary-600 dark:text-secondary-400 dark:data-[state=active]:text-secondary-100 data-[disabled]:text-secondary-400 dark:data-[disabled]:text-secondary-600 data-[state=active]:border-primary-500 dark:data-[state=active]:border-primary-300 dark:data-[state=active]:bg-secondary-800 -mr-px rounded border-r-2 border-transparent p-2 font-medium transition-colors ease-in-out data-[disabled]:cursor-not-allowed data-[orientation=vertical]:border-r-0 data-[state=active]:text-black"
               >
-                <Squares2X2Icon strokeWidth={2} width={20} height={20} />
+                <Squares2X2Icon className="size-5 stroke-2" />
               </SidebarTrigger>
             </div>
           </TooltipTrigger>
@@ -132,10 +132,24 @@ export function Palette({ enableDragging = false, onSelect }: Palette) {
           </chakra.div>
           {isEmpty ? (
             <Flex direction="column" flex={1} justifyContent="center">
-              <Empty
-                title="Component Not Found"
-                description="Please check your spelling and try again, or explore our other available components."
-              />
+              <Flex
+                width="100%"
+                direction="column"
+                alignItems="center"
+                justifyContent="center"
+                gap={1}
+                userSelect="none"
+                p={3}
+                textAlign="center"
+                fontWeight={500}
+                textColor="GrayText"
+              >
+                <Text fontSize="lg">Component Not Found</Text>
+                <Text fontSize="sm" lineHeight={1.25}>
+                  Please check your spelling and try again, or explore our other
+                  available components.
+                </Text>
+              </Flex>
             </Flex>
           ) : (
             Object.entries(blockResults).map(
@@ -163,32 +177,5 @@ export function Palette({ enableDragging = false, onSelect }: Palette) {
         </Flex>
       </chakra.div>
     </SidebarItem>
-  );
-}
-
-type Empty = {
-  title: string;
-  description: string;
-};
-
-function Empty({ title, description }: Empty) {
-  return (
-    <Flex
-      width="100%"
-      direction="column"
-      alignItems="center"
-      justifyContent="center"
-      gap={1}
-      userSelect="none"
-      p={3}
-      textAlign="center"
-      fontWeight={500}
-      textColor="GrayText"
-    >
-      <Text fontSize="lg">{title}</Text>
-      <Text fontSize="sm" lineHeight={1.25}>
-        {description}
-      </Text>
-    </Flex>
   );
 }

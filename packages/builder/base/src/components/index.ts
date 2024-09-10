@@ -3,8 +3,8 @@ export { Container } from "./Container";
 export { Settings } from "./Settings";
 export { Workspace } from "./Workspace";
 export {
-  BuilderPanel,
   Sidebar,
+  SidebarContent,
   SidebarItem,
   SidebarList,
   SidebarTrigger,

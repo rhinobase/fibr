@@ -1,6 +1,6 @@
 import { useThread } from "@fibr/react";
 import { FieldWrapper as RaftyFieldWrapper, classNames } from "@rafty/ui";
-import { type PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { TooltipWrapper } from "./TooltipWrapper";
 
 export type FieldWrapperProps = {
@@ -29,7 +29,11 @@ export function FieldWrapper({ className, children }: FieldWrapper) {
         name={id}
         label={label}
         description={description}
-        className={classNames(hidden && "opacity-40", "gap-2", className)}
+        className={classNames(
+          hidden && "opacity-40",
+          "[&>div>div]:first:space-y-0.5 [&>div]:gap-2",
+          className,
+        )}
         isRequired={required}
         isDisabled={disabled}
       >
