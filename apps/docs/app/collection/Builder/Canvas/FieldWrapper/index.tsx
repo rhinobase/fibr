@@ -39,6 +39,7 @@ export function FieldWrapper(props: PropsWithChildren) {
       selectedBlockIds: field.id,
     }),
   );
+  console.log(field.type);
 
   if (field.type === "canvas")
     return (
@@ -81,7 +82,19 @@ export function FieldWrapper(props: PropsWithChildren) {
             "dark:hover:border-secondary-900 hover:shadow-[0_1px_5px_1px_rgba(0,0,0,0.1)] dark:hover:shadow-none",
         )}
       >
-        {props.children}
+        <BlockWrapper>
+          {/* <div
+            onPointerDownCapture={(event) => {
+              event.stopPropagation();
+            }}
+            onKeyDownCapture={(event) => {
+              event.stopPropagation();
+            }}
+            className="pointer-events-auto"
+          > */}
+          {props.children}
+          {/* </div> */}
+        </BlockWrapper>
       </Wrapper>
     </Component>
   );
@@ -113,7 +126,7 @@ const Wrapper = forwardRef<HTMLDivElement, Wrapper>(function Wrapper(
       className={classNames(wrapperClasses({ selected }), className)}
       ref={forwardedRef}
     >
-      <BlockWrapper>{children}</BlockWrapper>
+      {children}
     </div>
   );
 });

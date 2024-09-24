@@ -24,7 +24,7 @@ export function reactHookFormResolver(blocks: FieldBlockType[]) {
 
   if (!form) return "";
 
-  const capitalizedTitle = formatTitle(form.data?.title ?? "");
+  const capitalizedTitle = formatTitle(form?.label ?? "");
   const fields = group[form.id];
 
   const defaultValues = fields

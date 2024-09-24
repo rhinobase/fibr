@@ -1,3 +1,4 @@
+import type { FieldProps } from "@duck-form/fields";
 import { DevTool } from "@hookform/devtools";
 import { DuckField, useField } from "duck-form";
 import {
@@ -11,8 +12,7 @@ export type Canvas = {
   onSubmit?: SubmitHandler<FieldValues>;
   onError?: SubmitErrorHandler<FieldValues>;
 } & {
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  blocks?: Record<string, any>;
+  blocks?: Record<string, FieldProps>;
 };
 
 export function Canvas() {
@@ -35,7 +35,6 @@ export function Canvas() {
             <DuckField key={id} id={id} {...field} />
           ))}
       </form>
-
       <DevTool control={control} />
     </>
   );
