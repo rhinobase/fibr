@@ -4,7 +4,7 @@ import {
   groupByParentNode,
 } from "@fibr/builder";
 
-export type FieldBlockType = BlockType<{
+export type FieldBlockType = BlockType & {
   // Canvas
   title?: string;
   // Field
@@ -16,7 +16,7 @@ export type FieldBlockType = BlockType<{
   tooltip?: string;
   description?: string;
   defaultValue?: string;
-}>;
+};
 
 export function reactHookFormResolver(blocks: FieldBlockType[]) {
   const group = groupByParentNode(blocks);
@@ -29,12 +29,9 @@ export function reactHookFormResolver(blocks: FieldBlockType[]) {
 
   const defaultValues = fields
     ?.reduce<string[]>((prev, { id, ...field }) => {
-      if (field?.data?.defaultValue == null) return prev;
+      if (field.defaultValue == null) return prev;
 
-      const {
-        type,
-        data: { defaultValue },
-      } = field;
+      const { type, defaultValue } = field;
 
       prev.push(
         `${id}: ${type === "number" ? `${defaultValue}` : `"${defaultValue}"`}`,
@@ -104,9 +101,8 @@ const generateFieldComponent = (
 ) => {
   if (!field) return "";
 
-  const { type, data = {} } = field;
-
   const {
+    type,
     label,
     required,
     hidden,
@@ -114,7 +110,7 @@ const generateFieldComponent = (
     placeholder,
     tooltip,
     description,
-  } = data;
+  } = field;
 
   const props = [];
 

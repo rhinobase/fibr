@@ -47,9 +47,11 @@ export function FormDisplay({ fieldWrapper }: FormDisplay) {
             });
         }}
       >
-        {Object.entries(blueprint).map(([id, canvas]) => (
-          <DuckField key={id} id={id} {...canvas} />
-        ))}
+        {Object.entries(blueprint).map(([id, canvas]) => {
+          // console.log(canvas);
+
+          return <DuckField key={id} id={id} {...canvas} />;
+        })}
         <FieldOverlay />
       </DndWrapper>
     </Blueprint>
@@ -58,7 +60,7 @@ export function FormDisplay({ fieldWrapper }: FormDisplay) {
 
 type BlueprintType = Record<
   string,
-  Omit<BlockType, "id"> & { blocks?: BlueprintType }
+  Omit<BlockType, "id"> & { fields?: BlueprintType }
 >;
 
 function createBlueprint(
@@ -73,7 +75,7 @@ function createBlueprint(
     for (const { id, ...block } of blocks) {
       blueprint[id] = block;
 
-      if (id in context) blueprint[id].blocks = createBlueprint(id, context);
+      if (id in context) blueprint[id].fields = createBlueprint(id, context);
     }
 
   return blueprint;

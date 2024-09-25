@@ -1,8 +1,12 @@
 import type { FieldProps } from "@duck-form/fields";
 import { quackFields } from "@duck-form/fields";
 import type { Block, Config } from "@fibr/builder";
+import { AiOutlinePercentage } from "react-icons/ai";
 import {
   BsBraces,
+  BsCalendar2Date,
+  BsCalendar2Range,
+  BsCurrencyDollar,
   BsListCheck,
   BsSegmentedNav,
   BsTextareaT,
@@ -12,30 +16,48 @@ import { IoIosSwitch } from "react-icons/io";
 import { LuTextCursorInput } from "react-icons/lu";
 import {
   MdCheckBox,
+  MdColorLens,
+  MdDataArray,
   MdEdit,
   MdLink,
   MdOutlineKey,
   MdOutlineMailOutline,
+  MdPushPin,
   MdStar,
 } from "react-icons/md";
+import { PiSlidersHorizontal } from "react-icons/pi";
 import {
   RiCheckboxMultipleFill,
   RiEdit2Fill,
   RiListCheck3,
   RiListRadio,
 } from "react-icons/ri";
-import { RxSwitch } from "react-icons/rx";
-import { CommanSetting } from "./settings";
-
+import { RxSlider, RxSwitch } from "react-icons/rx";
+import { CommanSetting, SelectSetting } from "./settings";
 export { Canvas } from "./components";
 export * from "./settings";
+
+function getSettings(type: FieldProps["type"]) {
+  switch (type) {
+    case "select":
+    case "radio":
+    case "checkboxgroup":
+    case "segmentedControl":
+    case "listbox":
+    case "multiListbox":
+    case "switchGroup":
+      return SelectSetting;
+    default:
+      return CommanSetting;
+  }
+}
 
 export const formConfig: Record<string, Config> = Object.entries(
   quackFields,
 ).reduce<Record<string, Config>>((prev, [type, field]) => {
   prev[type] = {
     builder: field,
-    settings: CommanSetting,
+    settings: getSettings(type as FieldProps["type"]),
   };
   return prev;
 }, {});
@@ -114,7 +136,7 @@ export const formBlocks: Record<string, Omit<Block<FieldProps>, "type">[]> = {
     },
     {
       label: "Percentage Input",
-      icon: LuTextCursorInput,
+      icon: AiOutlinePercentage,
       presets: {
         type: "percentageInput",
         label: "Label",
@@ -123,7 +145,7 @@ export const formBlocks: Record<string, Omit<Block<FieldProps>, "type">[]> = {
     },
     {
       label: "Pin",
-      icon: BsTextareaT,
+      icon: MdPushPin,
       presets: {
         type: "pin",
         length: 4,
@@ -132,7 +154,7 @@ export const formBlocks: Record<string, Omit<Block<FieldProps>, "type">[]> = {
     },
     {
       label: "Currency Input",
-      icon: LuTextCursorInput,
+      icon: BsCurrencyDollar,
       presets: {
         type: "currencyInput",
         label: "Label",
@@ -141,7 +163,7 @@ export const formBlocks: Record<string, Omit<Block<FieldProps>, "type">[]> = {
     },
     {
       label: "Editable Number",
-      icon: BsTextareaT,
+      icon: LuTextCursorInput,
       presets: {
         type: "editableNumber",
         label: "Label",
@@ -158,7 +180,7 @@ export const formBlocks: Record<string, Omit<Block<FieldProps>, "type">[]> = {
     },
     {
       label: "Slider",
-      icon: BsTextareaT,
+      icon: RxSlider,
       presets: {
         type: "slider",
         label: "Label",
@@ -166,7 +188,7 @@ export const formBlocks: Record<string, Omit<Block<FieldProps>, "type">[]> = {
     },
     {
       label: "Range Slider",
-      icon: BsTextareaT,
+      icon: PiSlidersHorizontal,
       presets: {
         type: "rangeSlider",
         label: "Label",
@@ -183,7 +205,7 @@ export const formBlocks: Record<string, Omit<Block<FieldProps>, "type">[]> = {
       },
     },
   ],
-  "Select inputs": [
+  "Select Inputs": [
     {
       label: "Checkbox",
       icon: MdCheckBox,
@@ -231,7 +253,7 @@ export const formBlocks: Record<string, Omit<Block<FieldProps>, "type">[]> = {
       label: "Select",
       icon: RiListCheck3,
       presets: {
-        type: "radio",
+        type: "select",
         label: "Label",
         options: [],
       },
@@ -264,15 +286,15 @@ export const formBlocks: Record<string, Omit<Block<FieldProps>, "type">[]> = {
       },
     },
   ],
-  "Date and Time Input": [
+  "Date and Time Inputs": [
     {
       label: "Date",
-      icon: BsTextareaT,
+      icon: BsCalendar2Date,
       presets: { type: "date", label: "Label" },
     },
     {
       label: "Date Range",
-      icon: BsTextareaT,
+      icon: BsCalendar2Range,
       presets: {
         type: "dateRange",
         label: "Label",
@@ -290,7 +312,7 @@ export const formBlocks: Record<string, Omit<Block<FieldProps>, "type">[]> = {
   "Array Field": [
     {
       label: "Array",
-      icon: MdOutlineKey,
+      icon: MdDataArray,
       presets: {
         type: "array",
         of: {
@@ -315,7 +337,7 @@ export const formBlocks: Record<string, Omit<Block<FieldProps>, "type">[]> = {
   "Special Input": [
     {
       label: "Color Picker",
-      icon: BsTextareaT,
+      icon: MdColorLens,
       presets: {
         type: "colorPicker",
         label: "Label",

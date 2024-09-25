@@ -39,7 +39,6 @@ export function FieldWrapper(props: PropsWithChildren) {
       selectedBlockIds: field.id,
     }),
   );
-  console.log(field.type);
 
   if (field.type === "canvas")
     return (
