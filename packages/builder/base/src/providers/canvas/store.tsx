@@ -137,17 +137,12 @@ export const createCanvasStore = ({
           return;
         }
 
-        const oldValues = blocks[index];
-
-        // Making sure we are not overriding these properties
-        updatedValues.id = undefined;
-        updatedValues.parentNode = undefined;
-
         // Merging the current props with the new ones
-        const combinedValues = _.merge({}, oldValues, updatedValues);
+        const combinedValues = _.merge({}, updatedValues);
 
         // Updating the schema
         set((state) => {
+          // @ts-expect-error type mismatch
           state.schema[index] = combinedValues;
         });
 
