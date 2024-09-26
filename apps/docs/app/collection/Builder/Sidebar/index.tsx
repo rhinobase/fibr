@@ -15,7 +15,8 @@ import {
   ListBulletIcon,
   Squares2X2Icon,
 } from "@heroicons/react/24/outline";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
+import { Toast, Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
+import toast from "react-hot-toast";
 import { AddFormDialog } from "./AddFormDialog";
 import { reactHookFormResolver } from "./resolver";
 
@@ -48,7 +49,23 @@ export function Sidebar() {
               }
               onSelect={(value) => {
                 const parentNode = findParent(schema);
-                addBlock({ blockData: { ...value, parentNode } });
+
+                const childs = schema.map((item) => {
+                  if (item.parentNode === parentNode) return item.type;
+                });
+
+                const parentNodeType = schema.find(
+                  (item) => item.id === parentNode,
+                )?.type;
+
+                if (parentNodeType === "array" && childs.includes(value.type))
+                  toast.custom(() => (
+                    <Toast
+                      severity="error"
+                      title="Type already exists in array field!"
+                    />
+                  ));
+                else addBlock({ blockData: { ...value, parentNode } });
               }}
             />
             <Overview
@@ -108,7 +125,7 @@ export function Sidebar() {
   );
 }
 
-const GROUP_TYPES = ["canvas", "object"];
+const GROUP_TYPES = ["canvas", "object", "array"];
 
 function findParent(context: BlockType[]) {
   const active = context.filter((block) => block.selected);

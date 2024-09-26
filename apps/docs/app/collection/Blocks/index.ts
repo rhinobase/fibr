@@ -315,10 +315,6 @@ export const formBlocks: Record<string, Omit<Block<FieldProps>, "type">[]> = {
       icon: MdDataArray,
       presets: {
         type: "array",
-        of: {
-          type: "string",
-          label: "String",
-        },
         label: "Label",
       },
     },
