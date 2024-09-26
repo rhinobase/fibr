@@ -1,9 +1,9 @@
-import { useThread } from "@fibr/react";
 import { classNames } from "@rafty/ui";
+import { useField } from "duck-form";
 import type { PropsWithChildren } from "react";
 
 export function FieldPadding(props: PropsWithChildren) {
-  const { type } = useThread();
+  const { type } = useField();
 
   return (
     <div

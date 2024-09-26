@@ -47,11 +47,9 @@ export function FormDisplay({ fieldWrapper }: FormDisplay) {
             });
         }}
       >
-        {Object.entries(blueprint).map(([id, canvas]) => {
-          // console.log(canvas);
-
-          return <DuckField key={id} id={id} {...canvas} />;
-        })}
+        {Object.entries(blueprint).map(([id, canvas]) => (
+          <DuckField key={id} id={id} {...canvas} />
+        ))}
         <FieldOverlay />
       </DndWrapper>
     </Blueprint>

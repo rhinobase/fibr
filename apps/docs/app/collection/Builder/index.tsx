@@ -6,8 +6,8 @@ import {
   type CanvasStoreProps,
   useBuilder,
 } from "@fibr/builder";
-import { Settings } from "@fibr/shared";
 import { Canvas } from "./Canvas";
+import { Settings } from "./Settings";
 import { Sidebar } from "./Sidebar";
 
 export type Builder = BlocksStoreProps & Omit<CanvasStoreProps, "onError">;

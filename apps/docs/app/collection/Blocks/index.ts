@@ -34,7 +34,7 @@ import {
 } from "react-icons/ri";
 import { RxSlider, RxSwitch } from "react-icons/rx";
 import { CommanSetting, SelectSetting } from "./settings";
-export { Canvas } from "./components";
+export * from "./components";
 export * from "./settings";
 
 function getSettings(type: FieldProps["type"]) {

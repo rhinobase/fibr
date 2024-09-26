@@ -1,18 +1,32 @@
-import { useThread } from "@fibr/react";
-import { type PropsWithChildren, useEffect } from "react";
+import { useBlueprint, useDuckForm, useField } from "duck-form";
+import { type PropsWithChildren, useEffect, useId, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 export function SettingsPanelWrapper(props: PropsWithChildren) {
-  const { _update, id, ...defaultValues } = useThread<{
+  const fieldProps = useField<{
     _update: (values: unknown) => void;
   }>();
+  const { generateId } = useDuckForm();
+  const { schema } = useBlueprint();
+
+  const autoId = useId();
+  const customId = useMemo(
+    () => generateId?.(schema, fieldProps),
+    [generateId, schema, fieldProps],
+  );
+
+  const id = customId ?? autoId;
+
+  const { _update, ...defaultValues } = fieldProps;
 
   const methods = useForm({ defaultValues });
 
+  const { reset, watch } = methods;
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    methods.reset(defaultValues);
-    const subscription = methods.watch(_update);
+    reset(defaultValues);
+    const subscription = watch(_update);
 
     return () => {
       subscription.unsubscribe();

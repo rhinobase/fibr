@@ -10,7 +10,7 @@ export function QuickActions(props: PropsWithChildren) {
   const [isHover, setHover] = useState(false);
 
   return (
-    <div>
+    <div className="w-full">
       {/* this extra div is to avoid the margin top from parent component */}
       <HoverCard
         openDelay={50}
