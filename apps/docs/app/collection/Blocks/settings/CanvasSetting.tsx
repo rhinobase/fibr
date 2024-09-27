@@ -5,7 +5,7 @@ import { SettingsPanelWrapper } from "./utils/SettingsPanelWrapper";
 export function CanvasSettings() {
   return (
     <SettingsPanelWrapper>
-      <Label>Title</Label>
+      <Label>Label</Label>
       <SettingInput name="label" />
     </SettingsPanelWrapper>
   );

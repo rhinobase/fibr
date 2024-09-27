@@ -50,9 +50,9 @@ export function Sidebar() {
               onSelect={(value) => {
                 const parentNode = findParent(schema);
 
-                const childs = schema.map((item) => {
-                  if (item.parentNode === parentNode) return item.type;
-                });
+                const childs = schema
+                  .filter((item) => item.parentNode === parentNode)
+                  .map((item) => item.type);
 
                 const parentNodeType = schema.find(
                   (item) => item.id === parentNode,
