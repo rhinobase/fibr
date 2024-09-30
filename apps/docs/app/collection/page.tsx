@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { Toaster } from "react-hot-toast";
 import { LoadingScreen } from "./Loading";
 
 const Playground = dynamic(() => import("./Playground/index"), {
@@ -7,5 +8,10 @@ const Playground = dynamic(() => import("./Playground/index"), {
 });
 
 export default function ChakraExamplePage() {
-  return <Playground />;
+  return (
+    <>
+      <Playground />
+      <Toaster />
+    </>
+  );
 }

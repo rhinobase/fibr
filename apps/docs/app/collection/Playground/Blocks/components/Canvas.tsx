@@ -3,9 +3,10 @@ import { DevTool } from "@hookform/devtools";
 import { DuckField, useField } from "duck-form";
 import {
   type FieldValues,
+  FormProvider,
   type SubmitErrorHandler,
   type SubmitHandler,
-  useFormContext,
+  useForm,
 } from "react-hook-form";
 
 export type Canvas = {
@@ -19,12 +20,12 @@ export function Canvas() {
   // Getting component config
   const config = useField<Canvas>();
   const { fields, onSubmit, onError } = config;
-
+  const methods = useForm();
   // Adding provider for forms
-  const { handleSubmit, control } = useFormContext();
+  const { handleSubmit, control } = methods;
 
   return (
-    <>
+    <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit(onSubmit ?? console.log, onError)}
         className="space-y-3"
@@ -36,6 +37,6 @@ export function Canvas() {
           ))}
       </form>
       <DevTool control={control} />
-    </>
+    </FormProvider>
   );
 }

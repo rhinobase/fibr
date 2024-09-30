@@ -1,6 +1,5 @@
 "use client";
 import { Workspace } from "@fibr/builder";
-import { FormProvider, useForm } from "react-hook-form";
 import { Toaster } from "react-hot-toast";
 import {
   ArrayField,
@@ -42,24 +41,17 @@ const DEFAULT_SCHEMA = [
 ];
 
 export default function CollectionPage() {
-  const methods = useForm();
-
   return (
-    <>
-      <FormProvider {...methods}>
-        <Workspace className="flex h-screen w-full flex-col">
-          <Builder
-            schema={DEFAULT_SCHEMA}
-            blocks={formBlocks}
-            config={{
-              ...formConfig,
-              canvas: { builder: Canvas, settings: CanvasSettings },
-              array: { builder: ArrayField, settings: CanvasSettings },
-            }}
-          />
-        </Workspace>
-      </FormProvider>
-      <Toaster />
-    </>
+    <Workspace className="flex h-screen w-full flex-col">
+      <Builder
+        schema={DEFAULT_SCHEMA}
+        blocks={formBlocks}
+        config={{
+          ...formConfig,
+          canvas: { builder: Canvas, settings: CanvasSettings },
+          array: { builder: ArrayField, settings: CanvasSettings },
+        }}
+      />
+    </Workspace>
   );
 }
