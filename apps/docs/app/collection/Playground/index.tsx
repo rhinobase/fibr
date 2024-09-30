@@ -1,6 +1,5 @@
 "use client";
 import { Workspace } from "@fibr/builder";
-import { Toaster } from "react-hot-toast";
 import {
   ArrayField,
   Canvas,

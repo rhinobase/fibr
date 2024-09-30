@@ -8,8 +8,8 @@ import {
   useCanvas,
   useClipboard,
 } from "@fibr/builder";
-import { Kbd, Text, classNames } from "@rafty/ui";
-import { Blueprint, DuckForm, useField } from "duck-form";
+import { classNames } from "@rafty/ui";
+import { DuckForm } from "duck-form";
 import type { PropsWithChildren } from "react";
 import { type ReactNode, forwardRef, useEffect, useMemo } from "react";
 import { FieldPadding } from "./FieldPadding";
@@ -43,7 +43,7 @@ export function Canvas() {
 }
 
 export const FormBuilderCanvas = forwardRef<HTMLDivElement, BuilderCanvas>(
-  ({ className, ...props }, forwardedRef) => {
+  function FormBuilderCanvas({ className, ...props }, forwardedRef) {
     const onError = useBuilder((state) => state.onError);
     const { config, validateSchema } = useBlocks(
       ({ config, validateSchema }) => ({
@@ -67,7 +67,7 @@ export const FormBuilderCanvas = forwardRef<HTMLDivElement, BuilderCanvas>(
             prev[name] = builder;
             return prev;
           },
-          { default: DefaultComponent },
+          {},
         ),
       [config],
     );
@@ -78,29 +78,16 @@ export const FormBuilderCanvas = forwardRef<HTMLDivElement, BuilderCanvas>(
           components={builders}
           generateId={(_, props) => (props.id ? String(props.id) : undefined)}
         >
-          <Blueprint>
-            <BuilderCanvas
-              {...props}
-              className={classNames(
-                "bg-secondary-100 dark:bg-secondary-900 flex h-full items-start justify-center overflow-y-auto",
-                className,
-              )}
-              ref={forwardedRef}
-            />
-          </Blueprint>
+          <BuilderCanvas
+            {...props}
+            className={classNames(
+              "bg-secondary-100 dark:bg-secondary-900 flex h-full items-start justify-center overflow-y-auto",
+              className,
+            )}
+            ref={forwardedRef}
+          />
         </DuckForm>
       </CanvasShortcutsWrapper>
     );
   },
 );
-FormBuilderCanvas.displayName = "FormBuilderCanvas";
-
-export function DefaultComponent() {
-  const { type } = useField();
-
-  return (
-    <Text isMuted className="text-center text-sm">
-      Component of type <Kbd>{type}</Kbd> doesn&apos;t exist!
-    </Text>
-  );
-}

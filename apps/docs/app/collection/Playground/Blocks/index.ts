@@ -55,10 +55,16 @@ function getSettings(type: FieldProps["type"]) {
 export const formConfig: Record<string, Config> = Object.entries(
   quackFields,
 ).reduce<Record<string, Config>>((prev, [type, field]) => {
-  prev[type] = {
-    builder: field,
-    settings: getSettings(type as FieldProps["type"]),
-  };
+  if (type === "default")
+    prev[type] = {
+      builder: field,
+    };
+  else
+    prev[type] = {
+      builder: field,
+      settings: getSettings(type as FieldProps["type"]),
+    };
+
   return prev;
 }, {});
 
