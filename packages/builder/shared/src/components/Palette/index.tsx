@@ -76,7 +76,7 @@ export function Palette({
         <hr className="dark:border-secondary-700" />
       </div>
       <div className="h-full overflow-y-auto">
-        <div className="flex h-full flex-col px-3 pb-3 pt-1">
+        <div className="flex min-h-full flex-col px-3 pb-3">
           <div className="dark:bg-secondary-950 sticky top-0 z-10 bg-white pb-2">
             <SearchField
               value={search}

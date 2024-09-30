@@ -135,7 +135,8 @@ function useClipboardManager() {
   return {
     clipboard,
     // TODO: nextjs is giving error because of this mergeRefs function call
-    ref: mergeRefs(copyRef, pasteRef, groupRef),
+    ref: groupRef,
+    // mergeRefs(copyRef, pasteRef, groupRef),
     set,
   };
 }
