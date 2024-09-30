@@ -62,21 +62,21 @@ export const formConfig: Record<string, Config> = Object.entries(
   return prev;
 }, {});
 
-export const formBlocks: Record<string, Omit<Block<FieldProps>, "type">[]> = {
+export const formBlocks: Record<string, Block[]> = {
   "Text Inputs": [
     {
+      type: "string",
       label: "Text Input",
       icon: LuTextCursorInput,
       presets: {
-        type: "string",
         label: "Label",
       },
     },
     {
+      type: "string",
       label: "Email",
       icon: MdOutlineMailOutline,
       presets: {
-        type: "string",
         inputType: "email",
         label: "Label",
         description: "Description",
@@ -84,203 +84,204 @@ export const formBlocks: Record<string, Omit<Block<FieldProps>, "type">[]> = {
       },
     },
     {
+      type: "string",
       label: "URL",
       icon: MdLink,
       presets: {
-        type: "string",
         inputType: "url",
         label: "Label",
         description: "Description",
       },
     },
     {
+      type: "password",
       label: "password",
       icon: MdOutlineKey,
       presets: {
-        type: "password",
         label: "Label",
         description: "Description",
       },
     },
     {
+      type: "textarea",
       label: "Textarea",
       icon: BsTextareaT,
-      presets: { type: "textarea", label: "Label" },
+      presets: { label: "Label" },
     },
     {
+      type: "editableText",
       label: "Editable Text",
       icon: MdEdit,
       presets: {
-        type: "editableText",
         label: "Label",
       },
     },
     {
+      type: "editableTextarea",
       label: "Editable Textarea",
       icon: RiEdit2Fill,
       presets: {
-        type: "editableTextarea",
         label: "Label",
       },
     },
   ],
   "Number Inputs": [
     {
+      type: "number",
       label: "Number Input",
       icon: LuTextCursorInput,
       presets: {
-        type: "number",
         label: "Label",
         description: "Description",
       },
     },
     {
+      type: "percentageInput",
       label: "Percentage Input",
       icon: AiOutlinePercentage,
       presets: {
-        type: "percentageInput",
         label: "Label",
         description: "Description",
       },
     },
     {
+      type: "pin",
       label: "Pin",
       icon: MdPushPin,
       presets: {
-        type: "pin",
         length: 4,
         label: "Label",
       },
     },
     {
+      type: "currencyInput",
       label: "Currency Input",
       icon: BsCurrencyDollar,
       presets: {
-        type: "currencyInput",
         label: "Label",
         description: "Description",
       },
     },
     {
+      type: "editableNumber",
       label: "Editable Number",
       icon: LuTextCursorInput,
       presets: {
-        type: "editableNumber",
         label: "Label",
       },
     },
     {
+      type: "rating",
       label: "Rating",
       icon: MdStar,
       presets: {
-        type: "rating",
         label: "Label",
         count: 5,
       },
     },
     {
+      type: "slider",
       label: "Slider",
       icon: RxSlider,
       presets: {
-        type: "slider",
         label: "Label",
       },
     },
     {
+      type: "rangeSlider",
       label: "Range Slider",
       icon: PiSlidersHorizontal,
       presets: {
-        type: "rangeSlider",
         label: "Label",
       },
     },
   ],
   Presentation: [
     {
+      type: "tag",
       label: "Tag Input",
       icon: FaTags,
       presets: {
-        type: "tag",
         label: "Label",
       },
     },
   ],
   "Select Inputs": [
     {
+      type: "boolean",
       label: "Checkbox",
       icon: MdCheckBox,
       presets: {
-        type: "boolean",
         label: "Label",
       },
     },
     {
+      type: "switch",
       label: "Switch",
       icon: RxSwitch,
       presets: {
-        type: "switch",
         label: "Label",
       },
     },
     {
+      type: "checkboxgroup",
       label: "Checkbox Group",
       icon: RiCheckboxMultipleFill,
       presets: {
-        type: "checkboxgroup",
         label: "Label",
         options: [],
       },
     },
     {
+      type: "switchGroup",
       label: "Switch Group",
       icon: IoIosSwitch,
       presets: {
-        type: "switchGroup",
         label: "Label",
         options: [],
       },
     },
     {
+      type: "radio",
       label: "Radio",
       icon: RiListRadio,
       presets: {
-        type: "radio",
         label: "Label",
         options: [],
       },
     },
     {
+      type: "select",
       label: "Select",
       icon: RiListCheck3,
       presets: {
-        type: "select",
         label: "Label",
         options: [],
       },
     },
     {
+      type: "segmentedControl",
       label: "Segmented Control",
       icon: BsSegmentedNav,
       presets: {
-        type: "segmentedControl",
         label: "Label",
         options: [],
       },
     },
     {
+      type: "listbox",
       label: "Listbox",
       icon: RiListCheck3,
       presets: {
-        type: "listbox",
         label: "Label",
         options: [],
       },
     },
     {
+      type: "multiListbox",
       label: "Multi Listbox",
       icon: BsListCheck,
       presets: {
-        type: "multiListbox",
         label: "Label",
         options: [],
       },
@@ -288,43 +289,44 @@ export const formBlocks: Record<string, Omit<Block<FieldProps>, "type">[]> = {
   ],
   "Date and Time Inputs": [
     {
+      type: "date",
       label: "Date",
       icon: BsCalendar2Date,
-      presets: { type: "date", label: "Label" },
+      presets: { label: "Label" },
     },
     {
+      type: "dateRange",
       label: "Date Range",
       icon: BsCalendar2Range,
       presets: {
-        type: "dateRange",
         label: "Label",
       },
     },
     {
+      type: "calendar",
       label: "Calendar",
       icon: FaCalendar,
       presets: {
-        type: "calendar",
         label: "Label",
       },
     },
   ],
   "Array Field": [
     {
+      type: "array",
       label: "Array",
       icon: MdDataArray,
       presets: {
-        type: "array",
         label: "Label",
       },
     },
   ],
   "Nested Object": [
     {
+      type: "object",
       label: "Object Group",
       icon: BsBraces,
       presets: {
-        type: "object",
         fields: {},
         label: "Label",
       },
@@ -332,10 +334,10 @@ export const formBlocks: Record<string, Omit<Block<FieldProps>, "type">[]> = {
   ],
   "Special Input": [
     {
+      type: "colorPicker",
       label: "Color Picker",
       icon: MdColorLens,
       presets: {
-        type: "colorPicker",
         label: "Label",
       },
     },
