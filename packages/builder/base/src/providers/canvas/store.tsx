@@ -137,8 +137,13 @@ export const createCanvasStore = ({
           return;
         }
 
+        const oldValues = blocks[index];
+
         // Merging the current props with the new ones
-        const combinedValues = _.merge({}, updatedValues);
+        const combinedValues = _.merge(
+          {},
+          { ...updatedValues, id: oldValues.id },
+        );
 
         // Updating the schema
         set((state) => {
