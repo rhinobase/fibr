@@ -1,5 +1,6 @@
 "use client";
 import { Env, Workspace, useBuilder } from "@fibr/builder";
+import { FormBuilder } from "@fibr/form";
 import {
   Button,
   Text,
@@ -20,13 +21,14 @@ import {
   formBlocks,
   formConfig,
 } from "./Blocks";
-import { Builder } from "./Builder";
 
 const DEFAULT_SCHEMA = [
   {
     id: "canvas",
     type: "canvas",
-    label: "Contact Us",
+    data: {
+      title: "Contact Us",
+    },
   },
   {
     id: "name",
@@ -57,7 +59,7 @@ export default function CollectionPage() {
     <ThemeProvider attribute="class" disableTransitionOnChange>
       <Workspace className="flex h-screen w-full flex-col">
         <Header />
-        <Builder
+        <FormBuilder
           schema={DEFAULT_SCHEMA}
           blocks={formBlocks}
           config={{

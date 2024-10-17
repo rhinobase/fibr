@@ -1,12 +1,12 @@
-import { useCanvas, eventHandler } from "@fibr/builder";
-import { useThread } from "@fibr/react";
+import { eventHandler, useCanvas } from "@fibr/builder";
 import { InputField, classNames, useBoolean } from "@rafty/ui";
+import { useField } from "duck-form";
 import { useEffect, useRef, type FocusEvent, type KeyboardEvent } from "react";
 import { HiPencil } from "react-icons/hi";
 import type { Node } from "reactflow";
 
 export function EditIdField() {
-  const { id } = useThread<Node>();
+  const { id } = useField<Node>();
   const [isEditable, toggleEditable] = useBoolean(false);
   const ref = useRef<HTMLInputElement>(null);
   const { select, updateId } = useCanvas(({ select, updateId }) => ({

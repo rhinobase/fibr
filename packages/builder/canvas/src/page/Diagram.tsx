@@ -1,5 +1,5 @@
 import { useBlocks, useCanvas, type BlockType } from "@fibr/builder";
-import { Thread } from "@fibr/react";
+import { DuckField } from "duck-form";
 import { useTheme } from "next-themes";
 import { useCallback, useMemo } from "react";
 import {
@@ -41,7 +41,7 @@ export function Diagram() {
   const nodeTypes: NodeTypes = useMemo(
     () =>
       Object.keys(config).reduce<NodeTypes>((prev, name) => {
-        prev[name] = Thread;
+        prev[name] = DuckField;
         return prev;
       }, {}),
     [config],

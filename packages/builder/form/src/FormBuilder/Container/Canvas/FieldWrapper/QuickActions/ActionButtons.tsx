@@ -1,11 +1,10 @@
 import {
   type BlockType,
   DEFAULT_GROUP,
+  eventHandler,
   groupByParentNode,
   useCanvas,
-  eventHandler,
 } from "@fibr/builder";
-import { useThread } from "@fibr/react";
 import {
   Button,
   Tooltip,
@@ -13,6 +12,7 @@ import {
   TooltipTrigger,
   classNames,
 } from "@rafty/ui";
+import { useField } from "duck-form";
 import type { IconType } from "react-icons";
 import { HiOutlineEyeOff } from "react-icons/hi";
 import {
@@ -28,7 +28,7 @@ enum Direction {
 }
 
 export function ActionButtons() {
-  const { id, parentNode = DEFAULT_GROUP } = useThread<BlockType>();
+  const { id, parentNode = DEFAULT_GROUP } = useField<BlockType>();
   const { schema, move, remove, duplicate, select, update } = useCanvas(
     ({ schema, move, remove, duplicate, select, update }) => ({
       schema,

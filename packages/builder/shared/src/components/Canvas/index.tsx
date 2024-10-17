@@ -1,15 +1,15 @@
 import {
-  useBlocks,
   Canvas as BuilderCanvas,
   CanvasShortcutsWrapper,
+  useBlocks,
+  useBuilder,
   useCanvas,
   WorkspaceErrorType,
-  useBuilder,
 } from "@fibr/builder";
-import { FibrProvider } from "@fibr/react";
+import { classNames } from "@rafty/ui";
+import { DuckForm } from "duck-form";
 import { forwardRef, useEffect, useMemo, type ReactNode } from "react";
 import { DefaultComponent } from "./DefaultComponent";
-import { classNames } from "@rafty/ui";
 
 export const Canvas = forwardRef<HTMLDivElement, BuilderCanvas>(
   ({ className, ...props }, forwardedRef) => {
@@ -43,7 +43,10 @@ export const Canvas = forwardRef<HTMLDivElement, BuilderCanvas>(
 
     return (
       <CanvasShortcutsWrapper>
-        <FibrProvider plugins={builders}>
+        <DuckForm
+          components={builders}
+          generateId={(_, props) => (props.id ? String(props.id) : undefined)}
+        >
           <BuilderCanvas
             {...props}
             className={classNames(
@@ -52,7 +55,7 @@ export const Canvas = forwardRef<HTMLDivElement, BuilderCanvas>(
             )}
             ref={forwardedRef}
           />
-        </FibrProvider>
+        </DuckForm>
       </CanvasShortcutsWrapper>
     );
   },

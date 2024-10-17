@@ -1,9 +1,10 @@
-import { useThread } from "@fibr/react";
 import { FieldWrapper as RaftyFieldWrapper, classNames } from "@rafty/ui";
+import { useField } from "duck-form";
 import type { PropsWithChildren } from "react";
 import { TooltipWrapper } from "./TooltipWrapper";
 
 export type FieldWrapperProps = {
+  id: string;
   data: {
     label?: string;
     description?: string;
@@ -21,7 +22,7 @@ export function FieldWrapper({ className, children }: FieldWrapper) {
   const {
     id,
     data: { label, description, disabled, hidden, required },
-  } = useThread<FieldWrapperProps>();
+  } = useField<FieldWrapperProps>();
 
   return (
     <TooltipWrapper>

@@ -1,5 +1,3 @@
-import type { FieldProps } from "@duck-form/fields";
-import { DevTool } from "@hookform/devtools";
 import { DuckField, useField } from "duck-form";
 import {
   type FieldValues,
@@ -13,30 +11,29 @@ export type Canvas = {
   onSubmit?: SubmitHandler<FieldValues>;
   onError?: SubmitErrorHandler<FieldValues>;
 } & {
-  fields?: Record<string, FieldProps>;
+  blocks?: Record<string, Record<string, unknown>>;
 };
 
 export function Canvas() {
   // Getting component config
   const config = useField<Canvas>();
-  const { fields, onSubmit, onError } = config;
-  const methods = useForm();
+  const { blocks, onSubmit, onError } = config;
+
   // Adding provider for forms
-  const { handleSubmit, control } = methods;
+  const methods = useForm();
 
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={handleSubmit(onSubmit ?? console.log, onError)}
+        onSubmit={methods.handleSubmit(onSubmit ?? console.log, onError)}
         className="space-y-3"
         autoComplete="off"
       >
-        {fields &&
-          Object.entries(fields).map(([id, field]) => (
+        {blocks &&
+          Object.entries(blocks).map(([id, field]) => (
             <DuckField key={id} id={id} {...field} />
           ))}
       </form>
-      <DevTool control={control} />
     </FormProvider>
   );
 }

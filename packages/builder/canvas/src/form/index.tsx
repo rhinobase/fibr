@@ -13,7 +13,7 @@ export function FormBuilderCanvas(props: FormBuilderCanvas) {
   return (
     <Canvas
       ref={ref}
-      className="min-h-min py-10"
+      className="py-10"
       onClick={handleSelect}
       onKeyDown={handleSelect}
     >

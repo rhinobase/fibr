@@ -1,7 +1,7 @@
-import { useThread } from "@fibr/react";
 import RaftyIcon, { type RaftyIconProps } from "@rafty/icons";
 import { InputGroup, LeftAddon, Prefix, RightAddon, Suffix } from "@rafty/ui";
 import { cva } from "class-variance-authority";
+import { useField } from "duck-form";
 import type { PropsWithChildren } from "react";
 
 const addonTextClasses = cva(
@@ -40,7 +40,7 @@ export type InputWrapperProps = {
 export function InputWrapper(props: PropsWithChildren) {
   const {
     data: { prefixIcon, prefixText, suffixIcon, size = "md", suffixText },
-  } = useThread<InputWrapperProps>();
+  } = useField<InputWrapperProps>();
 
   return (
     <InputGroup size={size} className="w-full">

@@ -1,12 +1,12 @@
-import { useThread } from "@fibr/react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import {
   Button,
+  eventHandler,
   InputField,
   Suffix,
   useBoolean,
-  eventHandler,
 } from "@rafty/ui";
+import { useField } from "duck-form";
 import { useFormContext } from "react-hook-form";
 import { FieldWrapper, InputWrapper } from "../../utils/components";
 
@@ -25,7 +25,7 @@ export function PasswordInput() {
   const {
     id,
     data: { defaultValue, placeholder },
-  } = useThread<PasswordInput>();
+  } = useField<PasswordInput & { id: string }>();
 
   const { register } = useFormContext();
 

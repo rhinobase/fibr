@@ -6,7 +6,7 @@
     "@dnd-kit/modifiers": "^7.0.0",
     "@fibr/builder": "^0.0.1",
     "@fibr/canvas": "^0.0.1",
-    "@fibr/react": "^0.6.3",
+    "duck-form": "^0.1.4",
     "@fibr/shared": "^1.0.0",
     "@heroicons/react": "^2.1.4",
     "@rafty/ui": "^1.7.0",

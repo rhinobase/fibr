@@ -6,7 +6,7 @@
     "@dnd-kit/sortable": "^8.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@fibr/builder": "^0.0.1",
-    "@fibr/react": "^0.0.1",
+    "duck-form": "^0.1.4",
     "@fibr/shared": "^1.0.0",
     "@swc/helpers": "^0.5.3",
     "@uidotdev/usehooks": "^2.4.1",

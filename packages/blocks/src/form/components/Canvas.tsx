@@ -1,4 +1,4 @@
-import { Thread, type ThreadType, useThread } from "@fibr/react";
+import { DuckField, useField } from "duck-form";
 import {
   type FieldValues,
   FormProvider,
@@ -11,12 +11,12 @@ export type Canvas = {
   onSubmit?: SubmitHandler<FieldValues>;
   onError?: SubmitErrorHandler<FieldValues>;
 } & {
-  blocks?: Record<string, ThreadType>;
+  blocks?: Record<string, Record<string, unknown>>;
 };
 
 export function Canvas() {
   // Getting component config
-  const config = useThread<Canvas>();
+  const config = useField<Canvas>();
   const { blocks, onSubmit, onError } = config;
 
   // Adding provider for forms
@@ -31,7 +31,7 @@ export function Canvas() {
       >
         {blocks &&
           Object.entries(blocks).map(([id, field]) => (
-            <Thread key={id} id={id} {...field} />
+            <DuckField key={id} id={id} {...field} />
           ))}
       </form>
     </FormProvider>
