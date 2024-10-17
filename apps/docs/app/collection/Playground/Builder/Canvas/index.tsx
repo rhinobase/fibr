@@ -31,7 +31,7 @@ export function Canvas() {
   return (
     <FormBuilderCanvas
       ref={ref}
-      className="min-h-min py-10"
+      className="py-10"
       onClick={handleSelect}
       onKeyDown={handleSelect}
     >

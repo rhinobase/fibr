@@ -18,7 +18,7 @@ export function Builder({ blocks, config, ...builderProps }: Builder) {
   return (
     <BlocksProvider blocks={blocks} config={config}>
       <CanvasProvider {...builderProps} onError={onError}>
-        <BuilderContainer className="flex-1 overflow-y-auto">
+        <BuilderContainer className="relative flex-1 overflow-y-auto">
           <Sidebar />
           <Canvas />
           <Settings />

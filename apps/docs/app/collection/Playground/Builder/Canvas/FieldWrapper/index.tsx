@@ -82,7 +82,7 @@ export function FieldWrapper(props: PropsWithChildren) {
         )}
       >
         <BlockWrapper>
-          {/* <div
+          <div
             onPointerDownCapture={(event) => {
               event.stopPropagation();
             }}
@@ -90,9 +90,9 @@ export function FieldWrapper(props: PropsWithChildren) {
               event.stopPropagation();
             }}
             className="pointer-events-auto"
-          > */}
-          {props.children}
-          {/* </div> */}
+          >
+            {props.children}
+          </div>
         </BlockWrapper>
       </Wrapper>
     </Component>

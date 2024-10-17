@@ -30,7 +30,7 @@ export function AddForm(props: AddForm) {
         onSubmit={handleSubmit((values) => {
           add({
             blockData: {
-              // @ts-expect-error
+              // @ts-expect-error: The 'label' property does not exist.
               label: values.label,
               type: "canvas",
             },

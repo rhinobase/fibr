@@ -4,10 +4,8 @@ import {
   groupByParentNode,
 } from "@fibr/builder";
 
+// #region Field Type
 export type FieldBlockType = BlockType & {
-  // Canvas
-  title?: string;
-  // Field
   label?: string;
   required?: boolean;
   hidden?: boolean;
@@ -20,12 +18,12 @@ export type FieldBlockType = BlockType & {
 
 export function reactHookFormResolver(blocks: FieldBlockType[]) {
   const group = groupByParentNode(blocks);
-  const form = group[DEFAULT_GROUP]?.[0];
+  const form = group[DEFAULT_GROUP]?.[0] as FieldBlockType;
 
   if (!form) return "";
 
   const capitalizedTitle = formatTitle(form?.label ?? "");
-  const fields = group[form.id];
+  const fields = group[form.id] as FieldBlockType[];
 
   const defaultValues = fields
     ?.reduce<string[]>((prev, { id, ...field }) => {

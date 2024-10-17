@@ -20,6 +20,7 @@ import {
   MdDataArray,
   MdEdit,
   MdLink,
+  MdNumbers,
   MdOutlineKey,
   MdOutlineMailOutline,
   MdPushPin,
@@ -96,6 +97,7 @@ export const formBlocks: Record<string, Block[]> = {
       presets: {
         inputType: "url",
         label: "Label",
+        prefix: "URL",
         description: "Description",
       },
     },
@@ -135,7 +137,7 @@ export const formBlocks: Record<string, Block[]> = {
     {
       type: "number",
       label: "Number Input",
-      icon: LuTextCursorInput,
+      icon: MdNumbers,
       presets: {
         label: "Label",
         description: "Description",
@@ -171,7 +173,7 @@ export const formBlocks: Record<string, Block[]> = {
     {
       type: "editableNumber",
       label: "Editable Number",
-      icon: LuTextCursorInput,
+      icon: MdEdit,
       presets: {
         label: "Label",
       },
@@ -262,7 +264,15 @@ export const formBlocks: Record<string, Block[]> = {
       icon: RiListCheck3,
       presets: {
         label: "Label",
-        options: [],
+        options: [
+          {
+            label: "Sample1",
+            value: "A",
+          },
+          {
+            label: "Sample2",
+          },
+        ],
       },
     },
     {
@@ -280,7 +290,12 @@ export const formBlocks: Record<string, Block[]> = {
       icon: RiListCheck3,
       presets: {
         label: "Label",
-        options: [],
+        options: [
+          {
+            label: "Sample",
+            value: "A",
+          },
+        ],
       },
     },
     {
