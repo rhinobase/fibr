@@ -1,7 +1,7 @@
 {
   "name": "@fibr/blocks",
   "description": "Rafty fields plugin for Fibr",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "keywords": [
     "react",
@@ -27,7 +27,7 @@
     "@dnd-kit/core": "^6.1.0",
     "duck-form": "^0.1.4",
     "@fibr/builder": "^0.1.0",
-    "@fibr/shared": "^0.1.0",
+    "@fibr/shared": "^0.1.1",
     "@heroicons/react": "^2.1.1",
     "@hookform/error-message": "^2.0.1",
     "@rafty/icons": "^0.1.6",

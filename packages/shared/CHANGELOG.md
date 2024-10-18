@@ -1,3 +1,9 @@
+## 0.1.1 (2024-10-18)
+
+### 🧱 Updated Dependencies
+
+- Updated builder to 0.1.0
+
 ## 0.1.0 (2024-10-18)
 
 ### 🚀 Features

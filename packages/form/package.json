@@ -1,11 +1,11 @@
 {
   "name": "@fibr/form",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "dependencies": {
     "@dnd-kit/sortable": "^8.0.0",
     "@dnd-kit/utilities": "^3.2.2",
-    "@fibr/builder": "^0.0.1",
-    "@fibr/canvas": "^0.0.1",
+    "@fibr/builder": "^0.1.0",
+    "@fibr/canvas": "^0.0.2",
     "duck-form": "^0.1.4",
     "@fibr/shared": "^1.0.0",
     "@heroicons/react": "^2.1.1",
