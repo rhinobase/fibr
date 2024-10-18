@@ -1,3 +1,9 @@
+## 0.1.4 (2024-10-18)
+
+### 🧱 Updated Dependencies
+
+- Updated shared to 0.1.1
+
 ## 0.1.3 (2024-10-18)
 
 ### 🧱 Updated Dependencies
