@@ -1,6 +1,6 @@
 {
   "name": "@fibr/shared",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Fibr interface builder",
   "license": "MIT",
   "keywords": [
@@ -29,7 +29,7 @@
     "@dnd-kit/modifiers": "^7.0.0",
     "@dnd-kit/sortable": "^8.0.0",
     "@dnd-kit/utilities": "^3.2.2",
-    "@fibr/builder": "^0.1.0",
+    "@fibr/builder": "^0.1.1",
     "@heroicons/react": "^2.1.1",
     "@rafty/ui": "^1.5.2",
     "@swc/helpers": "^0.5.3",

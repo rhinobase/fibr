@@ -1,6 +1,6 @@
 {
   "name": "@fibr/canvas",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "Fibr interface builder",
   "license": "MIT",
   "keywords": [
@@ -28,8 +28,8 @@
     "@dnd-kit/core": "^6.1.0",
     "@dnd-kit/sortable": "^8.0.0",
     "@dnd-kit/utilities": "^3.2.2",
-    "@fibr/builder": "^0.1.0",
-    "@fibr/shared": "^0.1.0",
+    "@fibr/builder": "^0.1.1",
+    "@fibr/shared": "^0.1.1",
     "@swc/helpers": "^0.5.3",
     "@uidotdev/usehooks": "^2.4.1",
     "class-variance-authority": "^0.7.0",

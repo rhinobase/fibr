@@ -1,3 +1,10 @@
+## 0.1.3 (2024-10-18)
+
+### 🧱 Updated Dependencies
+
+- Updated builder to 0.1.1
+- Updated shared to 0.1.1
+
 ## 0.1.1 (2024-10-18)
 
 This was a version bump only for canvas to align it with other projects, there were no code changes.
