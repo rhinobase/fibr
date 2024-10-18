@@ -1,11 +1,11 @@
 import { Box } from "@chakra-ui/react";
 import { useBlocks } from "@fibr/builder";
-import { useThread } from "@fibr/react";
+import { useField } from "duck-form";
 import type { PropsWithChildren } from "react";
 import type { Node } from "reactflow";
 
 export function NodeWrapper(props: PropsWithChildren) {
-  const { selected, type } = useThread<Node>();
+  const { selected, type } = useField<Node>();
   const allowedEdgesType = useBlocks(({ config }) =>
     Object.entries(config).reduce<string[]>((prev, [name, block]) => {
       if (block.metadata?.node_type === "edge") prev.push(name);

@@ -9,7 +9,7 @@ import {
   useCanvas,
   useClipboard,
 } from "@fibr/builder";
-import { FibrProvider, WeaverProvider, useThread } from "@fibr/react";
+import { Blueprint, DuckForm, useField } from "duck-form";
 import { type ReactNode, useEffect, useMemo } from "react";
 import toast from "react-hot-toast";
 import { Diagram } from "./Diagram";
@@ -62,7 +62,7 @@ export function Canvas() {
   }, [schema]);
 
   return (
-    <FibrProvider plugins={builders}>
+    <DuckForm components={builders}>
       <BuilderCanvas
         ref={mergeRefs(ref, setNodeRef)}
         style={{
@@ -72,17 +72,17 @@ export function Canvas() {
         }}
         className="bg-secondary-100 dark:bg-secondary-900 flex h-full items-start justify-center overflow-y-auto"
       >
-        <WeaverProvider wrapper={NodeWrapper}>
+        <Blueprint wrapper={NodeWrapper}>
           <Diagram />
-        </WeaverProvider>
+        </Blueprint>
         <Controls />
       </BuilderCanvas>
-    </FibrProvider>
+    </DuckForm>
   );
 }
 
 function DefaultComponent() {
-  const { type } = useThread();
+  const { type } = useField();
 
   return (
     <Text opacity={0.6} textAlign="center" fontSize="sm">

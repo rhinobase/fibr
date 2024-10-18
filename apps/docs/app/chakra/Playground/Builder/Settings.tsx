@@ -5,8 +5,8 @@ import {
   useBlocks,
   useCanvas,
 } from "@fibr/builder";
-import { FibrProvider, Thread } from "@fibr/react";
 import { classNames } from "@rafty/ui";
+import { Blueprint, DuckField, DuckForm } from "duck-form";
 import { type ReactNode, useMemo } from "react";
 
 export type Settings = BuilderSettings;
@@ -44,17 +44,22 @@ export function Settings({ style, className, ...props }: Settings) {
   if (selectedBlocksLength === 1) {
     const block = selectedBlocks[0];
     component = (
-      <FibrProvider plugins={settingBuilders}>
-        <Thread
-          {...block}
-          _update={(values: Partial<BlockType>) =>
-            updateBlock({
-              blockId: block.id,
-              updatedValues: values,
-            })
-          }
-        />
-      </FibrProvider>
+      <DuckForm
+        components={settingBuilders}
+        generateId={(_, props) => (props.id ? String(props.id) : undefined)}
+      >
+        <Blueprint>
+          <DuckField
+            {...block}
+            _update={(values: Partial<BlockType>) =>
+              updateBlock({
+                blockId: block.id,
+                updatedValues: values,
+              })
+            }
+          />
+        </Blueprint>
+      </DuckForm>
     );
   } else
     component = (
