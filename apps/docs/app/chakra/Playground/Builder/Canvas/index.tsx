@@ -2,8 +2,10 @@ import { Kbd, Text, Toast } from "@chakra-ui/react";
 import { useDroppable } from "@dnd-kit/core";
 import {
   Canvas as BuilderCanvas,
+  WorkspaceErrorType,
   mergeRefs,
   useBlocks,
+  useBuilder,
   useCanvas,
   useClipboard,
 } from "@fibr/builder";
@@ -19,6 +21,8 @@ export function Canvas() {
   const { setNodeRef } = useDroppable({
     id: "canvas",
   });
+
+  const onError = useBuilder((state) => state.onError);
 
   const { config, validateSchema } = useBlocks(
     ({ config, validateSchema }) => ({
@@ -51,6 +55,11 @@ export function Canvas() {
       ),
     [config],
   );
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (!validateSchema(schema))
+      onError({ type: WorkspaceErrorType.SCHEMA_NOT_VALID });
+  }, [schema]);
 
   return (
     <FibrProvider plugins={builders}>
@@ -61,6 +70,7 @@ export function Canvas() {
           alignItems: "stretch",
           justifyContent: "normal",
         }}
+        className="bg-secondary-100 dark:bg-secondary-900 flex h-full items-start justify-center overflow-y-auto"
       >
         <WeaverProvider wrapper={NodeWrapper}>
           <Diagram />
@@ -76,7 +86,7 @@ function DefaultComponent() {
 
   return (
     <Text opacity={0.6} textAlign="center" fontSize="sm">
-      Component of type <Kbd>{type}</Kbd> doesn't exist!
+      Component of type <Kbd>{type}</Kbd> doesn&apos;t exist!
     </Text>
   );
 }

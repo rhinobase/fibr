@@ -7,27 +7,27 @@ import {
 } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { type BlockType, useCanvas } from "../canvas";
-import { Toast } from "@rafty/ui";
 import { mergeRefs } from "../../utils";
-import toast from "react-hot-toast";
 import type { XYPosition } from "reactflow";
 import { groupByParentNode } from "../utils";
+import { WorkspaceErrorType, useBuilder } from "../builder";
 
 const ClipboardContext = createContext<ReturnType<
   typeof useClipboardManager
 > | null>(null);
 
-export function ClipboardProvider(props: PropsWithChildren) {
+export function ClipboardProvider({ children }: PropsWithChildren) {
   const value = useClipboardManager();
 
   return (
     <ClipboardContext.Provider value={value}>
-      {props.children}
+      {children}
     </ClipboardContext.Provider>
   );
 }
 
 function useClipboardManager() {
+  const onError = useBuilder((state) => state.onError);
   const [clipboard, setClipboard] = useState<BlockType[]>();
   const { schema, remove, uniqueId, set } = useCanvas(
     ({ schema, remove, uniqueId, set }) => ({
@@ -98,14 +98,7 @@ function useClipboardManager() {
       for (const block of schema) {
         if (block.selected) {
           if (group.parentNode && block.parentNode !== group.parentNode) {
-            toast.custom(({ visible }) => (
-              <Toast
-                visible={visible}
-                severity="error"
-                title="Parent group not matching"
-                message="All the nodes should be of the same group/parent node."
-              />
-            ));
+            onError({ type: WorkspaceErrorType.GROUP_NOT_VALID });
 
             return;
           }
@@ -141,7 +134,9 @@ function useClipboardManager() {
 
   return {
     clipboard,
-    ref: mergeRefs(copyRef, pasteRef, groupRef),
+    // TODO: nextjs is giving error because of this mergeRefs function call
+    ref: groupRef,
+    // mergeRefs(copyRef, pasteRef, groupRef),
     set,
   };
 }

@@ -1,17 +1,17 @@
-import { Thread, type ThreadType, useThread } from "@fibr/react";
 import { Label, Text } from "@rafty/ui";
+import { DuckField, useField } from "duck-form";
 import { Fragment, type PropsWithChildren } from "react";
 
 export type ObjectField = {
-  blocks?: Record<string, ThreadType>;
+  fields?: Record<string, Record<string, unknown>>;
   data: { label: string; description: string };
 };
 
 export function ObjectField() {
   const {
-    blocks,
+    fields,
     data: { description, label },
-  } = useThread<ObjectField>();
+  } = useField<ObjectField>();
 
   const LabelAndDescriptionWrapper =
     label && description
@@ -28,9 +28,9 @@ export function ObjectField() {
           </Text>
         )}
       </LabelAndDescriptionWrapper>
-      {blocks &&
-        Object.entries(blocks).map(([id, field]) => (
-          <Thread key={id} id={id} {...field} />
+      {fields &&
+        Object.entries(fields).map(([id, field]) => (
+          <DuckField key={id} id={id} {...field} />
         ))}
     </div>
   );

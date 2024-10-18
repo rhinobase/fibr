@@ -1,6 +1,6 @@
 import { DragOverlay, useDndContext } from "@dnd-kit/core";
-import { Thread, type ThreadType } from "@fibr/react";
 import { Portal } from "@fibr/shared";
+import { DuckField } from "duck-form";
 import { FormProvider, useForm } from "react-hook-form";
 
 export function FieldOverlay() {
@@ -12,10 +12,10 @@ export function FieldOverlay() {
       <FormProvider {...methods}>
         <DragOverlay dropAnimation={null}>
           {active?.data && (
-            <Thread
+            <DuckField
               id={String(active.id)}
               isOverlay
-              {...(active.data.current as ThreadType)}
+              {...active.data.current}
             />
           )}
         </DragOverlay>

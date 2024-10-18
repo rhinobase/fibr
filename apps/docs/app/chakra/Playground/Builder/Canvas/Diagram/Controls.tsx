@@ -1,5 +1,5 @@
 import { type ButtonProps, Button as ChakraButton } from "@chakra-ui/react";
-import { Env, classNames, eventHandler, useBuilder } from "@fibr/builder";
+import { Env, eventHandler, useBuilder } from "@fibr/builder";
 import { useEffect } from "react";
 import { HiMinus, HiPlus } from "react-icons/hi";
 import { HiLockClosed, HiLockOpen } from "react-icons/hi2";

@@ -4,7 +4,6 @@ import {
   useBlocks,
   useCanvas,
   type BlockType,
-  classNames,
   eventHandler,
 } from "@fibr/builder";
 import {
@@ -13,6 +12,7 @@ import {
   AccordionTrigger,
   Text,
   accordionTriggerClasses,
+  classNames,
 } from "@rafty/ui";
 import { cva } from "class-variance-authority";
 import type { CSSProperties } from "react";

@@ -1,12 +1,8 @@
 import { useDraggable } from "@dnd-kit/core";
-import {
-  classNames,
-  eventHandler,
-  type Block,
-  type BlockType,
-} from "@fibr/builder";
+import { eventHandler, type Block, type BlockType } from "@fibr/builder";
 import type { RangeTuple } from "fuse.js";
 import { highlightMatches } from "../utils";
+import { classNames } from "@rafty/ui";
 
 export type PaletteCard = Block & {
   isOverlay?: boolean;

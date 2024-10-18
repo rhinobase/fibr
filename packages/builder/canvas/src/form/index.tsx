@@ -2,7 +2,9 @@ import { useCanvas, useClipboard } from "@fibr/builder";
 import { Canvas } from "@fibr/shared";
 import { FormDisplay } from "./FormDisplay";
 
-export function FormBuilderCanvas() {
+export type FormBuilderCanvas = FormDisplay;
+
+export function FormBuilderCanvas(props: FormBuilderCanvas) {
   const select = useCanvas(({ select }) => select);
   const { ref } = useClipboard();
 
@@ -11,12 +13,12 @@ export function FormBuilderCanvas() {
   return (
     <Canvas
       ref={ref}
-      className="min-h-min py-10"
+      className="py-10"
       onClick={handleSelect}
       onKeyDown={handleSelect}
     >
       <div className="w-[500px] space-y-2 rounded">
-        <FormDisplay />
+        <FormDisplay {...props} />
       </div>
     </Canvas>
   );

@@ -1,10 +1,11 @@
-import { useThread } from "@fibr/react";
+import { useField } from "duck-form";
 import { useEffect, type PropsWithChildren } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 export function SettingsPanelWrapper(props: PropsWithChildren) {
-  const { _update, id, ...defaultValues } = useThread<{
+  const { _update, id, ...defaultValues } = useField<{
     _update: (values: unknown) => void;
+    id: string;
   }>();
 
   const methods = useForm({ defaultValues });
