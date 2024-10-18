@@ -7,7 +7,7 @@
     "@fibr/builder": "^0.1.0",
     "@fibr/canvas": "^0.1.0",
     "duck-form": "^0.1.4",
-    "@fibr/shared": "^1.0.0",
+    "@fibr/shared": "^0.1.0",
     "@heroicons/react": "^2.1.4",
     "@rafty/ui": "^1.7.0",
     "@swc/helpers": "^0.5.3",
