@@ -1,11 +1,11 @@
 {
   "name": "@fibr/workflow",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",
     "@dnd-kit/modifiers": "^7.0.0",
     "@fibr/builder": "^0.1.0",
-    "@fibr/canvas": "^0.0.2",
+    "@fibr/canvas": "^0.1.0",
     "duck-form": "^0.1.4",
     "@fibr/shared": "^1.0.0",
     "@heroicons/react": "^2.1.4",
