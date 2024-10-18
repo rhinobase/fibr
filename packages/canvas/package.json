@@ -1,6 +1,29 @@
 {
   "name": "@fibr/canvas",
   "version": "0.1.0",
+  "description": "Fibr interface builder",
+  "license": "MIT",
+  "keywords": [
+    "form",
+    "builder",
+    "automatic",
+    "react",
+    "blueprint",
+    "schema",
+    "json"
+  ],
+  "homepage": "https://fibr.rhinobase.io/",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhinobase/fibr.git",
+    "directory": "packages/react"
+  },
+  "bugs": {
+    "url": "https://github.com/rhinobase/fibr/issues"
+  },
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",
     "@dnd-kit/sortable": "^8.0.0",
