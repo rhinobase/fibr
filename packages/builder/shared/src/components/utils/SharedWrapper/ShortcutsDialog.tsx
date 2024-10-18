@@ -1,4 +1,4 @@
-import { useBuilder } from "@fibr/providers";
+import { useBuilder } from "@fibr/builder";
 import {
   Button,
   Dialog,
@@ -86,8 +86,8 @@ export function ShortcutsDialog() {
             </DialogClose>
             <SearchField
               className="w-[200px]"
-              search={search}
-              onSearch={setSearch}
+              value={search}
+              onValueChange={setSearch}
               size="sm"
               autoComplete="off"
             />

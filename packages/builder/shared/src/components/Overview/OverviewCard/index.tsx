@@ -1,6 +1,11 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useCanvas, type BlockType } from "@fibr/providers";
+import {
+  useBlocks,
+  useCanvas,
+  type BlockType,
+  eventHandler,
+} from "@fibr/builder";
 import {
   AccordionContent,
   AccordionItem,
@@ -8,11 +13,9 @@ import {
   Text,
   accordionTriggerClasses,
   classNames,
-  eventHandler,
 } from "@rafty/ui";
 import { cva } from "class-variance-authority";
 import type { CSSProperties } from "react";
-import { useBlocks } from "../../../providers";
 import { CustomButton } from "./CustomButton";
 import {
   HiChevronRight,
@@ -161,7 +164,7 @@ export function OverviewCard({
       <Text
         className={classNames(
           hidden && "opacity-40",
-          "text-2xs w-full truncate text-left font-medium",
+          "w-full truncate text-left text-[0.75rem] font-medium",
         )}
       >
         {id}

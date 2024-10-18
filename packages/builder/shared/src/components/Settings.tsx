@@ -1,9 +1,12 @@
-import { Settings as BuilderSettings } from "@fibr/builder";
-import { type BlockType, useCanvas } from "@fibr/providers";
-import { FibrProvider, Thread } from "@fibr/react";
+import {
+  Settings as BuilderSettings,
+  useBlocks,
+  useCanvas,
+  type BlockType,
+} from "@fibr/builder";
 import { Button, Text, classNames } from "@rafty/ui";
-import { type ReactNode, useMemo } from "react";
-import { useBlocks } from "../providers";
+import { Blueprint, DuckField, DuckForm } from "duck-form";
+import { useMemo, type ReactNode } from "react";
 
 export type Settings = BuilderSettings;
 
@@ -40,17 +43,22 @@ export function Settings({ className, ...props }: Settings) {
   if (selectedBlocksLength === 1) {
     const block = selectedBlocks[0];
     component = (
-      <FibrProvider plugins={settingBuilders}>
-        <Thread
-          {...block}
-          _update={(values: Partial<BlockType>) =>
-            updateBlock({
-              blockId: block.id,
-              updatedValues: values,
-            })
-          }
-        />
-      </FibrProvider>
+      <DuckForm
+        components={settingBuilders}
+        generateId={(_, props) => (props.id ? String(props.id) : undefined)}
+      >
+        <Blueprint>
+          <DuckField
+            {...block}
+            _update={(values: Partial<BlockType>) =>
+              updateBlock({
+                blockId: block.id,
+                updatedValues: values,
+              })
+            }
+          />
+        </Blueprint>
+      </DuckForm>
     );
   } else
     component = (
@@ -87,13 +95,28 @@ export function Settings({ className, ...props }: Settings) {
       </>
     );
 
+  const selectedBlockId =
+    selectedBlocksLength === 1 ? selectedBlocks[0].id : undefined;
+
   if (isSettingsPanelActive)
     return (
       <BuilderSettings
         {...props}
-        blockId={selectedBlocksLength === 1 ? selectedBlocks[0].id : undefined}
-        className={classNames("flex flex-col gap-3", className)}
+        className={classNames(
+          "border-secondary-200 dark:border-secondary-800 dark:bg-secondary-950 absolute right-0 top-0 flex h-full w-96 flex-col gap-3 overflow-y-auto border-l bg-white p-3",
+          className,
+        )}
       >
+        <div className="flex w-full items-center justify-between">
+          <h4 className="font-medium">Settings</h4>
+          <p
+            title={selectedBlockId}
+            className="max-w-60 truncate text-sm font-medium italic opacity-60"
+          >
+            {selectedBlockId}
+          </p>
+        </div>
+        <hr className="dark:border-secondary-700 border-secondary-200" />
         {component}
       </BuilderSettings>
     );

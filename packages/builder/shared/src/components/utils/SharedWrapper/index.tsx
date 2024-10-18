@@ -1,26 +1,35 @@
 import {
+  BlocksProvider,
   CanvasProvider,
   EditorShortcutsWrapper,
+  useBuilder,
+  type BlocksStoreProps,
   type CanvasStoreProps,
-} from "@fibr/providers";
+} from "@fibr/builder";
 import type { PropsWithChildren } from "react";
 import { HotkeysProvider } from "react-hotkeys-hook";
-import { BlocksProvider, type BlocksStoreProps } from "../../../providers";
 import { ShortcutsDialog } from "./ShortcutsDialog";
 
 export type SharedWrapper = PropsWithChildren<
-  BlocksStoreProps & CanvasStoreProps
+  BlocksStoreProps & Omit<CanvasStoreProps, "onError">
 >;
 
 export function SharedWrapper({
   children,
   blocks,
   config,
-  ...builderProps
+  ...canvasProviderProps
 }: SharedWrapper) {
+  const onError = useBuilder((state) => state.onError);
+
+  const blockProviderProps: BlocksStoreProps = {
+    blocks,
+    config,
+  };
+
   return (
-    <BlocksProvider blocks={blocks} config={config}>
-      <CanvasProvider {...builderProps}>
+    <BlocksProvider {...blockProviderProps}>
+      <CanvasProvider {...canvasProviderProps} onError={onError}>
         <HotkeysProvider>
           <EditorShortcutsWrapper>{children}</EditorShortcutsWrapper>
           <ShortcutsDialog />

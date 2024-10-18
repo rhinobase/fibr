@@ -1,5 +1,5 @@
-import { useThread } from "@fibr/react";
 import { InputField } from "@rafty/ui";
+import { useField } from "duck-form";
 import { useFormContext } from "react-hook-form";
 import { FieldWrapper, InputWrapper } from "../../utils/components";
 
@@ -15,7 +15,7 @@ export function StringInput() {
   const {
     id,
     data: { defaultValue, placeholder, inputType = "text" },
-  } = useThread<StringInput>();
+  } = useField<StringInput & { id: string }>();
 
   const { register } = useFormContext();
 

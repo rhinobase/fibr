@@ -1,4 +1,4 @@
-import { useCanvas } from "@fibr/providers";
+import { useCanvas } from "@fibr/builder";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -8,11 +8,10 @@ import {
   DialogHeader,
   DialogOverlay,
   DialogTrigger,
-  ErrorMessage,
-  FieldControl,
+  FieldWrapper,
   InputField,
 } from "@rafty/ui";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import z from "zod";
 
 export function AddFormDialog() {
@@ -40,37 +39,40 @@ const schema = z.object({
 function AddForm() {
   const add = useCanvas(({ add }) => add);
 
+  const methods = useForm<z.infer<typeof schema>>({
+    resolver: zodResolver(schema),
+  });
+
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
-  });
+  } = methods;
 
   return (
-    <form
-      onSubmit={handleSubmit(
-        (data) =>
-          add({
-            blockData: {
-              data,
-              type: "canvas",
-            },
-          }),
-        console.error,
-      )}
-      className="space-y-3"
-    >
-      <FieldControl name="title" isInvalid={errors.title !== null} isRequired>
-        <InputField size="sm" {...register("title")} />
-        <ErrorMessage>{errors.title?.message}</ErrorMessage>
-      </FieldControl>
-      <div className="flex items-center justify-end">
-        <Button colorScheme="primary" size="sm" type="submit">
-          Add
-        </Button>
-      </div>
-    </form>
+    <FormProvider {...methods}>
+      <form
+        onSubmit={handleSubmit(
+          (data) =>
+            add({
+              blockData: {
+                data,
+                type: "canvas",
+              },
+            }),
+          console.error,
+        )}
+        className="space-y-3"
+      >
+        <FieldWrapper name="title" isInvalid={errors.title !== null} isRequired>
+          <InputField size="sm" {...register("title")} />
+        </FieldWrapper>
+        <div className="flex items-center justify-end">
+          <Button colorScheme="primary" size="sm" type="submit">
+            Add
+          </Button>
+        </div>
+      </form>
+    </FormProvider>
   );
 }

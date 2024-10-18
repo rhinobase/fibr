@@ -1,6 +1,5 @@
-import { useCanvas, type BlockType } from "@fibr/providers";
-import { Thread } from "@fibr/react";
-import { useBlocks } from "@fibr/shared";
+import { useBlocks, useCanvas, type BlockType } from "@fibr/builder";
+import { DuckField } from "duck-form";
 import { useCallback, useMemo } from "react";
 import {
   Background,
@@ -94,7 +93,7 @@ export function Diagram() {
   const customNodeTypes = useMemo(
     () =>
       Object.keys(config).reduce<NodeTypes>((prev, name) => {
-        if (!allowedEdgesType.includes(name)) prev[name] = Thread;
+        if (!allowedEdgesType.includes(name)) prev[name] = DuckField;
         return prev;
       }, {}),
     [allowedEdgesType, config],
@@ -104,7 +103,7 @@ export function Diagram() {
     () =>
       Object.keys(config).reduce<EdgeTypes>((prev, name) => {
         if (allowedEdgesType.includes(name))
-          prev[name] = (props) => <Thread type={name} {...props} />;
+          prev[name] = (props) => <DuckField type={name} {...props} />;
         return prev;
       }, {}),
     [allowedEdgesType, config],

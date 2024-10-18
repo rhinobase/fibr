@@ -1,8 +1,8 @@
-import { useThread } from "@fibr/react";
 import { Kbd, Text } from "@rafty/ui";
+import { useField } from "duck-form";
 
 export function DefaultComponent() {
-  const { type } = useThread();
+  const { type } = useField();
 
   return (
     <Text isMuted className="text-center text-sm">

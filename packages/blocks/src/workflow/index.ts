@@ -1,4 +1,4 @@
-import type { Block, Config } from "@fibr/shared";
+import type { Block, Config } from "@fibr/builder";
 import {
   LuGitCommit,
   LuGitFork,
@@ -19,7 +19,7 @@ import { Group } from "../page/components";
 import { PageSettings } from "../page/settings";
 
 export const workflowConfig: Record<string, Config> = {
-  object: { builder: Group, settings: PageSettings },
+  // object: { builder: Group, settings: PageSettings },
   start: {
     builder: StartNode,
     settings: NodeSettings,
@@ -75,23 +75,23 @@ export const workflowBlocks: Record<string, Block<Partial<Node>>[]> = {
       },
     },
   ],
-  // Default: [
-  //   {
-  //     type: "default",
-  //     label: "Default",
-  //     icon: MdCropFree,
-  //   },
-  //   {
-  //     type: "input",
-  //     label: "Input",
-  //     icon: MdInput,
-  //   },
-  //   {
-  //     type: "output",
-  //     label: "Output",
-  //     icon: MdOutput,
-  //   },
-  // ],
+  Default: [
+    {
+      type: "default",
+      label: "Default",
+      icon: MdCropFree,
+    },
+    {
+      type: "input",
+      label: "Input",
+      icon: MdInput,
+    },
+    {
+      type: "output",
+      label: "Output",
+      icon: MdOutput,
+    },
+  ],
   Operator: [
     {
       type: "condition",

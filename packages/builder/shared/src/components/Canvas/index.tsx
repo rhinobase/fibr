@@ -1,14 +1,19 @@
-import { Canvas as BuilderCanvas } from "@fibr/builder";
-import { CanvasShortcutsWrapper, useCanvas } from "@fibr/providers";
-import { FibrProvider } from "@fibr/react";
-import { Toast } from "@rafty/ui";
-import { type ReactNode, forwardRef, useEffect, useMemo } from "react";
-import toast from "react-hot-toast";
-import { useBlocks } from "../../providers";
+import {
+  Canvas as BuilderCanvas,
+  CanvasShortcutsWrapper,
+  useBlocks,
+  useBuilder,
+  useCanvas,
+  WorkspaceErrorType,
+} from "@fibr/builder";
+import { classNames } from "@rafty/ui";
+import { DuckForm } from "duck-form";
+import { forwardRef, useEffect, useMemo, type ReactNode } from "react";
 import { DefaultComponent } from "./DefaultComponent";
 
 export const Canvas = forwardRef<HTMLDivElement, BuilderCanvas>(
-  (props, forwardedRef) => {
+  ({ className, ...props }, forwardedRef) => {
+    const onError = useBuilder((state) => state.onError);
     const { config, validateSchema } = useBlocks(
       ({ config, validateSchema }) => ({
         config,
@@ -18,17 +23,11 @@ export const Canvas = forwardRef<HTMLDivElement, BuilderCanvas>(
 
     const schema = useCanvas(({ schema }) => schema);
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
     useEffect(() => {
       if (!validateSchema(schema))
-        toast.custom(({ visible }) => (
-          <Toast
-            visible={visible}
-            severity="error"
-            title="Schema is not valid!"
-            message="One or more fields in schema are not available."
-          />
-        ));
-    }, [validateSchema, schema]);
+        onError({ type: WorkspaceErrorType.SCHEMA_NOT_VALID });
+    }, [schema]);
 
     const builders = useMemo(
       () =>
@@ -44,9 +43,19 @@ export const Canvas = forwardRef<HTMLDivElement, BuilderCanvas>(
 
     return (
       <CanvasShortcutsWrapper>
-        <FibrProvider plugins={builders}>
-          <BuilderCanvas ref={forwardedRef} {...props} />
-        </FibrProvider>
+        <DuckForm
+          components={builders}
+          generateId={(_, props) => (props.id ? String(props.id) : undefined)}
+        >
+          <BuilderCanvas
+            {...props}
+            className={classNames(
+              "bg-secondary-100 dark:bg-secondary-900 flex h-full items-start justify-center overflow-y-auto",
+              className,
+            )}
+            ref={forwardedRef}
+          />
+        </DuckForm>
       </CanvasShortcutsWrapper>
     );
   },
