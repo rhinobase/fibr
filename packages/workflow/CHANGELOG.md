@@ -1,3 +1,13 @@
+## 0.0.11 (2024-10-18)
+
+### 🚀 Features
+
+- **workflow:** init package ([e419ed4](https://github.com/rhinobase/fibr/commit/e419ed4))
+
+### 🧱 Updated Dependencies
+
+- Updated canvas to 0.1.2
+
 ## 0.0.10 (2024-10-18)
 
 ### 🚀 Features

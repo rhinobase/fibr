@@ -1,3 +1,9 @@
+## 0.0.11 (2024-10-18)
+
+### 🧱 Updated Dependencies
+
+- Updated canvas to 0.1.2
+
 ## 0.0.10 (2024-10-18)
 
 ### 🧱 Updated Dependencies

@@ -1,3 +1,7 @@
+## 0.1.2 (2024-10-18)
+
+This was a version bump only for canvas to align it with other projects, there were no code changes.
+
 ## 0.1.4 (2024-10-18)
 
 ### 🧱 Updated Dependencies
