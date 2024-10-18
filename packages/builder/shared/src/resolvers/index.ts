@@ -1,1 +1,0 @@
-export { astResolver } from "./ast";

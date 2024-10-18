@@ -16,13 +16,12 @@
     "baseUrl": ".",
     "paths": {
       "@fibr/blocks": ["packages/blocks/src/index.ts"],
-      "@fibr/builder": ["packages/builder/base/src/index.ts"],
-      "@fibr/canvas": ["packages/builder/canvas/src/index.ts"],
-      "@fibr/form": ["packages/builder/form/src/index.ts"],
-      "@fibr/page": ["packages/builder/page/src/index.ts"],
-      "@fibr/react": ["packages/react/src/index.ts"],
-      "@fibr/shared": ["packages/builder/shared/src/index.ts"],
-      "@fibr/workflow": ["packages/builder/workflow/src/index.ts"]
+      "@fibr/builder": ["packages/builder/src/index.ts"],
+      "@fibr/canvas": ["packages/canvas/src/index.ts"],
+      "@fibr/form": ["packages/form/src/index.ts"],
+      "@fibr/page": ["packages/page/src/index.ts"],
+      "@fibr/shared": ["packages/shared/src/index.ts"],
+      "@fibr/workflow": ["packages/workflow/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
