@@ -1,11 +1,11 @@
 {
   "name": "@fibr/page",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",
     "@dnd-kit/modifiers": "^7.0.0",
     "@fibr/builder": "^0.1.0",
-    "@fibr/canvas": "^0.1.0",
+    "@fibr/canvas": "^0.1.1",
     "@fibr/shared": "^0.1.0",
     "@heroicons/react": "^2.1.4",
     "@rafty/ui": "^1.7.0",
