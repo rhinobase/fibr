@@ -57,7 +57,7 @@ export function FormDisplay({ fieldWrapper }: FormDisplay) {
 
 type BlueprintType = Record<
   string,
-  Omit<BlockType<{ label?: string }>, "id"> & { blocks?: BlueprintType }
+  Omit<BlockType<{ label?: string }>, "id"> & { fields?: BlueprintType }
 >;
 
 function createBlueprint(
@@ -72,7 +72,7 @@ function createBlueprint(
     for (const { id, ...block } of blocks) {
       blueprint[id] = block;
 
-      if (id in context) blueprint[id].blocks = createBlueprint(id, context);
+      if (id in context) blueprint[id].fields = createBlueprint(id, context);
     }
 
   return blueprint;

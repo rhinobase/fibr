@@ -15,7 +15,6 @@ export function NumberInput() {
     id,
     data: { defaultValue, placeholder },
   } = useField<NumberInput & { id: string }>();
-  console.log("working");
 
   const { register } = useFormContext();
 

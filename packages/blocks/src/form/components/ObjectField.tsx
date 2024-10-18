@@ -3,13 +3,13 @@ import { DuckField, useField } from "duck-form";
 import { Fragment, type PropsWithChildren } from "react";
 
 export type ObjectField = {
-  blocks?: Record<string, Record<string, unknown>>;
+  fields?: Record<string, Record<string, unknown>>;
   data: { label: string; description: string };
 };
 
 export function ObjectField() {
   const {
-    blocks,
+    fields,
     data: { description, label },
   } = useField<ObjectField>();
 
@@ -28,8 +28,8 @@ export function ObjectField() {
           </Text>
         )}
       </LabelAndDescriptionWrapper>
-      {blocks &&
-        Object.entries(blocks).map(([id, field]) => (
+      {fields &&
+        Object.entries(fields).map(([id, field]) => (
           <DuckField key={id} id={id} {...field} />
         ))}
     </div>
