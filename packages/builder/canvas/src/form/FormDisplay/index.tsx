@@ -4,12 +4,12 @@ import {
   useCanvas,
   type BlockType,
 } from "@fibr/builder";
-import { Loom, WeaverProvider } from "@fibr/react";
 import { DndWrapper } from "@fibr/shared";
+import { Blueprint, DuckField } from "duck-form";
 import { FieldOverlay } from "./FieldOverlay";
 
 export type FormDisplay = {
-  fieldWrapper?: WeaverProvider["wrapper"];
+  fieldWrapper?: Blueprint<unknown>["wrapper"];
 };
 
 export function FormDisplay({ fieldWrapper }: FormDisplay) {
@@ -30,7 +30,7 @@ export function FormDisplay({ fieldWrapper }: FormDisplay) {
     );
 
   return (
-    <WeaverProvider wrapper={fieldWrapper}>
+    <Blueprint schema={blueprint} wrapper={fieldWrapper}>
       <DndWrapper
         items={blocks.map(({ id }) => id)}
         onDragStart={({ active }) => {
@@ -47,24 +47,24 @@ export function FormDisplay({ fieldWrapper }: FormDisplay) {
         }}
       >
         {Object.entries(blueprint).map(([id, canvas]) => (
-          <Loom key={id} blueprint={canvas} />
+          <DuckField key={id} {...canvas} />
         ))}
         <FieldOverlay />
       </DndWrapper>
-    </WeaverProvider>
+    </Blueprint>
   );
 }
 
-type Blueprint = Record<
+type BlueprintType = Record<
   string,
-  Omit<BlockType<{ label?: string }>, "id"> & { blocks?: Blueprint }
+  Omit<BlockType<{ label?: string }>, "id"> & { fields?: BlueprintType }
 >;
 
 function createBlueprint(
   key: string,
   context: Record<string, BlockType[] | undefined>,
 ) {
-  const blueprint: Blueprint = {};
+  const blueprint: BlueprintType = {};
 
   const blocks = context[key];
 
@@ -72,7 +72,7 @@ function createBlueprint(
     for (const { id, ...block } of blocks) {
       blueprint[id] = block;
 
-      if (id in context) blueprint[id].blocks = createBlueprint(id, context);
+      if (id in context) blueprint[id].fields = createBlueprint(id, context);
     }
 
   return blueprint;

@@ -1,5 +1,5 @@
-import { useThread } from "@fibr/react";
 import { Textarea as TextareaField } from "@rafty/ui";
+import { useField } from "duck-form";
 import { useFormContext } from "react-hook-form";
 import { FieldWrapper } from "../../utils/components";
 
@@ -14,7 +14,7 @@ export function Textarea() {
   const {
     id,
     data: { defaultValue, placeholder },
-  } = useThread<Textarea>();
+  } = useField<Textarea & { id: string }>();
 
   const { register } = useFormContext();
 

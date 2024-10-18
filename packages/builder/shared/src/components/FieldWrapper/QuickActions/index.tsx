@@ -1,12 +1,12 @@
 import type { BlockType } from "@fibr/builder";
-import { useThread } from "@fibr/react";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@rafty/ui";
+import { useField } from "duck-form";
 import { useState, type PropsWithChildren } from "react";
 import { ActionButtons } from "./ActionButtons";
 import { EditIdField } from "./EditIdField";
 
 export function QuickActions(props: PropsWithChildren) {
-  const { selected } = useThread<BlockType>();
+  const { selected } = useField<BlockType>();
   const [isHover, setHover] = useState(false);
 
   return (

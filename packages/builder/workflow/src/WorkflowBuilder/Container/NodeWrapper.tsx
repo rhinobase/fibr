@@ -1,11 +1,11 @@
-import { useThread } from "@fibr/react";
 import { useBlocks } from "@fibr/builder";
+import { classNames } from "@rafty/ui";
+import { useField } from "duck-form";
 import type { PropsWithChildren } from "react";
 import type { Node } from "reactflow";
-import { classNames } from "@rafty/ui";
 
 export function NodeWrapper(props: PropsWithChildren) {
-  const { selected, type } = useThread<Node>();
+  const { selected, type } = useField<Node>();
   const allowedEdgesType = useBlocks(({ config }) =>
     Object.entries(config).reduce<string[]>((prev, [name, block]) => {
       if (block.metadata?.node_type === "edge") prev.push(name);

@@ -1,5 +1,5 @@
-import { useThread } from "@fibr/react";
 import { classNames, useBoolean } from "@rafty/ui";
+import { useField } from "duck-form";
 import type { PropsWithChildren } from "react";
 import {
   NodeResizeControl,
@@ -11,7 +11,7 @@ import {
 export const PANELS = ["page", "object"];
 
 export function NodeWrapper(props: PropsWithChildren) {
-  const { type, selected } = useThread<Node>();
+  const { type, selected } = useField<Node>();
 
   const isGroup = PANELS.includes(type);
 

@@ -1,5 +1,5 @@
-import { useThread } from "@fibr/react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@rafty/ui";
+import { useField } from "duck-form";
 import type { PropsWithChildren } from "react";
 
 export type TooltipWrapperProps = {
@@ -9,7 +9,7 @@ export type TooltipWrapperProps = {
 export function TooltipWrapper(props: PropsWithChildren) {
   const {
     data: { tooltip },
-  } = useThread<TooltipWrapperProps>();
+  } = useField<TooltipWrapperProps>();
 
   if (tooltip)
     return (

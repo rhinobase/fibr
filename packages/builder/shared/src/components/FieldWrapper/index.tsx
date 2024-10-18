@@ -1,8 +1,9 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { type BlockType, useCanvas, eventHandler } from "@fibr/builder";
-import { useThread } from "@fibr/react";
+import { type BlockType, eventHandler, useCanvas } from "@fibr/builder";
+import { classNames } from "@rafty/ui";
 import { cva } from "class-variance-authority";
+import { useField } from "duck-form";
 import {
   type CSSProperties,
   Fragment,
@@ -11,10 +12,9 @@ import {
   forwardRef,
 } from "react";
 import { QuickActions } from "./QuickActions";
-import { classNames } from "@rafty/ui";
 
 export function FieldWrapper(props: PropsWithChildren) {
-  const { isOverlay, ...field } = useThread<
+  const { isOverlay, ...field } = useField<
     BlockType & { isOverlay?: boolean }
   >();
   const { select, noOfSelectedBlocks } = useCanvas(({ select, schema }) => ({

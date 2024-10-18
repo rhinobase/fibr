@@ -1,10 +1,10 @@
-import type { ThreadWithIdType } from "@fibr/react";
-
 export type ShouldEmitEvent<T> = {
   shouldEmit?: boolean;
 } & T;
 
-export type BlockType<T = Record<string, unknown>> = ThreadWithIdType<{
+export type BlockType<T = Record<string, unknown>> = {
+  id: string;
+  type: string;
   data?: T;
   hidden?: boolean;
   selected?: boolean;
@@ -14,7 +14,7 @@ export type BlockType<T = Record<string, unknown>> = ThreadWithIdType<{
   deletable?: boolean;
   parentNode?: string;
   resizing?: boolean;
-}>;
+};
 
 export type AddBlockProps<T = Record<string, unknown>> = ShouldEmitEvent<{
   blockData: Omit<BlockType<T>, "id">;
