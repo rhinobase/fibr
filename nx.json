@@ -77,5 +77,6 @@
     "@nx/workspace:move": {
       "projectNameAndRootFormat": "as-provided"
     }
-  }
+  },
+  "useLegacyCache": true
 }
