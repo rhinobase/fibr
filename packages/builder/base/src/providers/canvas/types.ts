@@ -1,5 +1,3 @@
-import type { ThreadWithIdType } from "@fibr/react";
-
 export type ShouldEmitEvent<T> = {
   shouldEmit?: boolean;
 } & T;
