@@ -103,7 +103,7 @@ export function Settings({ className, ...props }: Settings) {
       <BuilderSettings
         {...props}
         className={classNames(
-          "border-secondary-200 dark:border-secondary-800 dark:bg-secondary-950 absolute right-0 top-0 flex h-full w-96 flex-col gap-3 overflow-y-auto border-l bg-white p-3",
+          "border-secondary-200 dark:border-secondary-800 dark:bg-secondary-950 absolute right-0 top-0 flex h-full w-96 flex-col gap-3 border-l bg-white p-3",
           className,
         )}
       >
@@ -117,7 +117,7 @@ export function Settings({ className, ...props }: Settings) {
           </p>
         </div>
         <hr className="dark:border-secondary-700 border-secondary-200" />
-        {component}
+        <div className="overflow-y-auto pr-2">{component}</div>
       </BuilderSettings>
     );
 }
